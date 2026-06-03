@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Jorgensen Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Helvetica,Arial,sans-serif;background:#f5f0e6;color:#111;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;background:#fff;border-bottom:1px solid #e8e0d0}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;color:#1a1510}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#1a1510;opacity:0.6;transition:opacity 0.2s}
+.nav-links a:hover{opacity:1}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem 1.5rem}
+.card{background:#fff;max-width:440px;width:100%;padding:3.5rem;border:1px solid #e8e0d0}
+
+.state{display:none}
+.state.active{display:block}
+
+.card-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;display:block}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.2;margin-bottom:1rem;color:#1a1510}
+.card-title em{font-style:italic}
+.card-body{font-size:0.78rem;line-height:2;color:#777;margin-bottom:2rem}
+.divider{height:1px;background:#e8e0d0;margin:2rem 0}
+
+.input-group{margin-bottom:1.5rem}
+.input-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-bottom:0.6rem;display:block}
+.input{width:100%;border:none;border-bottom:1px solid #e8e0d0;padding:0.75rem 0;font-size:0.82rem;font-family:Helvetica,Arial,sans-serif;color:#1a1510;outline:none;background:transparent;transition:border-color 0.2s}
+.input:focus{border-bottom-color:#1a1510}
+.input::placeholder{color:#ccc}
+
+.btn{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.5rem}
+.btn:hover{background:#2a2218}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+
+.error-msg{font-size:0.68rem;color:#c0392b;margin-top:0.75rem;display:none}
+.error-msg.show{display:block}
+
+.forgot{font-size:0.58rem;letter-spacing:0.1em;color:#999;text-align:center;margin-top:1.5rem;display:block}
+.forgot a{color:#1a1510;border-bottom:1px solid #ccc}
+
+.dashboard-card{background:#f5f0e6;padding:1.5rem;margin-bottom:1.5rem}
+.dashboard-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:#1a1510;margin-bottom:0.25rem}
+.dashboard-meta{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#999}
+.dashboard-type{display:inline-block;margin-top:0.5rem;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 0.75rem;border:1px solid #1a1510;color:#1a1510}
+
+.program-list{display:flex;flex-direction:column;gap:0}
+.program-item{padding:1rem 0;border-bottom:1px solid #e8e0d0;display:flex;justify-content:space-between;align-items:center}
+.program-item:last-child{border-bottom:none}
+.program-name{font-size:0.72rem;font-weight:400;color:#1a1510}
+.program-tag{font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:#999}
+.btn-outline{display:inline-block;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.5rem 1rem;border:1px solid #1a1510;color:#1a1510;cursor:pointer;transition:all 0.2s;background:transparent;font-family:Helvetica,Arial,sans-serif}
+.btn-outline:hover{background:#1a1510;color:#f5f0e6}
+.logout{font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:#999;cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;margin-top:1.5rem;display:block;width:100%;text-align:center}
+.logout:hover{color:#1a1510}
+
+footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:0.55rem;letter-spacing:0.1em;color:#ccc}
+
+@media(max-width:600px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  main{padding:2rem 1rem}
+  .card{padding:2rem 1.5rem}
+  footer{padding:1.5rem}
+  .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Jorgensen Foundation</a>
+  <div class="nav-links">
+    <a href="/#programs">Programs</a>
+    <a href="/#mission">Mission</a>
+    <a href="/#access">Access</a>
+  </div>
+</nav>
+
+<main>
+  <div class="card">
+
+    <!-- LOGIN STATE -->
+    <div class="state active" id="state-login">
+      <span class="card-label">Member Access</span>
+      <h1 class="card-title">Sign in to<br><em>your account</em></h1>
+      <p class="card-body">Access the Jorgensen Foundation's computational chemistry programs.</p>
+      <div class="divider"></div>
+      <div class="input-group">
+        <label class="input-label" for="email">Email Address</label>
+        <input class="input" type="email" id="email" placeholder="your@institution.edu">
+      </div>
+      <div class="input-group">
+        <label class="input-label" for="password">Password</label>
+        <input class="input" type="password" id="password" placeholder="Your password" onkeydown="if(event.key==='Enter')login()">
+      </div>
+      <p class="error-msg" id="login-error"></p>
+      <button class="btn" id="login-btn" onclick="login()">Sign In</button>
+      <span class="forgot">Don't have an account? <a href="/#access">Register here</a></span>
+    </div>
+
+    <!-- DASHBOARD STATE -->
+    <div class="state" id="state-dashboard">
+      <span class="card-label">Dashboard</span>
+      <h1 class="card-title">Welcome<br><em>back</em></h1>
+      <div class="divider"></div>
+      <div class="dashboard-card" id="dashboard-info"></div>
+      <p style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#999;margin-bottom:1rem">Available Programs</p>
+      <div class="program-list">
+        <div class="program-item">
+          <div>
+            <div class="program-name">BOSS</div>
+            <div class="program-tag">Molecular Mechanics · Monte Carlo</div>
+          </div>
+          <button class="btn-outline">Launch</button>
+        </div>
+        <div class="program-item">
+          <div>
+            <div class="program-name">MCPRO</div>
+            <div class="program-tag">Protein Simulations</div>
+          </div>
+          <button class="btn-outline">Launch</button>
+        </div>
+        <div class="program-item">
+          <div>
+            <div class="program-name">BOMB</div>
+            <div class="program-tag">Drug Discovery · Docking</div>
+          </div>
+          <button class="btn-outline">Launch</button>
+        </div>
+        <div class="program-item">
+          <div>
+            <div class="program-name">FEP</div>
+            <div class="program-tag">Free Energy Perturbation</div>
+          </div>
+          <button class="btn-outline">Launch</button>
+        </div>
+        <div class="program-item">
+          <div>
+            <div class="program-name">Visualisation Suite</div>
+            <div class="program-tag">3D Molecular Rendering</div>
+          </div>
+          <button class="btn-outline">Launch</button>
+        </div>
+      </div>
+      <button class="logout" onclick="logout()">Sign Out</button>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Jorgensen Foundation · jorgensenfoundation.org</span>
+    <span class="footer-copy">info@jorgensenfoundation.org</span>
+  </div>
+</footer>
+
+<script>
+const API = 'https://jorgensen-backend-production.up.railway.app';
+
+function showState(id) {
+  document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function checkSession() {
+  const user = sessionStorage.getItem('jf_user');
+  if (user) {
+    showDashboard(JSON.parse(user));
+  }
+}
+
+function showDashboard(user) {
+  const typeLabel = user.account_type === 'academia' ? 'Academic Access' : 'Industry Access';
+  document.getElementById('dashboard-info').innerHTML = `
+    <div class="dashboard-name">${user.name || user.email}</div>
+    <div class="dashboard-meta">${user.email}</div>
+    <span class="dashboard-type">${typeLabel}</span>
+  `;
+  showState('state-dashboard');
+}
+
+async function login() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errorEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  errorEl.classList.remove('show');
+  if (!email || !password) {
+    errorEl.textContent = 'Please enter your email and password.';
+    errorEl.classList.add('show'); return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+  try {
+    const res = await fetch(`${API}/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, password})
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      errorEl.textContent = data.detail || 'Invalid email or password.';
+      errorEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+      return;
+    }
+    sessionStorage.setItem('jf_user', JSON.stringify(data));
+    showDashboard(data);
+  } catch(e) {
+    errorEl.textContent = 'Connection error. Please try again.';
+    errorEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('jf_user');
+  showState('state-login');
+}
+
+checkSession();
+</script>
+</body>
+</html>
