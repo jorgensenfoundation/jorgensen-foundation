@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Jorgensen Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Helvetica,Arial,sans-serif;background:#f5f0e6;color:#111;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;background:#1a1510;border-bottom:1px solid rgba(245,240,230,0.1)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;color:#f5f0e6}
+.nav-tag{font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,240,230,0.35)}
+.nav-logout{font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,230,0.5);cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;display:none}
+.nav-logout:hover{color:#f5f0e6}
+
+main{flex:1;padding:3rem}
+
+/* LOGIN */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 120px);padding:4rem 1.5rem}
+.card{background:#fff;max-width:400px;width:100%;padding:3rem;border:1px solid #e8e0d0}
+.card-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;display:block}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;line-height:1.2;margin-bottom:1rem;color:#1a1510}
+.card-title em{font-style:italic}
+.divider{height:1px;background:#e8e0d0;margin:1.5rem 0}
+.input-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-bottom:0.6rem;display:block}
+.input{width:100%;border:none;border-bottom:1px solid #e8e0d0;padding:0.75rem 0;font-size:0.82rem;font-family:Helvetica,Arial,sans-serif;color:#1a1510;outline:none;background:transparent;transition:border-color 0.2s;margin-bottom:1.5rem}
+.input:focus{border-bottom-color:#1a1510}
+.input::placeholder{color:#ccc}
+.btn{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif}
+.btn:hover{background:#2a2218}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.error-msg{font-size:0.68rem;color:#c0392b;margin-top:0.75rem;display:none}
+.error-msg.show{display:block}
+
+/* DASHBOARD */
+.admin-dashboard{display:none}
+.admin-dashboard.active{display:block}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:3rem;max-width:1200px}
+.stat-box{background:#fff;border:1px solid #e8e0d0;padding:1.5rem 2rem}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#1a1510;line-height:1}
+.stat-label{font-size:0.52rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-top:0.4rem}
+
+.table-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;max-width:1200px}
+.table-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:#1a1510}
+.filter-row{display:flex;gap:0.75rem}
+.filter-btn{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.5rem 1rem;border:1px solid #e8e0d0;background:transparent;color:#999;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif}
+.filter-btn.active{border-color:#1a1510;color:#1a1510;background:#f5f0e6}
+.search-input{border:none;border-bottom:1px solid #e8e0d0;padding:0.5rem 0;font-size:0.72rem;font-family:Helvetica,Arial,sans-serif;color:#1a1510;outline:none;background:transparent;width:200px}
+.search-input::placeholder{color:#ccc}
+
+.table-wrap{background:#fff;border:1px solid #e8e0d0;max-width:1200px;overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead tr{border-bottom:1px solid #e8e0d0}
+th{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;padding:1rem 1.25rem;text-align:left;font-weight:400;white-space:nowrap}
+td{font-size:0.7rem;padding:1rem 1.25rem;border-bottom:1px solid #f5f0e6;color:#555;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#faf8f4}
+.badge{display:inline-block;font-size:0.48rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.25rem 0.6rem;border:1px solid}
+.badge-active{border-color:#27ae60;color:#27ae60}
+.badge-inactive{border-color:#ccc;color:#bbb}
+.badge-academia{border-color:#1a1510;color:#1a1510}
+.badge-industry{border-color:#8B6914;color:#8B6914}
+.badge-verified{border-color:#3498db;color:#3498db}
+.badge-unverified{border-color:#e8e0d0;color:#ccc}
+.action-btn{font-size:0.48rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.7rem;border:1px solid;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif;background:transparent}
+.action-activate{border-color:#27ae60;color:#27ae60}
+.action-activate:hover{background:#27ae60;color:#fff}
+.action-deactivate{border-color:#e74c3c;color:#e74c3c}
+.action-deactivate:hover{background:#e74c3c;color:#fff}
+.empty-state{text-align:center;padding:4rem;color:#bbb;font-size:0.72rem;letter-spacing:0.1em}
+
+.refresh-btn{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.25rem;border:1px solid #1a1510;background:transparent;color:#1a1510;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif}
+.refresh-btn:hover{background:#1a1510;color:#f5f0e6}
+
+footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top:auto}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:0.55rem;letter-spacing:0.1em;color:#ccc}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  main{padding:1.5rem}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .table-header{flex-direction:column;align-items:flex-start;gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Jorgensen Foundation</a>
+  <span class="nav-tag">Admin</span>
+  <button class="nav-logout" id="nav-logout" onclick="logout()">Sign Out</button>
+</nav>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="login-wrap">
+  <div class="card">
+    <span class="card-label">Restricted Access</span>
+    <h1 class="card-title">Admin<br><em>Dashboard</em></h1>
+    <div class="divider"></div>
+    <label class="input-label">Admin Password</label>
+    <input class="input" type="password" id="admin-password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin()">
+    <p class="error-msg" id="login-error"></p>
+    <button class="btn" id="login-btn" onclick="adminLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="admin-dashboard" id="admin-dashboard">
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num" id="stat-total">—</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-active">—</div>
+      <div class="stat-label">Active Subscriptions</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-academia">—</div>
+      <div class="stat-label">Academia</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-industry">—</div>
+      <div class="stat-label">Industry</div>
+    </div>
+  </div>
+
+  <div class="table-header">
+    <div class="table-title">All Users</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <input class="search-input" type="text" id="search" placeholder="Search email or name..." oninput="filterUsers()">
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+        <button class="filter-btn" onclick="setFilter('academia', this)">Academia</button>
+        <button class="filter-btn" onclick="setFilter('industry', this)">Industry</button>
+        <button class="filter-btn" onclick="setFilter('active', this)">Active</button>
+        <button class="filter-btn" onclick="setFilter('inactive', this)">Inactive</button>
+      </div>
+      <button class="refresh-btn" onclick="loadUsers()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Institution</th>
+          <th>Type</th>
+          <th>Verified</th>
+          <th>Subscription</th>
+          <th>Registered</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="users-table">
+        <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Jorgensen Foundation · Admin Panel</span>
+    <span class="footer-copy">info@jorgensenfoundation.org</span>
+  </div>
+</footer>
+
+<script>
+const API = 'https://jorgensen-backend-production.up.railway.app';
+let adminToken = '';
+let allUsers = [];
+let currentFilter = 'all';
+
+function showDashboard() {
+  document.getElementById('login-wrap').style.display = 'none';
+  document.getElementById('admin-dashboard').classList.add('active');
+  document.getElementById('nav-logout').style.display = 'inline';
+  loadUsers();
+}
+
+async function adminLogin() {
+  const password = document.getElementById('admin-password').value;
+  const errorEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  errorEl.classList.remove('show');
+  if (!password) {
+    errorEl.textContent = 'Please enter the admin password.';
+    errorEl.classList.add('show'); return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+  try {
+    const res = await fetch(`${API}/admin/users`, {
+      headers: { 'Authorization': `Bearer ${password}` }
+    });
+    if (!res.ok) {
+      errorEl.textContent = 'Invalid admin password.';
+      errorEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+      return;
+    }
+    adminToken = password;
+    sessionStorage.setItem('jf_admin_token', adminToken);
+    const data = await res.json();
+    allUsers = data;
+    showDashboard();
+    renderUsers(allUsers);
+  } catch(e) {
+    errorEl.textContent = 'Connection error. Please try again.';
+    errorEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+}
+
+async function loadUsers() {
+  try {
+    const res = await fetch(`${API}/admin/users`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (!res.ok) { logout(); return; }
+    allUsers = await res.json();
+    updateStats(allUsers);
+    filterUsers();
+  } catch(e) {
+    console.error('Failed to load users', e);
+  }
+}
+
+function updateStats(users) {
+  document.getElementById('stat-total').textContent = users.length;
+  document.getElementById('stat-active').textContent = users.filter(u => u.subscription_status === 'active').length;
+  document.getElementById('stat-academia').textContent = users.filter(u => u.account_type === 'academia').length;
+  document.getElementById('stat-industry').textContent = users.filter(u => u.account_type === 'industry').length;
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterUsers();
+}
+
+function filterUsers() {
+  const search = document.getElementById('search').value.toLowerCase();
+  let filtered = allUsers.filter(u => {
+    const matchSearch = !search ||
+      (u.email || '').toLowerCase().includes(search) ||
+      (u.name || '').toLowerCase().includes(search) ||
+      (u.institution || '').toLowerCase().includes(search);
+    const matchFilter =
+      currentFilter === 'all' ||
+      (currentFilter === 'academia' && u.account_type === 'academia') ||
+      (currentFilter === 'industry' && u.account_type === 'industry') ||
+      (currentFilter === 'active' && u.subscription_status === 'active') ||
+      (currentFilter === 'inactive' && u.subscription_status !== 'active');
+    return matchSearch && matchFilter;
+  });
+  renderUsers(filtered);
+}
+
+function renderUsers(users) {
+  const tbody = document.getElementById('users-table');
+  if (!users.length) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No users found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = users.map(u => {
+    const date = u.created_at ? new Date(u.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+    const isActive = u.subscription_status === 'active';
+    return `
+      <tr>
+        <td>${u.name || '—'}</td>
+        <td>${u.email}</td>
+        <td>${u.institution || '—'}</td>
+        <td><span class="badge badge-${u.account_type}">${u.account_type}</span></td>
+        <td><span class="badge ${u.is_verified ? 'badge-verified' : 'badge-unverified'}">${u.is_verified ? 'Verified' : 'Unverified'}</span></td>
+        <td><span class="badge ${isActive ? 'badge-active' : 'badge-inactive'}">${isActive ? 'Active' : 'Inactive'}</span></td>
+        <td>${date}</td>
+        <td>
+          ${isActive
+            ? `<button class="action-btn action-deactivate" onclick="deactivateUser('${u.email}')">Deactivate</button>`
+            : `<button class="action-btn action-activate" onclick="activateUser('${u.email}')">Activate</button>`
+          }
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function activateUser(email) {
+  try {
+    const res = await fetch(`${API}/admin/activate`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({email})
+    });
+    if (res.ok) loadUsers();
+  } catch(e) { console.error(e); }
+}
+
+async function deactivateUser(email) {
+  if (!confirm(`Deactivate ${email}?`)) return;
+  try {
+    const res = await fetch(`${API}/admin/deactivate`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({email})
+    });
+    if (res.ok) loadUsers();
+  } catch(e) { console.error(e); }
+}
+
+function logout() {
+  sessionStorage.removeItem('jf_admin_token');
+  adminToken = '';
+  document.getElementById('login-wrap').style.display = 'flex';
+  document.getElementById('admin-dashboard').classList.remove('active');
+  document.getElementById('nav-logout').style.display = 'none';
+  document.getElementById('admin-password').value = '';
+}
+
+// Check existing session
+const saved = sessionStorage.getItem('jf_admin_token');
+if (saved) {
+  adminToken = saved;
+  showDashboard();
+} else {
+  document.getElementById('login-wrap').style.display = 'flex';
+}
+</script>
+</body>
+</html>
