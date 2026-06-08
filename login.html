@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Jorgensen Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Helvetica,Arial,sans-serif;background:#f5f0e6;color:#111;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;background:#fff;border-bottom:1px solid #e8e0d0;position:sticky;top:0;z-index:10}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;color:#1a1510}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#1a1510;opacity:0.6;transition:opacity 0.2s}
+.nav-links a:hover{opacity:1}
+.nav-user{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:#999;display:none}
+.nav-logout{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:#1a1510;cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;display:none}
+.nav-logout:hover{opacity:0.6}
+
+main{flex:1;padding:0}
+
+/* CENTERED CARD PAGES */
+.page-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 120px);padding:4rem 1.5rem}
+.page-wrap.hidden{display:none}
+.card{background:#fff;max-width:480px;width:100%;padding:3.5rem;border:1px solid #e8e0d0}
+.card-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;display:block}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.2;margin-bottom:1rem;color:#1a1510}
+.card-title em{font-style:italic}
+.card-body{font-size:0.78rem;line-height:2;color:#777;margin-bottom:2rem}
+.divider{height:1px;background:#e8e0d0;margin:2rem 0}
+.input-group{margin-bottom:1.5rem}
+.input-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-bottom:0.6rem;display:block}
+.input{width:100%;border:none;border-bottom:1px solid #e8e0d0;padding:0.75rem 0;font-size:0.82rem;font-family:Helvetica,Arial,sans-serif;color:#1a1510;outline:none;background:transparent;transition:border-color 0.2s}
+.input:focus{border-bottom-color:#1a1510}
+.input::placeholder{color:#ccc}
+.btn{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.5rem}
+.btn:hover{background:#2a2218}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.btn-outline-dark{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid #1a1510;background:transparent;color:#1a1510;cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.75rem}
+.btn-outline-dark:hover{background:#f5f0e6}
+.error-msg{font-size:0.68rem;color:#c0392b;margin-top:0.75rem;display:none}
+.error-msg.show{display:block}
+.success-msg{font-size:0.68rem;color:#27ae60;margin-top:0.75rem;display:none}
+.success-msg.show{display:block}
+.link-small{font-size:0.58rem;letter-spacing:0.1em;color:#999;text-align:center;margin-top:1.5rem;display:block}
+.link-small a{color:#1a1510;border-bottom:1px solid #ccc}
+
+/* PAYMENT PLANS */
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.plan-card{border:1px solid #e8e0d0;padding:1.5rem;cursor:pointer;transition:all 0.2s;position:relative}
+.plan-card:hover{border-color:#1a1510}
+.plan-card.selected{border-color:#1a1510;background:#f5f0e6}
+.plan-card.selected::after{content:'✓';position:absolute;top:0.75rem;right:0.75rem;font-size:0.7rem;color:#1a1510}
+.plan-period{font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:#999;margin-bottom:0.5rem}
+.plan-price{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:#1a1510;line-height:1}
+.plan-price span{font-size:0.65rem;color:#999;font-family:Helvetica,Arial,sans-serif}
+.plan-save{font-size:0.55rem;color:#27ae60;margin-top:0.3rem;letter-spacing:0.05em}
+.plan-type-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#999;margin-bottom:1rem;display:block}
+
+/* ACCESS CODE */
+.access-code-toggle{font-size:0.58rem;letter-spacing:0.1em;color:#999;cursor:pointer;display:block;text-align:center;margin-top:1.25rem;border:none;background:none;font-family:Helvetica,Arial,sans-serif;width:100%}
+.access-code-toggle:hover{color:#1a1510}
+.access-code-section{display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #e8e0d0}
+.access-code-section.show{display:block}
+.access-code-row{display:flex;gap:0.75rem}
+.access-code-row .input{flex:1}
+.btn-apply{font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.25rem;border:1px solid #1a1510;background:transparent;color:#1a1510;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif;white-space:nowrap;flex-shrink:0}
+.btn-apply:hover{background:#1a1510;color:#f5f0e6}
+
+/* DASHBOARD */
+.dashboard{display:none;padding:3rem}
+.dashboard.active{display:block}
+.dashboard-header{max-width:1100px;margin:0 auto 3rem;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #e8e0d0;padding-bottom:2rem}
+.dashboard-welcome{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#1a1510;line-height:1.1}
+.dashboard-welcome em{font-style:italic}
+.dashboard-meta{text-align:right}
+.dashboard-email{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#999;margin-bottom:0.5rem}
+.dashboard-type{display:inline-block;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 0.75rem;border:1px solid #1a1510;color:#1a1510}
+.programs-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;max-width:1100px;margin-left:auto;margin-right:auto;display:block}
+.programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto}
+
+/* PROGRAM CARD */
+.prog-card{background:#fff;border:1px solid #e8e0d0;overflow:hidden;transition:box-shadow 0.3s}
+.prog-card:hover{box-shadow:0 4px 24px rgba(26,21,16,0.08)}
+.prog-img-placeholder{width:100%;height:180px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem}
+.prog-img-label{font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,240,230,0.3)}
+.prog-body{padding:1.5rem}
+.prog-number{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:#ccc;margin-bottom:0.5rem}
+.prog-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:#1a1510;margin-bottom:0.5rem;line-height:1.2}
+.prog-tagline{font-size:0.62rem;letter-spacing:0.1em;color:#999;text-transform:uppercase;margin-bottom:1rem}
+.prog-short{font-size:0.72rem;line-height:1.8;color:#666;margin-bottom:1.25rem}
+.prog-toggle{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#1a1510;cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;display:flex;align-items:center;gap:0.5rem;padding:0;transition:opacity 0.2s}
+.prog-toggle:hover{opacity:0.6}
+.prog-expanded{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.prog-expanded.open{max-height:500px}
+.prog-expanded-inner{padding-top:1.25rem;border-top:1px solid #e8e0d0;margin-top:1.25rem}
+.prog-detail-title{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-bottom:0.75rem}
+.prog-features{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.25rem}
+.prog-features li{font-size:0.68rem;line-height:1.7;color:#666;display:flex;gap:0.6rem}
+.prog-features li::before{content:'—';color:#ccc;flex-shrink:0}
+.prog-launch{display:inline-block;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.75rem 1.5rem;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif}
+.prog-launch:hover{background:#2a2218}
+
+footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top:4rem}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto}
+.footer-copy{font-size:0.55rem;letter-spacing:0.1em;color:#ccc}
+
+@media(max-width:900px){
+  .programs-grid{grid-template-columns:1fr 1fr}
+  .dashboard{padding:2rem 1.5rem}
+  .dashboard-header{flex-direction:column;align-items:flex-start;gap:1rem}
+  .dashboard-meta{text-align:left}
+}
+@media(max-width:600px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .programs-grid{grid-template-columns:1fr}
+  .page-wrap{padding:2rem 1rem}
+  .card{padding:2rem 1.5rem}
+  .plan-grid{grid-template-columns:1fr}
+  footer{padding:1.5rem}
+  .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Jorgensen Foundation</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/#programs">Programs</a>
+      <a href="/#mission">Mission</a>
+      <a href="/#access">Access</a>
+    </div>
+    <span class="nav-user" id="nav-user"></span>
+    <button class="nav-logout" id="nav-logout" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<!-- LOGIN PAGE -->
+<div class="page-wrap" id="page-login">
+  <div class="card">
+    <span class="card-label">Member Access</span>
+    <h1 class="card-title">Sign in to<br><em>your account</em></h1>
+    <p class="card-body">Access the Jorgensen Foundation's computational chemistry programs.</p>
+    <div class="divider"></div>
+    <div class="input-group">
+      <label class="input-label" for="email">Email Address</label>
+      <input class="input" type="email" id="email" placeholder="your@institution.edu">
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="password">Password</label>
+      <input class="input" type="password" id="password" placeholder="Your password" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <p class="error-msg" id="login-error"></p>
+    <button class="btn" id="login-btn" onclick="login()">Sign In</button>
+    <span class="link-small">Don't have an account? <a href="/#access">Register here</a></span>
+  </div>
+</div>
+
+<!-- PAYMENT PAGE -->
+<div class="page-wrap hidden" id="page-payment">
+  <div class="card">
+    <span class="card-label" id="payment-label">Choose Your Plan</span>
+    <h1 class="card-title">Activate your<br><em>account</em></h1>
+    <p class="card-body" id="payment-body">Select a billing period to access the Jorgensen Foundation programs.</p>
+    <div class="divider"></div>
+    <span class="plan-type-label" id="plan-type-label"></span>
+    <div class="plan-grid">
+      <div class="plan-card selected" id="plan-monthly" onclick="selectPlan('monthly')">
+        <div class="plan-period">Monthly</div>
+        <div class="plan-price" id="price-monthly">€49<span>/mo</span></div>
+        <div class="plan-save">Flexible</div>
+      </div>
+      <div class="plan-card" id="plan-annual" onclick="selectPlan('annual')">
+        <div class="plan-period">Annual</div>
+        <div class="plan-price" id="price-annual">€490<span>/yr</span></div>
+        <div class="plan-save">Save 2 months</div>
+      </div>
+    </div>
+    <p class="error-msg" id="payment-error"></p>
+    <button class="btn" id="payment-btn" onclick="proceedToPayment()">Continue to Payment</button>
+    <button class="access-code-toggle" onclick="toggleAccessCode()">Have an access code?</button>
+    <div class="access-code-section" id="access-code-section">
+      <div class="access-code-row">
+        <input class="input" type="text" id="access-code-input" placeholder="Enter your access code">
+        <button class="btn-apply" onclick="applyAccessCode()">Apply</button>
+      </div>
+      <p class="error-msg" id="code-error"></p>
+      <p class="success-msg" id="code-success"></p>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="dashboard-header">
+    <div class="dashboard-welcome">Good to see you,<br><em id="dash-name">—</em></div>
+    <div class="dashboard-meta">
+      <div class="dashboard-email" id="dash-email"></div>
+      <span class="dashboard-type" id="dash-type"></span>
+    </div>
+  </div>
+  <span class="programs-label">Your Programs</span>
+  <div class="programs-grid">
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#1a1510">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="10" stroke="#f5f0e6" stroke-width="1"/><circle cx="24" cy="8" r="4" fill="#f5f0e6" opacity="0.5"/><circle cx="38" cy="32" r="4" fill="#f5f0e6" opacity="0.5"/><circle cx="10" cy="32" r="4" fill="#f5f0e6" opacity="0.5"/><line x1="24" y1="12" x2="24" y2="14" stroke="#f5f0e6" opacity="0.4"/><line x1="35" y1="29" x2="33" y2="28" stroke="#f5f0e6" opacity="0.4"/><line x1="13" y1="29" x2="15" y2="28" stroke="#f5f0e6" opacity="0.4"/></svg>
+        <span class="prog-img-label">Molecular Simulation</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">01</div>
+        <div class="prog-name">BOSS</div>
+        <div class="prog-tagline">Biochemical & Organic Simulation System</div>
+        <p class="prog-short">Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Monte Carlo simulations in NPT, NVT, and μVT ensembles</li>
+            <li>OPLS force fields for organic molecules and biomolecules</li>
+            <li>Semi-empirical QM methods: AM1, PM3, PDDG/PM3</li>
+            <li>Energy minimisation and normal mode analysis</li>
+            <li>Free energy perturbation and thermodynamic integration</li>
+            <li>Conformational searching and geometry optimisation</li>
+          </ul>
+          <button class="prog-launch">Launch BOSS →</button>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#2a1f14">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="24" rx="18" ry="10" stroke="#f5f0e6" stroke-width="1" opacity="0.4"/><ellipse cx="24" cy="24" rx="10" ry="18" stroke="#f5f0e6" stroke-width="1" opacity="0.4"/><circle cx="24" cy="24" r="4" fill="#f5f0e6" opacity="0.6"/></svg>
+        <span class="prog-img-label">Protein Simulation</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">02</div>
+        <div class="prog-name">MCPRO</div>
+        <div class="prog-tagline">Monte Carlo for Proteins</div>
+        <p class="prog-short">Monte Carlo simulations of peptides, proteins, and nucleic acids in solution with full solvent treatment.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Protein-ligand binding free energy calculations</li>
+            <li>Explicit and implicit solvent models</li>
+            <li>Residue-based cutoffs for efficient sampling</li>
+            <li>Z-matrix internal coordinate moves</li>
+            <li>Solute-solvent and solute-solute energy decomposition</li>
+            <li>Compatible with OPLS-AA force fields</li>
+          </ul>
+          <button class="prog-launch">Launch MCPRO →</button>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#141a1a">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="16" y="16" width="16" height="16" stroke="#f5f0e6" stroke-width="1" opacity="0.5"/><circle cx="24" cy="24" r="3" fill="#f5f0e6" opacity="0.7"/><line x1="8" y1="24" x2="16" y2="24" stroke="#f5f0e6" opacity="0.3"/><line x1="32" y1="24" x2="40" y2="24" stroke="#f5f0e6" opacity="0.3"/><line x1="24" y1="8" x2="24" y2="16" stroke="#f5f0e6" opacity="0.3"/><line x1="24" y1="32" x2="24" y2="40" stroke="#f5f0e6" opacity="0.3"/></svg>
+        <span class="prog-img-label">Drug Discovery</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">03</div>
+        <div class="prog-name">BOMB</div>
+        <div class="prog-tagline">Biochemical & Organic Model Builder</div>
+        <p class="prog-short">Combinatorial library growth inside protein binding sites for structure-based drug discovery and lead optimisation.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>De novo ligand growth in protein binding sites</li>
+            <li>Virtual screening of combinatorial libraries</li>
+            <li>Docking with scoring and ranking</li>
+            <li>Lead optimisation guided by FEP calculations</li>
+            <li>Fragment-based drug design support</li>
+            <li>Protein structure preparation and editing</li>
+          </ul>
+          <button class="prog-launch">Launch BOMB →</button>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#0d1a14">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M8 36 Q16 20 24 24 Q32 28 40 12" stroke="#f5f0e6" stroke-width="1.5" fill="none" opacity="0.6"/><circle cx="8" cy="36" r="2" fill="#f5f0e6" opacity="0.5"/><circle cx="24" cy="24" r="2" fill="#f5f0e6" opacity="0.5"/><circle cx="40" cy="12" r="2" fill="#f5f0e6" opacity="0.5"/></svg>
+        <span class="prog-img-label">Free Energy</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">04</div>
+        <div class="prog-name">FEP</div>
+        <div class="prog-tagline">Free Energy Perturbation</div>
+        <p class="prog-short">Rigorous free energy calculations for binding affinities, solvation, and chemical transformations.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Relative and absolute binding free energies</li>
+            <li>Free energies of hydration and solvation</li>
+            <li>Thermodynamic integration protocols</li>
+            <li>Bennett Acceptance Ratio (BAR) analysis</li>
+            <li>Alchemical transformations between ligands</li>
+            <li>Industry-standard accuracy for lead optimisation</li>
+          </ul>
+          <button class="prog-launch">Launch FEP →</button>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#1a1414">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><polygon points="24,8 38,32 10,32" stroke="#f5f0e6" stroke-width="1" fill="none" opacity="0.5"/><circle cx="24" cy="8" r="3" fill="#f5f0e6" opacity="0.6"/><circle cx="38" cy="32" r="3" fill="#f5f0e6" opacity="0.6"/><circle cx="10" cy="32" r="3" fill="#f5f0e6" opacity="0.6"/></svg>
+        <span class="prog-img-label">Force Fields</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">05</div>
+        <div class="prog-name">OPLS Force Fields</div>
+        <div class="prog-tagline">Optimised Potentials for Liquid Simulations</div>
+        <p class="prog-short">Industry-standard force fields covering organic molecules, proteins, nucleic acids, and lipids.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>OPLS-AA: all-atom parameters for organic molecules</li>
+            <li>OPLS-AA/L: improved backbone parameters for proteins</li>
+            <li>Coverage of 100+ functional groups</li>
+            <li>Validated against experimental liquid properties</li>
+            <li>Compatible with BOSS, MCPRO, and major MD packages</li>
+            <li>Custom parameterisation tools for novel compounds</li>
+          </ul>
+          <button class="prog-launch">Launch OPLS →</button>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#0d0d1a">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="12" stroke="#f5f0e6" stroke-width="1" opacity="0.5"/><circle cx="24" cy="24" r="5" fill="#f5f0e6" opacity="0.7"/><circle cx="24" cy="12" r="2.5" fill="#f5f0e6" opacity="0.4"/><circle cx="35" cy="30" r="2.5" fill="#f5f0e6" opacity="0.4"/><circle cx="13" cy="30" r="2.5" fill="#f5f0e6" opacity="0.4"/></svg>
+        <span class="prog-img-label">3D Visualisation</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">06</div>
+        <div class="prog-name">Visualisation Suite</div>
+        <div class="prog-tagline">3D Molecular Rendering</div>
+        <p class="prog-short">Browser-based interactive 3D rendering of all simulation outputs — no installation required.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Interactive 3D molecular viewer in the browser</li>
+            <li>Ball-and-stick, space-fill, ribbon, and surface modes</li>
+            <li>Trajectory playback for MD and MC simulations</li>
+            <li>Electron density and electrostatic potential surfaces</li>
+            <li>Protein-ligand binding mode visualisation</li>
+            <li>Export publication-quality images and animations</li>
+          </ul>
+          <button class="prog-launch">Launch Visualiser →</button>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Jorgensen Foundation · jorgensenfoundation.org</span>
+    <span class="footer-copy">info@jorgensenfoundation.org</span>
+  </div>
+</footer>
+
+<script>
+const API = 'https://jorgensen-backend-production.up.railway.app';
+let currentUser = null;
+let selectedPlan = 'monthly';
+
+const ACADEMIA_PRICES = { monthly: '€49/mo', annual: '€490/yr' };
+const INDUSTRY_PRICES = { monthly: '€199/mo', annual: '€1,990/yr' };
+
+function showPage(id) {
+  document.getElementById('page-login').classList.toggle('hidden', id !== 'page-login');
+  document.getElementById('page-payment').classList.toggle('hidden', id !== 'page-payment');
+  document.getElementById('dashboard').classList.toggle('active', id === 'dashboard');
+  document.getElementById('page-login').style.display = id === 'page-login' ? 'flex' : 'none';
+  document.getElementById('page-payment').style.display = id === 'page-payment' ? 'flex' : 'none';
+}
+
+function setupPaymentPage(user) {
+  const isAcademia = user.account_type === 'academia';
+  const prices = isAcademia ? ACADEMIA_PRICES : INDUSTRY_PRICES;
+  document.getElementById('plan-type-label').textContent = isAcademia ? 'Academia Access' : 'Industry Access';
+  document.getElementById('price-monthly').innerHTML = prices.monthly.replace('/', '<span>/') + '</span>';
+  document.getElementById('price-annual').innerHTML = prices.annual.replace('/', '<span>/') + '</span>';
+}
+
+function selectPlan(period) {
+  selectedPlan = period;
+  document.getElementById('plan-monthly').classList.toggle('selected', period === 'monthly');
+  document.getElementById('plan-annual').classList.toggle('selected', period === 'annual');
+}
+
+function showDashboard(user) {
+  currentUser = user;
+  const first = (user.name || user.email).split(' ')[0];
+  document.getElementById('dash-name').textContent = first;
+  document.getElementById('dash-email').textContent = user.email;
+  document.getElementById('dash-type').textContent = user.account_type === 'academia' ? 'Academic Access' : 'Industry Access';
+  document.getElementById('nav-user').textContent = first;
+  document.getElementById('nav-user').style.display = 'inline';
+  document.getElementById('nav-logout').style.display = 'inline';
+  showPage('dashboard');
+}
+
+function toggleCard(btn) {
+  const expanded = btn.nextElementSibling;
+  const isOpen = expanded.classList.contains('open');
+  expanded.classList.toggle('open', !isOpen);
+  btn.querySelector('span').textContent = isOpen ? '↓' : '↑';
+}
+
+function toggleAccessCode() {
+  const section = document.getElementById('access-code-section');
+  section.classList.toggle('show');
+}
+
+async function login() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errorEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  errorEl.classList.remove('show');
+  if (!email || !password) {
+    errorEl.textContent = 'Please enter your email and password.';
+    errorEl.classList.add('show'); return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+  try {
+    const res = await fetch(`${API}/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, password})
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      errorEl.textContent = data.detail || 'Invalid email or password.';
+      errorEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+      return;
+    }
+    sessionStorage.setItem('jf_user', JSON.stringify(data));
+    currentUser = data;
+    if (data.subscription_status === 'active') {
+      showDashboard(data);
+    } else {
+      setupPaymentPage(data);
+      showPage('page-payment');
+    }
+  } catch(e) {
+    errorEl.textContent = 'Connection error. Please try again.';
+    errorEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+}
+
+async function proceedToPayment() {
+  if (!currentUser) return;
+  const btn = document.getElementById('payment-btn');
+  const errorEl = document.getElementById('payment-error');
+  errorEl.classList.remove('show');
+  btn.disabled = true;
+  btn.textContent = 'Redirecting to payment...';
+  try {
+    const res = await fetch(`${API}/create-checkout`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: currentUser.email, billing_period: selectedPlan})
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      errorEl.textContent = data.detail || 'Could not create checkout. Please try again.';
+      errorEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = 'Continue to Payment';
+      return;
+    }
+    window.location.href = data.checkout_url;
+  } catch(e) {
+    errorEl.textContent = 'Connection error. Please try again.';
+    errorEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Continue to Payment';
+  }
+}
+
+async function applyAccessCode() {
+  if (!currentUser) return;
+  const code = document.getElementById('access-code-input').value.trim();
+  const errorEl = document.getElementById('code-error');
+  const successEl = document.getElementById('code-success');
+  errorEl.classList.remove('show');
+  successEl.classList.remove('show');
+  if (!code) {
+    errorEl.textContent = 'Please enter an access code.';
+    errorEl.classList.add('show'); return;
+  }
+  try {
+    const res = await fetch(`${API}/apply-access-code`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: currentUser.email, code})
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      errorEl.textContent = data.detail || 'Invalid access code.';
+      errorEl.classList.add('show'); return;
+    }
+    successEl.textContent = 'Access code accepted! Redirecting...';
+    successEl.classList.add('show');
+    currentUser.subscription_status = 'active';
+    sessionStorage.setItem('jf_user', JSON.stringify(currentUser));
+    setTimeout(() => showDashboard(currentUser), 1200);
+  } catch(e) {
+    errorEl.textContent = 'Connection error. Please try again.';
+    errorEl.classList.add('show');
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('jf_user');
+  currentUser = null;
+  document.getElementById('nav-user').style.display = 'none';
+  document.getElementById('nav-logout').style.display = 'none';
+  showPage('page-login');
+}
+
+// Check existing session
+const saved = sessionStorage.getItem('jf_user');
+if (saved) {
+  const user = JSON.parse(saved);
+  currentUser = user;
+  if (user.subscription_status === 'active') {
+    showDashboard(user);
+  } else {
+    setupPaymentPage(user);
+    showPage('page-payment');
+  }
+} else {
+  showPage('page-login');
+}
+</script>
+</body>
+</html>
