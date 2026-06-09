@@ -182,12 +182,12 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
     <div class="plan-grid">
       <div class="plan-card selected" id="plan-monthly" onclick="selectPlan('monthly')">
         <div class="plan-period">Monthly</div>
-        <div class="plan-price" id="price-monthly">€49<span>/mo</span></div>
+        <div class="plan-price" id="price-monthly">$49<span>/mo</span></div>
         <div class="plan-save">Flexible</div>
       </div>
       <div class="plan-card" id="plan-annual" onclick="selectPlan('annual')">
         <div class="plan-period">Annual</div>
-        <div class="plan-price" id="price-annual">€490<span>/yr</span></div>
+        <div class="plan-price" id="price-annual">$490<span>/yr</span></div>
         <div class="plan-save">Save 2 months</div>
       </div>
     </div>
@@ -398,8 +398,8 @@ let selectedPlan = 'monthly';
 let storedCredentials = null;
 let pollInterval = null;
 
-const ACADEMIA_PRICES = { monthly: '€49/mo', annual: '€490/yr' };
-const INDUSTRY_PRICES = { monthly: '€199/mo', annual: '€1,990/yr' };
+const ACADEMIA_PRICES = { monthly: '$49/mo', annual: '$490/yr' };
+const INDUSTRY_PRICES = { monthly: '$199/mo', annual: '$1,990/yr' };
 
 function stopSubscriptionPolling() {
   if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }

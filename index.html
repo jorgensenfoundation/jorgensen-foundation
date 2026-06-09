@@ -397,7 +397,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
     <div class="access-card">
       <span class="access-tier">For Researchers</span>
       <div class="access-name">Academia</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;margin-bottom:0.25rem;color:#1a1510" id="academia-price">€49</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;margin-bottom:0.25rem;color:#1a1510" id="academia-price">$49</div>
       <div style="font-size:0.58rem;color:#bbb;margin-bottom:2rem;letter-spacing:0.08em" id="academia-period">per month</div>
       <p class="access-desc">Full access to all simulation programs with cloud computing, 3D visualisation, and results export. Verified through your institutional email address.</p>
       <div class="access-divider"></div>
@@ -412,7 +412,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
     <div class="access-card warm-dark">
       <span class="access-tier">For Enterprise</span>
       <div class="access-name">Industry</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;margin-bottom:0.25rem;color:#f5f0e6" id="industry-price">€199</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;margin-bottom:0.25rem;color:#f5f0e6" id="industry-price">$199</div>
       <div style="font-size:0.58rem;color:rgba(245,240,230,0.3);margin-bottom:2rem;letter-spacing:0.08em" id="industry-period">per month</div>
       <p class="access-desc">Priority access with unlimited computing, dedicated support, and custom integrations. Verified through your company email address.</p>
       <div class="access-divider"></div>
@@ -516,9 +516,9 @@ function toggleBilling() {
   isAnnual = !isAnnual;
   const knob = document.getElementById('toggle-knob');
   knob.style.transform = isAnnual ? 'translateX(20px)' : 'translateX(0)';
-  document.getElementById('academia-price').textContent = isAnnual ? '€490' : '€49';
+  document.getElementById('academia-price').textContent = isAnnual ? '$490' : '$49';
   document.getElementById('academia-period').textContent = isAnnual ? 'per year' : 'per month';
-  document.getElementById('industry-price').textContent = isAnnual ? '€1,990' : '€199';
+  document.getElementById('industry-price').textContent = isAnnual ? '$1,990' : '$199';
   document.getElementById('industry-period').textContent = isAnnual ? 'per year' : 'per month';
 }
 
