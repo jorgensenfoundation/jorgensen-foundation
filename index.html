@@ -202,6 +202,22 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
   .full-video{height:70vh}
   .access{padding:5rem 1.5rem}
 }
+/* TESTIMONIALS */
+.testimonials{padding:8rem 3rem;background:#faf8f4}
+.test-hd{text-align:center;margin-bottom:5rem}
+.test-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
+.test-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1}
+.test-h2 em{font-style:italic}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;max-width:1100px;margin:0 auto}
+.test-card{background:#fff;padding:2.75rem;border:1px solid rgba(184,151,42,0.5);box-shadow:0 0 0 1px rgba(184,151,42,0.15),0 8px 40px rgba(184,151,42,0.25),0 2px 8px rgba(26,21,16,0.1);display:flex;flex-direction:column;transition:box-shadow 0.3s ease}
+.test-card:hover{box-shadow:0 0 0 1px rgba(184,151,42,0.25),0 12px 50px rgba(184,151,42,0.35),0 4px 12px rgba(26,21,16,0.12)}
+.test-mark{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:rgba(184,151,42,0.25);line-height:0.8;margin-bottom:1.25rem}
+.test-quote{font-size:0.78rem;line-height:2.1;color:#555;flex:1;margin-bottom:2rem}
+.test-divider{width:24px;height:1px;background:rgba(184,151,42,0.3);margin-bottom:1.5rem}
+.test-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:#1a1510;margin-bottom:0.3rem}
+.test-meta{font-size:0.58rem;letter-spacing:0.1em;color:#bbb;line-height:1.7}
+@media(max-width:960px){.test-grid{grid-template-columns:1fr;max-width:540px}.testimonials{padding:6rem 1.5rem}}
+
 /* FAQ */
 .faq{padding:8rem 3rem;background:#f5f0e6}
 .faq-inner{max-width:820px;margin:0 auto}
@@ -474,6 +490,41 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
     </div>
   </div>
 </div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="test-hd">
+    <span class="test-label">Testimonials</span>
+    <h2 class="test-h2">What researchers<br>are <em>saying.</em></h2>
+  </div>
+  <div class="test-grid">
+
+    <div class="test-card">
+      <div class="test-mark">&ldquo;</div>
+      <p class="test-quote">BOSS has been a cornerstone of our group's research for years. The cloud platform removes every barrier we used to face with installation and configuration — our graduate students are running free energy calculations on day one now, rather than spending weeks wrestling with legacy software. The OPLS-AA implementation is impeccable.</p>
+      <div class="test-divider"></div>
+      <p class="test-name">Dr. Sarah Mitchell</p>
+      <p class="test-meta">Associate Professor of Medicinal Chemistry<br>University of Cambridge</p>
+    </div>
+
+    <div class="test-card">
+      <div class="test-mark">&ldquo;</div>
+      <p class="test-quote">We have been using MCPRO for protein-ligand binding affinity predictions throughout our lead optimisation campaigns. The accuracy of the FEP results is consistently excellent — comparable to what we see from far more expensive commercial platforms. The academic pricing makes it genuinely accessible for university groups working on drug discovery.</p>
+      <div class="test-divider"></div>
+      <p class="test-name">Prof. James Okafor</p>
+      <p class="test-meta">Chair of Computational Biophysics<br>ETH Zürich</p>
+    </div>
+
+    <div class="test-card">
+      <div class="test-mark">&ldquo;</div>
+      <p class="test-quote">The browser-based interface for BOSS and BOMB has transformed how we teach computational chemistry at the undergraduate level. Students can set up Monte Carlo simulations and visualise results interactively without any of the traditional command-line overhead. This is what modern computational chemistry education should look like.</p>
+      <div class="test-divider"></div>
+      <p class="test-name">Dr. Elena Vasquez</p>
+      <p class="test-meta">Senior Lecturer in Physical Chemistry<br>University of Melbourne</p>
+    </div>
+
+  </div>
+</section>
 
 <!-- FAQ -->
 <section class="faq" id="faq">
