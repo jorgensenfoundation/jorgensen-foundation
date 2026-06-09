@@ -49,7 +49,8 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .success-msg.show{display:block}
 .link-small{font-size:0.58rem;letter-spacing:0.1em;color:#999;text-align:center;margin-top:1.5rem;display:block}
 .link-small a{color:#1a1510;border-bottom:1px solid #ccc}
-.show-hide-btn{display:block;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#bbb;background:none;border:none;cursor:pointer;margin-top:0.5rem;padding:0;font-family:Helvetica,Arial,sans-serif}
+.eye-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#bbb;padding:0;display:flex;align-items:center;line-height:0}
+.eye-btn:hover{color:#888}
 
 /* PAYMENT PLANS */
 .plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
@@ -157,8 +158,10 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
     </div>
     <div class="input-group">
       <label class="input-label" for="password">Password</label>
-      <input class="input" type="password" id="password" placeholder="Your password" autocomplete="new-password" onkeydown="if(event.key==='Enter')login()">
-      <button onclick="toggleVis('password', this)" class="show-hide-btn" type="button">SHOW</button>
+      <div style="position:relative">
+        <input class="input" type="password" id="password" placeholder="Your password" autocomplete="new-password" onkeydown="if(event.key==='Enter')login()" style="padding-right:2rem">
+        <button onclick="toggleVis('password', this)" class="eye-btn" type="button" aria-label="Show password"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
     </div>
     <p class="error-msg" id="login-error"></p>
     <button class="btn" id="login-btn" onclick="login()">Sign In</button>
@@ -379,10 +382,12 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
 </footer>
 
 <script>
+const EYE_OPEN = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_CLOSED = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
 function toggleVis(inputId, btn) {
   const input = document.getElementById(inputId);
-  if (input.type === 'password') { input.type = 'text'; btn.textContent = 'HIDE'; }
-  else { input.type = 'password'; btn.textContent = 'SHOW'; }
+  if (input.type === 'password') { input.type = 'text'; btn.innerHTML = EYE_CLOSED; btn.setAttribute('aria-label', 'Hide password'); }
+  else { input.type = 'password'; btn.innerHTML = EYE_OPEN; btn.setAttribute('aria-label', 'Show password'); }
 }
 
 const API = 'https://jorgensen-backend-production.up.railway.app';
