@@ -141,6 +141,8 @@ nav.scrolled .nav-hamburger span{background:#111}
 .access-btn:hover{background:#111;color:#fff}
 .access-btn.light{border-color:rgba(245,240,230,0.3);color:#f5f0e6}
 .access-btn.light:hover{background:#f5f0e6;color:#1a1510}
+.access-cta{display:inline-block;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 3rem;border:1px solid #1a1510;color:#1a1510;background:transparent;cursor:pointer;font-family:Helvetica,Arial,sans-serif;transition:all 0.25s}
+.access-cta:hover{background:#1a1510;color:#f5f0e6}
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(20,16,10,0.5);z-index:200;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
@@ -425,7 +427,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
     </div>
   </div>
   <div style="text-align:center;margin-top:3rem">
-    <button onclick="openModal()" style="display:inline-block;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 3rem;border:1px solid #1a1510;color:#1a1510;background:transparent;cursor:pointer;font-family:Helvetica,Arial,sans-serif">Create Account</button>
+    <button onclick="openModal()" class="access-cta">Create Account</button>
   </div>
   <p style="text-align:center;margin-top:2rem;font-size:0.62rem;color:#aaa">Already have an account? <a href="/login" style="color:#1a1510;border-bottom:1px solid #ccc">Sign in here</a></p>
 </section>
