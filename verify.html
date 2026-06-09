@@ -99,11 +99,7 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff}
         <label class="input-label" for="password">Password</label>
         <input class="input" type="password" id="password" placeholder="Minimum 8 characters" autocomplete="new-password">
       </div>
-      <div class="input-group">
-        <label class="input-label" for="password-confirm">Confirm Password</label>
-        <input class="input" type="password" id="password-confirm" placeholder="Repeat your password" autocomplete="new-password">
-        <span class="input-hint">At least 8 characters</span>
-      </div>
+
       <p class="error-msg" id="password-error"></p>
       <button class="btn" id="set-password-btn" onclick="setPassword()">Create Account & Continue</button>
     </div>
@@ -181,16 +177,11 @@ async function verifyToken() {
 
 async function setPassword() {
   const password = document.getElementById('password').value;
-  const confirm = document.getElementById('password-confirm').value;
   const errorEl = document.getElementById('password-error');
   const btn = document.getElementById('set-password-btn');
   errorEl.classList.remove('show');
   if (password.length < 8) {
     errorEl.textContent = 'Password must be at least 8 characters.';
-    errorEl.classList.add('show'); return;
-  }
-  if (password !== confirm) {
-    errorEl.textContent = 'Passwords do not match.';
     errorEl.classList.add('show'); return;
   }
   btn.disabled = true;
