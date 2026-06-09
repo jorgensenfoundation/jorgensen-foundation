@@ -123,9 +123,9 @@ nav.scrolled .nav-hamburger span{background:#111}
 .access-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1}
 .access-h2 em{font-style:italic}
 .access-sub{font-size:0.7rem;color:#999;margin-top:1rem;line-height:2;max-width:480px;margin-left:auto;margin-right:auto}
-.access-grid{display:grid;grid-template-columns:1fr 1fr;max-width:860px;margin:0 auto;border:1px solid #ddd8ce}
-.access-card{padding:4rem;background:#fff;border-right:1px solid #ddd8ce}
-.access-card.warm-dark{background:#1a1510;color:#f5f0e6;border-right:none}
+.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;max-width:860px;margin:0 auto}
+.access-card{padding:4rem;background:#fff}
+.access-card.warm-dark{background:#1a1510;color:#f5f0e6}
 .access-tier{font-size:0.52rem;letter-spacing:0.32em;text-transform:uppercase;color:#bbb;margin-bottom:1.5rem;display:block}
 .access-card.warm-dark .access-tier{color:rgba(245,240,230,0.35)}
 .access-name{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;margin-bottom:1rem;line-height:1.1}
@@ -141,7 +141,7 @@ nav.scrolled .nav-hamburger span{background:#111}
 .access-btn:hover{background:#111;color:#fff}
 .access-btn.light{border-color:rgba(245,240,230,0.3);color:#f5f0e6}
 .access-btn.light:hover{background:#f5f0e6;color:#1a1510}
-.access-cta{display:inline-block;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 3rem;border:1px solid #1a1510;color:#1a1510;background:transparent;cursor:pointer;font-family:Helvetica,Arial,sans-serif;transition:all 0.25s}
+.access-cta{display:block;margin:2rem auto 0;width:fit-content;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 3rem;border:1px solid #1a1510;color:#1a1510;background:transparent;cursor:pointer;font-family:Helvetica,Arial,sans-serif;transition:all 0.25s}
 .access-cta:hover{background:#1a1510;color:#f5f0e6}
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(20,16,10,0.5);z-index:200;align-items:center;justify-content:center}
@@ -184,8 +184,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 @media(max-width:960px){
   .split{grid-template-columns:1fr}
   .split-media{height:55vw;min-height:280px}
-  .access-grid{grid-template-columns:1fr}
-  .access-card{border-right:none;border-bottom:1px solid #ddd8ce}
+  .access-grid{grid-template-columns:1fr;gap:1.5rem}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
   .nav-links,.nav-cta{display:none}
   .nav-hamburger{display:flex}
@@ -426,9 +425,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
       </ul>
     </div>
   </div>
-  <div style="text-align:center;margin-top:3rem">
-    <button onclick="openModal()" class="access-cta">Create Account</button>
-  </div>
+  <button onclick="openModal()" class="access-cta">Create Account</button>
   <p style="text-align:center;margin-top:2rem;font-size:0.62rem;color:#aaa">Already have an account? <a href="/login" style="color:#1a1510;border-bottom:1px solid #ccc">Sign in here</a></p>
 </section>
 
