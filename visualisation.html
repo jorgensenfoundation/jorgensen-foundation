@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCPRO — Jorgensen Foundation</title>
-<meta name="description" content="MCPRO (Monte Carlo for Proteins) — Monte Carlo simulations of peptides, proteins, and nucleic acids in explicit solvent with free energy perturbation.">
+<title>Molecular Visualisation Suite — Jorgensen Foundation</title>
+<meta name="description" content="Molecular Visualisation Suite — browser-based 3D rendering of simulation outputs. Interactive trajectories, electron density surfaces, and binding mode analysis. No external software required.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -28,11 +28,11 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:1px;background:#fff;transition:background 0.4s}
 .hero{height:100vh;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:#1a1510}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 50%,rgba(184,151,42,0.09) 0%,transparent 55%),linear-gradient(150deg,#1a1510 0%,#2a2218 100%)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 35%,rgba(184,151,42,0.09) 0%,transparent 55%),linear-gradient(125deg,#1a1510 0%,#2a2218 100%)}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,16,10,0.85) 0%,rgba(20,16,10,0.1) 60%,transparent 100%)}
 .hero-content{position:relative;z-index:2;padding:0 3rem 5rem}
 .hero-tag{font-size:0.55rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(245,240,230,0.5);margin-bottom:1.25rem;display:block}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,10vw,9rem);font-weight:300;color:#f5f0e6;line-height:0.95;letter-spacing:-0.02em}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,7.5rem);font-weight:300;color:#f5f0e6;line-height:0.95;letter-spacing:-0.02em}
 .hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;font-style:italic;color:rgba(245,240,230,0.55);margin-top:1rem;line-height:1.3}
 .hero-desc{font-size:0.78rem;line-height:2;color:rgba(245,240,230,0.45);margin-top:1.5rem;max-width:500px}
 .hero-actions{display:flex;gap:1.25rem;margin-top:2.5rem;flex-wrap:wrap;align-items:center}
@@ -81,22 +81,6 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .io-item-tag.out{background:rgba(184,151,42,0.15);color:#8a6a10;border:1px solid rgba(184,151,42,0.3)}
 .io-item-name{font-size:0.72rem;color:#1a1510;margin-bottom:0.2rem;font-weight:400}
 .io-item-desc{font-size:0.63rem;color:#aaa;line-height:1.7}
-.citation-section{padding:7rem 3rem;background:#1a1510}
-.citation-inner{max-width:860px;margin:0 auto}
-.citation-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:rgba(245,240,230,0.3);margin-bottom:2rem;display:block}
-.citation-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.75rem);font-weight:300;color:#f5f0e6;line-height:1.2;margin-bottom:3rem}
-.citation-h2 em{font-style:italic}
-.citation-card{background:rgba(245,240,230,0.05);border:1px solid rgba(245,240,230,0.1);padding:3rem}
-.citation-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:#f5f0e6;line-height:1.4;margin-bottom:0.75rem}
-.citation-authors{font-size:0.68rem;color:rgba(245,240,230,0.45);margin-bottom:0.4rem;line-height:1.7}
-.citation-journal{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#b8972a;margin-bottom:1.5rem}
-.citation-divider{height:1px;background:rgba(245,240,230,0.08);margin-bottom:1.5rem}
-.citation-text{font-family:'Cormorant Garamond',serif;font-size:0.88rem;line-height:1.9;color:rgba(245,240,230,0.35);margin-bottom:2rem;font-style:italic}
-.citation-actions{display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center}
-.citation-link{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:#f5f0e6;border-bottom:1px solid rgba(245,240,230,0.3);padding-bottom:0.2rem;transition:border-color 0.2s}
-.citation-link:hover{border-color:#f5f0e6}
-.citation-copy{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,230,0.35);border:none;background:none;cursor:pointer;font-family:Helvetica,Arial,sans-serif;padding:0;transition:color 0.2s}
-.citation-copy:hover{color:#f5f0e6}
 .cta-band{background:#f5f0e6;padding:7rem 3rem;text-align:center;border-top:1px solid #ddd8ce}
 .cta-band-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
 .cta-band-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;color:#1a1510;line-height:1.1;margin-bottom:2.5rem}
@@ -107,8 +91,6 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .cta-btn-dark:hover{background:#2a2218}
 .cta-btn-ghost{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid #1a1510;color:#1a1510;transition:all 0.25s}
 .cta-btn-ghost:hover{background:#1a1510;color:#f5f0e6}
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(2rem);background:#1a1510;color:#f5f0e6;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.75rem;opacity:0;transition:opacity 0.25s,transform 0.25s;pointer-events:none;z-index:200}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block}
@@ -129,11 +111,11 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
   .tech-header{padding:4rem 1.5rem 2.5rem}
   .tech-item{padding:2rem 1.5rem;grid-template-columns:50px 1fr}.tech-tag{display:none}
   .cap-grid{grid-template-columns:1fr 1fr}.io-grid{grid-template-columns:1fr;gap:3rem}
-  .citation-section,.cta-band{padding:5rem 1.5rem}.citation-card{padding:2rem}
+  .cta-band{padding:5rem 1.5rem}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
 }
 @media(max-width:540px){
-  .hero-h1{font-size:4rem}.cap-grid{grid-template-columns:1fr}
+  .hero-h1{font-size:3rem}.cap-grid{grid-template-columns:1fr}
   .cta-btns{flex-direction:column;align-items:center}
   .footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:1rem;text-align:center}
 }
@@ -160,12 +142,12 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-tag">Program 02 · Jorgensen Foundation</span>
-    <h1 class="hero-h1">MCPRO</h1>
-    <p class="hero-subtitle">Monte Carlo for Proteins</p>
-    <p class="hero-desc">Monte Carlo simulations of peptides, proteins, and nucleic acids in explicit solvent. Derived from BOSS with extensive biomolecular extensions, MCPRO is the primary tool for computing protein-ligand binding free energies using statistical perturbation theory.</p>
+    <span class="hero-tag">Program 06 · Jorgensen Foundation</span>
+    <h1 class="hero-h1">Visualisation</h1>
+    <p class="hero-subtitle">Molecular Visualisation Suite</p>
+    <p class="hero-desc">Browser-based 3D rendering of all simulation outputs from the foundation's programs. Inspect trajectories, map electron density surfaces, analyse binding modes, and export publication-quality images — directly in the browser, with no external software required.</p>
     <div class="hero-actions">
-      <a href="/login" class="hero-btn">Launch MCPRO →</a>
+      <a href="/login" class="hero-btn">Open Suite →</a>
       <a href="#overview" class="hero-btn-ghost">Learn More</a>
     </div>
   </div>
@@ -174,46 +156,46 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
-    <span>Protein Simulation</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Binding Free Energies</span><b>·</b><span>Explicit Solvent</span><b>·</b><span>Z-Matrix Sampling</span><b>·</b><span>Energy Decomposition</span><b>·</b><span>FEP</span><b>·</b>
-    <span>Protein Simulation</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Binding Free Energies</span><b>·</b><span>Explicit Solvent</span><b>·</b><span>Z-Matrix Sampling</span><b>·</b><span>Energy Decomposition</span><b>·</b><span>FEP</span><b>·</b>
+    <span>3D Rendering</span><b>·</b><span>Trajectory Playback</span><b>·</b><span>Electron Density</span><b>·</b><span>Binding Modes</span><b>·</b><span>Surface Mapping</span><b>·</b><span>No Installation</span><b>·</b><span>WebGL</span><b>·</b>
+    <span>3D Rendering</span><b>·</b><span>Trajectory Playback</span><b>·</b><span>Electron Density</span><b>·</b><span>Binding Modes</span><b>·</b><span>Surface Mapping</span><b>·</b><span>No Installation</span><b>·</b><span>WebGL</span><b>·</b>
   </div>
 </div>
 
 <section class="overview" id="overview">
   <div class="overview-inner">
     <span class="section-label">Overview</span>
-    <h2 class="section-h2">What MCPRO<br><em>does.</em></h2>
-    <p class="section-intro">MCPRO extends BOSS to biomolecular systems — peptides, proteins, and nucleic acids simulated in explicit aqueous solvent. It is the workhorse of the Jorgensen group's drug discovery pipeline, used to compute protein-ligand binding free energies with accuracy that rivals much more expensive methods. The key innovation is the use of Z-matrix internal coordinate moves that efficiently sample conformational space of the solute while treating the protein environment with full atomic detail.</p>
+    <h2 class="section-h2">What the Suite<br><em>renders.</em></h2>
+    <p class="section-intro">The Molecular Visualisation Suite is the visual layer of the Jorgensen Foundation platform. Every output from BOSS, MCPRO, BOMB, FEP, and the OPLS parameter engine feeds directly into the suite without format conversion or file download. The renderer is built on WebGL, delivering hardware-accelerated 3D graphics in any modern browser. Protein-ligand complexes, Monte Carlo trajectories, free energy convergence plots, and electron density maps all open within seconds of a simulation completing — turning computational results into insight that can be shared immediately with collaborators.</p>
     <div class="cap-grid">
       <div class="cap-card">
         <div class="cap-num">01</div>
-        <p class="cap-title">Protein-Ligand Binding</p>
-        <p class="cap-body">Free energy perturbation calculations for relative binding affinities between ligand analogues. Alchemical mutation of one ligand to another within the protein active site using double-wide FEP sampling.</p>
+        <p class="cap-title">3D Molecular Rendering</p>
+        <p class="cap-body">Hardware-accelerated WebGL rendering of molecular structures in ball-and-stick, space-fill, ribbon, and surface representations. Switch display modes interactively. Supports systems from single small molecules to full protein-ligand complexes with explicit solvent.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">02</div>
-        <p class="cap-title">Explicit Solvent Simulation</p>
-        <p class="cap-body">Periodic box simulation with TIP3P or TIP4P water. Full treatment of solvent structure around the protein and ligand. Residue-based cutoffs for efficient energy evaluation in large systems.</p>
+        <p class="cap-title">Trajectory Playback</p>
+        <p class="cap-body">Frame-by-frame or continuous playback of Monte Carlo and MD trajectories. Adjustable playback speed, looping, and frame-stepping. Overlay multiple frames to visualise conformational sampling. Export selected frames as PDB snapshots.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">03</div>
-        <p class="cap-title">Z-Matrix Sampling</p>
-        <p class="cap-body">Internal coordinate Monte Carlo moves using Z-matrix representation for the solute. Efficient sampling of ligand and protein side-chain degrees of freedom without the overhead of Cartesian MD.</p>
+        <p class="cap-title">Electron Density Surfaces</p>
+        <p class="cap-body">Isosurface rendering of electron density and electrostatic potential maps from semi-empirical QM calculations in BOSS. Adjustable isovalue with colour-mapped ESP overlay. Identifies electrophilic and nucleophilic regions to guide ligand design.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">04</div>
-        <p class="cap-title">OPLS-AA/L Force Field</p>
-        <p class="cap-body">Validated protein backbone and side-chain parameters from OPLS-AA/L, with improved dihedral terms for accurate secondary structure reproduction. Full OPLS-AA coverage for small-molecule ligands.</p>
+        <p class="cap-title">Binding Mode Analysis</p>
+        <p class="cap-body">Overlay of docked or simulated ligand poses within the protein active site. Hydrogen bond detection and display. Residue-by-residue interaction energy heatmap from MCPRO decomposition analysis, colour-mapped onto the protein surface.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">05</div>
-        <p class="cap-title">Energy Decomposition</p>
-        <p class="cap-body">Residue-by-residue breakdown of protein-ligand interaction energies. Identifies key binding contacts and hotspot residues, guiding medicinal chemistry optimisation decisions.</p>
+        <p class="cap-title">Free Energy Plots</p>
+        <p class="cap-body">Interactive plots of FEP convergence, per-window ΔG contributions, overlap matrices, and cumulative free energy as a function of simulation length. Zoom, pan, and export as SVG or PNG for papers and presentations.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">06</div>
-        <p class="cap-title">Biomolecular Sampling</p>
-        <p class="cap-body">Peptide and protein conformational sampling in solution. Loop modelling, side-chain rotamer sampling, and ligand binding mode exploration within full protein contexts.</p>
+        <p class="cap-title">Export and Sharing</p>
+        <p class="cap-body">Export rendered scenes as high-resolution PNG or publication-quality SVG. Generate shareable links to visualisation states for collaborators with platform access. Download underlying data (PDB, CSV) directly from within the viewer.</p>
       </div>
     </div>
   </div>
@@ -222,56 +204,56 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 <section class="tech" id="technical">
   <div class="tech-header">
     <span class="section-label">Technical Details</span>
-    <h2 class="section-h2">Supported<br><em>calculations.</em></h2>
+    <h2 class="section-h2">Supported<br><em>formats and views.</em></h2>
   </div>
   <div class="tech-list">
     <div class="tech-item">
       <span class="tech-num">01</span>
       <div>
-        <p class="tech-name">Protein-Ligand Free Energy Perturbation</p>
-        <p class="tech-desc">Relative binding free energy calculations via statistical perturbation theory. The ligand is alchemically mutated from one analogue to another in both the protein-bound and aqueous states; ΔΔG binding is obtained from the thermodynamic cycle. Double-wide sampling collects both forward and reverse perturbation data simultaneously for improved convergence. Supports multi-step perturbation paths with configurable window counts.</p>
+        <p class="tech-name">WebGL Renderer</p>
+        <p class="tech-desc">The suite's rendering engine uses WebGL 2.0 for hardware-accelerated 3D graphics with no plugin or installation requirement. Molecular geometry is passed as vertex buffers to the GPU; surface meshes are generated client-side using marching-cubes for electron density isosurfaces. Supports systems up to ~100,000 atoms at interactive frame rates on modern hardware. Falls back gracefully to WebGL 1.0 where 2.0 is unavailable.</p>
       </div>
-      <span class="tech-tag">Binding FEP</span>
+      <span class="tech-tag">Renderer</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">02</span>
       <div>
-        <p class="tech-name">Z-Matrix Monte Carlo Moves</p>
-        <p class="tech-desc">Solute conformational sampling using internal (Z-matrix) coordinates rather than Cartesian displacements. Bond lengths, bond angles, and dihedral angles are moved independently with configurable acceptance windows. Preferential sampling weights solute-solvent interactions to accelerate convergence of solvation properties. Protein backbone and side-chain moves use residue-specific Z-matrix definitions.</p>
+        <p class="tech-name">Trajectory Streaming</p>
+        <p class="tech-desc">Trajectory files from BOSS and MCPRO simulations are streamed progressively from cloud storage rather than downloaded in full before playback. The first frame renders immediately; subsequent frames load in the background. Supports trajectories of arbitrary length. Frame interpolation provides smooth playback between coarsely-spaced coordinate snapshots. Playback state is preserved when switching between browser tabs.</p>
       </div>
-      <span class="tech-tag">Monte Carlo</span>
+      <span class="tech-tag">Trajectories</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">03</span>
       <div>
-        <p class="tech-name">OPLS-AA/L Force Field for Proteins</p>
-        <p class="tech-desc">The OPLS-AA/L parameter set provides improved backbone dihedral terms fitted to high-level QM data on alanine and glycine dipeptides, correcting the over-stabilisation of helical conformations present in early OPLS-AA. Side-chain parameters are unchanged from OPLS-AA. Ligand parameters derived from OPLS-AA with RESP partial charges from AM1-BCC. Covers all 20 standard amino acids, common post-translational modifications, and nucleic acid residues.</p>
+        <p class="tech-name">Electron Density Isosurfaces</p>
+        <p class="tech-desc">Electron density grids from BOSS semi-empirical QM calculations are stored as volumetric data in a compact binary format. The suite renders adjustable-isovalue surfaces using a GPU-accelerated marching-cubes implementation. Electrostatic potential mapped onto the density surface is colour-coded from red (negative) to blue (positive), with adjustable colour scale limits. Grid resolution is typically 0.5 Å for BOSS output.</p>
       </div>
-      <span class="tech-tag">Force Field</span>
+      <span class="tech-tag">Density</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">04</span>
       <div>
-        <p class="tech-name">Explicit and Implicit Solvent Models</p>
-        <p class="tech-desc">Explicit water models: TIP3P (default for protein simulations), TIP4P. Periodic boundary conditions with minimum image convention. Residue-based cutoff scheme (typically 10–12 Å) for non-bonded interactions. Long-range electrostatics via reaction field correction. Implicit solvent option using GB/SA for rapid relative free energy estimates when explicit solvent convergence is prohibitive.</p>
+        <p class="tech-name">Interaction Energy Heatmap</p>
+        <p class="tech-desc">Per-residue interaction energies from MCPRO decomposition analysis are mapped onto the protein surface as a colour gradient. Residues with strong favourable interactions (hotspots) are coloured distinctly from neutral and unfavourable contacts. Clicking a residue in the 3D view highlights it in the accompanying data table and displays the LJ and electrostatic components separately. Useful for identifying key binding contacts and guiding SAR hypotheses.</p>
       </div>
-      <span class="tech-tag">Solvation</span>
+      <span class="tech-tag">Analysis</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">05</span>
       <div>
-        <p class="tech-name">Residue-Based Cutoffs and Neighbour Lists</p>
-        <p class="tech-desc">Non-bonded interactions evaluated using residue-based cutoffs rather than atom-based, reducing the frequency of neighbour list updates and improving performance for large protein systems. Solute-solvent and solvent-solvent interactions separated with independent cutoff distances. Efficient memory layout for systems of 1,000–10,000 atoms typical in protein-ligand FEP calculations.</p>
+        <p class="tech-name">Hydrogen Bond Detection</p>
+        <p class="tech-desc">Geometric hydrogen bond detection across trajectory frames: donor-acceptor distance ≤ 3.5 Å and D-H···A angle ≥ 120°. H-bond occupancy (fraction of frames with a given contact) displayed as a label on the 3D view and listed in a sortable table. Threshold values are user-adjustable. Solute-solute (ligand-protein) and solute-solvent bonds detected independently.</p>
       </div>
-      <span class="tech-tag">Performance</span>
+      <span class="tech-tag">H-Bonds</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">06</span>
       <div>
-        <p class="tech-name">Interaction Energy Decomposition</p>
-        <p class="tech-desc">Per-residue decomposition of protein-ligand non-bonded interaction energies (Lennard-Jones + electrostatic). Identifies key contacts and quantifies their contribution to binding. Solute-solvent energy decomposition shows which portions of the ligand are well or poorly solvated. Output in tabular CSV format for direct import into visualisation and analysis tools.</p>
+        <p class="tech-name">Image and Data Export</p>
+        <p class="tech-desc">Rendered scenes exported as PNG at user-specified resolution (up to 4096 × 4096 px) or as SVG for vector graphics workflows. The underlying molecular coordinates of any displayed frame can be downloaded as PDB. Numerical data displayed in plots — ΔG values, RDFs, convergence curves — are downloadable as CSV. Shareable links encode the full viewer state including camera angle, display mode, and active analysis overlay.</p>
       </div>
-      <span class="tech-tag">Analysis</span>
+      <span class="tech-tag">Export</span>
     </div>
   </div>
 </section>
@@ -283,43 +265,23 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
     <div class="io-grid">
       <div>
         <span class="io-col-label">Accepted Inputs</span>
-        <p class="io-col-title">What MCPRO reads</p>
+        <p class="io-col-title">What the Suite reads</p>
         <ul class="io-list">
-          <li class="io-item"><span class="io-item-tag">PDB</span><div><p class="io-item-name">Protein structure (.pdb)</p><p class="io-item-desc">Prepared protein structure with hydrogens, correct protonation states, and any co-crystallised waters. Standard PDB format; pre-processed through the MCPRO structure preparation utilities.</p></div></li>
-          <li class="io-item"><span class="io-item-tag">Z-MAT</span><div><p class="io-item-name">Ligand Z-matrix (.z)</p><p class="io-item-desc">Internal coordinate description of the ligand with OPLS atom types and partial charges. Generated from PDB or MOL2 input using the integrated Z-matrix builder.</p></div></li>
-          <li class="io-item"><span class="io-item-tag">MOL2</span><div><p class="io-item-name">Ligand structures (.mol2 / .sdf)</p><p class="io-item-desc">Small-molecule input formats for automatic Z-matrix generation. Partial charges assigned via AM1-BCC. Supports series of analogues for FEP campaigns.</p></div></li>
-          <li class="io-item"><span class="io-item-tag">PAR</span><div><p class="io-item-name">Custom parameter files (.par)</p><p class="io-item-desc">User-defined OPLS parameters for non-standard residues, modified amino acids, or novel ligand functional groups not covered by the standard library.</p></div></li>
-          <li class="io-item"><span class="io-item-tag">CTRL</span><div><p class="io-item-name">Simulation control file</p><p class="io-item-desc">Defines ensemble, step count, cutoffs, FEP windows, output frequency, and all simulation parameters. Set through the platform's guided input interface.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PDB</span><div><p class="io-item-name">Structure and trajectory files (.pdb)</p><p class="io-item-desc">Single-frame structures or multi-model PDB trajectory files from BOSS, MCPRO, BOMB, and FEP. Loaded directly from the platform's output storage or uploaded from local disk.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">CUBE</span><div><p class="io-item-name">Electron density grids (.cube)</p><p class="io-item-desc">Gaussian cube-format volumetric electron density and electrostatic potential grids from BOSS QM calculations. Supports both density and potential on the same grid for ESP-mapped surface rendering.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">CSV</span><div><p class="io-item-name">Numerical results (.csv)</p><p class="io-item-desc">Free energy values, per-residue decompositions, RDF data, and convergence statistics from simulation log files. Parsed automatically to generate interactive plots within the viewer.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">MOL2</span><div><p class="io-item-name">Small-molecule structures (.mol2 / .sdf)</p><p class="io-item-desc">Direct upload of ligand structures for standalone visualisation or overlay with protein binding site structures outside of a full simulation workflow.</p></div></li>
         </ul>
       </div>
       <div>
         <span class="io-col-label">Generated Outputs</span>
-        <p class="io-col-title">What MCPRO returns</p>
+        <p class="io-col-title">What the Suite returns</p>
         <ul class="io-list">
-          <li class="io-item"><span class="io-item-tag out">ΔΔG</span><div><p class="io-item-name">Relative binding free energies</p><p class="io-item-desc">ΔΔG binding values with bootstrap uncertainties, forward/reverse free energy estimates, and hysteresis as a convergence metric. CSV and summary report formats.</p></div></li>
-          <li class="io-item"><span class="io-item-tag out">DECOMP</span><div><p class="io-item-name">Residue interaction decomposition</p><p class="io-item-desc">Per-residue LJ and electrostatic contributions to the ligand binding energy. Heatmap visualisation available in the platform's analysis dashboard.</p></div></li>
-          <li class="io-item"><span class="io-item-tag out">TRAJ</span><div><p class="io-item-name">Simulation trajectories (.pdb)</p><p class="io-item-desc">Coordinate snapshots of protein-ligand complex at user-defined intervals. Viewable in the 3D visualisation suite with binding mode overlay tools.</p></div></li>
-          <li class="io-item"><span class="io-item-tag out">RDF</span><div><p class="io-item-name">Radial distribution functions</p><p class="io-item-desc">Solute-solvent pair distribution functions and coordination numbers. H-bond occupancies between ligand and active site residues across the trajectory.</p></div></li>
-          <li class="io-item"><span class="io-item-tag out">LOG</span><div><p class="io-item-name">Full calculation log</p><p class="io-item-desc">Complete record of all parameters, convergence diagnostics, per-window averages, and statistical analysis. Downloadable for archiving and methods sections.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">PNG</span><div><p class="io-item-name">Rendered images (.png)</p><p class="io-item-desc">High-resolution raster exports of the 3D view at any camera angle. Configurable resolution up to 4096 × 4096 px with transparent background option for figure preparation.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">SVG</span><div><p class="io-item-name">Vector plots (.svg)</p><p class="io-item-desc">Scalable vector exports of all 2D data plots — FEP convergence, overlap matrices, RDFs, decomposition bar charts. Suitable for direct inclusion in manuscripts without quality loss.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">PDB</span><div><p class="io-item-name">Frame snapshots (.pdb)</p><p class="io-item-desc">Coordinate download of any trajectory frame displayed in the viewer. Used to extract representative binding mode structures for further analysis or reporting.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">LINK</span><div><p class="io-item-name">Shareable view links</p><p class="io-item-desc">Encoded URLs capturing the full viewer state — loaded files, camera orientation, display mode, and active overlays. Share with collaborators who have platform access for instant reproduction of the view.</p></div></li>
         </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="citation-section" id="citation">
-  <div class="citation-inner">
-    <span class="citation-label">How to Cite</span>
-    <h2 class="citation-h2">Official reference<br><em>for MCPRO.</em></h2>
-    <div class="citation-card">
-      <p class="citation-title">Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO</p>
-      <p class="citation-authors">W. L. Jorgensen, J. Tirado-Rives</p>
-      <p class="citation-journal">Journal of Computational Chemistry · 2005 · Vol. 26, pp. 1689–1700</p>
-      <div class="citation-divider"></div>
-      <p class="citation-text">Jorgensen, W. L.; Tirado-Rives, J. "Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO." J. Comput. Chem. 2005, 26, 1689–1700.</p>
-      <div class="citation-actions">
-        <a href="https://doi.org/10.1002/jcc.20297" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1002/jcc.20297</a>
-        <button class="citation-copy" onclick="copyCitation()">Copy Citation</button>
       </div>
     </div>
   </div>
@@ -327,15 +289,13 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 
 <section class="cta-band">
   <span class="cta-band-label">Get Started</span>
-  <h2 class="cta-band-h2">Ready to run your first<br><em>protein-ligand FEP?</em></h2>
-  <p class="cta-band-sub">Sign in to access MCPRO through the browser — full protein-ligand binding free energy calculations, no installation required.</p>
+  <h2 class="cta-band-h2">Ready to see your<br><em>simulations in 3D?</em></h2>
+  <p class="cta-band-sub">Sign in to open the Molecular Visualisation Suite — all simulation outputs rendered interactively in the browser, no installation required.</p>
   <div class="cta-btns">
-    <a href="/login" class="cta-btn-dark">Launch MCPRO →</a>
+    <a href="/login" class="cta-btn-dark">Open Suite →</a>
     <a href="/#access" class="cta-btn-ghost">View Pricing</a>
   </div>
 </section>
-
-<div class="toast" id="toast">Citation copied</div>
 
 <footer>
   <div class="footer-grid">
@@ -392,14 +352,6 @@ function toggleMenu() {
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } });
 });
-let toastTimer;
-function copyCitation() {
-  navigator.clipboard.writeText('Jorgensen, W. L.; Tirado-Rives, J. J. Comput. Chem. 2005, 26, 1689.').catch(() => {});
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
-}
 </script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BOSS — Jorgensen Foundation</title>
-<meta name="description" content="BOSS (Biochemical and Organic Simulation System) — Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution.">
+<title>OPLS Force Fields — Jorgensen Foundation</title>
+<meta name="description" content="OPLS (Optimised Potentials for Liquid Simulations) — the industry-standard force fields developed by the Jorgensen group for organic molecules, proteins, nucleic acids, and lipids.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -12,8 +12,6 @@
 html{scroll-behavior:smooth}
 body{font-family:Helvetica,Arial,sans-serif;background:#f5f0e6;color:#111;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
-
-/* NAV */
 nav{display:flex;justify-content:space-between;align-items:center;padding:2rem 3rem;position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.4s,padding 0.4s}
 nav.scrolled{background:#fff;padding:1.2rem 3rem;border-bottom:1px solid #e8e4dc}
 nav.scrolled .nav-logo,nav.scrolled .nav-links a{color:#111}
@@ -29,14 +27,12 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .nav-cta:hover{background:#fff;color:#111}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:1px;background:#fff;transition:background 0.4s}
-
-/* HERO */
 .hero{height:100vh;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:#1a1510}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(184,151,42,0.09) 0%,transparent 55%),linear-gradient(135deg,#1a1510 0%,#2a2218 100%)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(184,151,42,0.1) 0%,transparent 55%),linear-gradient(160deg,#1a1510 0%,#2a2218 100%)}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,16,10,0.85) 0%,rgba(20,16,10,0.1) 60%,transparent 100%)}
 .hero-content{position:relative;z-index:2;padding:0 3rem 5rem}
 .hero-tag{font-size:0.55rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(245,240,230,0.5);margin-bottom:1.25rem;display:block}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,12vw,10rem);font-weight:300;color:#f5f0e6;line-height:0.95;letter-spacing:-0.02em}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,10vw,9rem);font-weight:300;color:#f5f0e6;line-height:0.95;letter-spacing:-0.02em}
 .hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;font-style:italic;color:rgba(245,240,230,0.55);margin-top:1rem;line-height:1.3}
 .hero-desc{font-size:0.78rem;line-height:2;color:rgba(245,240,230,0.45);margin-top:1.5rem;max-width:500px}
 .hero-actions{display:flex;gap:1.25rem;margin-top:2.5rem;flex-wrap:wrap;align-items:center}
@@ -48,14 +44,10 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .hero-scroll span{font-size:0.48rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(245,240,230,0.35)}
 .scroll-bar{width:1px;height:36px;background:rgba(245,240,230,0.2);position:relative;overflow:hidden}
 .scroll-bar::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:#f5f0e6;animation:scrollAnim 2s ease infinite}
-
-/* TICKER */
 .ticker{background:#2a2218;padding:0.85rem 0;overflow:hidden}
 .ticker-inner{display:flex;gap:5rem;animation:ticker 30s linear infinite;white-space:nowrap}
 .ticker-inner span{font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(245,240,230,0.4)}
 .ticker-inner b{color:rgba(245,240,230,0.15);font-weight:300}
-
-/* OVERVIEW */
 .overview{padding:8rem 3rem;background:#faf8f4}
 .overview-inner{max-width:1100px;margin:0 auto}
 .section-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
@@ -68,20 +60,15 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .cap-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(184,151,42,0.35);line-height:1;margin-bottom:1rem}
 .cap-title{font-size:0.72rem;letter-spacing:0.06em;font-weight:400;color:#1a1510;margin-bottom:0.6rem}
 .cap-body{font-size:0.68rem;line-height:1.9;color:#888}
-
-/* TECHNICAL DETAILS */
 .tech{background:#fff}
 .tech-header{padding:6rem 3rem 3rem;border-bottom:1px solid #ede8de;max-width:1100px;margin:0 auto}
 .tech-list{max-width:1100px;margin:0 auto;display:flex;flex-direction:column}
 .tech-item{display:grid;grid-template-columns:70px 1fr auto;align-items:start;padding:2.5rem 3rem;border-bottom:1px solid #ede8de;gap:2.5rem;transition:background 0.2s}
 .tech-item:hover{background:#faf8f4}
 .tech-num{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;color:#d5cfc5;padding-top:0.1rem}
-.tech-body{}
 .tech-name{font-size:0.78rem;letter-spacing:0.04em;font-weight:400;color:#1a1510;margin-bottom:0.5rem}
 .tech-desc{font-size:0.68rem;color:#999;line-height:1.9}
 .tech-tag{font-size:0.48rem;letter-spacing:0.18em;text-transform:uppercase;color:#b8972a;border:1px solid rgba(184,151,42,0.3);padding:0.25rem 0.65rem;white-space:nowrap;align-self:start;margin-top:0.15rem}
-
-/* INPUT / OUTPUT */
 .io-section{padding:8rem 3rem;background:#f5f0e6}
 .io-inner{max-width:1100px;margin:0 auto}
 .io-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:4rem}
@@ -92,11 +79,8 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .io-item:first-child{border-top:1px solid #ddd8ce}
 .io-item-tag{font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;background:#1a1510;color:#f5f0e6;padding:0.25rem 0.55rem;flex-shrink:0;margin-top:0.15rem}
 .io-item-tag.out{background:rgba(184,151,42,0.15);color:#8a6a10;border:1px solid rgba(184,151,42,0.3)}
-.io-item-body{}
 .io-item-name{font-size:0.72rem;color:#1a1510;margin-bottom:0.2rem;font-weight:400}
 .io-item-desc{font-size:0.63rem;color:#aaa;line-height:1.7}
-
-/* CITATION */
 .citation-section{padding:7rem 3rem;background:#1a1510}
 .citation-inner{max-width:860px;margin:0 auto}
 .citation-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:rgba(245,240,230,0.3);margin-bottom:2rem;display:block}
@@ -113,8 +97,6 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .citation-link:hover{border-color:#f5f0e6}
 .citation-copy{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,230,0.35);border:none;background:none;cursor:pointer;font-family:Helvetica,Arial,sans-serif;padding:0;transition:color 0.2s}
 .citation-copy:hover{color:#f5f0e6}
-
-/* CTA BAND */
 .cta-band{background:#f5f0e6;padding:7rem 3rem;text-align:center;border-top:1px solid #ddd8ce}
 .cta-band-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
 .cta-band-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;color:#1a1510;line-height:1.1;margin-bottom:2.5rem}
@@ -125,12 +107,8 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .cta-btn-dark:hover{background:#2a2218}
 .cta-btn-ghost{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid #1a1510;color:#1a1510;transition:all 0.25s}
 .cta-btn-ghost:hover{background:#1a1510;color:#f5f0e6}
-
-/* TOAST */
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(2rem);background:#1a1510;color:#f5f0e6;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.75rem;opacity:0;transition:opacity 0.25s,transform 0.25s;pointer-events:none;z-index:200}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* FOOTER */
 footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block}
@@ -141,40 +119,28 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 .footer-col ul a:hover{color:#111}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #ede8de;padding-top:2rem}
 .footer-copy{font-size:0.55rem;letter-spacing:0.1em;color:#ccc}
-
-/* ANIMATIONS */
 @keyframes scrollAnim{0%{top:-100%}100%{top:100%}}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* RESPONSIVE */
 @media(max-width:960px){
-  .nav-links,.nav-cta{display:none}
-  .nav-hamburger{display:flex}
-  nav{padding:1.5rem 1.5rem}
-  nav.scrolled{padding:1rem 1.5rem}
+  .nav-links,.nav-cta{display:none}.nav-hamburger{display:flex}
+  nav{padding:1.5rem 1.5rem}nav.scrolled{padding:1rem 1.5rem}
   .hero-content{padding:0 1.5rem 4rem}
   .overview,.io-section{padding:5rem 1.5rem}
   .tech-header{padding:4rem 1.5rem 2.5rem}
-  .tech-item{padding:2rem 1.5rem;grid-template-columns:50px 1fr}
-  .tech-tag{display:none}
-  .cap-grid{grid-template-columns:1fr 1fr}
-  .io-grid{grid-template-columns:1fr;gap:3rem}
-  .citation-section,.cta-band{padding:5rem 1.5rem}
-  .citation-card{padding:2rem}
+  .tech-item{padding:2rem 1.5rem;grid-template-columns:50px 1fr}.tech-tag{display:none}
+  .cap-grid{grid-template-columns:1fr 1fr}.io-grid{grid-template-columns:1fr;gap:3rem}
+  .citation-section,.cta-band{padding:5rem 1.5rem}.citation-card{padding:2rem}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
 }
 @media(max-width:540px){
-  .hero-h1{font-size:5rem}
-  .cap-grid{grid-template-columns:1fr}
+  .hero-h1{font-size:4rem}.cap-grid{grid-template-columns:1fr}
   .cta-btns{flex-direction:column;align-items:center}
-  .footer-grid{grid-template-columns:1fr}
-  .footer-bottom{flex-direction:column;gap:1rem;text-align:center}
+  .footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:1rem;text-align:center}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="nav">
   <a href="/" class="nav-logo">Jorgensen Foundation</a>
   <div class="nav-links">
@@ -187,151 +153,129 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
     <a href="/login" class="nav-cta" style="background:transparent">Sign In</a>
     <a href="/#access" class="nav-cta">Register</a>
   </div>
-  <div class="nav-hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-tag">Program 01 · Jorgensen Foundation</span>
-    <h1 class="hero-h1">BOSS</h1>
-    <p class="hero-subtitle">Biochemical and Organic Simulation System</p>
-    <p class="hero-desc">Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution. Developed over forty years in the Jorgensen group at Yale University, BOSS is the computational core of the Foundation's simulation platform.</p>
+    <span class="hero-tag">Program 05 · Jorgensen Foundation</span>
+    <h1 class="hero-h1">OPLS</h1>
+    <p class="hero-subtitle">Optimised Potentials for Liquid Simulations</p>
+    <p class="hero-desc">The industry-standard force fields for organic molecules, proteins, nucleic acids, and lipids. Developed over four decades by the Jorgensen group at Yale, OPLS parameters are fitted to reproduce experimental liquid properties — densities, heats of vaporisation, and free energies of hydration — ensuring accuracy in condensed-phase simulations.</p>
     <div class="hero-actions">
-      <a href="/login" class="hero-btn">Launch BOSS →</a>
+      <a href="/login" class="hero-btn">Access OPLS →</a>
       <a href="#overview" class="hero-btn-ghost">Learn More</a>
     </div>
   </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="scroll-bar"></div>
-  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
 </section>
 
-<!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
-    <span>Monte Carlo</span><b>·</b>
-    <span>OPLS Force Fields</span><b>·</b>
-    <span>Free Energy Perturbation</span><b>·</b>
-    <span>AM1 · PM3 · PDDG/PM3</span><b>·</b>
-    <span>Energy Minimization</span><b>·</b>
-    <span>Conformational Search</span><b>·</b>
-    <span>Normal Mode Analysis</span><b>·</b>
-    <span>Monte Carlo</span><b>·</b>
-    <span>OPLS Force Fields</span><b>·</b>
-    <span>Free Energy Perturbation</span><b>·</b>
-    <span>AM1 · PM3 · PDDG/PM3</span><b>·</b>
-    <span>Energy Minimization</span><b>·</b>
-    <span>Conformational Search</span><b>·</b>
-    <span>Normal Mode Analysis</span><b>·</b>
+    <span>OPLS-AA</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Liquid Properties</span><b>·</b><span>Condensed Phase</span><b>·</b><span>Small Molecules</span><b>·</b><span>Proteins</span><b>·</b><span>Nucleic Acids</span><b>·</b>
+    <span>OPLS-AA</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Liquid Properties</span><b>·</b><span>Condensed Phase</span><b>·</b><span>Small Molecules</span><b>·</b><span>Proteins</span><b>·</b><span>Nucleic Acids</span><b>·</b>
   </div>
 </div>
 
-<!-- OVERVIEW -->
 <section class="overview" id="overview">
   <div class="overview-inner">
     <span class="section-label">Overview</span>
-    <h2 class="section-h2">What BOSS<br><em>does.</em></h2>
-    <p class="section-intro">BOSS performs molecular mechanics (MM) and Monte Carlo (MC) statistical mechanics simulations on organic and biological molecules, with the goal of computing thermodynamic, structural, and energetic properties in solution. It combines the OPLS family of force fields with semi-empirical quantum mechanical methods to cover a wide range of chemical systems — from small organic molecules to protein active sites.</p>
+    <h2 class="section-h2">What OPLS<br><em>covers.</em></h2>
+    <p class="section-intro">OPLS (Optimised Potentials for Liquid Simulations) is a family of force fields developed by the Jorgensen group with a defining philosophy: parameters must reproduce experimental liquid-state data, not just gas-phase quantum chemistry. Each functional group is parametrised to match measured densities, heats of vaporisation, and free energies of solvation for neat liquids and aqueous solutions. The result is a force field that performs with exceptional accuracy in the condensed phase — where nearly all chemistry of interest actually occurs. OPLS-AA (all-atom) and its successor OPLS-AA/L are the default parameter sets used throughout the foundation's simulation programs.</p>
     <div class="cap-grid">
       <div class="cap-card">
         <div class="cap-num">01</div>
-        <p class="cap-title">Monte Carlo Simulation</p>
-        <p class="cap-body">Statistical mechanics sampling in NPT, NVT, and μVT ensembles using Metropolis Monte Carlo. Handles periodic boundary conditions and standard cutoff schemes for efficient large-system treatment.</p>
+        <p class="cap-title">Organic Small Molecules</p>
+        <p class="cap-body">Complete OPLS-AA coverage for common organic functional groups: alkanes, alkenes, aromatics, alcohols, ethers, esters, amines, amides, halides, thiols, and heterocycles. Torsional parameters fitted to reproduce both liquid properties and high-level QM conformational profiles.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">02</div>
-        <p class="cap-title">Energy Minimization</p>
-        <p class="cap-body">Full molecular mechanics energy minimization using conjugate gradient and steepest descent methods. Normal mode analysis for vibrational frequency computation and thermochemical corrections.</p>
+        <p class="cap-title">Proteins and Peptides</p>
+        <p class="cap-body">All 20 standard amino acids parametrised with OPLS-AA/L backbone dihedral corrections. Improved helical propensity balance relative to OPLS-AA, validated against NMR data for dipeptides and short helices. Covers common post-translational modifications and non-standard residues.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">03</div>
-        <p class="cap-title">Free Energy Perturbation</p>
-        <p class="cap-body">Statistical perturbation theory for computing relative and absolute free energies of hydration, binding, and chemical equilibria. Thermodynamic integration as an alternative estimator.</p>
+        <p class="cap-title">Nucleic Acids</p>
+        <p class="cap-body">DNA and RNA bases, sugars, and phosphate backbone parametrised for explicit-solvent simulations. Compatible with standard nucleotide residue topologies. Suitable for DNA duplex stability, RNA folding, and protein-nucleic acid interaction studies.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">04</div>
-        <p class="cap-title">Semi-empirical QM</p>
-        <p class="cap-body">AM1, PM3, and PDDG/PM3 Hamiltonians for electronic structure calculations. QM/MM hybrid calculations with OPLS-AA for the MM region, enabling accurate treatment of reactive centres.</p>
+        <p class="cap-title">Lipids and Membranes</p>
+        <p class="cap-body">Phospholipid parameters for bilayer simulations. Compatible with standard glycerophospholipid head groups and common fatty acid tails. Used for membrane protein embedding and lipid-drug interaction studies in conjunction with the TIP3P/TIP4P water models.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">05</div>
-        <p class="cap-title">Conformational Analysis</p>
-        <p class="cap-body">Systematic and Monte Carlo conformational searching for flexible molecules. Torsional scanning and geometry optimisation to map potential energy surfaces and identify low-energy conformers.</p>
+        <p class="cap-title">Water Models</p>
+        <p class="cap-body">TIP3P, TIP4P, and TIP5P water models developed alongside and validated with OPLS parameters. TIP4P reproduces the density maximum of water near 4 °C; TIP5P further improves structural properties. All are compatible with OPLS-AA solute parameters for mixed systems.</p>
       </div>
       <div class="cap-card">
         <div class="cap-num">06</div>
-        <p class="cap-title">Solvation Studies</p>
-        <p class="cap-body">Explicit solvent simulations using TIP3P, TIP4P, and other water models. Radial distribution functions, solvation free energies, and solute-solvent interaction energies as primary outputs.</p>
+        <p class="cap-title">Ion Parameters</p>
+        <p class="cap-body">Monovalent and divalent ion parameters fitted to experimental free energies of hydration and ion-water radial distribution functions. Covers alkali metals, halides, and common divalent cations for ionic solution and nucleic acid simulations.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TECHNICAL DETAILS -->
 <section class="tech" id="technical">
   <div class="tech-header">
     <span class="section-label">Technical Details</span>
-    <h2 class="section-h2">Supported<br><em>calculations.</em></h2>
+    <h2 class="section-h2">Parameter<br><em>generations.</em></h2>
   </div>
   <div class="tech-list">
     <div class="tech-item">
       <span class="tech-num">01</span>
-      <div class="tech-body">
-        <p class="tech-name">MM Energy Minimization</p>
-        <p class="tech-desc">Full molecular mechanics minimization using the OPLS-AA, OPLS-UA, or AMBER force fields. Gradient minimization via conjugate gradient and limited-memory BFGS (L-BFGS). Supports constrained minimization, distance constraints, and dihedral restraints. Normal mode analysis available post-minimization for frequency computation and zero-point energy corrections.</p>
+      <div>
+        <p class="tech-name">OPLS-UA (United-Atom)</p>
+        <p class="tech-desc">The original OPLS force field introduced in 1984, using united-atom (UA) groups where non-polar hydrogens are merged into the heavy atom they are bonded to. Reduces the number of interaction sites by roughly a third, improving simulation speed. UA parameters were fitted to reproduce densities and heats of vaporisation for a broad range of organic liquids. Still widely used for hydrocarbon and simple organic systems where explicit aliphatic hydrogens are not essential.</p>
       </div>
-      <span class="tech-tag">Molecular Mechanics</span>
+      <span class="tech-tag">OPLS-UA</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">02</span>
-      <div class="tech-body">
-        <p class="tech-name">Monte Carlo Statistical Mechanics</p>
-        <p class="tech-desc">Metropolis Monte Carlo sampling in NPT (constant pressure-temperature), NVT (constant volume-temperature), and μVT (grand canonical) ensembles. Z-matrix internal coordinate moves for efficient conformational sampling of solute molecules. Preferential sampling of solute-solvent interactions. Standard periodic boundary conditions with minimum image convention and spherical or atom-based cutoffs.</p>
+      <div>
+        <p class="tech-name">OPLS-AA (All-Atom)</p>
+        <p class="tech-desc">All-atom parametrisation published in 1996 that places explicit parameters on every hydrogen. Non-bonded parameters (ε, σ, q) refitted to experimental liquid properties for 14 functional group classes covering over 30 organic liquids. Intramolecular torsional terms fitted to HF/6-31G* energy profiles for representative molecules. OPLS-AA is the base parameter set for all protein and biomolecular simulations in BOSS, MCPRO, and the FEP modules.</p>
       </div>
-      <span class="tech-tag">Monte Carlo</span>
+      <span class="tech-tag">OPLS-AA</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">03</span>
-      <div class="tech-body">
-        <p class="tech-name">OPLS Force Fields</p>
-        <p class="tech-desc">Full implementation of OPLS-AA (all-atom) and OPLS-UA (united-atom) force fields. Covers organic molecules, proteins, nucleic acids, and lipids. Non-bonded interactions via Lennard-Jones 12-6 potential and Coulombic electrostatics. 1–4 interaction scaling at 0.5 for both LJ and electrostatics. Automatic atom typing for standard functional groups; custom parameter specification supported via input files.</p>
+      <div>
+        <p class="tech-name">OPLS-AA/L (Improved Backbone)</p>
+        <p class="tech-desc">Backbone dihedral corrections published by Kaminski et al. in 2001, addressing the over-stabilisation of helical conformations in OPLS-AA. New φ and ψ torsional terms for alanine and glycine dipeptides fitted to LMP2/cc-pVTZ(-f)//HF/6-31G** energy surfaces. Side-chain parameters unchanged from OPLS-AA. OPLS-AA/L reproduces α-helix:β-sheet equilibria in better agreement with experiment and is the default protein parameter set used in the foundation's programs.</p>
       </div>
-      <span class="tech-tag">Force Fields</span>
+      <span class="tech-tag">OPLS-AA/L</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">04</span>
-      <div class="tech-body">
-        <p class="tech-name">Semi-empirical QM Methods: AM1, PM3, PDDG/PM3</p>
-        <p class="tech-desc">Austin Model 1 (AM1), Parametric Method 3 (PM3), and the Pairwise Distance Directed Gaussian (PDDG/PM3) Hamiltonian. PDDG/PM3 provides improved heats of formation and thermochemical accuracy over standard PM3. Applicable to geometry optimization, single-point energy calculations, and QM/MM hybrid simulations. Supports open-shell (UHF) and excited-state calculations.</p>
+      <div>
+        <p class="tech-name">Partial Charge Methodology</p>
+        <p class="tech-desc">Partial charges in OPLS are derived from fitting to HF/6-31G* electrostatic potentials (RESP methodology) and then empirically scaled to reproduce condensed-phase properties. This 1.14× scaling relative to AM1-BCC or restrained ESP charges compensates for the mean-field approximation implicit in fixed-charge force fields and captures average electronic polarisation in the condensed phase without explicit polarisability terms.</p>
       </div>
-      <span class="tech-tag">QM Methods</span>
+      <span class="tech-tag">Charges</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">05</span>
-      <div class="tech-body">
-        <p class="tech-name">Free Energy Perturbation (FEP)</p>
-        <p class="tech-desc">Statistical perturbation theory (Zwanzig equation) for computing free energy differences between chemical states. Supports double-wide sampling and multi-state FEP with overlap criteria. Thermodynamic integration (TI) as an alternative protocol. Applications include relative hydration free energies, conformational free energy differences, pKa prediction, and alchemical transformations between ligand analogues.</p>
+      <div>
+        <p class="tech-name">Combining Rules and Non-Bonded Interactions</p>
+        <p class="tech-desc">OPLS uses geometric mean combining rules for both ε (well depth) and σ (diameter) Lennard-Jones parameters between unlike atom types: εᵢⱼ = √(εᵢεⱼ), σᵢⱼ = √(σᵢσⱼ). This differs from the Lorentz-Berthelot rules used in AMBER and CHARMM and reflects the liquid-property fitting procedure. 1-4 non-bonded interactions are scaled by 0.5 for both LJ and electrostatic terms. Cutoff distances of 8–12 Å are standard depending on system size.</p>
       </div>
-      <span class="tech-tag">Free Energy</span>
+      <span class="tech-tag">Non-Bonded</span>
     </div>
     <div class="tech-item">
       <span class="tech-num">06</span>
-      <div class="tech-body">
-        <p class="tech-name">Solvent Models</p>
-        <p class="tech-desc">Explicit water models: TIP3P, TIP4P, TIP4P-Ew, SPC/E. Explicit organic solvents: chloroform, DMSO, methanol, cyclohexane, and others parameterized against experimental liquid properties. Implicit solvent via GB/SA continuum model for rapid solvation free energy estimation. Gas-phase calculations supported for all methods.</p>
+      <div>
+        <p class="tech-name">Validation Benchmarks</p>
+        <p class="tech-desc">OPLS parameters are validated against experimental liquid densities (ρ), heats of vaporisation (ΔHvap), and free energies of hydration (ΔGhyd) for each functional group class. Typical accuracy: ρ within 1–2%, ΔHvap within 1–2 kJ/mol, ΔGhyd within 1 kcal/mol. Additional validation includes NMR coupling constants for backbone conformational equilibria (OPLS-AA/L) and protein folding stability benchmarks against experimentally characterised helical peptides.</p>
       </div>
-      <span class="tech-tag">Solvation</span>
+      <span class="tech-tag">Validation</span>
     </div>
   </div>
 </section>
 
-<!-- INPUT / OUTPUT -->
 <section class="io-section" id="io">
   <div class="io-inner">
     <span class="section-label">Input / Output</span>
@@ -339,124 +283,58 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
     <div class="io-grid">
       <div>
         <span class="io-col-label">Accepted Inputs</span>
-        <p class="io-col-title">What BOSS reads</p>
+        <p class="io-col-title">What OPLS reads</p>
         <ul class="io-list">
-          <li class="io-item">
-            <span class="io-item-tag">Z-MAT</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Z-matrix (.z) files</p>
-              <p class="io-item-desc">Native BOSS internal coordinate format. Defines molecular geometry, connectivity, atom types, and partial charges. Required for all solute molecules.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag">PDB</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Protein Data Bank (.pdb)</p>
-              <p class="io-item-desc">Standard PDB format for input protein and small-molecule structures. Automatic conversion to z-matrix available via the BOSS preprocessing utilities.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag">MOL2</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Tripos MOL2 (.mol2)</p>
-              <p class="io-item-desc">Small-molecule format with atom typing and partial charge information. Supported for ligand input with automatic z-matrix generation.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag">SDF</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Structure Data File (.sdf / .mol)</p>
-              <p class="io-item-desc">MDL SDF format for small molecule libraries. Batch input supported for FEP series calculations across multiple ligand analogues.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag">PAR</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Parameter files (.par)</p>
-              <p class="io-item-desc">Custom OPLS parameter files for novel functional groups or modified residues. Override standard library parameters for specific atom types.</p>
-            </div>
-          </li>
+          <li class="io-item"><span class="io-item-tag">MOL2</span><div><p class="io-item-name">Molecular structure (.mol2 / .sdf)</p><p class="io-item-desc">Small-molecule structures for automatic parameter assignment. The platform's parameter engine identifies OPLS atom types from connectivity, assigns charges via AM1-BCC scaled to the OPLS convention, and generates a ready-to-use parameter file.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PDB</span><div><p class="io-item-name">Protein / nucleic acid structure (.pdb)</p><p class="io-item-desc">Standard PDB files for biomolecular systems. Residue-based topology assignment using OPLS-AA/L residue libraries. Handles standard amino acids, common modified residues, and nucleotides.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">SMILES</span><div><p class="io-item-name">SMILES string</p><p class="io-item-desc">Direct SMILES input for small molecules. 3D conformation generated automatically, followed by OPLS atom type assignment and charge calculation. Suitable for rapid parameter generation in screening workflows.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PAR</span><div><p class="io-item-name">Custom parameter override (.par)</p><p class="io-item-desc">User-supplied non-bonded and torsional parameters for novel functional groups, non-standard residues, or bespoke force field modifications. Merged with the standard OPLS library at runtime.</p></div></li>
         </ul>
       </div>
       <div>
         <span class="io-col-label">Generated Outputs</span>
-        <p class="io-col-title">What BOSS returns</p>
+        <p class="io-col-title">What OPLS returns</p>
         <ul class="io-list">
-          <li class="io-item">
-            <span class="io-item-tag out">ENERGY</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Energy summary files</p>
-              <p class="io-item-desc">Total potential energies, component breakdowns (bonded, non-bonded, solute-solvent), ensemble averages, and standard deviations across the MC trajectory.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag out">TRAJ</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Simulation trajectories (.pdb / .xyz)</p>
-              <p class="io-item-desc">Coordinate snapshots at user-defined intervals. Viewable directly in the platform's 3D visualisation suite or exported for external analysis.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag out">FEP</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Free energy results</p>
-              <p class="io-item-desc">ΔG values with statistical uncertainties, overlap matrices, convergence plots, and per-window averages. CSV export for downstream analysis.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag out">RDF</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Radial distribution functions</p>
-              <p class="io-item-desc">Solute-solvent and solvent-solvent pair distribution functions, coordination numbers, and hydrogen bond statistics from completed simulations.</p>
-            </div>
-          </li>
-          <li class="io-item">
-            <span class="io-item-tag out">LOG</span>
-            <div class="io-item-body">
-              <p class="io-item-name">Full calculation log</p>
-              <p class="io-item-desc">Complete record of input parameters, system setup, convergence diagnostics, and all numerical results. Downloadable as plain text for archiving and methods sections.</p>
-            </div>
-          </li>
+          <li class="io-item"><span class="io-item-tag out">PAR</span><div><p class="io-item-name">Parameter file (.par)</p><p class="io-item-desc">Complete OPLS parameter file for the input molecule, including atom types, partial charges, LJ parameters, and torsional terms. Directly usable in BOSS, MCPRO, and FEP calculations without modification.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">Z-MAT</span><div><p class="io-item-name">Z-matrix file (.z)</p><p class="io-item-desc">Internal coordinate representation of the parametrised molecule with OPLS atom type labels and connectivity. Required input format for Monte Carlo simulations in BOSS and MCPRO.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">PROP</span><div><p class="io-item-name">Predicted liquid properties</p><p class="io-item-desc">For parametrised pure liquids: predicted density and heat of vaporisation from short Monte Carlo simulations, compared against experimental reference values to confirm parameter quality before production runs.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">LOG</span><div><p class="io-item-name">Atom type assignment log</p><p class="io-item-desc">Record of every atom type assignment decision, partial charge values, and any ambiguous cases flagged for user review. Downloadable for documentation and supplementary methods sections.</p></div></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CITATION -->
 <section class="citation-section" id="citation">
   <div class="citation-inner">
     <span class="citation-label">How to Cite</span>
-    <h2 class="citation-h2">Official reference<br><em>for BOSS.</em></h2>
+    <h2 class="citation-h2">Primary reference<br><em>for OPLS-AA.</em></h2>
     <div class="citation-card">
-      <p class="citation-title">Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO</p>
-      <p class="citation-authors">W. L. Jorgensen, J. Tirado-Rives</p>
-      <p class="citation-journal">Journal of Computational Chemistry · 2005 · Vol. 26, pp. 1689–1700</p>
+      <p class="citation-title">Development and Testing of the OPLS All-Atom Force Field on Conformational Energetics and Properties of Organic Liquids</p>
+      <p class="citation-authors">W. L. Jorgensen, D. S. Maxwell, J. Tirado-Rives</p>
+      <p class="citation-journal">Journal of the American Chemical Society · 1996 · Vol. 118, pp. 11225–11236</p>
       <div class="citation-divider"></div>
-      <p class="citation-text">Jorgensen, W. L.; Tirado-Rives, J. "Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO." J. Comput. Chem. 2005, 26, 1689–1700.</p>
+      <p class="citation-text">Jorgensen, W. L.; Maxwell, D. S.; Tirado-Rives, J. "Development and Testing of the OPLS All-Atom Force Field on Conformational Energetics and Properties of Organic Liquids." J. Am. Chem. Soc. 1996, 118, 11225–11236.</p>
       <div class="citation-actions">
-        <a href="https://doi.org/10.1002/jcc.20297" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1002/jcc.20297</a>
+        <a href="https://doi.org/10.1021/ja9621760" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1021/ja9621760</a>
         <button class="citation-copy" onclick="copyCitation()">Copy Citation</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-band">
   <span class="cta-band-label">Get Started</span>
-  <h2 class="cta-band-h2">Ready to run your<br>first <em>BOSS simulation?</em></h2>
-  <p class="cta-band-sub">Sign in to your account to access BOSS through the browser — no installation required. Academic subscriptions from $49/month.</p>
+  <h2 class="cta-band-h2">Ready to parametrise your<br><em>molecules with OPLS?</em></h2>
+  <p class="cta-band-sub">Sign in to access the OPLS parameter engine — automatic atom typing, charge assignment, and validation, no installation required.</p>
   <div class="cta-btns">
-    <a href="/login" class="cta-btn-dark">Launch BOSS →</a>
+    <a href="/login" class="cta-btn-dark">Access OPLS →</a>
     <a href="/#access" class="cta-btn-ghost">View Pricing</a>
   </div>
 </section>
 
-<!-- TOAST -->
 <div class="toast" id="toast">Citation copied</div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
@@ -500,9 +378,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 
 <script>
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
 function toggleMenu() {
   const links = document.querySelector('.nav-links');
   if (links) {
@@ -512,15 +388,11 @@ function toggleMenu() {
   }
 }
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-  });
+  a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } });
 });
 let toastTimer;
 function copyCitation() {
-  const text = 'Jorgensen, W. L.; Tirado-Rives, J. J. Comput. Chem. 2005, 26, 1689.';
-  navigator.clipboard.writeText(text).catch(() => {});
+  navigator.clipboard.writeText('Jorgensen, W. L.; Maxwell, D. S.; Tirado-Rives, J. J. Am. Chem. Soc. 1996, 118, 11225.').catch(() => {});
   const toast = document.getElementById('toast');
   toast.classList.add('show');
   clearTimeout(toastTimer);
