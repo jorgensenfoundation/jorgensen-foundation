@@ -75,6 +75,9 @@ nav.scrolled .nav-links a.active{border-bottom-color:#111}
 .prog-name{font-size:0.75rem;letter-spacing:0.06em;font-weight:400;margin-bottom:0.4rem}
 .prog-desc{font-size:0.63rem;color:#aaa;line-height:1.8;letter-spacing:0.02em}
 .prog-tag{font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:#b8972a;border:1px solid rgba(184,151,42,0.3);padding:0.25rem 0.6rem;white-space:nowrap}
+.prog-side{display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem}
+.prog-arrow{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#ccc;white-space:nowrap;transition:color 0.2s}
+.prog-item:hover .prog-arrow{color:#111}
 
 /* MISSION SPLIT */
 .split{display:grid;grid-template-columns:1fr 1fr;min-height:75vh}
@@ -265,7 +268,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
         <p class="prog-name">BOSS — Biochemical and Organic Simulation System</p>
         <p class="prog-desc">The cornerstone of the Jorgensen group's software. Molecular mechanics, Monte Carlo statistical mechanics, and semi-empirical quantum mechanics. Used in thousands of published studies for computing conformational energies, solvation free energies, and chemical equilibria.</p>
       </div>
-      <span class="prog-tag">Since 1983</span>
+      <div class="prog-side"><span class="prog-tag">Since 1983</span><a href="/boss" class="prog-arrow">View Program →</a></div>
     </div>
     <div class="prog-item">
       <span class="prog-num">02</span>
@@ -273,7 +276,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
         <p class="prog-name">MCPRO — Monte Carlo for Proteins</p>
         <p class="prog-desc">An extension of BOSS for biomolecular systems — peptides, proteins, and nucleic acids in explicit solvent. The primary tool for computing protein-ligand binding free energies using statistical perturbation theory.</p>
       </div>
-      <span class="prog-tag">Since 1995</span>
+      <div class="prog-side"><span class="prog-tag">Since 1995</span><a href="/mcpro" class="prog-arrow">View Program →</a></div>
     </div>
     <div class="prog-item">
       <span class="prog-num">03</span>
@@ -281,7 +284,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
         <p class="prog-name">BOMB — Biochemical and Organic Model Builder</p>
         <p class="prog-desc">A virtual screening and lead discovery platform. Grows and scores combinatorial libraries inside protein binding sites, then ranks candidates for synthesis and experimental testing. The front end of the Jorgensen group's drug discovery pipeline.</p>
       </div>
-      <span class="prog-tag">Since 2002</span>
+      <div class="prog-side"><span class="prog-tag">Since 2002</span><a href="/bomb" class="prog-arrow">View Program →</a></div>
     </div>
     <div class="prog-item">
       <span class="prog-num">04</span>
@@ -289,7 +292,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
         <p class="prog-name">OPLS Force Fields</p>
         <p class="prog-desc">Optimised Potentials for Liquid Simulations. Developed to reproduce thermodynamic and structural properties of liquids, and extended to cover the full range of organic molecules, proteins, nucleic acids, and lipids. The OPLS-AA and OPLS3 force fields are among the most widely used in the field.</p>
       </div>
-      <span class="prog-tag">Since 1984</span>
+      <div class="prog-side"><span class="prog-tag">Since 1984</span><a href="/opls" class="prog-arrow">View Program →</a></div>
     </div>
     <div class="prog-item">
       <span class="prog-num">05</span>
@@ -297,7 +300,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
         <p class="prog-name">Free Energy Perturbation (FEP)</p>
         <p class="prog-desc">Statistical perturbation theory applied to computing free energies of binding, hydration, and reaction. FEP calculations using BOSS and MCPRO have been used to guide lead optimisation programs at pharmaceutical companies worldwide, and remain among the most accurate methods for ranking drug candidates.</p>
       </div>
-      <span class="prog-tag">Since 1985</span>
+      <div class="prog-side"><span class="prog-tag">Since 1985</span><a href="/fep" class="prog-arrow">View Program →</a></div>
     </div>
   </div>
 </section>
