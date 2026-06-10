@@ -39,7 +39,7 @@ main{flex:1;padding:3rem}
 /* DASHBOARD */
 .admin-dashboard{display:none}
 .admin-dashboard.active{display:block}
-.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;margin-bottom:3rem;max-width:1200px}
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:1.5rem;margin-bottom:3rem;max-width:1200px}
 .stat-box{background:#fff;border:1px solid #e8e0d0;padding:1.5rem 2rem}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#1a1510;line-height:1}
 .stat-label{font-size:0.52rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-top:0.4rem}
@@ -151,6 +151,10 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
       <div class="stat-num" id="stat-grants">—</div>
       <div class="stat-label">Grant Applications</div>
     </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-newsletter">—</div>
+      <div class="stat-label">Newsletter Subscribers</div>
+    </div>
   </div>
 
   <div class="table-header">
@@ -187,6 +191,31 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
       </tbody>
     </table>
   </div>
+  <div class="section-divider"></div>
+
+  <div class="table-header">
+    <div class="table-title">Newsletter Subscribers</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <input class="search-input" type="text" id="newsletter-search" placeholder="Search email..." oninput="filterNewsletter()">
+      <button class="refresh-btn" onclick="loadNewsletter()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:3rem">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Subscribed</th>
+        </tr>
+      </thead>
+      <tbody id="newsletter-table">
+        <tr><td colspan="3" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <div class="section-divider"></div>
 
   <div class="table-header">
@@ -248,6 +277,7 @@ function showDashboard() {
   document.getElementById('admin-dashboard').classList.add('active');
   document.getElementById('nav-logout').style.display = 'inline';
   loadUsers();
+  loadNewsletter();
   loadGrants();
 }
 
@@ -306,6 +336,48 @@ function updateStats(users) {
   document.getElementById('stat-active').textContent = users.filter(u => u.subscription_status === 'active').length;
   document.getElementById('stat-academia').textContent = users.filter(u => u.account_type === 'academia').length;
   document.getElementById('stat-industry').textContent = users.filter(u => u.account_type === 'industry').length;
+}
+
+let allNewsletter = [];
+
+async function loadNewsletter() {
+  try {
+    const res = await fetch(`${API}/admin/newsletter`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (!res.ok) return;
+    allNewsletter = await res.json();
+    document.getElementById('stat-newsletter').textContent = allNewsletter.length;
+    filterNewsletter();
+  } catch(e) {
+    console.error('Failed to load newsletter subscribers', e);
+  }
+}
+
+function filterNewsletter() {
+  const search = document.getElementById('newsletter-search').value.toLowerCase();
+  const filtered = !search ? allNewsletter : allNewsletter.filter(s =>
+    (s.email || '').toLowerCase().includes(search)
+  );
+  renderNewsletter(filtered);
+}
+
+function renderNewsletter(subscribers) {
+  const tbody = document.getElementById('newsletter-table');
+  if (!subscribers.length) {
+    tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No subscribers found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = subscribers.map((s, i) => {
+    const date = s.subscribed_at ? new Date(s.subscribed_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+    return `
+      <tr>
+        <td style="color:#ccc">${i + 1}</td>
+        <td><a href="mailto:${s.email}" style="color:#1a1510;border-bottom:1px solid #e8e0d0">${s.email}</a></td>
+        <td>${date}</td>
+      </tr>
+    `;
+  }).join('');
 }
 
 async function loadGrants() {
