@@ -491,12 +491,12 @@ async function submitGrant() {
     last_name: document.getElementById('last-name').value.trim(),
     email: document.getElementById('email').value.trim(),
     institution: document.getElementById('institution').value.trim(),
-    supervisor: document.getElementById('supervisor').value.trim(),
+    supervisor_name: document.getElementById('supervisor').value.trim(),
     conference_name: document.getElementById('conference-name').value.trim(),
     conference_date: document.getElementById('conference-date').value.trim(),
     conference_location: document.getElementById('conference-location').value.trim(),
     amount_requested: document.getElementById('amount').value.trim(),
-    description: document.getElementById('description').value.trim(),
+    research_description: document.getElementById('description').value.trim(),
   };
   for (const [k, v] of Object.entries(fields)) {
     if (!v) {
