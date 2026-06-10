@@ -39,7 +39,7 @@ main{flex:1;padding:3rem}
 /* DASHBOARD */
 .admin-dashboard{display:none}
 .admin-dashboard.active{display:block}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:3rem;max-width:1200px}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;margin-bottom:3rem;max-width:1200px}
 .stat-box{background:#fff;border:1px solid #e8e0d0;padding:1.5rem 2rem}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#1a1510;line-height:1}
 .stat-label{font-size:0.52rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-top:0.4rem}
@@ -82,6 +82,11 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
 .footer-legal{display:flex;gap:1.5rem;align-items:center}
 .footer-legal a{font-size:0.55rem;letter-spacing:0.1em;color:#ccc;text-decoration:none;transition:color 0.2s}
 .footer-legal a:hover{color:#888}
+
+.desc-short{display:inline}
+.desc-full{display:none}
+.desc-toggle{font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:#b8972a;cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;padding:0;margin-left:0.35rem}
+.section-divider{height:1px;background:#ede8de;max-width:1200px;margin:3rem 0}
 
 @media(max-width:900px){
   nav{padding:1.2rem 1.5rem}
@@ -142,6 +147,10 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
       <div class="stat-num" id="stat-industry">—</div>
       <div class="stat-label">Industry</div>
     </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-grants">—</div>
+      <div class="stat-label">Grant Applications</div>
+    </div>
   </div>
 
   <div class="table-header">
@@ -178,6 +187,35 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
       </tbody>
     </table>
   </div>
+  <div class="section-divider"></div>
+
+  <div class="table-header">
+    <div class="table-title">Grant Applications</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <input class="search-input" type="text" id="grants-search" placeholder="Search name, email, conference..." oninput="filterGrants()">
+      <button class="refresh-btn" onclick="loadGrants()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Applicant</th>
+          <th>Email</th>
+          <th>Institution</th>
+          <th>Supervisor</th>
+          <th>Conference</th>
+          <th>Amount</th>
+          <th>Submitted</th>
+          <th>Research Description</th>
+        </tr>
+      </thead>
+      <tbody id="grants-table">
+        <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <footer>
@@ -202,6 +240,7 @@ function togglePasswordVisibility() {
 const API = 'https://jorgensen-backend-production.up.railway.app';
 let adminToken = '';
 let allUsers = [];
+let allGrants = [];
 let currentFilter = 'all';
 
 function showDashboard() {
@@ -209,6 +248,7 @@ function showDashboard() {
   document.getElementById('admin-dashboard').classList.add('active');
   document.getElementById('nav-logout').style.display = 'inline';
   loadUsers();
+  loadGrants();
 }
 
 async function adminLogin() {
@@ -266,6 +306,72 @@ function updateStats(users) {
   document.getElementById('stat-active').textContent = users.filter(u => u.subscription_status === 'active').length;
   document.getElementById('stat-academia').textContent = users.filter(u => u.account_type === 'academia').length;
   document.getElementById('stat-industry').textContent = users.filter(u => u.account_type === 'industry').length;
+}
+
+async function loadGrants() {
+  try {
+    const res = await fetch(`${API}/admin/grants`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (!res.ok) return;
+    allGrants = await res.json();
+    document.getElementById('stat-grants').textContent = allGrants.length;
+    filterGrants();
+  } catch(e) {
+    console.error('Failed to load grants', e);
+  }
+}
+
+function filterGrants() {
+  const search = document.getElementById('grants-search').value.toLowerCase();
+  const filtered = !search ? allGrants : allGrants.filter(g =>
+    (g.email || '').toLowerCase().includes(search) ||
+    (g.first_name || '').toLowerCase().includes(search) ||
+    (g.last_name || '').toLowerCase().includes(search) ||
+    (g.institution || '').toLowerCase().includes(search) ||
+    (g.conference_name || '').toLowerCase().includes(search)
+  );
+  renderGrants(filtered);
+}
+
+function renderGrants(grants) {
+  const tbody = document.getElementById('grants-table');
+  if (!grants.length) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No applications found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = grants.map((g, i) => {
+    const date = g.created_at ? new Date(g.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+    const desc = g.research_description || '';
+    const short = desc.length > 120 ? desc.slice(0, 120) + '…' : desc;
+    const hasMore = desc.length > 120;
+    return `
+      <tr>
+        <td>${g.first_name || ''} ${g.last_name || ''}</td>
+        <td><a href="mailto:${g.email}" style="color:#1a1510;border-bottom:1px solid #e8e0d0">${g.email}</a></td>
+        <td>${g.institution || '—'}</td>
+        <td>${g.supervisor_name || '—'}</td>
+        <td style="min-width:160px">${g.conference_name || '—'}<br><span style="font-size:0.62rem;color:#aaa">${g.conference_date || ''} · ${g.conference_location || ''}</span></td>
+        <td style="white-space:nowrap">$${g.amount_requested || '—'}</td>
+        <td style="white-space:nowrap">${date}</td>
+        <td style="min-width:200px;max-width:280px">
+          <span class="desc-short" id="desc-short-${i}">${short}</span>
+          <span class="desc-full" id="desc-full-${i}">${desc}</span>
+          ${hasMore ? `<button class="desc-toggle" onclick="toggleDesc(${i})">Show more</button>` : ''}
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function toggleDesc(i) {
+  const s = document.getElementById(`desc-short-${i}`);
+  const f = document.getElementById(`desc-full-${i}`);
+  const btn = s.parentElement.querySelector('.desc-toggle');
+  const expanded = f.style.display === 'inline';
+  s.style.display = expanded ? 'inline' : 'none';
+  f.style.display = expanded ? 'none' : 'inline';
+  btn.textContent = expanded ? 'Show more' : 'Show less';
 }
 
 function setFilter(filter, btn) {
