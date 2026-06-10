@@ -108,8 +108,15 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .prog-launch{display:inline-block;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.75rem 1.5rem;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif}
 .prog-launch:hover{background:#2a2218}
 
-footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top:4rem}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto}
+footer{padding:5rem 3rem 2.5rem;border-top:1px solid #e8e0d0;background:#fff;margin-top:4rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block;color:#1a1510}
+.footer-desc{font-size:0.65rem;line-height:2.1;color:#aaa;max-width:280px}
+.footer-col h4{font-size:0.52rem;letter-spacing:0.32em;text-transform:uppercase;color:#bbb;margin-bottom:1.25rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
+.footer-col ul a{font-size:0.68rem;color:#888;transition:color 0.2s}
+.footer-col ul a:hover{color:#111}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e8e0d0;padding-top:2rem}
 .footer-copy{font-size:0.55rem;letter-spacing:0.1em;color:#ccc}
 
 @media(max-width:900px){
@@ -125,7 +132,8 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
   .page-wrap{padding:2rem 1rem}
   .card{padding:2rem 1.5rem}
   .plan-grid{grid-template-columns:1fr}
-  footer{padding:1.5rem}
+  footer{padding:3rem 1.5rem 2rem}
+  .footer-grid{grid-template-columns:1fr;gap:2.5rem}
   .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
 }
 .card,.prog-card,.access-card,.price-card,.stat-box,.table-wrap,.plan-card,.dashboard-card,.user-info{border:1px solid rgba(184,151,42,0.5);box-shadow:0 0 0 1px rgba(184,151,42,0.15),0 8px 40px rgba(184,151,42,0.25),0 2px 8px rgba(26,21,16,0.1)}
@@ -378,9 +386,42 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
 </div>
 
 <footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-logo">Jorgensen Foundation</span>
+      <p class="footer-desc">Advancing computational chemistry through accessible, cloud-based simulation tools. Built on the work of the Jorgensen Research Group at Yale University.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="/boss">BOSS</a></li>
+        <li><a href="/mcpro">MCPRO</a></li>
+        <li><a href="/bomb">BOMB</a></li>
+        <li><a href="/fep">FEP</a></li>
+        <li><a href="/opls">OPLS Force Fields</a></li>
+        <li><a href="/visualisation">Visualisation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Foundation</h4>
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/about#team">Team</a></li>
+        <li><a href="/publications">Publications</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Access</h4>
+      <ul>
+        <li><a href="/#access">Academia</a></li>
+        <li><a href="/#access">Industry</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
   <div class="footer-bottom">
     <span class="footer-copy">© 2026 Jorgensen Foundation · jorgensenfoundation.org</span>
-    <span class="footer-copy">info@jorgensenfoundation.org</span>
+    <span class="footer-copy">Computational Chemistry · Open Science</span>
   </div>
 </footer>
 
