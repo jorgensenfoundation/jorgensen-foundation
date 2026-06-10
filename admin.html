@@ -259,6 +259,21 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff;margin-top
 </footer>
 
 <script>
+function esc(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escAttr(value) {
+  // Entity-encoded for safe use inside quoted HTML attribute values
+  return esc(value);
+}
+
 function togglePasswordVisibility() {
   const input = document.getElementById('admin-password');
   const btn = document.getElementById('admin-show-btn');
@@ -373,8 +388,8 @@ function renderNewsletter(subscribers) {
     return `
       <tr>
         <td style="color:#ccc">${i + 1}</td>
-        <td><a href="mailto:${s.email}" style="color:#1a1510;border-bottom:1px solid #e8e0d0">${s.email}</a></td>
-        <td>${date}</td>
+        <td><a href="mailto:${escAttr(s.email)}" style="color:#1a1510;border-bottom:1px solid #e8e0d0">${esc(s.email)}</a></td>
+        <td>${esc(date)}</td>
       </tr>
     `;
   }).join('');
@@ -419,16 +434,16 @@ function renderGrants(grants) {
     const hasMore = desc.length > 120;
     return `
       <tr>
-        <td>${g.first_name || ''} ${g.last_name || ''}</td>
-        <td><a href="mailto:${g.email}" style="color:#1a1510;border-bottom:1px solid #e8e0d0">${g.email}</a></td>
-        <td>${g.institution || '—'}</td>
-        <td>${g.supervisor_name || '—'}</td>
-        <td style="min-width:160px">${g.conference_name || '—'}<br><span style="font-size:0.62rem;color:#aaa">${g.conference_date || ''} · ${g.conference_location || ''}</span></td>
-        <td style="white-space:nowrap">$${g.amount_requested || '—'}</td>
-        <td style="white-space:nowrap">${date}</td>
+        <td>${esc(g.first_name)} ${esc(g.last_name)}</td>
+        <td><a href="mailto:${escAttr(g.email)}" style="color:#1a1510;border-bottom:1px solid #e8e0d0">${esc(g.email)}</a></td>
+        <td>${esc(g.institution || '—')}</td>
+        <td>${esc(g.supervisor_name || '—')}</td>
+        <td style="min-width:160px">${esc(g.conference_name || '—')}<br><span style="font-size:0.62rem;color:#aaa">${esc(g.conference_date)} · ${esc(g.conference_location)}</span></td>
+        <td style="white-space:nowrap">$${esc(g.amount_requested || '—')}</td>
+        <td style="white-space:nowrap">${esc(date)}</td>
         <td style="min-width:200px;max-width:280px">
-          <span class="desc-short" id="desc-short-${i}">${short}</span>
-          <span class="desc-full" id="desc-full-${i}">${desc}</span>
+          <span class="desc-short" id="desc-short-${i}">${esc(short)}</span>
+          <span class="desc-full" id="desc-full-${i}">${esc(desc)}</span>
           ${hasMore ? `<button class="desc-toggle" onclick="toggleDesc(${i})">Show more</button>` : ''}
         </td>
       </tr>
@@ -483,19 +498,19 @@ function renderUsers(users) {
     const isActive = u.subscription_status === 'active';
     return `
       <tr>
-        <td>${u.first_name || ''} ${u.last_name || '' || '—'}</td>
-        <td>${u.email}</td>
-        <td>${u.institution || '—'}</td>
-        <td><span class="badge badge-${u.account_type}">${u.account_type}</span></td>
+        <td>${esc(u.first_name)} ${esc(u.last_name || '—')}</td>
+        <td>${esc(u.email)}</td>
+        <td>${esc(u.institution || '—')}</td>
+        <td><span class="badge badge-${escAttr(u.account_type)}">${esc(u.account_type)}</span></td>
         <td><span class="badge ${u.is_verified ? 'badge-verified' : 'badge-unverified'}">${u.is_verified ? 'Verified' : 'Unverified'}</span></td>
         <td><span class="badge ${isActive ? 'badge-active' : 'badge-inactive'}">${isActive ? 'Active' : 'Inactive'}</span></td>
-        <td>${date}</td>
+        <td>${esc(date)}</td>
         <td>
           ${isActive
-            ? `<button class="action-btn action-deactivate" onclick="deactivateUser('${u.email}')">Deactivate</button>`
-            : `<button class="action-btn action-activate" onclick="activateUser('${u.email}')">Activate</button>`
+            ? `<button class="action-btn action-deactivate" onclick="deactivateUser('${escAttr(u.email)}')">Deactivate</button>`
+            : `<button class="action-btn action-activate" onclick="activateUser('${escAttr(u.email)}')">Activate</button>`
           }
-          <button class="action-btn" onclick="deleteUser('${u.email}')" style="border-color:#e74c3c;color:#e74c3c;margin-left:0.4rem">Delete</button>
+          <button class="action-btn" onclick="deleteUser('${escAttr(u.email)}')" style="border-color:#e74c3c;color:#e74c3c;margin-left:0.4rem">Delete</button>
         </td>
       </tr>
     `;

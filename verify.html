@@ -146,6 +146,16 @@ footer{padding:2rem 3rem;border-top:1px solid #e8e0d0;background:#fff}
 <script>
 const API = 'https://jorgensen-backend-production.up.railway.app';
 
+function esc(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function toggleVis(inputId, btn) {
   const input = document.getElementById(inputId);
   if (input.type === 'password') { input.type = 'text'; btn.textContent = 'HIDE'; }
@@ -176,8 +186,8 @@ async function verifyToken() {
     }
     const typeLabel = data.account_type === 'academia' ? 'Academic Access' : 'Industry Access';
     document.getElementById('user-info').innerHTML = `
-      <div class="user-name">${data.first_name || ''} ${data.last_name || ''}</div>
-      <div class="user-meta">${data.email}</div>
+      <div class="user-name">${esc(data.first_name)} ${esc(data.last_name)}</div>
+      <div class="user-meta">${esc(data.email)}</div>
       <span class="user-type">${typeLabel}</span>
     `;
     showState('state-set-password');
