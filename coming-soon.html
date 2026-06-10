@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon — Jorgensen Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:Helvetica,Arial,sans-serif;background:#1a1510;color:#f5f0e6;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.logo{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-weight:400;letter-spacing:0.4em;text-transform:uppercase;color:rgba(245,240,230,0.5);margin-bottom:4rem;text-align:center}
+.heading{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,7vw,5.5rem);font-weight:300;line-height:1;letter-spacing:-0.02em;text-align:center;margin-bottom:1.25rem}
+.heading em{font-style:italic}
+.sub{font-size:0.75rem;line-height:2;color:rgba(245,240,230,0.4);text-align:center;max-width:380px;margin-bottom:3.5rem}
+.form{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;max-width:320px}
+.input-wrap{position:relative;width:100%}
+.input{width:100%;border:none;border-bottom:1px solid rgba(245,240,230,0.2);background:transparent;padding:0.85rem 2.5rem 0.85rem 0;font-size:0.82rem;font-family:Helvetica,Arial,sans-serif;color:#f5f0e6;outline:none;transition:border-color 0.2s;letter-spacing:0.05em}
+.input::placeholder{color:rgba(245,240,230,0.2);letter-spacing:0.05em}
+.input:focus{border-bottom-color:rgba(245,240,230,0.5)}
+.eye-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(245,240,230,0.25);font-size:0.6rem;letter-spacing:0.1em;font-family:Helvetica,Arial,sans-serif;transition:color 0.2s}
+.eye-btn:hover{color:rgba(245,240,230,0.6)}
+.submit{margin-top:2rem;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;padding:0.9rem 3rem;border:1px solid rgba(245,240,230,0.3);background:transparent;color:#f5f0e6;cursor:pointer;font-family:Helvetica,Arial,sans-serif;transition:all 0.25s}
+.submit:hover{background:rgba(245,240,230,0.08);border-color:rgba(245,240,230,0.6)}
+.error{font-size:0.6rem;letter-spacing:0.08em;color:rgba(220,100,80,0.8);margin-top:1rem;min-height:1rem;text-align:center}
+.footer-note{position:fixed;bottom:2rem;font-size:0.52rem;letter-spacing:0.12em;color:rgba(245,240,230,0.15)}
+</style>
+</head>
+<body>
+
+<p class="logo">Jorgensen Foundation</p>
+
+<h1 class="heading">Coming<br><em>Soon</em></h1>
+<p class="sub">The platform is under final preparation. Enter the access password to continue.</p>
+
+<div class="form">
+  <div class="input-wrap">
+    <input class="input" type="password" id="password" placeholder="Access password" onkeydown="if(event.key==='Enter')unlock()">
+    <button class="eye-btn" type="button" onclick="toggleVis()" id="eye-btn">SHOW</button>
+  </div>
+  <p class="error" id="error-msg"></p>
+  <button class="submit" onclick="unlock()">Enter →</button>
+</div>
+
+<p class="footer-note">© 2026 Jorgensen Foundation</p>
+
+<script>
+const PASSWORD = 'jorgensen2026';
+
+function toggleVis() {
+  const input = document.getElementById('password');
+  const btn = document.getElementById('eye-btn');
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = 'HIDE'; }
+  else { input.type = 'password'; btn.textContent = 'SHOW'; }
+}
+
+function unlock() {
+  const val = document.getElementById('password').value;
+  const err = document.getElementById('error-msg');
+  if (val === PASSWORD) {
+    sessionStorage.setItem('jf_access', 'true');
+    window.location.replace('/');
+  } else {
+    err.textContent = 'Incorrect password.';
+    document.getElementById('password').value = '';
+    document.getElementById('password').focus();
+  }
+}
+
+// Already unlocked — skip gate
+if (sessionStorage.getItem('jf_access') === 'true') {
+  window.location.replace('/');
+}
+</script>
+</body>
+</html>
