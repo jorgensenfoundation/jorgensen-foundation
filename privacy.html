@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Jorgensen Foundation</title>
+<meta name="description" content="Privacy Policy for the Jorgensen Foundation — what data we collect, how we use it, GDPR compliance, cookie policy, and your data rights.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Helvetica,Arial,sans-serif;background:#f5f0e6;color:#111;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+nav{display:flex;justify-content:space-between;align-items:center;padding:2rem 3rem;position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.4s,padding 0.4s}
+nav.scrolled{background:#fff;padding:1.2rem 3rem;border-bottom:1px solid #e8e4dc}
+nav.scrolled .nav-logo,nav.scrolled .nav-links a{color:#111}
+nav.scrolled .nav-cta{color:#111;border-color:#111}
+nav.scrolled .nav-hamburger span{background:#111}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;color:#fff;transition:color 0.4s}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#fff;opacity:0.85;transition:opacity 0.2s,color 0.4s}
+.nav-links a:hover{opacity:1}
+nav.scrolled .nav-links a{color:#111}
+.nav-cta{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.6);color:#fff;padding:0.55rem 1.2rem;transition:all 0.3s}
+.nav-cta:hover{background:#fff;color:#111}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-hamburger span{display:block;width:22px;height:1px;background:#fff;transition:background 0.4s}
+.hero{height:45vh;min-height:340px;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:#1a1510}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 50%,rgba(184,151,42,0.08) 0%,transparent 55%),linear-gradient(140deg,#1a1510 0%,#2a2218 100%)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,16,10,0.88) 0%,rgba(20,16,10,0.1) 60%,transparent 100%)}
+.hero-content{position:relative;z-index:2;padding:0 3rem 4rem}
+.hero-tag{font-size:0.55rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(245,240,230,0.5);margin-bottom:1.25rem;display:block}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;color:#f5f0e6;line-height:0.95;letter-spacing:-0.02em}
+.hero-date{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,230,0.35);margin-top:1.25rem;display:block}
+.content-section{padding:7rem 3rem;background:#faf8f4}
+.content-inner{max-width:760px;margin:0 auto}
+.toc{margin-bottom:4rem;padding:2rem 2.5rem;background:#fff;border:1px solid rgba(184,151,42,0.3)}
+.toc-label{font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:#aaa;margin-bottom:1rem;display:block}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
+.toc-list li a{font-size:0.68rem;color:#888;transition:color 0.2s;display:flex;gap:0.75rem;align-items:baseline}
+.toc-list li a:hover{color:#1a1510}
+.toc-list li a::before{content:attr(data-num);font-family:'Cormorant Garamond',serif;font-size:0.75rem;color:#ccc;flex-shrink:0}
+.legal-section{margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid #ede8de}
+.legal-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.legal-num{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(184,151,42,0.6);margin-bottom:0.5rem;display:block;letter-spacing:0.08em}
+.legal-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:300;color:#1a1510;line-height:1.2;margin-bottom:1.75rem}
+.legal-h3{font-size:0.75rem;letter-spacing:0.06em;font-weight:400;color:#1a1510;margin-top:1.75rem;margin-bottom:0.75rem}
+.legal-body{font-size:0.78rem;line-height:2.2;color:#666}
+.legal-body p+p{margin-top:1rem}
+.legal-body ul{margin:1rem 0 1rem 1.5rem;display:flex;flex-direction:column;gap:0.5rem}
+.legal-body ul li{font-size:0.75rem;line-height:1.9;color:#777}
+.gdpr-box{margin-top:1.5rem;padding:1.5rem 2rem;background:#fff;border-left:3px solid rgba(184,151,42,0.5)}
+.gdpr-box p{font-size:0.75rem;line-height:2;color:#666}
+.gdpr-box strong{color:#1a1510;font-weight:400}
+footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block}
+.footer-desc{font-size:0.65rem;line-height:2.1;color:#aaa;max-width:280px}
+.footer-col h4{font-size:0.52rem;letter-spacing:0.32em;text-transform:uppercase;color:#bbb;margin-bottom:1.25rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
+.footer-col ul a{font-size:0.68rem;color:#888;transition:color 0.2s}
+.footer-col ul a:hover{color:#111}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #ede8de;padding-top:2rem;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:0.55rem;letter-spacing:0.1em;color:#ccc}
+.footer-legal{display:flex;gap:1.5rem;align-items:center}
+.footer-legal a{font-size:0.55rem;letter-spacing:0.1em;color:#ccc;transition:color 0.2s}
+.footer-legal a:hover{color:#888}
+@keyframes scrollAnim{0%{top:-100%}100%{top:100%}}
+@media(max-width:960px){
+  .nav-links,.nav-cta{display:none}.nav-hamburger{display:flex}
+  nav{padding:1.5rem 1.5rem}nav.scrolled{padding:1rem 1.5rem}
+  .hero-content{padding:0 1.5rem 3rem}
+  .content-section{padding:5rem 1.5rem}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+}
+@media(max-width:540px){
+  .footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:0.75rem;text-align:center}
+  .footer-legal{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/" class="nav-logo">Jorgensen Foundation</a>
+  <div class="nav-links">
+    <a href="/#programs">Programs</a>
+    <a href="/about">About</a>
+    <a href="/publications">Publications</a>
+    <a href="/news">News</a>
+    <a href="/grants">Grants</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <div style="display:flex;gap:0.75rem;align-items:center">
+    <a href="/login" class="nav-cta" style="background:transparent">Sign In</a>
+    <a href="/#access" class="nav-cta">Register</a>
+  </div>
+  <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Legal · Jorgensen Foundation</span>
+    <h1 class="hero-h1">Privacy<br>Policy</h1>
+    <span class="hero-date">Last updated: June 2026</span>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="content-inner">
+
+    <div class="toc">
+      <span class="toc-label">Contents</span>
+      <ol class="toc-list">
+        <li><a href="#data-collected" data-num="1.">Data We Collect</a></li>
+        <li><a href="#how-we-use" data-num="2.">How We Use Your Data</a></li>
+        <li><a href="#storage-security" data-num="3.">Data Storage and Security</a></li>
+        <li><a href="#gdpr" data-num="4.">GDPR — Rights of EU Users</a></li>
+        <li><a href="#cookies" data-num="5.">Cookie Policy</a></li>
+        <li><a href="#retention" data-num="6.">Data Retention</a></li>
+        <li><a href="#contact" data-num="7.">Contact for Data Requests</a></li>
+      </ol>
+    </div>
+
+    <div class="legal-section" id="data-collected">
+      <span class="legal-num">01</span>
+      <h2 class="legal-h2">Data We Collect</h2>
+      <div class="legal-body">
+        <p>The Jorgensen Foundation collects personal data only to the extent necessary to provide the platform and its associated services. We do not sell, rent, or share your personal data with third parties for marketing purposes.</p>
+
+        <h3 class="legal-h3">Account Information</h3>
+        <ul>
+          <li><strong>Name</strong> — first and last name, collected at registration and used to personalise your account and correspondence</li>
+          <li><strong>Email address</strong> — used as your account identifier, for authentication, billing communications, and service notifications</li>
+          <li><strong>Institution or organisation</strong> — collected to determine account type (academic or industry) and for internal record-keeping</li>
+          <li><strong>Password</strong> — stored as a salted bcrypt hash; we never store or transmit your password in plain text</li>
+        </ul>
+
+        <h3 class="legal-h3">Payment Information</h3>
+        <p>Payment card details and billing information are collected and processed by Stripe, our payment processor. The Jorgensen Foundation does not store payment card numbers. We receive from Stripe only a tokenised payment reference, the last four digits of your card, card type, and billing status. Stripe's privacy policy governs the handling of your payment data.</p>
+
+        <h3 class="legal-h3">Usage Data</h3>
+        <ul>
+          <li>Simulation inputs and job parameters you submit to the platform</li>
+          <li>Simulation outputs and results generated on your behalf</li>
+          <li>Log data including job timestamps, duration, and status</li>
+          <li>IP address and browser type collected automatically when you access the platform</li>
+        </ul>
+
+        <h3 class="legal-h3">Grant Applications</h3>
+        <p>If you apply for a student travel grant, we additionally collect your supervisor's name, the conference details provided in your application, and the research description you submit. This information is used solely for evaluating and administering grant applications.</p>
+
+        <h3 class="legal-h3">Communications</h3>
+        <p>If you contact us via the contact form or by email, we retain a record of that correspondence for the purpose of responding to your enquiry and for internal quality records.</p>
+      </div>
+    </div>
+
+    <div class="legal-section" id="how-we-use">
+      <span class="legal-num">02</span>
+      <h2 class="legal-h2">How We Use Your Data</h2>
+      <div class="legal-body">
+        <p>We use the personal data we collect for the following purposes, each of which has a corresponding legal basis under applicable data protection law.</p>
+
+        <h3 class="legal-h3">Account Management</h3>
+        <p>We use your name, email address, and institution to create and maintain your account, authenticate your identity when you sign in, and provide you with access to the platform. The legal basis is performance of a contract — this processing is necessary to provide the service you have subscribed to.</p>
+
+        <h3 class="legal-h3">Billing and Payments</h3>
+        <p>We use your email address and billing status information to process subscription payments, issue invoices, send payment confirmations and renewal reminders, and manage billing disputes. The legal basis is performance of a contract and, where applicable, compliance with legal obligations relating to financial record-keeping.</p>
+
+        <h3 class="legal-h3">Service Communications</h3>
+        <p>We use your email address to send you notifications that are necessary for the operation of the service, including account verification emails, password reset links, subscription renewal notices, and notifications of planned maintenance or outages. These communications are not optional — they are part of the service. The legal basis is performance of a contract and legitimate interests.</p>
+
+        <h3 class="legal-h3">Optional Communications</h3>
+        <p>With your consent, we may send you newsletters, grant cycle announcements, and programme updates. You may unsubscribe from optional communications at any time using the link in any such email, or by contacting us directly. Unsubscribing from optional communications does not affect service-critical notifications.</p>
+
+        <h3 class="legal-h3">Platform Improvement</h3>
+        <p>We use anonymised and aggregated usage data — which cannot be linked to individual users — to monitor platform performance, diagnose technical issues, and inform decisions about future development. We do not use individually identifiable simulation data for this purpose without your consent.</p>
+
+        <h3 class="legal-h3">Grant Administration</h3>
+        <p>Grant application data is used solely to evaluate applications, notify applicants of outcomes, and administer disbursements to successful recipients. Application data is not used for any other purpose.</p>
+      </div>
+    </div>
+
+    <div class="legal-section" id="storage-security">
+      <span class="legal-num">03</span>
+      <h2 class="legal-h2">Data Storage and Security</h2>
+      <div class="legal-body">
+        <p>We take the security of your personal data seriously and implement technical and organisational measures appropriate to the risk.</p>
+
+        <h3 class="legal-h3">Storage Location</h3>
+        <p>Your account data and simulation results are stored on servers operated by Railway, our cloud infrastructure provider, and Stripe, our payment processor. These providers operate data centres in the United States. If you are located in the European Economic Area, your data may be transferred to the United States. Where this occurs, we ensure appropriate safeguards are in place, including standard contractual clauses.</p>
+
+        <h3 class="legal-h3">Security Measures</h3>
+        <ul>
+          <li>All data transmitted between your browser and the platform is encrypted using TLS</li>
+          <li>Passwords are hashed using bcrypt with per-user salts before storage</li>
+          <li>Access to production systems is restricted to authorised personnel and protected by multi-factor authentication</li>
+          <li>Simulation data is stored in isolated per-account storage with no cross-account access</li>
+          <li>Payment data is handled entirely by Stripe and never passes through our servers</li>
+        </ul>
+
+        <h3 class="legal-h3">Data Breaches</h3>
+        <p>In the event of a personal data breach that is likely to result in a risk to your rights and freedoms, we will notify you and, where required by law, the relevant supervisory authority within the timeframe required by applicable law. Notifications will be sent to the email address associated with your account.</p>
+      </div>
+    </div>
+
+    <div class="legal-section" id="gdpr">
+      <span class="legal-num">04</span>
+      <h2 class="legal-h2">GDPR — Rights of EU Users</h2>
+      <div class="legal-body">
+        <p>If you are located in the European Economic Area (EEA), you have the following rights under the General Data Protection Regulation (GDPR). To exercise any of these rights, please contact us at <a href="mailto:info@jorgensenfoundation.org" style="color:#1a1510;border-bottom:1px solid #ccc">info@jorgensenfoundation.org</a>. We will respond to your request within 30 days.</p>
+
+        <div class="gdpr-box">
+          <p><strong>Right of access</strong> — You may request a copy of the personal data we hold about you.</p>
+          <p><strong>Right to rectification</strong> — You may ask us to correct inaccurate or incomplete personal data.</p>
+          <p><strong>Right to erasure</strong> — You may ask us to delete your personal data where there is no compelling reason for us to continue processing it.</p>
+          <p><strong>Right to restriction</strong> — You may ask us to restrict processing of your personal data in certain circumstances.</p>
+          <p><strong>Right to data portability</strong> — You may request a machine-readable copy of the personal data you have provided to us.</p>
+          <p><strong>Right to object</strong> — You may object to processing based on legitimate interests or for direct marketing purposes.</p>
+          <p><strong>Right to withdraw consent</strong> — Where processing is based on consent, you may withdraw it at any time without affecting the lawfulness of prior processing.</p>
+        </div>
+
+        <h3 class="legal-h3">Supervisory Authority</h3>
+        <p>If you believe we have not handled your personal data in accordance with applicable law, you have the right to lodge a complaint with the data protection supervisory authority in your country of residence.</p>
+
+        <h3 class="legal-h3">Legal Bases</h3>
+        <p>We process personal data on the following legal bases under Article 6 GDPR: performance of a contract (account management, billing), compliance with a legal obligation (financial records), legitimate interests (platform security and improvement), and consent (optional communications). Where we rely on legitimate interests, we have assessed that our interests do not override your data protection rights.</p>
+      </div>
+    </div>
+
+    <div class="legal-section" id="cookies">
+      <span class="legal-num">05</span>
+      <h2 class="legal-h2">Cookie Policy</h2>
+      <div class="legal-body">
+        <p>We use a minimal number of cookies to operate the platform. We do not use advertising cookies or sell cookie data to third parties.</p>
+
+        <h3 class="legal-h3">Essential Cookies</h3>
+        <p>We use session cookies to maintain your authenticated state while you are logged in to the platform. These cookies are strictly necessary for the service to function and cannot be disabled while you use the platform. They expire when you close your browser or sign out.</p>
+
+        <h3 class="legal-h3">Local Storage</h3>
+        <p>We use browser local storage to cache your session credentials temporarily between page loads, avoiding repeated authentication prompts during an active session. This data is cleared when you sign out and is not accessible to third parties.</p>
+
+        <h3 class="legal-h3">Third-Party Services</h3>
+        <p>Stripe, our payment processor, may set cookies in connection with payment processing. Google Fonts, used to load typefaces on the website, makes network requests to Google's servers but does not set persistent tracking cookies on our pages. We do not use Google Analytics, Facebook Pixel, or any other behavioural tracking service.</p>
+
+        <h3 class="legal-h3">Managing Cookies</h3>
+        <p>You can control and delete cookies through your browser settings. Disabling essential session cookies will prevent you from remaining signed in to the platform. Deleting local storage for this site will sign you out of any active session.</p>
+      </div>
+    </div>
+
+    <div class="legal-section" id="retention">
+      <span class="legal-num">06</span>
+      <h2 class="legal-h2">Data Retention</h2>
+      <div class="legal-body">
+        <p>We retain personal data only for as long as necessary for the purpose it was collected and to comply with our legal obligations.</p>
+
+        <h3 class="legal-h3">Active Accounts</h3>
+        <p>Account data is retained for the duration of your subscription and for as long as your account remains registered on the platform. You may request deletion of your account at any time by contacting us.</p>
+
+        <h3 class="legal-h3">Following Cancellation or Account Deletion</h3>
+        <p>After cancellation or account deletion, we retain your simulation data, inputs, and results for 90 days to allow you to retrieve any work before it is permanently deleted. Account identifiers and billing records are retained for seven years from the last transaction as required by financial regulations. After that period, all personal data is permanently deleted or anonymised.</p>
+
+        <h3 class="legal-h3">Communications and Support Records</h3>
+        <p>Records of support correspondence are retained for three years from the date of the last interaction and then permanently deleted.</p>
+
+        <h3 class="legal-h3">Grant Applications</h3>
+        <p>Unsuccessful grant applications are retained for two years following the decision and then deleted. Records relating to successful grants are retained for seven years for financial and audit purposes.</p>
+
+        <h3 class="legal-h3">Anonymised Data</h3>
+        <p>Aggregated, anonymised usage statistics — from which no individual can be identified — may be retained indefinitely for platform improvement and research purposes.</p>
+      </div>
+    </div>
+
+    <div class="legal-section" id="contact">
+      <span class="legal-num">07</span>
+      <h2 class="legal-h2">Contact for Data Requests</h2>
+      <div class="legal-body">
+        <p>All requests relating to your personal data — including access, rectification, erasure, portability, restriction, and objection — should be sent to:</p>
+
+        <h3 class="legal-h3">Data Controller</h3>
+        <p>Jorgensen Foundation<br>
+        Department of Chemistry, Yale University<br>
+        225 Prospect Street, New Haven, CT 06511<br>
+        United States</p>
+
+        <h3 class="legal-h3">Email</h3>
+        <p><a href="mailto:info@jorgensenfoundation.org" style="color:#1a1510;border-bottom:1px solid #ccc">info@jorgensenfoundation.org</a></p>
+
+        <p style="margin-top:1.5rem">We will acknowledge your request within five business days and respond in full within 30 days. If your request is complex or we receive a high volume of requests, we may extend this period by a further two months, in which case we will notify you. There is no charge for reasonable data requests.</p>
+
+        <h3 class="legal-h3">Changes to This Policy</h3>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. Material changes will be communicated to subscribers by email. The current version of the policy is always available at this URL. Continued use of the platform following notification of a change constitutes acceptance of the revised policy.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-logo">Jorgensen Foundation</span>
+      <p class="footer-desc">Advancing computational chemistry through accessible, cloud-based simulation tools. Built on the work of the Jorgensen Research Group at Yale University.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="/boss">BOSS</a></li>
+        <li><a href="/mcpro">MCPRO</a></li>
+        <li><a href="/bomb">BOMB</a></li>
+        <li><a href="/fep">FEP</a></li>
+        <li><a href="/opls">OPLS Force Fields</a></li>
+        <li><a href="/visualisation">Visualisation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Foundation</h4>
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/about#team">Team</a></li>
+        <li><a href="/publications">Publications</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Access</h4>
+      <ul>
+        <li><a href="/#access">Academia</a></li>
+        <li><a href="/#access">Industry</a></li>
+        <li><a href="/grants">Student Grants</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/login">Sign In</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Jorgensen Foundation · jorgensenfoundation.org</span>
+    <div class="footer-legal">
+      <a href="/terms">Terms of Service</a>
+      <a href="/privacy">Privacy Policy</a>
+      <span class="footer-copy">Computational Chemistry · Open Science</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  if (links) {
+    const open = links.style.display === 'flex';
+    links.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:#fff;padding:2rem 1.5rem;gap:1.5rem;border-bottom:1px solid #ede8de;z-index:99';
+    if (!open) document.querySelectorAll('.nav-links a').forEach(a => a.style.color = '#111');
+  }
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } });
+});
+</script>
+</body>
+</html>
