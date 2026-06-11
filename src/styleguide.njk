@@ -1,0 +1,145 @@
+---
+layout: base.njk
+title: Style Guide — Jorgensen Foundation
+description: Midnight / Stone / Oyster design system — tokens and component layer for review.
+comingSoonGate: false
+mainCss: /css/components.css
+pageCss: /css/styleguide.css
+footerInclude: footer-none.njk
+mainJs: false
+permalink: /styleguide/index.html
+---
+
+<div class="sg-wrap">
+
+  <div class="sg-head">
+    <h1>Midnight / Stone / Oyster <em style="font-style:italic">on white</em></h1>
+    <p class="body">Design system — tokens + consolidated component layer, for review before rollout. The type scale, 17px body, serif display, button shape, soft shadow + deepen hover, and hairline concept are unchanged — only the palette changed. Nothing here touches the 20 existing pages.</p>
+  </div>
+
+  <!-- COLOR TOKENS -->
+  <section class="sg-section">
+    <h2>Colour tokens</h2>
+    <div class="sg-swatches">
+      <div class="sg-swatch"><div class="chip" style="background:var(--ink)"></div><div class="meta"><span class="tok">--ink · Midnight</span><span class="hex">#302C2E · headings/text</span></div></div>
+      <div class="sg-swatch"><div class="chip" style="background:var(--body)"></div><div class="meta"><span class="tok">--body · Stone</span><span class="hex">#53534C · body copy</span></div></div>
+      <div class="sg-swatch"><div class="chip" style="background:var(--surface)"></div><div class="meta"><span class="tok">--surface · Oyster</span><span class="hex">#DEDCD5 · tags/hairlines</span></div></div>
+      <div class="sg-swatch"><div class="chip" style="background:var(--ground)"></div><div class="meta"><span class="tok">--ground · White</span><span class="hex">#ffffff · page</span></div></div>
+      <div class="sg-swatch"><div class="chip" style="background:var(--ink-hover)"></div><div class="meta"><span class="tok">--ink-hover</span><span class="hex">#211e20 · btn deepen</span></div></div>
+      <div class="sg-swatch"><div class="chip" style="background:var(--hairline)"></div><div class="meta"><span class="tok">--hairline</span><span class="hex">#DEDCD5 · = Oyster</span></div></div>
+      <div class="sg-swatch"><div class="chip" style="background:var(--cream)"></div><div class="meta"><span class="tok">--cream</span><span class="hex">#f4efe4 · hero text only</span></div></div>
+      <div class="sg-swatch"><div class="chip" style="background:var(--hero-overlay)"></div><div class="meta"><span class="tok">--hero-overlay</span><span class="hex">rgba(9,10,13,.82)</span></div></div>
+    </div>
+    <p class="sg-note">The old blue and metallic accent tokens are retired — structure is now Midnight / Stone / Oyster on white.</p>
+  </section>
+
+  <!-- TYPE SCALE -->
+  <section class="sg-section">
+    <h2>Type scale</h2>
+    <div class="sg-type-row"><h1 class="display">The Shape of <em>Discovery</em></h1><span class="sg-spec"><b>display</b> · serif 300 · clamp 3.5–7.5rem</span></div>
+    <div class="sg-type-row"><h2 class="h2">A section <em>heading</em></h2><span class="sg-spec"><b>h2</b> · serif 300 · clamp 2–3.25rem</span></div>
+    <div class="sg-type-row"><h3 class="h3">A subsection heading</h3><span class="sg-spec"><b>h3</b> · serif 400 · clamp 1.3–1.8rem</span></div>
+    <div class="sg-type-row"><p class="lead">Lead / intro paragraph — slightly larger, for opening statements and section intros.</p><span class="sg-spec"><b>lead</b> · 19px / 1.8</span></div>
+    <div class="sg-type-row"><p class="body">Body paragraph — this is the standard reading size used for all running copy. It is intentionally much larger than the old site (~13px) so long passages are comfortable to read.</p><span class="sg-spec"><b>body</b> · 17px / 1.8</span></div>
+    <div class="sg-type-row"><p class="small">Small / caption / meta text — used for timestamps, footnotes, table cells. Never below ~13px.</p><span class="sg-spec"><b>small</b> · 14px</span></div>
+    <div class="sg-type-row"><span class="eyebrow">Eyebrow Label · Computational Chemistry</span><span class="sg-spec"><b>eyebrow</b> · Stone · ~11.5px · 0.3em</span></div>
+  </section>
+
+  <!-- VIDEO HERO BAND (homepage — unchanged dark treatment) -->
+  <section class="sg-section">
+    <h2>Homepage video hero <span class="sg-spec">— dark placeholder = video · --hero-overlay gradient · cream serif · UNCHANGED</span></h2>
+    <div class="hero-band">
+      <div class="hero-band__media"></div>
+      <div class="hero-band__overlay"></div>
+      <div class="hero-band__content">
+        <span class="eyebrow">Computational Chemistry · Est. 2026</span>
+        <h2 class="display" style="margin:0.75rem 0 1.25rem">The Shape<br>of <em>Discovery</em></h2>
+        <p class="lead" style="max-width:440px">Decades of science. Now accessible to all.</p>
+        <div class="sg-row" style="margin-top:2rem">
+          <a class="btn btn--primary">Request Access</a>
+          <a class="btn btn--ghost">Explore Programs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INNER-PAGE HERO (white, treatment A) -->
+  <section class="sg-section">
+    <h2>Inner-page hero <span class="sg-spec">— white ground · ink serif headline · Stone sub · thin Oyster hairline · NO dark band</span></h2>
+    <div class="hero-inner">
+      <span class="eyebrow">About · The Foundation</span>
+      <h1 class="display" style="font-size:clamp(2.5rem,5vw,4.5rem);margin:0.75rem 0 1rem">The Science Behind<br>the <em>Foundation</em></h1>
+      <p class="lead" style="max-width:480px">Decades of computational chemistry research, now accessible to researchers worldwide.</p>
+      <span class="hairline" style="margin-top:2rem"></span>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="sg-section">
+    <h2>Buttons <span class="sg-spec">— square corners · Midnight primary + soft shadow · tonal "deepen" hover (no lift) · no glass</span></h2>
+    <div class="sg-row">
+      <button class="btn btn--primary">Primary · Midnight</button>
+      <button class="btn btn--secondary">Secondary · Outline</button>
+      <button class="btn btn--primary" disabled>Disabled</button>
+    </div>
+    <p class="sg-spec" style="margin-top:1.25rem">hover primary → background deepens to <b>--ink-hover #211e20</b>, shadow tightens; secondary → fills Midnight. No translate, no underline.</p>
+  </section>
+
+  <!-- HAIRLINE -->
+  <section class="sg-section">
+    <h2>Hairline accent <span class="sg-spec">— 1px --surface Oyster · rules + underlines ONLY, never a fill</span></h2>
+    <span class="hairline"></span>
+    <p class="body" style="margin-top:1.5rem">Inline underline accent: <a class="link-accent">an Oyster-underlined link</a> within body copy.</p>
+  </section>
+
+  <!-- CARD + TAG + FORM -->
+  <section class="sg-section">
+    <h2>Card, tag &amp; consolidated form <span class="sg-spec">— Oyster tag · one form family (marketing + app) · restrained card (no glow)</span></h2>
+    <div class="sg-grid-2">
+      <div class="card">
+        <span class="tag">Member Access</span>
+        <h3 class="h3" style="margin:1rem 0 0.75rem">Sign in to <em>your account</em></h3>
+        <p class="body">A card is white with an Oyster hairline border and no shadow — the old heavy gold glow is gone. The tag above is an Oyster surface fill with Midnight text.</p>
+      </div>
+      <div class="card">
+        <form onsubmit="return false">
+          <div class="input-group">
+            <label class="input-label" for="sg-email">Email Address</label>
+            <input class="input" type="email" id="sg-email" placeholder="you@institution.edu">
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="sg-type">Account Type</label>
+            <select class="input" id="sg-type"><option>Academia</option><option>Industry</option></select>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="sg-msg">Message</label>
+            <textarea class="input" id="sg-msg" placeholder="Tell us about your research…"></textarea>
+          </div>
+          <button class="btn btn--primary" style="width:100%" type="submit">Submit</button>
+          <p class="form-msg error">Error state — please fill in all fields.</p>
+          <p class="form-msg success">Success state — your message has been sent.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAV STATES -->
+  <section class="sg-section">
+    <h2>Nav — transparent &amp; scrolled <span class="sg-spec">— static samples</span></h2>
+    <div class="sg-nav-sample on-dark">
+      <div class="nav">
+        <span class="nav__logo">Jorgensen Foundation</span>
+        <div class="nav__links"><a class="active">Programs</a><a>About</a><a>Publications</a><a>Contact</a></div>
+      </div>
+    </div>
+    <p class="sg-spec" style="margin:-0.5rem 0 1.5rem">transparent · over homepage hero · cream links · cream underline under active</p>
+    <div class="sg-nav-sample">
+      <div class="nav nav--scrolled">
+        <span class="nav__logo">Jorgensen Foundation</span>
+        <div class="nav__links"><a class="active">Programs</a><a>About</a><a>Publications</a><a>Contact</a></div>
+      </div>
+    </div>
+    <p class="sg-spec">scrolled · white · ink links · Midnight underline under active (legible)</p>
+  </section>
+
+</div>

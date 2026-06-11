@@ -1,0 +1,154 @@
+/* ============================================================================
+   COMPONENT LAYER — "Midnight / Stone / Oyster" design system
+   ONE canonical, token-based version of each component family. Token-driven only
+   (no hardcoded hexes; incidental greys derived via color-mix). De-duplicates the
+   old per-page families and restyles them. Loaded ONLY by /styleguide for now.
+   ============================================================================ */
+@import url('/css/tokens.css');
+
+/* State colours the base palette didn't define — component-layer tokens (fold into tokens.css at rollout). */
+:root {
+  --error: #b3261e;
+  --success: #2f6b43;
+}
+
+/* --- HEADINGS (serif, weight 300, italic <em> accent; large elegant clamps) --- */
+.display{font-family:var(--font-serif);font-weight:300;color:var(--ink);font-size:clamp(3.5rem,8.5vw,7.5rem);line-height:1.0;letter-spacing:-0.02em}
+.h2{font-family:var(--font-serif);font-weight:300;color:var(--ink);font-size:clamp(2rem,4vw,3.25rem);line-height:1.12;letter-spacing:-0.01em}
+.h3{font-family:var(--font-serif);font-weight:400;color:var(--ink);font-size:clamp(1.3rem,2.5vw,1.8rem);line-height:1.25}
+.display em,.h2 em,.h3 em{font-style:italic}
+
+/* --- BODY TEXT (17px body, 19px lead, 1.8 line-height) --- */
+.lead{font-family:var(--font-sans);font-size:var(--fs-body-lg);line-height:var(--lh-body);color:var(--body)}
+.body{font-family:var(--font-sans);font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body)}
+.small{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.6;color:var(--body)}
+
+/* --- EYEBROW LABEL (Stone; --ink modifier for more emphasis) --- */
+.eyebrow{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.3em;text-transform:uppercase;color:var(--body);font-weight:400;display:block}
+.eyebrow--ink{color:var(--ink)}
+
+/* --- HAIRLINE ACCENT (Oyster; rules + underlines only, never a heavy fill) --- */
+.hairline{width:48px;height:1px;background:var(--surface);border:none;display:block}
+.link-accent{color:var(--ink);border-bottom:1px solid var(--surface);padding-bottom:2px;transition:border-color 0.2s}
+.link-accent:hover{border-bottom-color:var(--ink)}
+
+/* --- BUTTONS (square corners; small uppercase labels; tonal hover, no lift, no glass) --- */
+.btn{display:inline-block;font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.2em;text-transform:uppercase;padding:0.85rem 2rem;border:1px solid transparent;border-radius:0;background:transparent;cursor:pointer;transition:background 0.28s ease,color 0.28s ease,border-color 0.28s ease,box-shadow 0.28s ease}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+/* Primary — Midnight fill, white text, soft ink shadow; hover deepens to --ink-hover (no translate/lift) */
+.btn--primary{background:var(--ink);color:var(--ground);border-color:var(--ink);box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 22%,transparent)}
+.btn--primary:hover{background:var(--ink-hover);border-color:var(--ink-hover);box-shadow:0 8px 22px color-mix(in srgb,var(--ink) 30%,transparent)}
+/* Secondary — ink outline; hover fills ink */
+.btn--secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn--secondary:hover{background:var(--ink);color:var(--ground)}
+/* Ghost (hero, on dark) — cream outline; hover fills cream + ink text. Hero PRIMARY reuses .btn--primary. */
+.btn--ghost{background:transparent;color:var(--cream);border-color:var(--cream)}
+.btn--ghost:hover{background:var(--cream);color:var(--ink)}
+
+/* --- CARD (white, Oyster hairline border, restrained — no heavy glow) --- */
+.card{background:var(--ground);border:1px solid var(--hairline);border-radius:0;padding:2.5rem;box-shadow:none}
+
+/* --- TAG / BADGE (Oyster surface fill, ink text) --- */
+.tag{display:inline-block;font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;background:var(--surface);color:var(--ink);padding:0.25rem 0.65rem}
+
+/* --- FORM FAMILY (consolidates the marketing AND app form families into one set) --- */
+.input-group{margin-bottom:1.5rem}
+.input-label{display:block;font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.28em;text-transform:uppercase;color:var(--body);margin-bottom:0.6rem}
+.input{width:100%;border:none;border-bottom:1px solid var(--hairline);background:transparent;padding:0.75rem 0;font-family:var(--font-sans);font-size:var(--fs-body);color:var(--ink);outline:none;border-radius:0;transition:border-color 0.2s}
+.input:focus{border-bottom-color:var(--ink)}
+.input::placeholder{color:color-mix(in srgb, var(--ink) 32%, var(--ground))}
+textarea.input{resize:vertical;min-height:140px;line-height:var(--lh-body)}
+select.input{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:1.5rem;background-repeat:no-repeat;background-position:calc(100% - 9px) center,calc(100% - 4px) center;background-size:5px 5px,5px 5px;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%)}
+.form-msg{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.6;margin-top:0.75rem;display:none}
+.form-msg.error{color:var(--error);display:block}
+.form-msg.success{color:var(--success);display:block}
+
+/* --- NAV (transparent over homepage hero → scrolled solid; Oyster hairline divider) --- */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2.5rem}
+.nav__logo{font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;color:var(--cream)}
+.nav__links{display:flex;gap:2rem}
+.nav__links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);opacity:0.85;text-decoration:none}
+.nav--scrolled{background:var(--ground);border-bottom:1px solid var(--hairline)}
+.nav--scrolled .nav__logo,.nav--scrolled .nav__links a{color:var(--ink)}
+/* Active underline (functional, legible) — Midnight on white/scrolled, cream on the dark transparent nav.
+   (Decorative hairlines/rules stay Oyster; the active-nav line is intentionally darker so it reads.) */
+.nav__links a.active{border-bottom:1px solid var(--cream)}
+.nav--scrolled .nav__links a.active{border-bottom-color:var(--ink)}
+
+/* --- HERO BAND (homepage video) — dark band + near-black overlay + cream text --- */
+.hero-band{position:relative;background:var(--ink);padding:7rem 2.5rem 5rem;overflow:hidden}
+.hero-band__media{position:absolute;inset:0;background:var(--ink);background-image:radial-gradient(ellipse at 65% 40%,color-mix(in srgb,var(--cream) 8%,transparent) 0%,transparent 55%)}
+.hero-band__overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--hero-overlay) 0%,color-mix(in srgb,var(--hero-overlay) 30%,transparent) 60%,transparent 100%)}
+.hero-band__content{position:relative;z-index:2}
+.hero-band .display{color:var(--cream)}
+.hero-band .eyebrow{color:var(--cream)}
+.hero-band .lead{color:color-mix(in srgb,var(--cream) 70%,transparent)}
+
+/* --- INNER-PAGE HERO (white ground, ink serif headline, Stone sub, thin Oyster hairline; NO dark band) --- */
+.hero-inner{background:var(--ground);padding:6rem 2.5rem 4rem;border-bottom:1px solid var(--hairline)}
+.hero-inner .lead{color:var(--body)}
+
+/* ============================================================================
+   PROGRAM-PAGE SHARED BLOCK (folded in, token-based)
+   ============================================================================ */
+.section-label{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.3em;text-transform:uppercase;color:var(--body);margin-bottom:1.5rem;display:block}
+.section-h2{font-family:var(--font-serif);font-weight:300;color:var(--ink);font-size:clamp(2rem,4vw,3rem);line-height:1.12}
+.section-h2 em{font-style:italic}
+.section-intro{font-family:var(--font-sans);font-size:var(--fs-body-lg);line-height:var(--lh-body);color:var(--body);max-width:680px}
+
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.cap-card{background:var(--ground);border:1px solid var(--hairline);padding:2rem}
+.cap-num{font-family:var(--font-serif);font-size:2rem;font-weight:300;color:var(--body);line-height:1;margin-bottom:1rem}
+.cap-title{font-family:var(--font-sans);font-size:var(--fs-body);font-weight:400;color:var(--ink);margin-bottom:0.6rem;letter-spacing:0.02em}
+.cap-body{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.7;color:var(--body)}
+
+.tech-list{display:flex;flex-direction:column}
+.tech-item{display:grid;grid-template-columns:64px 1fr auto;gap:2rem;align-items:start;padding:2rem 0;border-bottom:1px solid var(--hairline)}
+.tech-num{font-family:var(--font-serif);font-size:1.15rem;font-weight:300;color:var(--body)}
+.tech-name{font-family:var(--font-sans);font-size:var(--fs-body);font-weight:400;color:var(--ink);margin-bottom:0.5rem}
+.tech-desc{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.8;color:var(--body)}
+.tech-tag{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;background:var(--surface);color:var(--ink);padding:0.25rem 0.65rem;white-space:nowrap}
+
+.io-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+.io-col-label{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.3em;text-transform:uppercase;color:var(--body);margin-bottom:1.5rem;display:block}
+.io-col-title{font-family:var(--font-serif);font-size:1.6rem;font-weight:300;color:var(--ink);margin-bottom:1.5rem}
+.io-item{display:flex;gap:1.25rem;align-items:start;padding:1rem 0;border-bottom:1px solid var(--hairline)}
+.io-item-tag{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.15em;text-transform:uppercase;background:var(--surface);color:var(--ink);padding:0.25rem 0.55rem;flex-shrink:0}
+.io-item-name{font-family:var(--font-sans);font-size:var(--fs-body);color:var(--ink);margin-bottom:0.2rem}
+.io-item-desc{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.7;color:var(--body)}
+
+/* Citation — light treatment (Oyster band + white card); no dark band on inner pages */
+.citation-section{background:var(--surface);padding:5rem 2.5rem}
+.citation-card{background:var(--ground);border:1px solid var(--hairline);padding:3rem}
+.citation-title{font-family:var(--font-serif);font-size:1.3rem;font-weight:400;color:var(--ink);line-height:1.4;margin-bottom:0.75rem}
+.citation-authors{font-family:var(--font-sans);font-size:var(--fs-small);color:var(--body);margin-bottom:0.4rem}
+.citation-journal{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.12em;text-transform:uppercase;color:var(--body);margin-bottom:1.5rem}
+.citation-text{font-family:var(--font-serif);font-style:italic;font-size:var(--fs-body);line-height:1.9;color:var(--body)}
+.citation-link{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.2em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--surface);padding-bottom:2px}
+
+.cta-band{background:var(--ground);border-top:1px solid var(--hairline);padding:6rem 2.5rem;text-align:center}
+.cta-band-h2{font-family:var(--font-serif);font-weight:300;color:var(--ink);font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin-bottom:1.25rem}
+.cta-band-h2 em{font-style:italic}
+.cta-band-sub{font-family:var(--font-sans);font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body);max-width:460px;margin:0 auto 2.5rem}
+
+.toast{display:inline-block;background:var(--ink);color:var(--ground);font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.75rem}
+
+/* ============================================================================
+   LEGAL FAMILY (.content-section/.toc/.legal-*) — folded in, bigger body text
+   ============================================================================ */
+.content-section{background:var(--ground);padding:6rem 2.5rem}
+.content-inner{max-width:760px;margin:0 auto}
+.toc{margin-bottom:3.5rem;padding:2rem 2.5rem;background:var(--ground);border:1px solid var(--hairline)}
+.toc-label{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.3em;text-transform:uppercase;color:var(--body);margin-bottom:1rem;display:block}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin:0;padding:0}
+.toc-list a{font-family:var(--font-sans);font-size:var(--fs-body);color:var(--body);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s}
+.toc-list a:hover{border-bottom-color:var(--surface)}
+.legal-section{margin-bottom:3.5rem;padding-bottom:3.5rem;border-bottom:1px solid var(--hairline)}
+.legal-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.legal-num{font-family:var(--font-serif);font-size:0.95rem;color:var(--body);margin-bottom:0.5rem;display:block;letter-spacing:0.08em}
+.legal-h2{font-family:var(--font-serif);font-weight:300;color:var(--ink);font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;margin-bottom:1.5rem}
+.legal-h3{font-family:var(--font-sans);font-size:var(--fs-body);font-weight:400;color:var(--ink);margin-top:1.75rem;margin-bottom:0.75rem;letter-spacing:0.02em}
+.legal-body{font-family:var(--font-sans);font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body)}
+.legal-body p+p{margin-top:1rem}
+.legal-body ul{margin:1rem 0 1rem 1.5rem;display:flex;flex-direction:column;gap:0.5rem}
+.legal-body li{font-size:var(--fs-body);line-height:1.9;color:var(--body)}

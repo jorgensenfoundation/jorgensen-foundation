@@ -1,0 +1,28 @@
+/* ============================================================================
+   DESIGN TOKENS — "Midnight / Stone / Oyster on white"
+   White-bodied · Midnight ink structure · Oyster hairline/surface. Imported first;
+   every component layer consumes these custom properties.
+   ============================================================================ */
+:root {
+  /* --- COLORS --- */
+  --ground: #ffffff;                  /* White — page background */
+  --ink: #302C2E;                     /* Midnight — headings, primary text */
+  --body: #53534C;                    /* Stone — body copy */
+  --surface: #DEDCD5;                 /* Oyster — tags, cards, hairlines, active-nav */
+  --ink-hover: #211e20;               /* darker Midnight — primary button deepen-hover */
+  --hairline: #DEDCD5;                /* Oyster — decorative hairlines & borders */
+  --cream: #f4efe4;                   /* text on the dark homepage video hero ONLY */
+  --hero-overlay: rgba(9,10,13,0.82); /* near-black gradient over the homepage hero video */
+
+  /* --- TYPE FAMILIES --- */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;  /* display/headings, weight 300, italic <em> accent */
+  --font-sans: Helvetica, Arial, sans-serif;           /* body + UI */
+
+  /* --- TYPE SCALE ---
+     Body copy ~16–18px with generous line-height (fixes the old ~13px). Assumes html base 16px. */
+  --fs-body: 1.0625rem;     /* 17px — body paragraphs */
+  --fs-body-lg: 1.1875rem;  /* 19px — lead/intro paragraphs */
+  --fs-small: 0.875rem;     /* 14px — captions/meta — never below ~13px */
+  --fs-eyebrow: 0.72rem;    /* ~11.5px — uppercase letter-spaced labels */
+  --lh-body: 1.8;           /* body line-height */
+}

@@ -1,0 +1,41 @@
+/* Style guide PAGE layout only (review scaffolding) — NOT part of the shipped
+   component layer. Depends on tokens.css (loaded via components.css). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ground);color:var(--body);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+
+.sg-wrap{max-width:1120px;margin:0 auto;padding:4rem 2.5rem 8rem}
+.sg-head{margin-bottom:4rem;padding-bottom:2rem;border-bottom:1px solid var(--hairline)}
+.sg-head h1{font-family:var(--font-serif);font-weight:300;font-size:clamp(2.5rem,5vw,4rem);color:var(--ink);line-height:1}
+.sg-head p{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body);margin-top:1rem;max-width:640px}
+
+.sg-section{padding:3.5rem 0;border-bottom:1px solid var(--hairline)}
+.sg-section:last-child{border-bottom:none}
+.sg-section > h2{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.3em;text-transform:uppercase;color:var(--ink);margin-bottom:2rem}
+
+/* spec label (px / hex / token name) */
+.sg-spec{font-family:var(--font-sans);font-size:0.6875rem;letter-spacing:0.05em;color:color-mix(in srgb,var(--ink) 45%,var(--ground));white-space:nowrap}
+.sg-spec b{color:var(--ink);font-weight:400}
+
+/* colour swatches */
+.sg-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.25rem}
+.sg-swatch{border:1px solid var(--hairline)}
+.sg-swatch .chip{height:84px}
+.sg-swatch .meta{padding:0.75rem 0.85rem;border-top:1px solid var(--hairline)}
+.sg-swatch .tok{font-family:var(--font-sans);font-size:0.78rem;color:var(--ink);display:block}
+.sg-swatch .hex{font-size:0.7rem;color:color-mix(in srgb,var(--ink) 45%,var(--ground));letter-spacing:0.04em}
+
+/* type scale rows */
+.sg-type-row{display:grid;grid-template-columns:1fr 160px;gap:2rem;align-items:baseline;padding:1.1rem 0;border-top:1px solid var(--hairline)}
+.sg-type-row:first-of-type{border-top:none}
+.sg-type-row .sg-spec{text-align:right}
+
+/* generic sample row */
+.sg-row{display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center}
+.sg-stack{display:flex;flex-direction:column;gap:1.5rem;max-width:520px}
+.sg-note{font-size:var(--fs-small);color:color-mix(in srgb,var(--ink) 45%,var(--ground));margin-top:1rem}
+
+/* nav samples */
+.sg-nav-sample{border:1px solid var(--hairline);margin-bottom:1.25rem}
+.sg-nav-sample.on-dark{background:var(--ink);border-color:transparent}
+.sg-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+@media(max-width:760px){.sg-grid-2{grid-template-columns:1fr}}
