@@ -1,0 +1,120 @@
+---
+layout: marketing.njk
+title: Contact — Jorgensen Foundation
+description: Get in touch with the Jorgensen Foundation — academic access, industry partnerships, technical support, and general enquiries.
+pageCss: /css/contact.css
+permalink: /contact/index.html
+navActive: contact
+---
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Contact · Jorgensen Foundation</span>
+    <h1 class="hero-h1">Get in <em>Touch</em></h1>
+    <p class="hero-sub">Whether you're a researcher, a potential industry partner, or just curious — we'd like to hear from you.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-wrap">
+  <div class="contact-inner">
+
+    <!-- LEFT: FORM -->
+    <div>
+      <span class="form-label-top">Send a Message</span>
+      <h2 class="form-h2">How can we<br><em>help you?</em></h2>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label class="input-label" for="first-name">First Name</label>
+          <input class="input" type="text" id="first-name" placeholder="Jane" autocomplete="given-name">
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="last-name">Last Name</label>
+          <input class="input" type="text" id="last-name" placeholder="Smith" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="email">Email Address</label>
+        <input class="input" type="email" id="email" placeholder="jane.smith@university.edu" autocomplete="email">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="subject">Subject</label>
+        <select class="input" id="subject">
+          <option value="" disabled selected>Select a subject</option>
+          <option value="General Enquiry">General Enquiry</option>
+          <option value="Academic Access">Academic Access</option>
+          <option value="Industry Partnership">Industry Partnership</option>
+          <option value="Technical Support">Technical Support</option>
+          <option value="Press &amp; Media">Press &amp; Media</option>
+        </select>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="input-group">
+        <label class="input-label" for="message">Message</label>
+        <textarea class="input" id="message" placeholder="Tell us about your research, your organisation, or what you're looking for…"></textarea>
+      </div>
+
+      <button class="submit-btn" id="submit-btn" onclick="submitContact()">Send Message</button>
+      <p class="form-msg" id="form-msg"></p>
+    </div>
+
+    <!-- RIGHT: INFO -->
+    <div class="info-top">
+      <span class="info-label">Contact Information</span>
+      <h2 class="info-h2">We respond to all<br><em>enquiries.</em></h2>
+
+      <div class="info-block">
+        <span class="info-block-label">Email</span>
+        <p class="info-block-name">General &amp; Partnerships</p>
+        <p class="info-block-content"><a href="mailto:info@jorgensenfoundation.org">info@jorgensenfoundation.org</a></p>
+      </div>
+
+      <div class="info-block">
+        <span class="info-block-label">Address</span>
+        <p class="info-block-name">Yale University</p>
+        <p class="info-block-content">
+          Department of Chemistry<br>
+          225 Prospect Street<br>
+          New Haven, CT 06511<br>
+          United States
+        </p>
+      </div>
+
+      <div class="info-block">
+        <span class="info-block-label">Response Times</span>
+        <p class="info-block-content">
+          Academic access enquiries are typically answered within two business days. Industry partnership discussions are coordinated by our partnerships team and may take up to five business days for an initial response.
+        </p>
+      </div>
+
+      <div class="info-block">
+        <span class="info-block-label">More Information</span>
+        <ul class="info-links">
+          <li><a href="/about">About the Jorgensen Foundation</a></li>
+          <li><a href="/publications">Scientific Publications</a></li>
+          <li><a href="/news">News &amp; Updates</a></li>
+          <li><a href="/grants">Student Travel Grants</a></li>
+          <li><a href="/boss">BOSS</a></li>
+          <li><a href="/mcpro">MCPRO</a></li>
+          <li><a href="/bomb">BOMB</a></li>
+          <li><a href="/fep">FEP</a></li>
+          <li><a href="/opls">OPLS Force Fields</a></li>
+          <li><a href="/visualisation">Visualisation</a></li>
+          <li><a href="/#access">Access &amp; Pricing</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<script src="/js/contact.js"></script>

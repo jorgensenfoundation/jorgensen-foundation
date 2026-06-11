@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{% if not comingSoon %}<script>if(sessionStorage.getItem('jf_access')!=='true'){window.location.replace('/coming-soon');}</script>{% endif %}
+{% if comingSoonGate != false %}<script>if(sessionStorage.getItem('jf_access')!=='true'){window.location.replace('/coming-soon');}</script>{% endif %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ title }}</title>
@@ -12,8 +12,6 @@
 {% if pageCss %}<link rel="stylesheet" href="{{ pageCss }}">{% endif %}
 </head>
 <body>
-
-{% include "nav.njk" %}
 
 {{ content | safe }}
 

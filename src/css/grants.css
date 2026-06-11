@@ -1,0 +1,86 @@
+/* Grants page styles. Loaded after style.css; page-unique rules + property-level
+   overrides of shared selectors (including the shared form components and the
+   shared FAQ component, which grants reuses). */
+
+/* --- Overrides of shared selectors --- */
+body{background:#f5f0e6}
+.hero{height:70vh;min-height:460px}
+.hero-overlay{background:linear-gradient(to top,rgba(20,16,10,0.88) 0%,rgba(20,16,10,0.1) 60%,transparent 100%)}
+.hero-h1{font-size:clamp(3.5rem,8vw,7.5rem);line-height:0.95;letter-spacing:-0.02em}
+
+/* --- Hero --- */
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 35% 55%,rgba(184,151,42,0.1) 0%,transparent 55%),linear-gradient(150deg,#1a1510 0%,#2a2218 100%)}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:300;font-style:italic;color:rgba(245,240,230,0.5);margin-top:1rem;line-height:1.4;max-width:560px}
+.hero-actions{display:flex;gap:1.25rem;margin-top:2.5rem;flex-wrap:wrap;align-items:center}
+.hero-btn{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid #f5f0e6;background:#f5f0e6;color:#1a1510;transition:all 0.25s}
+.hero-btn:hover{background:transparent;color:#f5f0e6}
+.hero-btn-ghost{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid rgba(245,240,230,0.3);color:#f5f0e6;transition:all 0.25s}
+.hero-btn-ghost:hover{border-color:#f5f0e6}
+
+/* --- About / stats --- */
+.about-section{padding:8rem 3rem;background:#faf8f4}
+.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.section-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
+.section-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem}
+.section-h2 em{font-style:italic}
+.section-body{font-size:0.8rem;line-height:2.2;color:#666}
+.section-body p+p{margin-top:1.25rem}
+.stat-row{display:flex;flex-direction:column;gap:2.5rem}
+.stat-block{border-left:2px solid rgba(184,151,42,0.4);padding-left:1.75rem}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:#1a1510;line-height:1}
+.stat-label{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#aaa;margin-top:0.4rem}
+
+/* --- Eligibility / coverage split --- */
+.split-section{background:#fff;display:grid;grid-template-columns:1fr 1fr}
+.split-col{padding:7rem 4.5rem}
+.split-col+.split-col{border-left:1px solid #ede8de}
+.split-h3{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:#1a1510;line-height:1.15;margin-bottom:2rem}
+.split-h3 em{font-style:italic}
+.split-body{font-size:0.78rem;line-height:2.1;color:#666;margin-bottom:2.5rem}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:0.9rem}
+.check-list li{font-size:0.72rem;line-height:1.7;color:#555;display:flex;gap:0.85rem;align-items:flex-start}
+.check-list li::before{content:'→';color:#b8972a;flex-shrink:0;font-size:0.65rem;margin-top:0.12rem}
+.coverage-amount{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:#1a1510;line-height:1;margin-bottom:0.4rem}
+.coverage-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
+
+/* --- How to apply (steps) --- */
+.steps-section{padding:8rem 3rem;background:#f5f0e6}
+.steps-inner{max-width:1100px;margin:0 auto}
+.steps-list{display:flex;flex-direction:column;margin-top:4rem}
+.step-item{display:grid;grid-template-columns:80px 1fr;gap:2.5rem;padding:2.5rem 0;border-bottom:1px solid #ddd8ce;align-items:start}
+.step-item:first-child{border-top:1px solid #ddd8ce}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:rgba(184,151,42,0.35);line-height:1}
+.step-title{font-size:0.8rem;letter-spacing:0.04em;font-weight:400;color:#1a1510;margin-bottom:0.5rem}
+.step-body{font-size:0.68rem;line-height:1.9;color:#888}
+
+/* --- Application form heading --- */
+.form-section{padding:8rem 3rem;background:#faf8f4}
+.form-inner{max-width:780px;margin:0 auto}
+.form-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.15;margin-bottom:0.75rem}
+.form-h2 em{font-style:italic}
+.form-sub{font-size:0.75rem;line-height:2;color:#888;margin-bottom:3.5rem;max-width:540px}
+
+/* --- FAQ: grants reuses the shared FAQ component; only these differ --- */
+.faq-a-inner{font-size:0.75rem;line-height:2.1;color:#888;padding-bottom:1.5rem;max-width:none}
+
+/* --- Shared form components: grants' value overrides --- */
+.input{font-size:0.8rem}
+textarea.input{min-height:120px;padding-top:0.75rem;line-height:1.7}
+.form-row{gap:1.5rem}
+.form-divider{background:#e8e4dc;margin:1rem 0 1.75rem}
+.submit-btn{margin-top:0.5rem}
+.submit-btn:disabled{opacity:0.5}
+.form-msg{margin-top:1rem}
+.form-msg.success{color:#2a7a45}
+
+/* --- Responsive (shared nav/footer breakpoints come from style.css) --- */
+@media(max-width:960px){
+  .hero-content{padding:0 1.5rem 4rem}
+  .about-section{padding:5rem 1.5rem}
+  .about-inner{grid-template-columns:1fr;gap:3rem}
+  .split-section{grid-template-columns:1fr}
+  .split-col{padding:4rem 1.5rem}
+  .split-col+.split-col{border-left:none;border-top:1px solid #ede8de}
+  .steps-section,.form-section,.faq{padding:5rem 1.5rem}
+  .form-row{grid-template-columns:1fr}
+}
