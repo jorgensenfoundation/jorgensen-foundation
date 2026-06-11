@@ -1,0 +1,43 @@
+/* Verify-email page-specific styles. Loaded after app.css (app nav/footer/body + the gold
+   card component come from there). .card omits its border because the shared gold rule
+   in app.css supplies the border + shadow (as it did in the original). */
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem 1.5rem}
+.card{background:#fff;max-width:480px;width:100%;padding:3.5rem}
+
+.state{display:none}
+.state.active{display:block}
+
+.card-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;display:block}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.2;margin-bottom:1rem;color:#1a1510}
+.card-title em{font-style:italic}
+.card-body{font-size:0.78rem;line-height:2;color:#777;margin-bottom:2rem}
+.divider{height:1px;background:#e8e0d0;margin:2rem 0}
+
+.user-info{background:#f5f0e6;padding:1.25rem 1.5rem;margin-bottom:2rem}
+.user-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:#1a1510;margin-bottom:0.25rem}
+.user-meta{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#999}
+.user-type{display:inline-block;margin-top:0.5rem;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 0.75rem;border:1px solid #1a1510;color:#1a1510}
+
+.input-group{margin-bottom:1.5rem}
+.input-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-bottom:0.6rem;display:block}
+.input{width:100%;border:none;border-bottom:1px solid #e8e0d0;padding:0.75rem 0;font-size:0.82rem;font-family:Helvetica,Arial,sans-serif;color:#1a1510;outline:none;background:transparent;transition:border-color 0.2s}
+.input:focus{border-bottom-color:#1a1510}
+.input::placeholder{color:#ccc}
+input[type=password]{-webkit-appearance:none;appearance:none}
+.input-hint{font-size:0.6rem;color:#bbb;margin-top:0.4rem;display:block}
+.show-hide-btn{display:block;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#bbb;background:none;border:none;cursor:pointer;margin-top:0.5rem;padding:0;font-family:Helvetica,Arial,sans-serif}
+
+.btn{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.5rem}
+.btn:hover{background:#2a2218}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+
+.error-msg{font-size:0.68rem;color:#c0392b;margin-top:0.75rem;display:none}
+.error-msg.show{display:block}
+
+.loading-spinner{text-align:center;padding:2rem 0}
+.loading-spinner p{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:#999;margin-top:1rem}
+
+@media(max-width:600px){
+  main{padding:2rem 1rem}
+  .card{padding:2rem 1.5rem}
+}

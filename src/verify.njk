@@ -1,0 +1,56 @@
+---
+layout: app.njk
+title: Verify Email — Jorgensen Foundation
+pageCss: /css/verify.css
+permalink: /verify/index.html
+---
+
+<main>
+  <div class="card">
+
+    <!-- LOADING STATE -->
+    <div class="state active" id="state-loading">
+      <div class="loading-spinner">
+        <p>Verifying your email...</p>
+      </div>
+    </div>
+
+    <!-- SET PASSWORD STATE -->
+    <div class="state" id="state-set-password">
+      <span class="card-label">Email Verified</span>
+      <h1 class="card-title">Create your<br><em>password</em></h1>
+      <p class="card-body">Your email has been verified. Set a password to complete your account and access the Jorgensen Foundation programs.</p>
+      <div class="user-info" id="user-info"></div>
+      <div class="divider"></div>
+      <div class="input-group">
+        <label class="input-label" for="password">Password</label>
+        <input class="input" type="password" id="password" placeholder="Minimum 8 characters" autocomplete="new-password">
+      </div>
+
+      <p class="error-msg" id="password-error"></p>
+      <button class="btn" id="set-password-btn" onclick="setPassword()">Create Account & Continue</button>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="state" id="state-success">
+      <span class="card-label">Account Active</span>
+      <h1 class="card-title">Welcome to<br><em>the Foundation</em></h1>
+      <p class="card-body">Your account is now active. You will be redirected to complete your subscription shortly.</p>
+      <div class="divider"></div>
+      <a href="/login" class="btn">Continue to Login</a>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div class="state" id="state-error">
+      <span class="card-label">Verification Failed</span>
+      <h1 class="card-title">Invalid<br><em>link</em></h1>
+      <p class="card-body">This verification link is invalid or has already been used. Please register again or contact us at info@jorgensenfoundation.org.</p>
+      <div class="divider"></div>
+      <a href="/#access" class="btn">Return to Registration</a>
+    </div>
+
+  </div>
+</main>
+
+
+<script src="/js/verify.js"></script>
