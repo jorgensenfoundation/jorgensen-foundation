@@ -1,0 +1,117 @@
+/* Login page-specific styles. Loaded after app.css. App nav + body come from app.css;
+   the gold .card/.prog-card/.plan-card border+shadow also come from app.css, so those
+   selectors omit their own border here (the original had the gold rule last, overriding
+   their #e8e0d0 border). This page overrides the app footer with login's big 4-column
+   footer (footer-app-full.njk). */
+main{flex:1;padding:0}
+
+/* --- Centered card pages --- */
+.page-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 120px);padding:4rem 1.5rem}
+.page-wrap.hidden{display:none}
+.card{background:#fff;max-width:480px;width:100%;padding:3.5rem}
+.card-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;display:block}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.2;margin-bottom:1rem;color:#1a1510}
+.card-title em{font-style:italic}
+.card-body{font-size:0.78rem;line-height:2;color:#777;margin-bottom:2rem}
+.divider{height:1px;background:#e8e0d0;margin:2rem 0}
+.input-group{margin-bottom:1.5rem}
+.input-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-bottom:0.6rem;display:block}
+.input{width:100%;border:none;border-bottom:1px solid #e8e0d0;padding:0.75rem 0;font-size:0.82rem;font-family:Helvetica,Arial,sans-serif;color:#1a1510;outline:none;background:transparent;transition:border-color 0.2s}
+.input:focus{border-bottom-color:#1a1510}
+.input::placeholder{color:#ccc}
+input[type=password]{-webkit-appearance:none;appearance:none}
+.btn{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.5rem}
+.btn:hover{background:#2a2218}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.btn-outline-dark{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid #1a1510;background:transparent;color:#1a1510;cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.75rem}
+.btn-outline-dark:hover{background:#f5f0e6}
+.error-msg{font-size:0.68rem;color:#c0392b;margin-top:0.75rem;display:none}
+.error-msg.show{display:block}
+.success-msg{font-size:0.68rem;color:#27ae60;margin-top:0.75rem;display:none}
+.success-msg.show{display:block}
+.link-small{font-size:0.58rem;letter-spacing:0.1em;color:#999;text-align:center;margin-top:1.5rem;display:block}
+.link-small a{color:#1a1510;border-bottom:1px solid #ccc}
+.eye-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#bbb;padding:0;display:flex;align-items:center;line-height:0}
+.eye-btn:hover{color:#888}
+
+/* --- Payment plans --- */
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.plan-card{padding:1.5rem;cursor:pointer;transition:all 0.2s;position:relative}
+.plan-card:hover{border-color:#1a1510}
+.plan-card.selected{border-color:#1a1510;background:#f5f0e6}
+.plan-card.selected::after{content:'✓';position:absolute;top:0.75rem;right:0.75rem;font-size:0.7rem;color:#1a1510}
+.plan-period{font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:#999;margin-bottom:0.5rem}
+.plan-price{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:#1a1510;line-height:1}
+.plan-price span{font-size:0.65rem;color:#999;font-family:Helvetica,Arial,sans-serif}
+.plan-save{font-size:0.55rem;color:#27ae60;margin-top:0.3rem;letter-spacing:0.05em}
+.plan-type-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#999;margin-bottom:1rem;display:block}
+
+/* --- Access code --- */
+.access-code-toggle{font-size:0.58rem;letter-spacing:0.1em;color:#999;cursor:pointer;display:block;text-align:center;margin-top:1.25rem;border:none;background:none;font-family:Helvetica,Arial,sans-serif;width:100%}
+.access-code-toggle:hover{color:#1a1510}
+.access-code-section{display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #e8e0d0}
+.access-code-section.show{display:block}
+.access-code-row{display:flex;gap:0.75rem}
+.access-code-row .input{flex:1}
+.btn-apply{font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.25rem;border:1px solid #1a1510;background:transparent;color:#1a1510;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif;white-space:nowrap;flex-shrink:0}
+.btn-apply:hover{background:#1a1510;color:#f5f0e6}
+
+/* --- Dashboard --- */
+.dashboard{display:none;padding:3rem}
+.dashboard.active{display:block}
+.dashboard-header{max-width:1100px;margin:0 auto 3rem;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #e8e0d0;padding-bottom:2rem}
+.dashboard-welcome{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:#1a1510;line-height:1.1}
+.dashboard-welcome em{font-style:italic}
+.dashboard-meta{text-align:right}
+.dashboard-email{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#999;margin-bottom:0.5rem}
+.dashboard-type{display:inline-block;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 0.75rem;border:1px solid #1a1510;color:#1a1510}
+.programs-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;max-width:1100px;margin-left:auto;margin-right:auto;display:block}
+.programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto}
+
+/* --- Program card (border + hover shadow come from the shared gold rule in app.css) --- */
+.prog-card{background:#fff;overflow:hidden;transition:box-shadow 0.3s}
+.prog-img-placeholder{width:100%;height:180px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem}
+.prog-img-label{font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,240,230,0.3)}
+.prog-body{padding:1.5rem}
+.prog-number{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:#ccc;margin-bottom:0.5rem}
+.prog-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:#1a1510;margin-bottom:0.5rem;line-height:1.2}
+.prog-tagline{font-size:0.62rem;letter-spacing:0.1em;color:#999;text-transform:uppercase;margin-bottom:1rem}
+.prog-short{font-size:0.72rem;line-height:1.8;color:#666;margin-bottom:1.25rem}
+.prog-toggle{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#1a1510;cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;display:flex;align-items:center;gap:0.5rem;padding:0;transition:opacity 0.2s}
+.prog-toggle:hover{opacity:0.6}
+.prog-expanded{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.prog-expanded.open{max-height:500px}
+.prog-expanded-inner{padding-top:1.25rem;border-top:1px solid #e8e0d0;margin-top:1.25rem}
+.prog-detail-title{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#999;margin-bottom:0.75rem}
+.prog-features{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.25rem}
+.prog-features li{font-size:0.68rem;line-height:1.7;color:#666;display:flex;gap:0.6rem}
+.prog-features li::before{content:'—';color:#ccc;flex-shrink:0}
+.prog-launch{display:inline-block;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.75rem 1.5rem;border:1px solid #1a1510;background:#1a1510;color:#f5f0e6;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif}
+.prog-launch:hover{background:#2a2218}
+
+/* --- Big footer (overrides app.css's minimal footer) --- */
+footer{padding:5rem 3rem 2.5rem;border-top:1px solid #e8e0d0;background:#fff;margin-top:4rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block;color:#1a1510}
+.footer-desc{font-size:0.65rem;line-height:2.1;color:#aaa;max-width:280px}
+.footer-col h4{font-size:0.52rem;letter-spacing:0.32em;text-transform:uppercase;color:#bbb;margin-bottom:1.25rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
+.footer-col ul a{font-size:0.68rem;color:#888;transition:color 0.2s}
+.footer-col ul a:hover{color:#111}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e8e0d0;padding-top:2rem}
+
+@media(max-width:900px){
+  .programs-grid{grid-template-columns:1fr 1fr}
+  .dashboard{padding:2rem 1.5rem}
+  .dashboard-header{flex-direction:column;align-items:flex-start;gap:1rem}
+  .dashboard-meta{text-align:left}
+}
+@media(max-width:600px){
+  .programs-grid{grid-template-columns:1fr}
+  .page-wrap{padding:2rem 1rem}
+  .card{padding:2rem 1.5rem}
+  .plan-grid{grid-template-columns:1fr}
+  footer{padding:3rem 1.5rem 2rem}
+  .footer-grid{grid-template-columns:1fr;gap:2.5rem}
+  .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+}
