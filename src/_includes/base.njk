@@ -8,15 +8,15 @@
 <meta name="description" content="{{ description }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="{{ mainCss or '/css/style.css' }}">
 {% if pageCss %}<link rel="stylesheet" href="{{ pageCss }}">{% endif %}
 </head>
 <body>
 
 {{ content | safe }}
 
-{% include "footer.njk" %}
+{% set _footer = footerInclude or "footer.njk" %}{% include _footer %}
 
-<script src="/js/main.js"></script>
+{% if mainJs != false %}<script src="/js/main.js"></script>{% endif %}
 </body>
 </html>

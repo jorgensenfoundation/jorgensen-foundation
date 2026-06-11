@@ -1,0 +1,24 @@
+<nav>
+  <a href="/" class="nav-logo">Jorgensen Foundation</a>
+  {% if navAuth %}
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/#programs">Programs</a>
+      <a href="/about">About</a>
+      <a href="/publications">Publications</a>
+      <a href="/news">News</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <span class="nav-user" id="nav-user"></span>
+    <button class="nav-logout" id="nav-logout" onclick="logout()">Sign Out</button>
+  </div>
+  {% else %}
+  <div class="nav-links">
+    <a href="/#programs">Programs</a>
+    <a href="/about">About</a>
+    <a href="/publications">Publications</a>
+    <a href="/news">News</a>
+    <a href="/contact">Contact</a>
+  </div>
+  {% endif %}
+</nav>

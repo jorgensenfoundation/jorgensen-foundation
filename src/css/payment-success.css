@@ -1,0 +1,16 @@
+/* Payment-success page-specific styles. Loaded after app.css. The .card border + shadow
+   come from the shared gold card component in app.css (which, in the original, overrode
+   the card's own border), so .card here omits border. */
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem 1.5rem}
+.card{background:#fff;max-width:480px;width:100%;padding:3.5rem}
+.card-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#999;margin-bottom:1.5rem;display:block}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.2;margin-bottom:1rem;color:#1a1510}
+.card-title em{font-style:italic}
+.card-body{font-size:0.78rem;line-height:2;color:#777;margin-bottom:2rem}
+.divider{height:1px;background:#e8e0d0;margin:2rem 0}
+.redirect-note{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#bbb;text-align:center}
+
+@media(max-width:600px){
+  main{padding:2rem 1rem}
+  .card{padding:2rem 1.5rem}
+}
