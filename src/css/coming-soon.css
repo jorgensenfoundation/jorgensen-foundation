@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coming Soon — Jorgensen Foundation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-<style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
 body{font-family:Helvetica,Arial,sans-serif;background:#1a1510;color:#f5f0e6;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
@@ -25,53 +16,3 @@ body{font-family:Helvetica,Arial,sans-serif;background:#1a1510;color:#f5f0e6;dis
 .submit:hover{background:rgba(245,240,230,0.08);border-color:rgba(245,240,230,0.6)}
 .error{font-size:0.6rem;letter-spacing:0.08em;color:rgba(220,100,80,0.8);margin-top:1rem;min-height:1rem;text-align:center}
 .footer-note{position:fixed;bottom:2rem;font-size:0.52rem;letter-spacing:0.12em;color:rgba(245,240,230,0.15)}
-</style>
-</head>
-<body>
-
-<p class="logo">Jorgensen Foundation</p>
-
-<h1 class="heading">Coming<br><em>Soon</em></h1>
-<p class="sub">The platform is under final preparation. Enter the access password to continue.</p>
-
-<div class="form">
-  <div class="input-wrap">
-    <input class="input" type="password" id="password" placeholder="Access password" onkeydown="if(event.key==='Enter')unlock()">
-    <button class="eye-btn" type="button" onclick="toggleVis()" id="eye-btn">SHOW</button>
-  </div>
-  <p class="error" id="error-msg"></p>
-  <button class="submit" onclick="unlock()">Enter →</button>
-</div>
-
-<p class="footer-note">© 2026 Jorgensen Foundation</p>
-
-<script>
-const PASSWORD = 'OPLS';
-
-function toggleVis() {
-  const input = document.getElementById('password');
-  const btn = document.getElementById('eye-btn');
-  if (input.type === 'password') { input.type = 'text'; btn.textContent = 'HIDE'; }
-  else { input.type = 'password'; btn.textContent = 'SHOW'; }
-}
-
-function unlock() {
-  const val = document.getElementById('password').value;
-  const err = document.getElementById('error-msg');
-  if (val === PASSWORD) {
-    sessionStorage.setItem('jf_access', 'true');
-    window.location.replace('/');
-  } else {
-    err.textContent = 'Incorrect password.';
-    document.getElementById('password').value = '';
-    document.getElementById('password').focus();
-  }
-}
-
-// Already unlocked — skip gate
-if (sessionStorage.getItem('jf_access') === 'true') {
-  window.location.replace('/');
-}
-</script>
-</body>
-</html>

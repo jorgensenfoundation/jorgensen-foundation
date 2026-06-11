@@ -1,0 +1,28 @@
+---
+layout: base.njk
+title: Coming Soon — Jorgensen Foundation
+comingSoonGate: false
+mainCss: /css/coming-soon.css
+footerInclude: footer-none.njk
+mainJs: false
+permalink: /coming-soon/index.html
+---
+
+<p class="logo">Jorgensen Foundation</p>
+
+<h1 class="heading">Coming<br><em>Soon</em></h1>
+<p class="sub">The platform is under final preparation. Enter the access password to continue.</p>
+
+<div class="form">
+  <div class="input-wrap">
+    <input class="input" type="password" id="password" placeholder="Access password" onkeydown="if(event.key==='Enter')unlock()">
+    <button class="eye-btn" type="button" onclick="toggleVis()" id="eye-btn">SHOW</button>
+  </div>
+  <p class="error" id="error-msg"></p>
+  <button class="submit" onclick="unlock()">Enter →</button>
+</div>
+
+<p class="footer-note">© 2026 Jorgensen Foundation</p>
+
+
+<script src="/js/coming-soon.js"></script>
