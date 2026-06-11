@@ -1,0 +1,14 @@
+{
+  "name": "jorgensen-foundation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Jorgensen Foundation website (Eleventy build)",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}
