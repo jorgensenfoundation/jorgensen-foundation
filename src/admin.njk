@@ -1,0 +1,170 @@
+---
+layout: base.njk
+title: Admin — Jorgensen Foundation
+comingSoonGate: false
+mainCss: /css/admin.css
+footerInclude: footer-none.njk
+mainJs: false
+permalink: /admin/index.html
+---
+
+<nav>
+  <a href="/" class="nav-logo">Jorgensen Foundation</a>
+  <span class="nav-tag">Admin</span>
+  <div style="display:flex;align-items:center;gap:1.5rem">
+    <a href="/about" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">About</a>
+    <a href="/publications" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">Publications</a>
+    <a href="/news" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">News</a>
+    <a href="/contact" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">Contact</a>
+    <button class="nav-logout" id="nav-logout" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="login-wrap">
+  <div class="card">
+    <span class="card-label">Restricted Access</span>
+    <h1 class="card-title">Admin<br><em>Dashboard</em></h1>
+    <div class="divider"></div>
+    <label class="input-label">Admin Password</label>
+    <div style="position:relative">
+      <input class="input" type="password" id="admin-password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin()" style="padding-right:2rem">
+      <button onclick="togglePasswordVisibility()" style="position:absolute;right:0;bottom:0.75rem;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.75rem;font-family:Helvetica,Arial,sans-serif;letter-spacing:0.05em" type="button" id="admin-show-btn">SHOW</button>
+    </div>
+    <p class="error-msg" id="login-error"></p>
+    <button class="btn" id="login-btn" onclick="adminLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="admin-dashboard" id="admin-dashboard">
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num" id="stat-total">—</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-active">—</div>
+      <div class="stat-label">Active Subscriptions</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-academia">—</div>
+      <div class="stat-label">Academia</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-industry">—</div>
+      <div class="stat-label">Industry</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-grants">—</div>
+      <div class="stat-label">Grant Applications</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="stat-newsletter">—</div>
+      <div class="stat-label">Newsletter Subscribers</div>
+    </div>
+  </div>
+
+  <div class="table-header">
+    <div class="table-title">All Users</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <input class="search-input" type="text" id="search" placeholder="Search email or name..." oninput="filterUsers()">
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+        <button class="filter-btn" onclick="setFilter('academia', this)">Academia</button>
+        <button class="filter-btn" onclick="setFilter('industry', this)">Industry</button>
+        <button class="filter-btn" onclick="setFilter('active', this)">Active</button>
+        <button class="filter-btn" onclick="setFilter('inactive', this)">Inactive</button>
+      </div>
+      <button class="refresh-btn" onclick="loadUsers()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Institution</th>
+          <th>Type</th>
+          <th>Verified</th>
+          <th>Subscription</th>
+          <th>Registered</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="users-table">
+        <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="table-header">
+    <div class="table-title">Newsletter Subscribers</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <input class="search-input" type="text" id="newsletter-search" placeholder="Search email..." oninput="filterNewsletter()">
+      <button class="refresh-btn" onclick="loadNewsletter()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:3rem">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Subscribed</th>
+        </tr>
+      </thead>
+      <tbody id="newsletter-table">
+        <tr><td colspan="3" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="table-header">
+    <div class="table-title">Grant Applications</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <input class="search-input" type="text" id="grants-search" placeholder="Search name, email, conference..." oninput="filterGrants()">
+      <button class="refresh-btn" onclick="loadGrants()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Applicant</th>
+          <th>Email</th>
+          <th>Institution</th>
+          <th>Supervisor</th>
+          <th>Conference</th>
+          <th>Amount</th>
+          <th>Submitted</th>
+          <th>Research Description</th>
+        </tr>
+      </thead>
+      <tbody id="grants-table">
+        <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Jorgensen Foundation · Admin Panel</span>
+    <div class="footer-legal">
+      <a href="/terms">Terms of Service</a>
+      <a href="/privacy">Privacy Policy</a>
+      <span class="footer-copy">info@jorgensenfoundation.org</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/js/admin.js"></script>
