@@ -13,6 +13,9 @@ nav.scrolled .nav-hamburger span{background:#111}
 .nav-links{display:flex;gap:2rem}
 .nav-links a{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#fff;opacity:0.85;transition:opacity 0.2s,color 0.4s}
 .nav-links a:hover{opacity:1}
+/* Active page indicator — understated hairline underline, same restraint as the other links */
+.nav-links a.active{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:rgba(255,255,255,0.35)}
+nav.scrolled .nav-links a.active{text-decoration-color:rgba(17,17,17,0.3)}
 .nav-cta{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.6);color:#fff;padding:0.55rem 1.2rem;transition:all 0.3s}
 .nav-cta:hover{background:#fff;color:#111}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}

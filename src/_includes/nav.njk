@@ -2,12 +2,12 @@
 <nav id="nav">
   <a href="/" class="nav-logo">Jorgensen Foundation</a>
   <div class="nav-links">
-    <a href="/#programs">Programs</a>
-    <a href="/about">About</a>
-    <a href="/publications">Publications</a>
-    <a href="/news">News</a>
-    <a href="/grants">Grants</a>
-    <a href="/contact">Contact</a>
+    <a href="/#programs"{% if navActive == "programs" %} class="active"{% endif %}>Programs</a>
+    <a href="/about"{% if navActive == "about" %} class="active"{% endif %}>About</a>
+    <a href="/publications"{% if navActive == "publications" %} class="active"{% endif %}>Publications</a>
+    <a href="/news"{% if navActive == "news" %} class="active"{% endif %}>News</a>
+    <a href="/grants"{% if navActive == "grants" %} class="active"{% endif %}>Grants</a>
+    <a href="/contact"{% if navActive == "contact" %} class="active"{% endif %}>Contact</a>
   </div>
   <div style="display:flex;gap:0.75rem;align-items:center">
     <a href="/login" class="nav-cta" style="background:transparent">Sign In</a>
