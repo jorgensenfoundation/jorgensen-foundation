@@ -1,0 +1,84 @@
+---
+layout: base.njk
+title: News & Updates — Jorgensen Foundation
+description: Latest news, program updates, and announcements from the Jorgensen Foundation.
+pageCss: /css/news.css
+permalink: /news/index.html
+navActive: news
+---
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Jorgensen Foundation</span>
+    <h1 class="hero-h1">News &amp;<br><em>Updates</em></h1>
+    <p class="hero-subtitle">Latest from the Jorgensen Foundation</p>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<section class="news-section" id="news">
+  <div class="news-inner">
+    <span class="section-label">Latest</span>
+    <h2 class="section-h2">What's new at the<br><em>Foundation.</em></h2>
+    <div class="news-grid">
+
+      <div class="news-card">
+        <div class="news-card-top">
+          <span class="news-date">June 2026</span>
+          <span class="news-tag foundation">Foundation News</span>
+        </div>
+        <p class="news-title">Jorgensen Foundation Launches</p>
+        <p class="news-desc">The Jorgensen Foundation officially opens its doors, bringing four decades of Yale computational chemistry research to researchers worldwide through a cloud-based platform. BOSS, MCPRO, BOMB, FEP, OPLS force fields, and the molecular visualisation suite are now accessible from any browser — no installation required.</p>
+        <a href="#" class="news-read-more">Read More →</a>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-top">
+          <span class="news-date">June 2026</span>
+          <span class="news-tag program">Program Update</span>
+        </div>
+        <p class="news-title">BOSS Version 5.0 Now Available</p>
+        <p class="news-desc">BOSS 5.0 brings significant performance improvements to Monte Carlo sampling, updated OPLS-AA/L parameters for expanded functional group coverage, and a redesigned input interface that reduces setup time for new simulations. Existing calculations are fully compatible with no migration required.</p>
+        <a href="#" class="news-read-more">Read More →</a>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-top">
+          <span class="news-date">May 2026</span>
+          <span class="news-tag publication">Publication</span>
+        </div>
+        <p class="news-title">New FEP Calculations for SARS-CoV-2</p>
+        <p class="news-desc">A new study using MCPRO and FEP calculations identifies potent inhibitors of the SARS-CoV-2 main protease, demonstrating sub-nanomolar predicted binding affinities for a series of novel peptidomimetic compounds. The work showcases the platform's drug discovery pipeline in an urgent therapeutic context.</p>
+        <a href="#" class="news-read-more">Read More →</a>
+      </div>
+
+      <div class="news-card">
+        <div class="news-card-top">
+          <span class="news-date">May 2026</span>
+          <span class="news-tag foundation">Foundation News</span>
+        </div>
+        <p class="news-title">Academic Grant Program Opens Applications</p>
+        <p class="news-desc">The Jorgensen Foundation's academic grant program is now accepting applications for the 2026–2027 cycle. Grants support graduate student and postdoctoral researcher travel to international computational chemistry conferences, with awards of up to $2,500 per recipient. Applications close 31 July 2026.</p>
+        <a href="#" class="news-read-more">Read More →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="newsletter" id="newsletter">
+  <div class="newsletter-inner">
+    <span class="newsletter-label">Stay Informed</span>
+    <h2 class="newsletter-h2">Get updates from the<br><em>Foundation.</em></h2>
+    <p class="newsletter-sub">Program releases, research highlights, and grant opportunities — delivered to your inbox. No more than one email per month.</p>
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="your@email.com" id="newsletter-email">
+      <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe →</button>
+    </div>
+    <p class="newsletter-note" id="newsletter-msg"></p>
+  </div>
+</section>
+
+<script src="/js/news.js"></script>

@@ -1,0 +1,190 @@
+---
+layout: base.njk
+title: OPLS Force Fields — Jorgensen Foundation
+description: OPLS (Optimised Potentials for Liquid Simulations) — the industry-standard force fields developed by the Jorgensen group for organic molecules, proteins, nucleic acids, and lipids.
+pageCss: /css/opls.css
+permalink: /opls/index.html
+navActive: programs
+---
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Program 05 · Jorgensen Foundation</span>
+    <h1 class="hero-h1">OPLS</h1>
+    <p class="hero-subtitle">Optimised Potentials for Liquid Simulations</p>
+    <p class="hero-desc">The industry-standard force fields for organic molecules, proteins, nucleic acids, and lipids. Developed over four decades by the Jorgensen group at Yale, OPLS parameters are fitted to reproduce experimental liquid properties — densities, heats of vaporisation, and free energies of hydration — ensuring accuracy in condensed-phase simulations.</p>
+    <div class="hero-actions">
+      <a href="/login" class="hero-btn">Access OPLS →</a>
+      <a href="#overview" class="hero-btn-ghost">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>OPLS-AA</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Liquid Properties</span><b>·</b><span>Condensed Phase</span><b>·</b><span>Small Molecules</span><b>·</b><span>Proteins</span><b>·</b><span>Nucleic Acids</span><b>·</b>
+    <span>OPLS-AA</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Liquid Properties</span><b>·</b><span>Condensed Phase</span><b>·</b><span>Small Molecules</span><b>·</b><span>Proteins</span><b>·</b><span>Nucleic Acids</span><b>·</b>
+  </div>
+</div>
+
+<section class="overview" id="overview">
+  <div class="overview-inner">
+    <span class="section-label">Overview</span>
+    <h2 class="section-h2">What OPLS<br><em>covers.</em></h2>
+    <p class="section-intro">OPLS (Optimised Potentials for Liquid Simulations) is a family of force fields developed by the Jorgensen group with a defining philosophy: parameters must reproduce experimental liquid-state data, not just gas-phase quantum chemistry. Each functional group is parametrised to match measured densities, heats of vaporisation, and free energies of solvation for neat liquids and aqueous solutions. The result is a force field that performs with exceptional accuracy in the condensed phase — where nearly all chemistry of interest actually occurs. OPLS-AA (all-atom) and its successor OPLS-AA/L are the default parameter sets used throughout the foundation's simulation programs.</p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <p class="cap-title">Organic Small Molecules</p>
+        <p class="cap-body">Complete OPLS-AA coverage for common organic functional groups: alkanes, alkenes, aromatics, alcohols, ethers, esters, amines, amides, halides, thiols, and heterocycles. Torsional parameters fitted to reproduce both liquid properties and high-level QM conformational profiles.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <p class="cap-title">Proteins and Peptides</p>
+        <p class="cap-body">All 20 standard amino acids parametrised with OPLS-AA/L backbone dihedral corrections. Improved helical propensity balance relative to OPLS-AA, validated against NMR data for dipeptides and short helices. Covers common post-translational modifications and non-standard residues.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <p class="cap-title">Nucleic Acids</p>
+        <p class="cap-body">DNA and RNA bases, sugars, and phosphate backbone parametrised for explicit-solvent simulations. Compatible with standard nucleotide residue topologies. Suitable for DNA duplex stability, RNA folding, and protein-nucleic acid interaction studies.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <p class="cap-title">Lipids and Membranes</p>
+        <p class="cap-body">Phospholipid parameters for bilayer simulations. Compatible with standard glycerophospholipid head groups and common fatty acid tails. Used for membrane protein embedding and lipid-drug interaction studies in conjunction with the TIP3P/TIP4P water models.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <p class="cap-title">Water Models</p>
+        <p class="cap-body">TIP3P, TIP4P, and TIP5P water models developed alongside and validated with OPLS parameters. TIP4P reproduces the density maximum of water near 4 °C; TIP5P further improves structural properties. All are compatible with OPLS-AA solute parameters for mixed systems.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <p class="cap-title">Ion Parameters</p>
+        <p class="cap-body">Monovalent and divalent ion parameters fitted to experimental free energies of hydration and ion-water radial distribution functions. Covers alkali metals, halides, and common divalent cations for ionic solution and nucleic acid simulations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech" id="technical">
+  <div class="tech-header">
+    <span class="section-label">Technical Details</span>
+    <h2 class="section-h2">Parameter<br><em>generations.</em></h2>
+  </div>
+  <div class="tech-list">
+    <div class="tech-item">
+      <span class="tech-num">01</span>
+      <div>
+        <p class="tech-name">OPLS-UA (United-Atom)</p>
+        <p class="tech-desc">The original OPLS force field introduced in 1984, using united-atom (UA) groups where non-polar hydrogens are merged into the heavy atom they are bonded to. Reduces the number of interaction sites by roughly a third, improving simulation speed. UA parameters were fitted to reproduce densities and heats of vaporisation for a broad range of organic liquids. Still widely used for hydrocarbon and simple organic systems where explicit aliphatic hydrogens are not essential.</p>
+      </div>
+      <span class="tech-tag">OPLS-UA</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">02</span>
+      <div>
+        <p class="tech-name">OPLS-AA (All-Atom)</p>
+        <p class="tech-desc">All-atom parametrisation published in 1996 that places explicit parameters on every hydrogen. Non-bonded parameters (ε, σ, q) refitted to experimental liquid properties for 14 functional group classes covering over 30 organic liquids. Intramolecular torsional terms fitted to HF/6-31G* energy profiles for representative molecules. OPLS-AA is the base parameter set for all protein and biomolecular simulations in BOSS, MCPRO, and the FEP modules.</p>
+      </div>
+      <span class="tech-tag">OPLS-AA</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">03</span>
+      <div>
+        <p class="tech-name">OPLS-AA/L (Improved Backbone)</p>
+        <p class="tech-desc">Backbone dihedral corrections published by Kaminski et al. in 2001, addressing the over-stabilisation of helical conformations in OPLS-AA. New φ and ψ torsional terms for alanine and glycine dipeptides fitted to LMP2/cc-pVTZ(-f)//HF/6-31G** energy surfaces. Side-chain parameters unchanged from OPLS-AA. OPLS-AA/L reproduces α-helix:β-sheet equilibria in better agreement with experiment and is the default protein parameter set used in the foundation's programs.</p>
+      </div>
+      <span class="tech-tag">OPLS-AA/L</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">04</span>
+      <div>
+        <p class="tech-name">Partial Charge Methodology</p>
+        <p class="tech-desc">Partial charges in OPLS are derived from fitting to HF/6-31G* electrostatic potentials (RESP methodology) and then empirically scaled to reproduce condensed-phase properties. This 1.14× scaling relative to AM1-BCC or restrained ESP charges compensates for the mean-field approximation implicit in fixed-charge force fields and captures average electronic polarisation in the condensed phase without explicit polarisability terms.</p>
+      </div>
+      <span class="tech-tag">Charges</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">05</span>
+      <div>
+        <p class="tech-name">Combining Rules and Non-Bonded Interactions</p>
+        <p class="tech-desc">OPLS uses geometric mean combining rules for both ε (well depth) and σ (diameter) Lennard-Jones parameters between unlike atom types: εᵢⱼ = √(εᵢεⱼ), σᵢⱼ = √(σᵢσⱼ). This differs from the Lorentz-Berthelot rules used in AMBER and CHARMM and reflects the liquid-property fitting procedure. 1-4 non-bonded interactions are scaled by 0.5 for both LJ and electrostatic terms. Cutoff distances of 8–12 Å are standard depending on system size.</p>
+      </div>
+      <span class="tech-tag">Non-Bonded</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">06</span>
+      <div>
+        <p class="tech-name">Validation Benchmarks</p>
+        <p class="tech-desc">OPLS parameters are validated against experimental liquid densities (ρ), heats of vaporisation (ΔHvap), and free energies of hydration (ΔGhyd) for each functional group class. Typical accuracy: ρ within 1–2%, ΔHvap within 1–2 kJ/mol, ΔGhyd within 1 kcal/mol. Additional validation includes NMR coupling constants for backbone conformational equilibria (OPLS-AA/L) and protein folding stability benchmarks against experimentally characterised helical peptides.</p>
+      </div>
+      <span class="tech-tag">Validation</span>
+    </div>
+  </div>
+</section>
+
+<section class="io-section" id="io">
+  <div class="io-inner">
+    <span class="section-label">Input / Output</span>
+    <h2 class="section-h2">File formats and<br><em>what to expect.</em></h2>
+    <div class="io-grid">
+      <div>
+        <span class="io-col-label">Accepted Inputs</span>
+        <p class="io-col-title">What OPLS reads</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag">MOL2</span><div><p class="io-item-name">Molecular structure (.mol2 / .sdf)</p><p class="io-item-desc">Small-molecule structures for automatic parameter assignment. The platform's parameter engine identifies OPLS atom types from connectivity, assigns charges via AM1-BCC scaled to the OPLS convention, and generates a ready-to-use parameter file.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PDB</span><div><p class="io-item-name">Protein / nucleic acid structure (.pdb)</p><p class="io-item-desc">Standard PDB files for biomolecular systems. Residue-based topology assignment using OPLS-AA/L residue libraries. Handles standard amino acids, common modified residues, and nucleotides.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">SMILES</span><div><p class="io-item-name">SMILES string</p><p class="io-item-desc">Direct SMILES input for small molecules. 3D conformation generated automatically, followed by OPLS atom type assignment and charge calculation. Suitable for rapid parameter generation in screening workflows.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PAR</span><div><p class="io-item-name">Custom parameter override (.par)</p><p class="io-item-desc">User-supplied non-bonded and torsional parameters for novel functional groups, non-standard residues, or bespoke force field modifications. Merged with the standard OPLS library at runtime.</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <span class="io-col-label">Generated Outputs</span>
+        <p class="io-col-title">What OPLS returns</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag out">PAR</span><div><p class="io-item-name">Parameter file (.par)</p><p class="io-item-desc">Complete OPLS parameter file for the input molecule, including atom types, partial charges, LJ parameters, and torsional terms. Directly usable in BOSS, MCPRO, and FEP calculations without modification.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">Z-MAT</span><div><p class="io-item-name">Z-matrix file (.z)</p><p class="io-item-desc">Internal coordinate representation of the parametrised molecule with OPLS atom type labels and connectivity. Required input format for Monte Carlo simulations in BOSS and MCPRO.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">PROP</span><div><p class="io-item-name">Predicted liquid properties</p><p class="io-item-desc">For parametrised pure liquids: predicted density and heat of vaporisation from short Monte Carlo simulations, compared against experimental reference values to confirm parameter quality before production runs.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">LOG</span><div><p class="io-item-name">Atom type assignment log</p><p class="io-item-desc">Record of every atom type assignment decision, partial charge values, and any ambiguous cases flagged for user review. Downloadable for documentation and supplementary methods sections.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="citation-section" id="citation">
+  <div class="citation-inner">
+    <span class="citation-label">How to Cite</span>
+    <h2 class="citation-h2">Primary reference<br><em>for OPLS-AA.</em></h2>
+    <div class="citation-card">
+      <p class="citation-title">Development and Testing of the OPLS All-Atom Force Field on Conformational Energetics and Properties of Organic Liquids</p>
+      <p class="citation-authors">W. L. Jorgensen, D. S. Maxwell, J. Tirado-Rives</p>
+      <p class="citation-journal">Journal of the American Chemical Society · 1996 · Vol. 118, pp. 11225–11236</p>
+      <div class="citation-divider"></div>
+      <p class="citation-text">Jorgensen, W. L.; Maxwell, D. S.; Tirado-Rives, J. "Development and Testing of the OPLS All-Atom Force Field on Conformational Energetics and Properties of Organic Liquids." J. Am. Chem. Soc. 1996, 118, 11225–11236.</p>
+      <div class="citation-actions">
+        <a href="https://doi.org/10.1021/ja9621760" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1021/ja9621760</a>
+        <button class="citation-copy" onclick="copyCitation()">Copy Citation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <span class="cta-band-label">Get Started</span>
+  <h2 class="cta-band-h2">Ready to parametrise your<br><em>molecules with OPLS?</em></h2>
+  <p class="cta-band-sub">Sign in to access the OPLS parameter engine — automatic atom typing, charge assignment, and validation, no installation required.</p>
+  <div class="cta-btns">
+    <a href="/login" class="cta-btn-dark">Access OPLS →</a>
+    <a href="/#access" class="cta-btn-ghost">View Pricing</a>
+  </div>
+</section>
+
+<div class="toast" id="toast">Citation copied</div>
+
+
+<script src="/js/opls.js"></script>

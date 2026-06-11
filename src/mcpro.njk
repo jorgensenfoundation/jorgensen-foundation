@@ -1,0 +1,192 @@
+---
+layout: base.njk
+title: MCPRO — Jorgensen Foundation
+description: MCPRO (Monte Carlo for Proteins) — Monte Carlo simulations of peptides, proteins, and nucleic acids in explicit solvent with free energy perturbation.
+pageCss: /css/mcpro.css
+permalink: /mcpro/index.html
+navActive: programs
+---
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Program 02 · Jorgensen Foundation</span>
+    <h1 class="hero-h1">MCPRO</h1>
+    <p class="hero-subtitle">Monte Carlo for Proteins</p>
+    <p class="hero-desc">Monte Carlo simulations of peptides, proteins, and nucleic acids in explicit solvent. Derived from BOSS with extensive biomolecular extensions, MCPRO is the primary tool for computing protein-ligand binding free energies using statistical perturbation theory.</p>
+    <div class="hero-actions">
+      <a href="/login" class="hero-btn">Launch MCPRO →</a>
+      <a href="#overview" class="hero-btn-ghost">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Protein Simulation</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Binding Free Energies</span><b>·</b><span>Explicit Solvent</span><b>·</b><span>Z-Matrix Sampling</span><b>·</b><span>Energy Decomposition</span><b>·</b><span>FEP</span><b>·</b>
+    <span>Protein Simulation</span><b>·</b><span>OPLS-AA/L</span><b>·</b><span>Binding Free Energies</span><b>·</b><span>Explicit Solvent</span><b>·</b><span>Z-Matrix Sampling</span><b>·</b><span>Energy Decomposition</span><b>·</b><span>FEP</span><b>·</b>
+  </div>
+</div>
+
+<section class="overview" id="overview">
+  <div class="overview-inner">
+    <span class="section-label">Overview</span>
+    <h2 class="section-h2">What MCPRO<br><em>does.</em></h2>
+    <p class="section-intro">MCPRO extends BOSS to biomolecular systems — peptides, proteins, and nucleic acids simulated in explicit aqueous solvent. It is the workhorse of the Jorgensen group's drug discovery pipeline, used to compute protein-ligand binding free energies with accuracy that rivals much more expensive methods. The key innovation is the use of Z-matrix internal coordinate moves that efficiently sample conformational space of the solute while treating the protein environment with full atomic detail.</p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <p class="cap-title">Protein-Ligand Binding</p>
+        <p class="cap-body">Free energy perturbation calculations for relative binding affinities between ligand analogues. Alchemical mutation of one ligand to another within the protein active site using double-wide FEP sampling.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <p class="cap-title">Explicit Solvent Simulation</p>
+        <p class="cap-body">Periodic box simulation with TIP3P or TIP4P water. Full treatment of solvent structure around the protein and ligand. Residue-based cutoffs for efficient energy evaluation in large systems.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <p class="cap-title">Z-Matrix Sampling</p>
+        <p class="cap-body">Internal coordinate Monte Carlo moves using Z-matrix representation for the solute. Efficient sampling of ligand and protein side-chain degrees of freedom without the overhead of Cartesian MD.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <p class="cap-title">OPLS-AA/L Force Field</p>
+        <p class="cap-body">Validated protein backbone and side-chain parameters from OPLS-AA/L, with improved dihedral terms for accurate secondary structure reproduction. Full OPLS-AA coverage for small-molecule ligands.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <p class="cap-title">Energy Decomposition</p>
+        <p class="cap-body">Residue-by-residue breakdown of protein-ligand interaction energies. Identifies key binding contacts and hotspot residues, guiding medicinal chemistry optimisation decisions.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <p class="cap-title">Biomolecular Sampling</p>
+        <p class="cap-body">Peptide and protein conformational sampling in solution. Loop modelling, side-chain rotamer sampling, and ligand binding mode exploration within full protein contexts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech" id="technical">
+  <div class="tech-header">
+    <span class="section-label">Technical Details</span>
+    <h2 class="section-h2">Supported<br><em>calculations.</em></h2>
+  </div>
+  <div class="tech-list">
+    <div class="tech-item">
+      <span class="tech-num">01</span>
+      <div>
+        <p class="tech-name">Protein-Ligand Free Energy Perturbation</p>
+        <p class="tech-desc">Relative binding free energy calculations via statistical perturbation theory. The ligand is alchemically mutated from one analogue to another in both the protein-bound and aqueous states; ΔΔG binding is obtained from the thermodynamic cycle. Double-wide sampling collects both forward and reverse perturbation data simultaneously for improved convergence. Supports multi-step perturbation paths with configurable window counts.</p>
+      </div>
+      <span class="tech-tag">Binding FEP</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">02</span>
+      <div>
+        <p class="tech-name">Z-Matrix Monte Carlo Moves</p>
+        <p class="tech-desc">Solute conformational sampling using internal (Z-matrix) coordinates rather than Cartesian displacements. Bond lengths, bond angles, and dihedral angles are moved independently with configurable acceptance windows. Preferential sampling weights solute-solvent interactions to accelerate convergence of solvation properties. Protein backbone and side-chain moves use residue-specific Z-matrix definitions.</p>
+      </div>
+      <span class="tech-tag">Monte Carlo</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">03</span>
+      <div>
+        <p class="tech-name">OPLS-AA/L Force Field for Proteins</p>
+        <p class="tech-desc">The OPLS-AA/L parameter set provides improved backbone dihedral terms fitted to high-level QM data on alanine and glycine dipeptides, correcting the over-stabilisation of helical conformations present in early OPLS-AA. Side-chain parameters are unchanged from OPLS-AA. Ligand parameters derived from OPLS-AA with RESP partial charges from AM1-BCC. Covers all 20 standard amino acids, common post-translational modifications, and nucleic acid residues.</p>
+      </div>
+      <span class="tech-tag">Force Field</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">04</span>
+      <div>
+        <p class="tech-name">Explicit and Implicit Solvent Models</p>
+        <p class="tech-desc">Explicit water models: TIP3P (default for protein simulations), TIP4P. Periodic boundary conditions with minimum image convention. Residue-based cutoff scheme (typically 10–12 Å) for non-bonded interactions. Long-range electrostatics via reaction field correction. Implicit solvent option using GB/SA for rapid relative free energy estimates when explicit solvent convergence is prohibitive.</p>
+      </div>
+      <span class="tech-tag">Solvation</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">05</span>
+      <div>
+        <p class="tech-name">Residue-Based Cutoffs and Neighbour Lists</p>
+        <p class="tech-desc">Non-bonded interactions evaluated using residue-based cutoffs rather than atom-based, reducing the frequency of neighbour list updates and improving performance for large protein systems. Solute-solvent and solvent-solvent interactions separated with independent cutoff distances. Efficient memory layout for systems of 1,000–10,000 atoms typical in protein-ligand FEP calculations.</p>
+      </div>
+      <span class="tech-tag">Performance</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">06</span>
+      <div>
+        <p class="tech-name">Interaction Energy Decomposition</p>
+        <p class="tech-desc">Per-residue decomposition of protein-ligand non-bonded interaction energies (Lennard-Jones + electrostatic). Identifies key contacts and quantifies their contribution to binding. Solute-solvent energy decomposition shows which portions of the ligand are well or poorly solvated. Output in tabular CSV format for direct import into visualisation and analysis tools.</p>
+      </div>
+      <span class="tech-tag">Analysis</span>
+    </div>
+  </div>
+</section>
+
+<section class="io-section" id="io">
+  <div class="io-inner">
+    <span class="section-label">Input / Output</span>
+    <h2 class="section-h2">File formats and<br><em>what to expect.</em></h2>
+    <div class="io-grid">
+      <div>
+        <span class="io-col-label">Accepted Inputs</span>
+        <p class="io-col-title">What MCPRO reads</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag">PDB</span><div><p class="io-item-name">Protein structure (.pdb)</p><p class="io-item-desc">Prepared protein structure with hydrogens, correct protonation states, and any co-crystallised waters. Standard PDB format; pre-processed through the MCPRO structure preparation utilities.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">Z-MAT</span><div><p class="io-item-name">Ligand Z-matrix (.z)</p><p class="io-item-desc">Internal coordinate description of the ligand with OPLS atom types and partial charges. Generated from PDB or MOL2 input using the integrated Z-matrix builder.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">MOL2</span><div><p class="io-item-name">Ligand structures (.mol2 / .sdf)</p><p class="io-item-desc">Small-molecule input formats for automatic Z-matrix generation. Partial charges assigned via AM1-BCC. Supports series of analogues for FEP campaigns.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PAR</span><div><p class="io-item-name">Custom parameter files (.par)</p><p class="io-item-desc">User-defined OPLS parameters for non-standard residues, modified amino acids, or novel ligand functional groups not covered by the standard library.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">CTRL</span><div><p class="io-item-name">Simulation control file</p><p class="io-item-desc">Defines ensemble, step count, cutoffs, FEP windows, output frequency, and all simulation parameters. Set through the platform's guided input interface.</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <span class="io-col-label">Generated Outputs</span>
+        <p class="io-col-title">What MCPRO returns</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag out">ΔΔG</span><div><p class="io-item-name">Relative binding free energies</p><p class="io-item-desc">ΔΔG binding values with bootstrap uncertainties, forward/reverse free energy estimates, and hysteresis as a convergence metric. CSV and summary report formats.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">DECOMP</span><div><p class="io-item-name">Residue interaction decomposition</p><p class="io-item-desc">Per-residue LJ and electrostatic contributions to the ligand binding energy. Heatmap visualisation available in the platform's analysis dashboard.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">TRAJ</span><div><p class="io-item-name">Simulation trajectories (.pdb)</p><p class="io-item-desc">Coordinate snapshots of protein-ligand complex at user-defined intervals. Viewable in the 3D visualisation suite with binding mode overlay tools.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">RDF</span><div><p class="io-item-name">Radial distribution functions</p><p class="io-item-desc">Solute-solvent pair distribution functions and coordination numbers. H-bond occupancies between ligand and active site residues across the trajectory.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">LOG</span><div><p class="io-item-name">Full calculation log</p><p class="io-item-desc">Complete record of all parameters, convergence diagnostics, per-window averages, and statistical analysis. Downloadable for archiving and methods sections.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="citation-section" id="citation">
+  <div class="citation-inner">
+    <span class="citation-label">How to Cite</span>
+    <h2 class="citation-h2">Official reference<br><em>for MCPRO.</em></h2>
+    <div class="citation-card">
+      <p class="citation-title">Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO</p>
+      <p class="citation-authors">W. L. Jorgensen, J. Tirado-Rives</p>
+      <p class="citation-journal">Journal of Computational Chemistry · 2005 · Vol. 26, pp. 1689–1700</p>
+      <div class="citation-divider"></div>
+      <p class="citation-text">Jorgensen, W. L.; Tirado-Rives, J. "Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO." J. Comput. Chem. 2005, 26, 1689–1700.</p>
+      <div class="citation-actions">
+        <a href="https://doi.org/10.1002/jcc.20297" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1002/jcc.20297</a>
+        <button class="citation-copy" onclick="copyCitation()">Copy Citation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <span class="cta-band-label">Get Started</span>
+  <h2 class="cta-band-h2">Ready to run your first<br><em>protein-ligand FEP?</em></h2>
+  <p class="cta-band-sub">Sign in to access MCPRO through the browser — full protein-ligand binding free energy calculations, no installation required.</p>
+  <div class="cta-btns">
+    <a href="/login" class="cta-btn-dark">Launch MCPRO →</a>
+    <a href="/#access" class="cta-btn-ghost">View Pricing</a>
+  </div>
+</section>
+
+<div class="toast" id="toast">Citation copied</div>
+
+
+<script src="/js/mcpro.js"></script>

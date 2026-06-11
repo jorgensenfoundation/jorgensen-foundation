@@ -1,0 +1,192 @@
+---
+layout: base.njk
+title: FEP — Jorgensen Foundation
+description: FEP (Free Energy Perturbation) — rigorous alchemical free energy calculations for binding affinities, solvation thermodynamics, and chemical equilibria.
+pageCss: /css/fep.css
+permalink: /fep/index.html
+navActive: programs
+---
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Program 04 · Jorgensen Foundation</span>
+    <h1 class="hero-h1">FEP</h1>
+    <p class="hero-subtitle">Free Energy Perturbation</p>
+    <p class="hero-desc">Rigorous alchemical free energy calculations for binding affinities, solvation thermodynamics, and chemical equilibria. Rooted in the landmark Jorgensen-Ravimohan methodology published in 1985, FEP remains the gold standard for accurate free energy predictions in drug discovery and materials science.</p>
+    <div class="hero-actions">
+      <a href="/login" class="hero-btn">Launch FEP →</a>
+      <a href="#overview" class="hero-btn-ghost">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Free Energy</span><b>·</b><span>Alchemical Transformations</span><b>·</b><span>Thermodynamic Integration</span><b>·</b><span>BAR Analysis</span><b>·</b><span>Binding Affinity</span><b>·</b><span>Solvation</span><b>·</b><span>MBAR</span><b>·</b>
+    <span>Free Energy</span><b>·</b><span>Alchemical Transformations</span><b>·</b><span>Thermodynamic Integration</span><b>·</b><span>BAR Analysis</span><b>·</b><span>Binding Affinity</span><b>·</b><span>Solvation</span><b>·</b><span>MBAR</span><b>·</b>
+  </div>
+</div>
+
+<section class="overview" id="overview">
+  <div class="overview-inner">
+    <span class="section-label">Overview</span>
+    <h2 class="section-h2">What FEP<br><em>does.</em></h2>
+    <p class="section-intro">Free Energy Perturbation computes the free energy difference between two chemical states by gradually transforming one into the other during a molecular simulation — a process called alchemical transformation. The technique is built on the Zwanzig equation from statistical mechanics: if two states are sufficiently similar, the free energy difference can be computed from the ensemble average of the energy gap between them. In practice this means accurate ΔG values for questions like "how much tighter does this analogue bind?" or "how much more soluble is this compound?" — numbers that take weeks to measure experimentally, computed in hours.</p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <p class="cap-title">Relative Binding Free Energies</p>
+        <p class="cap-body">Compute ΔΔG binding between pairs of ligand analogues in a protein active site. The standard application in lead optimisation — prioritise which analogues to synthesise based on predicted affinity improvements.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <p class="cap-title">Hydration Free Energies</p>
+        <p class="cap-body">Absolute and relative free energies of hydration for organic molecules. Benchmark values for force field validation; practical tool for solubility prediction and ADME estimation in early drug discovery.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <p class="cap-title">Alchemical Transformations</p>
+        <p class="cap-body">Mutate one molecule into another during simulation — changing functional groups, ring systems, or heteroatom substitutions — while accurately capturing the free energy cost of that transformation in a given environment.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <p class="cap-title">Thermodynamic Integration</p>
+        <p class="cap-body">Alternative to the Zwanzig estimator: integrates ⟨∂H/∂λ⟩ across the coupling parameter λ. Complementary to FEP — use TI as a cross-check or when the perturbation is too large for reliable exponential averaging.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <p class="cap-title">BAR and MBAR Analysis</p>
+        <p class="cap-body">Bennett Acceptance Ratio analysis uses data from both forward and reverse simulations to obtain minimum-variance free energy estimates. Multi-state BAR (MBAR) extracts maximum information from multi-window FEP calculations.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <p class="cap-title">Convergence Diagnostics</p>
+        <p class="cap-body">Overlap matrices, time-series analysis, and hysteresis checks to assess whether FEP calculations have converged. Automated warnings when overlap between adjacent windows is insufficient for reliable free energy estimates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech" id="technical">
+  <div class="tech-header">
+    <span class="section-label">Technical Details</span>
+    <h2 class="section-h2">Supported<br><em>calculations.</em></h2>
+  </div>
+  <div class="tech-list">
+    <div class="tech-item">
+      <span class="tech-num">01</span>
+      <div>
+        <p class="tech-name">Statistical Perturbation Theory (Zwanzig Equation)</p>
+        <p class="tech-desc">The foundational FEP estimator: ΔG = −kT ln⟨exp(−ΔU/kT)⟩₀. The ensemble average is collected during Monte Carlo or MD simulation of the reference state (λ=0), sampling the energy difference to the target state (λ=1). Most reliable when ΔU fluctuations are small — satisfied in practice by using many intermediate λ windows (typically 10–20) so that adjacent states substantially overlap.</p>
+      </div>
+      <span class="tech-tag">FEP Core</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">02</span>
+      <div>
+        <p class="tech-name">Double-Wide Sampling</p>
+        <p class="tech-desc">Both forward (λ → λ+Δλ) and reverse (λ → λ−Δλ) perturbations are collected simultaneously from a single simulation at each intermediate λ value. Doubles the statistical information per simulation without doubling the cost. The ratio of forward to reverse estimates provides a direct hysteresis check on convergence quality before combining them for the final ΔG.</p>
+      </div>
+      <span class="tech-tag">Sampling</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">03</span>
+      <div>
+        <p class="tech-name">Thermodynamic Integration</p>
+        <p class="tech-desc">Numerical integration of ⟨∂H/∂λ⟩λ over the coupling parameter λ from 0 to 1. Each window yields one gradient value; the integral is approximated by Gaussian quadrature or Simpson's rule over the window grid. TI is less sensitive to poor phase space overlap than exponential averaging, making it preferable for large perturbations such as ring transformations or charge changes.</p>
+      </div>
+      <span class="tech-tag">TI</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">04</span>
+      <div>
+        <p class="tech-name">Bennett Acceptance Ratio (BAR)</p>
+        <p class="tech-desc">Minimum-variance free energy estimator using data from both forward and reverse simulations. Solves iteratively for the ΔG that satisfies the BAR self-consistency equation. Provides lower statistical error than one-sided exponential averaging when both directions are available. Statistical uncertainty from bootstrap resampling over simulation blocks.</p>
+      </div>
+      <span class="tech-tag">BAR</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">05</span>
+      <div>
+        <p class="tech-name">Multi-State BAR (MBAR)</p>
+        <p class="tech-desc">Generalisation of BAR that simultaneously uses data from all λ windows. Optimal estimator for multi-window FEP calculations — extracts the maximum amount of statistical information from the full simulation dataset. Provides free energies, uncertainties, and overlap matrices for all pairs of states. Integrated as a post-processing analysis step on completed FEP trajectories.</p>
+      </div>
+      <span class="tech-tag">MBAR</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">06</span>
+      <div>
+        <p class="tech-name">Soft-Core Potentials for Topology Changes</p>
+        <p class="tech-desc">When an atom is created or annihilated during an alchemical transformation (appearance/disappearance perturbations), the Lennard-Jones potential becomes singular at λ=0 or 1. Soft-core potentials replace the standard 12-6 form with a modified expression that remains finite across all λ values, enabling numerically stable alchemical insertion and deletion without endpoint singularities.</p>
+      </div>
+      <span class="tech-tag">Soft-Core</span>
+    </div>
+  </div>
+</section>
+
+<section class="io-section" id="io">
+  <div class="io-inner">
+    <span class="section-label">Input / Output</span>
+    <h2 class="section-h2">File formats and<br><em>what to expect.</em></h2>
+    <div class="io-grid">
+      <div>
+        <span class="io-col-label">Accepted Inputs</span>
+        <p class="io-col-title">What FEP reads</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag">Z-MAT</span><div><p class="io-item-name">Initial and final state Z-matrices</p><p class="io-item-desc">Z-matrix files for both endpoints of the alchemical transformation (state A and state B). Atom mapping between the two states defined in a perturbation specification file.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PDB</span><div><p class="io-item-name">Protein / solvent context (.pdb)</p><p class="io-item-desc">For protein-ligand FEP: prepared protein structure from MCPRO. For hydration FEP: explicit solvent box pre-equilibrated with BOSS. Generated automatically when using the integrated workflow.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PERT</span><div><p class="io-item-name">Perturbation map file</p><p class="io-item-desc">Defines the atom-to-atom correspondence between state A and state B, the λ schedule, the number of MC steps per window, and the estimator (FEP, TI, or BAR) to apply.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">PAR</span><div><p class="io-item-name">Force field parameters (.par)</p><p class="io-item-desc">OPLS parameters for both endpoint states. Intermediate λ states use linearly interpolated parameters unless soft-core potentials are specified for appearing/disappearing atoms.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">EQUIL</span><div><p class="io-item-name">Pre-equilibrated starting structures</p><p class="io-item-desc">Optionally provide pre-equilibrated structures at each λ window to reduce equilibration overhead, particularly useful for large systems or expensive perturbations.</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <span class="io-col-label">Generated Outputs</span>
+        <p class="io-col-title">What FEP returns</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag out">ΔG</span><div><p class="io-item-name">Free energy results</p><p class="io-item-desc">ΔG and ΔΔG values from FEP, TI, and BAR estimators with bootstrap uncertainties. Forward, reverse, and combined estimates reported separately for convergence assessment.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">OVERLAP</span><div><p class="io-item-name">Overlap matrices</p><p class="io-item-desc">Phase space overlap between adjacent λ windows. Low overlap flags windows that may require additional simulation or finer λ spacing. Visualised as a heatmap in the analysis dashboard.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">CONV</span><div><p class="io-item-name">Convergence plots</p><p class="io-item-desc">Cumulative ΔG as a function of simulation length per window. Shows whether the calculation has plateaued and estimates the additional sampling needed for target precision.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">TRAJ</span><div><p class="io-item-name">Per-window trajectories (.pdb)</p><p class="io-item-desc">Coordinate snapshots from each λ window. Viewable in the 3D visualisation suite to inspect the alchemical intermediate structures and binding mode evolution across λ.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">LOG</span><div><p class="io-item-name">Full calculation log</p><p class="io-item-desc">Complete per-window energy statistics, estimator outputs, and statistical diagnostics. Downloadable as plain text for archiving and supplementary information sections.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="citation-section" id="citation">
+  <div class="citation-inner">
+    <span class="citation-label">How to Cite</span>
+    <h2 class="citation-h2">Founding reference<br><em>for FEP.</em></h2>
+    <div class="citation-card">
+      <p class="citation-title">Monte Carlo Simulation of Differences in Free Energies of Hydration</p>
+      <p class="citation-authors">W. L. Jorgensen, C. Ravimohan</p>
+      <p class="citation-journal">Journal of Chemical Physics · 1985 · Vol. 83, pp. 3050–3054</p>
+      <div class="citation-divider"></div>
+      <p class="citation-text">Jorgensen, W. L.; Ravimohan, C. "Monte Carlo Simulation of Differences in Free Energies of Hydration." J. Chem. Phys. 1985, 83, 3050–3054.</p>
+      <div class="citation-actions">
+        <a href="https://doi.org/10.1063/1.449071" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1063/1.449071</a>
+        <button class="citation-copy" onclick="copyCitation()">Copy Citation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <span class="cta-band-label">Get Started</span>
+  <h2 class="cta-band-h2">Ready to run your first<br><em>FEP calculation?</em></h2>
+  <p class="cta-band-sub">Sign in to access FEP through the browser — rigorous alchemical free energy calculations, no installation required.</p>
+  <div class="cta-btns">
+    <a href="/login" class="cta-btn-dark">Launch FEP →</a>
+    <a href="/#access" class="cta-btn-ghost">View Pricing</a>
+  </div>
+</section>
+
+<div class="toast" id="toast">Citation copied</div>
+
+
+<script src="/js/fep.js"></script>

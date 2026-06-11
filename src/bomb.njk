@@ -1,0 +1,192 @@
+---
+layout: base.njk
+title: BOMB — Jorgensen Foundation
+description: BOMB (Biochemical and Organic Model Builder) — combinatorial library growth inside protein binding sites for structure-based drug discovery and lead optimisation.
+pageCss: /css/bomb.css
+permalink: /bomb/index.html
+navActive: programs
+---
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Program 03 · Jorgensen Foundation</span>
+    <h1 class="hero-h1">BOMB</h1>
+    <p class="hero-subtitle">Biochemical and Organic Model Builder</p>
+    <p class="hero-desc">Combinatorial library growth and virtual screening inside protein binding sites. BOMB is the front end of the Jorgensen group's drug discovery pipeline — growing, scoring, and ranking lead candidates directly within target structures, then coupling with MCPRO for rigorous free energy refinement.</p>
+    <div class="hero-actions">
+      <a href="/login" class="hero-btn">Launch BOMB →</a>
+      <a href="#overview" class="hero-btn-ghost">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Drug Discovery</span><b>·</b><span>Virtual Screening</span><b>·</b><span>De Novo Design</span><b>·</b><span>Lead Optimisation</span><b>·</b><span>Fragment Growing</span><b>·</b><span>ADME Prediction</span><b>·</b><span>Docking</span><b>·</b>
+    <span>Drug Discovery</span><b>·</b><span>Virtual Screening</span><b>·</b><span>De Novo Design</span><b>·</b><span>Lead Optimisation</span><b>·</b><span>Fragment Growing</span><b>·</b><span>ADME Prediction</span><b>·</b><span>Docking</span><b>·</b>
+  </div>
+</div>
+
+<section class="overview" id="overview">
+  <div class="overview-inner">
+    <span class="section-label">Overview</span>
+    <h2 class="section-h2">What BOMB<br><em>does.</em></h2>
+    <p class="section-intro">BOMB addresses the lead discovery and optimisation problem in drug development. Given a protein target structure, BOMB grows combinatorial libraries of drug-like molecules inside the binding site, scores each candidate using OPLS-based energy functions, and ranks them for synthesis. The top candidates can be passed directly to MCPRO for rigorous FEP-based binding affinity refinement. The result is a tightly integrated pipeline from target structure to optimised lead — entirely computational.</p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <p class="cap-title">De Novo Library Growth</p>
+        <p class="cap-body">Grows combinatorial libraries of drug-like molecules inside a protein binding site starting from a core scaffold. Fragment additions guided by favourable interactions with the protein environment and drug-likeness filters.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <p class="cap-title">Virtual Screening</p>
+        <p class="cap-body">Rapid scoring and ranking of large compound libraries (10³–10⁶ molecules) against a protein target. OPLS-based scoring function accounts for steric complementarity and electrostatic interactions with the active site.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <p class="cap-title">Docking</p>
+        <p class="cap-body">Automated placement and orientation of ligands within the protein binding site. Multiple docking poses generated per compound; ranked by interaction score and filtered by geometric criteria and clash checking.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <p class="cap-title">FEP-Guided Optimisation</p>
+        <p class="cap-body">Top-ranked BOMB candidates passed directly to MCPRO for rigorous relative binding free energy calculations. Iterative optimisation cycle: BOMB generates analogues, MCPRO refines affinity predictions, guiding the next round of library design.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <p class="cap-title">Fragment-Based Design</p>
+        <p class="cap-body">Fragment growing and merging protocols for fragment-based drug discovery campaigns. Grow fragments into adjacent sub-pockets, merge hits from fragment screens, and link fragments across the binding site.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <p class="cap-title">ADME Property Prediction</p>
+        <p class="cap-body">Rapid prediction of aqueous solubility, logP, and other ADME-relevant properties for all generated compounds. Applied as early filters to focus the library on drug-like candidates before docking and scoring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech" id="technical">
+  <div class="tech-header">
+    <span class="section-label">Technical Details</span>
+    <h2 class="section-h2">Supported<br><em>calculations.</em></h2>
+  </div>
+  <div class="tech-list">
+    <div class="tech-item">
+      <span class="tech-num">01</span>
+      <div>
+        <p class="tech-name">Combinatorial Library Generation</p>
+        <p class="tech-desc">Generates libraries by decorating a core scaffold with fragments from user-defined or built-in reagent sets. Combinatorial enumeration up to three attachment points, producing libraries of up to ~10⁶ virtual compounds. Drug-likeness filters (Lipinski Ro5, PAINS alerts, reactive group flags) applied at enumeration time to ensure synthesisability and drug-likeness of the output set.</p>
+      </div>
+      <span class="tech-tag">Library</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">02</span>
+      <div>
+        <p class="tech-name">OPLS-Based Docking and Scoring</p>
+        <p class="tech-desc">Ligand placement using a grid-based docking algorithm with OPLS non-bonded energy scoring. Energy grids pre-computed for the protein receptor for rapid evaluation of millions of poses. Scoring function includes van der Waals complementarity, electrostatic shape matching, and internal ligand strain. Poses filtered by RMSD clustering to return diverse, non-redundant binding modes.</p>
+      </div>
+      <span class="tech-tag">Docking</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">03</span>
+      <div>
+        <p class="tech-name">Fragment Growing Protocol</p>
+        <p class="tech-desc">Iterative fragment extension starting from an anchor point (crystallographic fragment hit or user-specified core). At each step, available attachment vectors are identified, compatible fragments from the reagent library are placed, and poses scored. Growth guided by predicted protein-ligand interaction energy and available space in the binding pocket. Stops when Lipinski or size limits are reached.</p>
+      </div>
+      <span class="tech-tag">Fragment</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">04</span>
+      <div>
+        <p class="tech-name">MCPRO Coupling for FEP Refinement</p>
+        <p class="tech-desc">Direct export of top BOMB candidates to MCPRO input format. Automated generation of FEP perturbation paths between ranked analogues. Results from MCPRO calculations imported back into the BOMB ranking table, allowing combined BOMB score + FEP ΔΔG ranking of the compound series. Supports iterative design-score-synthesise cycles with full audit trail.</p>
+      </div>
+      <span class="tech-tag">FEP Coupling</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">05</span>
+      <div>
+        <p class="tech-name">Protein Structure Preparation</p>
+        <p class="tech-desc">Integrated structure preparation workflow: add hydrogens, assign protonation states at user-defined pH, resolve missing loops or side chains, remove crystallographic waters or retain structural waters in the binding site. Compatible with PDB structures directly from the RCSB or Protein Data Bank Europe. Homology model input supported with manual protonation state override.</p>
+      </div>
+      <span class="tech-tag">Preparation</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">06</span>
+      <div>
+        <p class="tech-name">ADME and Drug-Likeness Filters</p>
+        <p class="tech-desc">Computed properties: molecular weight, cLogP (OPLS-based), H-bond donor/acceptor counts, rotatable bond count, polar surface area (PSA), and aqueous solubility estimate. Lipinski Ro5, Veber flexibility/PSA, and PAINS filters applied as configurable gates. All properties exported per compound in the hit list table for downstream decision-making.</p>
+      </div>
+      <span class="tech-tag">ADME</span>
+    </div>
+  </div>
+</section>
+
+<section class="io-section" id="io">
+  <div class="io-inner">
+    <span class="section-label">Input / Output</span>
+    <h2 class="section-h2">File formats and<br><em>what to expect.</em></h2>
+    <div class="io-grid">
+      <div>
+        <span class="io-col-label">Accepted Inputs</span>
+        <p class="io-col-title">What BOMB reads</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag">PDB</span><div><p class="io-item-name">Protein structure (.pdb)</p><p class="io-item-desc">Target protein structure, optionally with co-crystallised ligand defining the binding site. Processed through the integrated preparation pipeline before docking.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">SMILES</span><div><p class="io-item-name">SMILES strings</p><p class="io-item-desc">Scaffold and reagent SMILES for combinatorial library enumeration. Accepted as plain text lists or SD file annotation fields. Batch input for virtual screening of existing compound collections.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">SDF</span><div><p class="io-item-name">Compound library (.sdf)</p><p class="io-item-desc">Multi-molecule SDF for virtual screening workflows. 3D coordinates used if present; 2D structures auto-converted to 3D using OPLS-based force field geometry.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">FRAG</span><div><p class="io-item-name">Fragment library files</p><p class="io-item-desc">Built-in libraries of medicinal chemistry-validated fragments (~500 entries) or user-provided custom fragment sets for bespoke library generation.</p></div></li>
+          <li class="io-item"><span class="io-item-tag">GRID</span><div><p class="io-item-name">Pre-computed energy grids</p><p class="io-item-desc">Cached receptor grid files for repeated screening against the same target. Computed once and reused across multiple campaigns to reduce setup time.</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <span class="io-col-label">Generated Outputs</span>
+        <p class="io-col-title">What BOMB returns</p>
+        <ul class="io-list">
+          <li class="io-item"><span class="io-item-tag out">HITS</span><div><p class="io-item-name">Ranked hit list</p><p class="io-item-desc">Table of all scored compounds ranked by docking score, with ADME properties, drug-likeness flags, and FEP ΔΔG values (where available) per compound. Exportable as CSV.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">POSES</span><div><p class="io-item-name">Docked poses (.pdb / .sdf)</p><p class="io-item-desc">Top-ranked binding poses for each compound, viewable in the 3D visualisation suite overlaid on the protein structure. Exportable for external analysis.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">LIB</span><div><p class="io-item-name">Enumerated library (.sdf)</p><p class="io-item-desc">Full enumerated virtual compound library before and after filtering. Includes 3D coordinates and property annotations for downstream use in screening or synthesis planning.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">ADME</span><div><p class="io-item-name">Property predictions</p><p class="io-item-desc">Per-compound ADME property table: MW, cLogP, HBD, HBA, PSA, rotatable bonds, solubility estimate. CSV format, importable into electronic lab notebooks.</p></div></li>
+          <li class="io-item"><span class="io-item-tag out">MCPRO</span><div><p class="io-item-name">MCPRO input package</p><p class="io-item-desc">Ready-to-run MCPRO input files for the top-ranked BOMB compounds, with pre-generated perturbation paths for FEP refinement of the lead series.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="citation-section" id="citation">
+  <div class="citation-inner">
+    <span class="citation-label">How to Cite</span>
+    <h2 class="citation-h2">Official reference<br><em>for BOMB.</em></h2>
+    <div class="citation-card">
+      <p class="citation-title">The Many Roles of Computation in Drug Discovery</p>
+      <p class="citation-authors">W. L. Jorgensen</p>
+      <p class="citation-journal">Science · 2004 · Vol. 303, pp. 1813–1818</p>
+      <div class="citation-divider"></div>
+      <p class="citation-text">Jorgensen, W. L. "The Many Roles of Computation in Drug Discovery." Science 2004, 303, 1813–1818.</p>
+      <div class="citation-actions">
+        <a href="https://doi.org/10.1126/science.1096375" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1126/science.1096375</a>
+        <button class="citation-copy" onclick="copyCitation()">Copy Citation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <span class="cta-band-label">Get Started</span>
+  <h2 class="cta-band-h2">Ready to screen your first<br><em>compound library?</em></h2>
+  <p class="cta-band-sub">Sign in to access BOMB through the browser — virtual screening and lead generation against your protein target, no installation required.</p>
+  <div class="cta-btns">
+    <a href="/login" class="cta-btn-dark">Launch BOMB →</a>
+    <a href="/#access" class="cta-btn-ghost">View Pricing</a>
+  </div>
+</section>
+
+<div class="toast" id="toast">Citation copied</div>
+
+
+<script src="/js/bomb.js"></script>

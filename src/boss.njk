@@ -1,0 +1,275 @@
+---
+layout: base.njk
+title: BOSS — Jorgensen Foundation
+description: BOSS (Biochemical and Organic Simulation System) — Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution.
+pageCss: /css/boss.css
+permalink: /boss/index.html
+navActive: programs
+---
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Program 01 · Jorgensen Foundation</span>
+    <h1 class="hero-h1">BOSS</h1>
+    <p class="hero-subtitle">Biochemical and Organic Simulation System</p>
+    <p class="hero-desc">Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution. Developed over forty years in the Jorgensen group at Yale University, BOSS is the computational core of the Foundation's simulation platform.</p>
+    <div class="hero-actions">
+      <a href="/login" class="hero-btn">Launch BOSS →</a>
+      <a href="#overview" class="hero-btn-ghost">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Monte Carlo</span><b>·</b>
+    <span>OPLS Force Fields</span><b>·</b>
+    <span>Free Energy Perturbation</span><b>·</b>
+    <span>AM1 · PM3 · PDDG/PM3</span><b>·</b>
+    <span>Energy Minimization</span><b>·</b>
+    <span>Conformational Search</span><b>·</b>
+    <span>Normal Mode Analysis</span><b>·</b>
+    <span>Monte Carlo</span><b>·</b>
+    <span>OPLS Force Fields</span><b>·</b>
+    <span>Free Energy Perturbation</span><b>·</b>
+    <span>AM1 · PM3 · PDDG/PM3</span><b>·</b>
+    <span>Energy Minimization</span><b>·</b>
+    <span>Conformational Search</span><b>·</b>
+    <span>Normal Mode Analysis</span><b>·</b>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="overview" id="overview">
+  <div class="overview-inner">
+    <span class="section-label">Overview</span>
+    <h2 class="section-h2">What BOSS<br><em>does.</em></h2>
+    <p class="section-intro">BOSS performs molecular mechanics (MM) and Monte Carlo (MC) statistical mechanics simulations on organic and biological molecules, with the goal of computing thermodynamic, structural, and energetic properties in solution. It combines the OPLS family of force fields with semi-empirical quantum mechanical methods to cover a wide range of chemical systems — from small organic molecules to protein active sites.</p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <p class="cap-title">Monte Carlo Simulation</p>
+        <p class="cap-body">Statistical mechanics sampling in NPT, NVT, and μVT ensembles using Metropolis Monte Carlo. Handles periodic boundary conditions and standard cutoff schemes for efficient large-system treatment.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <p class="cap-title">Energy Minimization</p>
+        <p class="cap-body">Full molecular mechanics energy minimization using conjugate gradient and steepest descent methods. Normal mode analysis for vibrational frequency computation and thermochemical corrections.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <p class="cap-title">Free Energy Perturbation</p>
+        <p class="cap-body">Statistical perturbation theory for computing relative and absolute free energies of hydration, binding, and chemical equilibria. Thermodynamic integration as an alternative estimator.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <p class="cap-title">Semi-empirical QM</p>
+        <p class="cap-body">AM1, PM3, and PDDG/PM3 Hamiltonians for electronic structure calculations. QM/MM hybrid calculations with OPLS-AA for the MM region, enabling accurate treatment of reactive centres.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <p class="cap-title">Conformational Analysis</p>
+        <p class="cap-body">Systematic and Monte Carlo conformational searching for flexible molecules. Torsional scanning and geometry optimisation to map potential energy surfaces and identify low-energy conformers.</p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <p class="cap-title">Solvation Studies</p>
+        <p class="cap-body">Explicit solvent simulations using TIP3P, TIP4P, and other water models. Radial distribution functions, solvation free energies, and solute-solvent interaction energies as primary outputs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL DETAILS -->
+<section class="tech" id="technical">
+  <div class="tech-header">
+    <span class="section-label">Technical Details</span>
+    <h2 class="section-h2">Supported<br><em>calculations.</em></h2>
+  </div>
+  <div class="tech-list">
+    <div class="tech-item">
+      <span class="tech-num">01</span>
+      <div class="tech-body">
+        <p class="tech-name">MM Energy Minimization</p>
+        <p class="tech-desc">Full molecular mechanics minimization using the OPLS-AA, OPLS-UA, or AMBER force fields. Gradient minimization via conjugate gradient and limited-memory BFGS (L-BFGS). Supports constrained minimization, distance constraints, and dihedral restraints. Normal mode analysis available post-minimization for frequency computation and zero-point energy corrections.</p>
+      </div>
+      <span class="tech-tag">Molecular Mechanics</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">02</span>
+      <div class="tech-body">
+        <p class="tech-name">Monte Carlo Statistical Mechanics</p>
+        <p class="tech-desc">Metropolis Monte Carlo sampling in NPT (constant pressure-temperature), NVT (constant volume-temperature), and μVT (grand canonical) ensembles. Z-matrix internal coordinate moves for efficient conformational sampling of solute molecules. Preferential sampling of solute-solvent interactions. Standard periodic boundary conditions with minimum image convention and spherical or atom-based cutoffs.</p>
+      </div>
+      <span class="tech-tag">Monte Carlo</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">03</span>
+      <div class="tech-body">
+        <p class="tech-name">OPLS Force Fields</p>
+        <p class="tech-desc">Full implementation of OPLS-AA (all-atom) and OPLS-UA (united-atom) force fields. Covers organic molecules, proteins, nucleic acids, and lipids. Non-bonded interactions via Lennard-Jones 12-6 potential and Coulombic electrostatics. 1–4 interaction scaling at 0.5 for both LJ and electrostatics. Automatic atom typing for standard functional groups; custom parameter specification supported via input files.</p>
+      </div>
+      <span class="tech-tag">Force Fields</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">04</span>
+      <div class="tech-body">
+        <p class="tech-name">Semi-empirical QM Methods: AM1, PM3, PDDG/PM3</p>
+        <p class="tech-desc">Austin Model 1 (AM1), Parametric Method 3 (PM3), and the Pairwise Distance Directed Gaussian (PDDG/PM3) Hamiltonian. PDDG/PM3 provides improved heats of formation and thermochemical accuracy over standard PM3. Applicable to geometry optimization, single-point energy calculations, and QM/MM hybrid simulations. Supports open-shell (UHF) and excited-state calculations.</p>
+      </div>
+      <span class="tech-tag">QM Methods</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">05</span>
+      <div class="tech-body">
+        <p class="tech-name">Free Energy Perturbation (FEP)</p>
+        <p class="tech-desc">Statistical perturbation theory (Zwanzig equation) for computing free energy differences between chemical states. Supports double-wide sampling and multi-state FEP with overlap criteria. Thermodynamic integration (TI) as an alternative protocol. Applications include relative hydration free energies, conformational free energy differences, pKa prediction, and alchemical transformations between ligand analogues.</p>
+      </div>
+      <span class="tech-tag">Free Energy</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-num">06</span>
+      <div class="tech-body">
+        <p class="tech-name">Solvent Models</p>
+        <p class="tech-desc">Explicit water models: TIP3P, TIP4P, TIP4P-Ew, SPC/E. Explicit organic solvents: chloroform, DMSO, methanol, cyclohexane, and others parameterized against experimental liquid properties. Implicit solvent via GB/SA continuum model for rapid solvation free energy estimation. Gas-phase calculations supported for all methods.</p>
+      </div>
+      <span class="tech-tag">Solvation</span>
+    </div>
+  </div>
+</section>
+
+<!-- INPUT / OUTPUT -->
+<section class="io-section" id="io">
+  <div class="io-inner">
+    <span class="section-label">Input / Output</span>
+    <h2 class="section-h2">File formats and<br><em>what to expect.</em></h2>
+    <div class="io-grid">
+      <div>
+        <span class="io-col-label">Accepted Inputs</span>
+        <p class="io-col-title">What BOSS reads</p>
+        <ul class="io-list">
+          <li class="io-item">
+            <span class="io-item-tag">Z-MAT</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Z-matrix (.z) files</p>
+              <p class="io-item-desc">Native BOSS internal coordinate format. Defines molecular geometry, connectivity, atom types, and partial charges. Required for all solute molecules.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag">PDB</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Protein Data Bank (.pdb)</p>
+              <p class="io-item-desc">Standard PDB format for input protein and small-molecule structures. Automatic conversion to z-matrix available via the BOSS preprocessing utilities.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag">MOL2</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Tripos MOL2 (.mol2)</p>
+              <p class="io-item-desc">Small-molecule format with atom typing and partial charge information. Supported for ligand input with automatic z-matrix generation.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag">SDF</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Structure Data File (.sdf / .mol)</p>
+              <p class="io-item-desc">MDL SDF format for small molecule libraries. Batch input supported for FEP series calculations across multiple ligand analogues.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag">PAR</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Parameter files (.par)</p>
+              <p class="io-item-desc">Custom OPLS parameter files for novel functional groups or modified residues. Override standard library parameters for specific atom types.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <span class="io-col-label">Generated Outputs</span>
+        <p class="io-col-title">What BOSS returns</p>
+        <ul class="io-list">
+          <li class="io-item">
+            <span class="io-item-tag out">ENERGY</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Energy summary files</p>
+              <p class="io-item-desc">Total potential energies, component breakdowns (bonded, non-bonded, solute-solvent), ensemble averages, and standard deviations across the MC trajectory.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag out">TRAJ</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Simulation trajectories (.pdb / .xyz)</p>
+              <p class="io-item-desc">Coordinate snapshots at user-defined intervals. Viewable directly in the platform's 3D visualisation suite or exported for external analysis.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag out">FEP</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Free energy results</p>
+              <p class="io-item-desc">ΔG values with statistical uncertainties, overlap matrices, convergence plots, and per-window averages. CSV export for downstream analysis.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag out">RDF</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Radial distribution functions</p>
+              <p class="io-item-desc">Solute-solvent and solvent-solvent pair distribution functions, coordination numbers, and hydrogen bond statistics from completed simulations.</p>
+            </div>
+          </li>
+          <li class="io-item">
+            <span class="io-item-tag out">LOG</span>
+            <div class="io-item-body">
+              <p class="io-item-name">Full calculation log</p>
+              <p class="io-item-desc">Complete record of input parameters, system setup, convergence diagnostics, and all numerical results. Downloadable as plain text for archiving and methods sections.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITATION -->
+<section class="citation-section" id="citation">
+  <div class="citation-inner">
+    <span class="citation-label">How to Cite</span>
+    <h2 class="citation-h2">Official reference<br><em>for BOSS.</em></h2>
+    <div class="citation-card">
+      <p class="citation-title">Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO</p>
+      <p class="citation-authors">W. L. Jorgensen, J. Tirado-Rives</p>
+      <p class="citation-journal">Journal of Computational Chemistry · 2005 · Vol. 26, pp. 1689–1700</p>
+      <div class="citation-divider"></div>
+      <p class="citation-text">Jorgensen, W. L.; Tirado-Rives, J. "Molecular Modeling of Organic and Biomolecular Systems Using BOSS and MCPRO." J. Comput. Chem. 2005, 26, 1689–1700.</p>
+      <div class="citation-actions">
+        <a href="https://doi.org/10.1002/jcc.20297" target="_blank" rel="noopener" class="citation-link">View Paper → doi.org/10.1002/jcc.20297</a>
+        <button class="citation-copy" onclick="copyCitation()">Copy Citation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <span class="cta-band-label">Get Started</span>
+  <h2 class="cta-band-h2">Ready to run your<br>first <em>BOSS simulation?</em></h2>
+  <p class="cta-band-sub">Sign in to your account to access BOSS through the browser — no installation required. Academic subscriptions from $49/month.</p>
+  <div class="cta-btns">
+    <a href="/login" class="cta-btn-dark">Launch BOSS →</a>
+    <a href="/#access" class="cta-btn-ghost">View Pricing</a>
+  </div>
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Citation copied</div>
+
+
+<script src="/js/boss.js"></script>
