@@ -1,78 +1,107 @@
-/* About page styles. Loaded after style.css, so these override the shared rules
-   where the About design differs. Only about-specific rules live here; everything
-   shared (nav, footer, fonts, hero/text-block/programs/ticker/footer base) is
-   inherited from /css/style.css via the layout. */
+/* About page — page-unique layout/structure for the Midnight/Stone/Oyster system.
+   Atoms (display/h2/lead/body/eyebrow, .card, .tag, .hairline, .btn) come
+   from components.css and are NOT redefined here. Loaded after components.css.
+   The shared transparent nav (cream over the dark hero, solid white on scroll)
+   comes from components.css — no page-scoped nav CSS needed here. */
 
-/* --- Overrides of shared selectors (full property coverage to avoid leakage) --- */
-body{background:#f5f0e6}                 /* About is beige, not white */
-.prog-item{cursor:auto}                  /* About rows aren't clickable (no cursor:pointer) */
-.ticker-inner{animation-duration:30s}    /* About ticker is slower (30s vs 25s) */
-.split-label{color:rgba(245,240,230,0.3)}
-.split-h2{color:#f5f0e6}
-.split-body{color:rgba(245,240,230,0.45);margin-bottom:0}
+/* --- base (about does not load style.css) --- */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
 
-/* --- Hero (gradient bg + subtitle) --- */
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(184,151,42,0.08) 0%,transparent 60%),linear-gradient(135deg,#1a1510 0%,#2a2218 100%)}
-.hero-sub{font-size:0.78rem;line-height:2;color:rgba(245,240,230,0.5);margin-top:1.5rem;max-width:440px}
+/* --- TICKER (Oyster band) --- */
+.ticker{background:var(--surface);padding:0.85rem 0;overflow:hidden}
+.ticker-inner{display:flex;gap:5rem;animation:aboutTicker 30s linear infinite;white-space:nowrap}
+.ticker-inner span{font-size:0.62rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--ink)}
+.ticker-inner b{color:color-mix(in srgb,var(--ink) 35%,var(--surface));font-weight:300}
+@keyframes aboutTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* --- Text blocks / two-column layout --- */
-.tb-body+.tb-body{margin-top:1.25rem}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-top:4rem}
-.two-col .tb-body{max-width:none}
+/* --- HERO: original full-height structure (from legacy about.html), recolored to Midnight.
+   Transparent cream nav sits OVER it and solidifies to white on scroll (shared nav). --- */
+.hero{height:70vh;min-height:480px;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink)}
+.hero-bg{position:absolute;inset:0;background:var(--ink)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,18,19,0.8) 0%,rgba(20,18,19,0.1) 60%,transparent 100%)}
+.hero-content{position:relative;z-index:2;padding:0 3rem 5rem}
+.hero-tag{font-size:0.55rem;letter-spacing:0.32em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 55%,transparent);margin-bottom:1.25rem;display:block}
+.hero-h1{font-family:var(--font-serif);font-size:clamp(3rem,7vw,5.5rem);font-weight:300;color:var(--cream);line-height:1.04;letter-spacing:-0.01em}
+.hero-h1 em{font-style:italic}
+.hero-sub{font-size:0.78rem;line-height:2;color:color-mix(in srgb,var(--cream) 55%,transparent);margin-top:1.25rem;max-width:420px}
+.hero-scroll{position:absolute;bottom:2.5rem;right:3rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0.5rem}
+.hero-scroll span{font-size:0.48rem;letter-spacing:0.28em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 35%,transparent)}
+.scroll-bar{width:1px;height:36px;background:color-mix(in srgb,var(--cream) 20%,transparent);position:relative;overflow:hidden}
+.scroll-bar::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--cream);animation:scrollAnim 2s ease infinite}
+@keyframes scrollAnim{0%{top:-100%}100%{top:100%}}
 
-/* --- Programs (Yale legacy variant) --- */
-.prog-header p{font-size:0.78rem;line-height:2.2;color:#888;max-width:560px;margin-top:1.5rem}
-.prog-tag{font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:#b8972a;border:1px solid rgba(184,151,42,0.3);padding:0.25rem 0.6rem;white-space:nowrap}
-.prog-side{display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem}
+/* --- TEXT SECTIONS (story / science) --- */
+.about-section{padding:7rem 3rem}
+.about-section--oyster{background:var(--surface)}
+.about-inner{max-width:960px;margin:0 auto}
+.about-section .eyebrow{margin-bottom:2rem}
+.about-section .h2{margin-bottom:2.5rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.two-col .body + .body{margin-top:1.25rem}
 
-/* --- Mission split (dark/light panels) --- */
-.split-dark{background:#1a1510;padding:5rem 4.5rem;display:flex;flex-direction:column;justify-content:center}
-.split-light{background:#f5f0e6;padding:5rem 4.5rem;display:flex;flex-direction:column;justify-content:center}
-.split-label.dark-label{color:#aaa}
-.split-h2.dark{color:#1a1510}
-.split-body.dark{color:#777}
-.split-list{list-style:none;display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
-.split-list li{font-size:0.72rem;line-height:1.8;color:rgba(245,240,230,0.5);display:flex;gap:0.75rem;align-items:flex-start}
-.split-list li::before{content:'—';color:rgba(184,151,42,0.5);flex-shrink:0}
-.split-list.dark li{color:#888}
-.split-list.dark li::before{color:#ccc}
+/* --- YALE PROGRAMS LIST --- */
+.about-programs{background:var(--ground)}
+.about-prog-header{padding:6rem 3rem 2.5rem;max-width:1100px;margin:0 auto}
+.about-prog-header .eyebrow{margin-bottom:1.5rem}
+.about-prog-header .h2{margin-bottom:1.25rem}
+.about-prog-header .body{max-width:580px}
+.prog-list{max-width:1100px;margin:0 auto;display:flex;flex-direction:column}
+.prog-item{display:grid;grid-template-columns:70px 1fr auto;align-items:start;padding:2.25rem 3rem;border-bottom:1px solid var(--hairline);gap:2.5rem}
+.prog-item:first-child{border-top:1px solid var(--hairline)}
+.prog-num{font-family:var(--font-serif);font-size:1.25rem;font-weight:300;color:var(--body);padding-top:0.1rem}
+.prog-name{font-family:var(--font-sans);font-size:var(--fs-body);font-weight:400;color:var(--ink);margin-bottom:0.5rem}
+.prog-desc{font-family:var(--font-sans);font-size:var(--fs-small);color:var(--body);line-height:1.8}
+.prog-side{display:flex;flex-direction:column;align-items:flex-end;gap:0.75rem}
+.prog-arrow{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.2em;text-transform:uppercase;color:var(--body);white-space:nowrap;transition:color 0.2s}
+.prog-item:hover .prog-arrow{color:var(--ink)}
 
-/* --- Team --- */
-.team{padding:8rem 3rem;background:#faf8f4}
-.team-hd{text-align:center;margin-bottom:5rem}
-.team-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
-.team-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1}
-.team-h2 em{font-style:italic}
-.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;max-width:960px;margin:0 auto}
-.team-card{background:#fff;padding:2.5rem;border:1px solid rgba(184,151,42,0.5);box-shadow:0 0 0 1px rgba(184,151,42,0.15),0 8px 40px rgba(184,151,42,0.25),0 2px 8px rgba(26,21,16,0.1);transition:box-shadow 0.3s ease,border-color 0.3s ease;display:flex;flex-direction:column;align-items:center;text-align:center}
-.team-card:hover{box-shadow:0 0 0 1px rgba(184,151,42,0.25),0 12px 50px rgba(184,151,42,0.35),0 4px 12px rgba(26,21,16,0.12)}
-.team-photo{width:80px;height:80px;background:#ede8de;border-radius:50%;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.team-initials{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:#b5aa98}
-.team-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:300;color:#1a1510;margin-bottom:0.4rem}
-.team-title{font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#bbb;line-height:1.7}
-.team-divider{width:24px;height:1px;background:rgba(184,151,42,0.3);margin:1rem auto}
+/* --- MISSION SPLIT (two light panels) --- */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:60vh}
+.split-panel{padding:5rem 4.5rem;display:flex;flex-direction:column;justify-content:center;background:var(--ground)}
+.split-panel--oyster{background:var(--surface)}
+.split-panel .eyebrow{margin-bottom:1.5rem}
+.split-panel .h2{margin-bottom:1.5rem}
+.split-panel .body{margin-bottom:2rem}
+.split-list{list-style:none;display:flex;flex-direction:column;gap:1rem}
+.split-list li{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.7;color:var(--body);display:flex;gap:0.75rem;align-items:flex-start}
+.split-list li::before{content:'—';color:var(--surface);flex-shrink:0}
+.split-panel--oyster .split-list li::before{color:color-mix(in srgb,var(--ink) 30%,var(--surface))}
 
-/* --- CTA band --- */
-.cta-band{background:#1a1510;padding:6rem 3rem;text-align:center}
-.cta-band-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:rgba(245,240,230,0.3);margin-bottom:2rem;display:block}
-.cta-band-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;color:#f5f0e6;line-height:1.1;margin-bottom:2.5rem}
-.cta-band-h2 em{font-style:italic}
-.cta-band-btns{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
-.cta-btn{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid rgba(245,240,230,0.3);color:#f5f0e6;transition:all 0.25s}
-.cta-btn:hover{background:#f5f0e6;color:#1a1510}
-.cta-btn.filled{background:#f5f0e6;color:#1a1510;border-color:#f5f0e6}
-.cta-btn.filled:hover{background:transparent;color:#f5f0e6}
+/* --- TEAM --- */
+.team{padding:8rem 3rem;background:var(--surface)}
+.team-hd{text-align:center;margin-bottom:4rem}
+.team-hd .eyebrow{margin-bottom:2rem}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:960px;margin:0 auto}
+.team-card{display:flex;flex-direction:column;align-items:center;text-align:center}
+.team-photo{width:80px;height:80px;background:var(--surface);border-radius:50%;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.team-initials{font-family:var(--font-serif);font-size:1.5rem;font-weight:300;color:var(--body)}
+.team-name{font-family:var(--font-serif);font-size:1.25rem;font-weight:300;color:var(--ink);margin-bottom:0.4rem}
+.team-divider{width:24px;height:1px;background:var(--surface);margin:1rem auto}
+.team-title{font-family:var(--font-sans);font-size:var(--fs-small);letter-spacing:0.04em;color:var(--body);line-height:1.7}
 
-/* --- Responsive (about-only overrides; shared breakpoints come from style.css) --- */
+/* --- CTA BAND --- */
+.cta-band{padding:7rem 3rem;text-align:center;background:var(--ground);border-top:1px solid var(--hairline)}
+.cta-band .eyebrow{margin-bottom:2rem}
+.cta-band .h2{margin-bottom:2.5rem}
+.cta-band-btns{display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap}
+
+/* --- RESPONSIVE --- */
 @media(max-width:960px){
-  .split-dark,.split-light{padding:3.5rem 1.5rem}
-  .two-col{grid-template-columns:1fr;gap:2rem}
-  .team-grid{grid-template-columns:1fr 1fr}
-  .text-block,.prog-header,.team{padding-left:1.5rem;padding-right:1.5rem}
-  .prog-tag{display:none}
   .hero-content{padding:0 1.5rem 4rem}
+  .about-section,.team,.cta-band{padding-left:1.5rem;padding-right:1.5rem}
+  .two-col{grid-template-columns:1fr;gap:2rem}
+  .about-prog-header{padding:4rem 1.5rem 2rem}
+  .prog-item{grid-template-columns:50px 1fr;gap:1.25rem;padding:1.75rem 1.5rem}
+  .prog-side{grid-column:2}
+  .split{grid-template-columns:1fr}
+  .split-panel{padding:3.5rem 1.5rem}
+  .team-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:540px){
+  .hero-h1{font-size:2.6rem}
   .team-grid{grid-template-columns:1fr}
   .cta-band-btns{flex-direction:column;align-items:center}
 }

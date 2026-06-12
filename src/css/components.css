@@ -131,9 +131,9 @@ select.input{appearance:none;-webkit-appearance:none;cursor:pointer;padding-righ
 .hero-band .eyebrow{color:var(--cream)}
 .hero-band .lead{color:color-mix(in srgb,var(--cream) 70%,transparent)}
 
-/* --- INNER-PAGE HERO (white ground, ink serif headline, Stone sub, thin Oyster hairline; NO dark band) --- */
-.hero-inner{background:var(--ground);padding:6rem 2.5rem 4rem;border-bottom:1px solid var(--hairline)}
-.hero-inner .lead{color:var(--body)}
+/* Inner pages do NOT use a separate hero treatment — each keeps its own original full-height
+   dark hero with the shared transparent nav over it (solidifies to white on scroll), recolored
+   to the Midnight palette in its page CSS. No .hero-inner band, no white nav-bar variant. */
 
 /* ============================================================================
    PROGRAM-PAGE SHARED BLOCK (folded in, token-based)
