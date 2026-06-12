@@ -4,13 +4,13 @@
 
 /* --- Overrides of shared selectors --- */
 body{background:#f5f0e6}
-.hero{height:70vh;min-height:460px}
+.hero{height:90vh;min-height:680px}
 .hero-overlay{background:linear-gradient(to top,rgba(20,16,10,0.88) 0%,rgba(20,16,10,0.1) 60%,transparent 100%)}
 .hero-h1{font-size:clamp(3.5rem,8vw,7.5rem);line-height:0.95;letter-spacing:-0.02em}
 
 /* --- Hero --- */
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 35% 55%,rgba(184,151,42,0.1) 0%,transparent 55%),linear-gradient(150deg,#1a1510 0%,#2a2218 100%)}
-.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:300;font-style:italic;color:rgba(245,240,230,0.5);margin-top:1rem;line-height:1.4;max-width:560px}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:normal;color:rgba(245,240,230,0.65);margin-top:1rem;line-height:26px;max-width:560px}
 .hero-actions{display:flex;gap:1.25rem;margin-top:2.5rem;flex-wrap:wrap;align-items:center}
 .hero-btn{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid #f5f0e6;background:#f5f0e6;color:#1a1510;transition:all 0.25s}
 .hero-btn:hover{background:transparent;color:#f5f0e6}

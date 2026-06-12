@@ -19,19 +19,6 @@ a{text-decoration:none;color:inherit}
 
 /* --- HERO: original full-height structure (from legacy about.html), recolored to Midnight.
    Transparent cream nav sits OVER it and solidifies to white on scroll (shared nav). --- */
-.hero{height:70vh;min-height:480px;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink)}
-.hero-bg{position:absolute;inset:0;background:var(--ink)}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,18,19,0.8) 0%,rgba(20,18,19,0.1) 60%,transparent 100%)}
-.hero-content{position:relative;z-index:2;padding:0 3rem 5rem}
-.hero-tag{font-size:0.55rem;letter-spacing:0.32em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 55%,transparent);margin-bottom:1.25rem;display:block}
-.hero-h1{font-family:var(--font-serif);font-size:clamp(3rem,7vw,5.5rem);font-weight:300;color:var(--cream);line-height:1.04;letter-spacing:-0.01em}
-.hero-h1 em{font-style:italic}
-.hero-sub{font-size:0.78rem;line-height:2;color:color-mix(in srgb,var(--cream) 55%,transparent);margin-top:1.25rem;max-width:420px}
-.hero-scroll{position:absolute;bottom:2.5rem;right:3rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0.5rem}
-.hero-scroll span{font-size:0.48rem;letter-spacing:0.28em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 35%,transparent)}
-.scroll-bar{width:1px;height:36px;background:color-mix(in srgb,var(--cream) 20%,transparent);position:relative;overflow:hidden}
-.scroll-bar::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--cream);animation:scrollAnim 2s ease infinite}
-@keyframes scrollAnim{0%{top:-100%}100%{top:100%}}
 
 /* --- TEXT SECTIONS (story / science) --- */
 .about-section{padding:7rem 3rem}
@@ -90,7 +77,6 @@ a{text-decoration:none;color:inherit}
 
 /* --- RESPONSIVE --- */
 @media(max-width:960px){
-  .hero-content{padding:0 1.5rem 4rem}
   .about-section,.team,.cta-band{padding-left:1.5rem;padding-right:1.5rem}
   .two-col{grid-template-columns:1fr;gap:2rem}
   .about-prog-header{padding:4rem 1.5rem 2rem}
@@ -101,7 +87,6 @@ a{text-decoration:none;color:inherit}
   .team-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:540px){
-  .hero-h1{font-size:2.6rem}
   .team-grid{grid-template-columns:1fr}
   .cta-band-btns{flex-direction:column;align-items:center}
 }

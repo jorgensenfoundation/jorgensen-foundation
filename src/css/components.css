@@ -24,7 +24,7 @@ nav.scrolled .nav-logo,nav.scrolled .nav-links a{color:var(--ink)}
 nav.scrolled .nav-cta{color:var(--ink);border-color:var(--ink)}
 nav.scrolled .nav-hamburger span{background:var(--ink)}
 .nav-logo{font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;color:var(--cream);transition:color 0.4s}
-.nav-links{display:flex;gap:2rem}
+.nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);opacity:0.85;transition:opacity 0.2s,color 0.4s}
 .nav-links a:hover{opacity:1}
 .nav-links a.active{border-bottom:1px solid var(--cream)}            /* transparent/dark nav */
@@ -33,6 +33,22 @@ nav.scrolled .nav-links a.active{border-bottom-color:var(--ink)}    /* white/scr
 .nav-cta:hover{background:var(--cream);color:var(--ink)}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:1px;background:var(--cream);transition:background 0.4s}
+/* --- PROGRAMS DROPDOWN (shared nav) — white panel, Oyster hairline, Midnight links --- */
+.nav-dropdown{position:relative;display:flex;align-items:center}
+.nav-dropdown-menu{position:absolute;top:100%;left:0;margin-top:1.1rem;min-width:170px;display:none;flex-direction:column;gap:0.85rem;border-top:1px solid var(--surface);padding-top:1rem;z-index:120}
+@media(min-width:961px){
+  /* Desktop hover dropdown: laid out but invisible until hover. visibility/opacity (not
+     display) so a close-delay can apply. Instant open; ~220ms grace before close so an
+     imprecise cursor path doesn't snap it shut. */
+  .nav-dropdown-menu{display:flex;visibility:hidden;opacity:0;transition:opacity 0.2s ease,visibility 0s linear 0.22s}
+  .nav-dropdown:hover .nav-dropdown-menu{visibility:visible;opacity:1;transition:opacity 0.2s ease,visibility 0s}
+  /* Transparent bridge filling the 1.1rem gap between trigger and menu so the hover area
+     is continuous (cursor never crosses dead space). */
+  .nav-dropdown-menu::before{content:"";position:absolute;left:0;right:0;top:-1.1rem;height:1.1rem}
+}
+.nav-dropdown-menu a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);opacity:0.85;white-space:nowrap;transition:opacity 0.2s,color 0.4s}
+.nav-dropdown-menu a:hover{opacity:1}
+nav.scrolled .nav-dropdown-menu a{color:var(--ink)}
 
 footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:var(--ground)}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
@@ -50,6 +66,10 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:
 @media(max-width:960px){
   .nav-links,.nav-cta{display:none}
   .nav-hamburger{display:flex}
+  .nav-dropdown{flex-direction:column;align-items:flex-start}
+  .nav-dropdown-menu{position:static;display:none;margin:0.85rem 0 0;padding:0 0 0 1rem;min-width:0;border-top:none}
+  .nav-dropdown.open .nav-dropdown-menu{display:flex}
+  .nav-dropdown-menu a{color:var(--ink)}
   nav{padding:1.5rem 1.5rem}
   nav.scrolled{padding:1rem 1.5rem}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
@@ -131,9 +151,28 @@ select.input{appearance:none;-webkit-appearance:none;cursor:pointer;padding-righ
 .hero-band .eyebrow{color:var(--cream)}
 .hero-band .lead{color:color-mix(in srgb,var(--cream) 70%,transparent)}
 
-/* Inner pages do NOT use a separate hero treatment — each keeps its own original full-height
-   dark hero with the shared transparent nav over it (solidifies to white on scroll), recolored
-   to the Midnight palette in its page CSS. No .hero-inner band, no white nav-bar variant. */
+/* --- INNER-PAGE HERO (canonical) — ONE shared definition for every inner page
+   (news, terms, privacy, about, publications, visualisation, and all program pages).
+   Standardized on the publications hero: same height/min-height, layout, gradient bg,
+   overlay, content padding, headline clamp, eyebrow, sub, and scroll cue. Pages supply
+   only their own headline TEXT/eyebrow and any page-specific sub-line (.hero-subtitle,
+   .hero-date, .hero-desc) and program CTA buttons. The homepage uses .hp-hero/.hero-band
+   instead and is unaffected. --- */
+.hero{height:70vh;min-height:480px;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,color-mix(in srgb,var(--cream) 7%,transparent) 0%,transparent 55%),linear-gradient(135deg,var(--ink) 0%,var(--ink) 100%)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,18,19,0.8) 0%,rgba(20,18,19,0.1) 60%,transparent 100%)}
+.hero-content{position:relative;z-index:2;padding:0 3rem 5rem}
+.hero-tag{font-size:0.55rem;letter-spacing:0.32em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 50%,transparent);margin-bottom:1.25rem;display:block}
+.hero-h1{font-family:var(--font-serif);font-size:clamp(3rem,7vw,5.5rem);font-weight:300;color:var(--cream);line-height:1.04;letter-spacing:-0.01em}
+.hero-h1 em{font-style:italic}
+.hero-sub{font-family:var(--font-serif);font-style:normal;font-weight:400;font-size:18px;line-height:26px;color:color-mix(in srgb,var(--cream) 65%,transparent);margin-top:1.25rem;max-width:420px}
+.hero-scroll{position:absolute;bottom:2.5rem;right:3rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0.5rem}
+.hero-scroll span{font-size:0.48rem;letter-spacing:0.28em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 35%,transparent)}
+.scroll-bar{width:1px;height:36px;background:color-mix(in srgb,var(--cream) 20%,transparent);position:relative;overflow:hidden}
+.scroll-bar::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--cream);animation:scrollAnim 2s ease infinite}
+@keyframes scrollAnim{0%{top:-100%}100%{top:100%}}
+@media(max-width:960px){.hero-content{padding:0 1.5rem 4rem}}
+@media(max-width:540px){.hero-h1{font-size:2.6rem}}
 
 /* ============================================================================
    PROGRAM-PAGE SHARED BLOCK (folded in, token-based)

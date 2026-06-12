@@ -11,6 +11,14 @@ function toggleMenu() {
     if (!open) document.querySelectorAll('.nav-links a').forEach(a => a.style.color = '#111');
   }
 }
+// Mobile-only Programs dropdown: tap "Programs" to expand the submenu; desktop uses CSS hover.
+function toggleDropdown(e) {
+  if (window.matchMedia('(max-width:960px)').matches) {
+    e.preventDefault();
+    const d = e.currentTarget.closest('.nav-dropdown');
+    if (d) d.classList.toggle('open');
+  }
+}
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));

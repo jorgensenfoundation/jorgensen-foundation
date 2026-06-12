@@ -2,7 +2,17 @@
 <nav id="nav">
   <a href="/" class="nav-logo">Jorgensen Foundation</a>
   <div class="nav-links">
-    <a href="/#programs"{% if navActive == "programs" %} class="active"{% endif %}>Programs</a>
+    <div class="nav-dropdown">
+      <a href="/#programs" class="nav-dropdown-toggle{% if navActive == "programs" %} active{% endif %}" onclick="toggleDropdown(event)">Programs</a>
+      <div class="nav-dropdown-menu">
+        <a href="/boss">BOSS</a>
+        <a href="/mcpro">MCPRO</a>
+        <a href="/bomb">BOMB</a>
+        <a href="/fep">FEP</a>
+        <a href="/opls">OPLS</a>
+        <a href="/visualisation">Visualisation</a>
+      </div>
+    </div>
     <a href="/about"{% if navActive == "about" %} class="active"{% endif %}>About</a>
     <a href="/publications"{% if navActive == "publications" %} class="active"{% endif %}>Publications</a>
     <a href="/news"{% if navActive == "news" %} class="active"{% endif %}>News</a>
@@ -10,7 +20,7 @@
     <a href="/contact"{% if navActive == "contact" %} class="active"{% endif %}>Contact</a>
   </div>
   <div style="display:flex;gap:0.75rem;align-items:center">
-    <a href="/login" class="nav-cta" style="background:transparent">Sign In</a>
+    <a href="/login" class="nav-cta">Sign In</a>
     <a href="/#access" class="nav-cta">Request Access</a>
   </div>
   <div class="nav-hamburger" onclick="toggleMenu()">

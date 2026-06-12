@@ -1,43 +1,44 @@
-/* Terms of Service page styles. Loaded after style.css; page-specific legal-document
-   rules + minimal property-level overrides of shared selectors. Shared nav/footer/reset
-   come from /css/style.css. */
+/* Terms of Service page styles — recolored to the Midnight/Stone/Oyster system
+   (colors only; original structure/dimensions preserved). Loaded after components.css
+   (which @imports tokens.css); no longer loads style.css. Shared chrome (nav/footer)
+   comes from components.css; structural rules formerly inherited from style.css (base
+   reset, hero container) are ported here, recolored. */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--body);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
 
-/* --- Overrides of shared selectors --- */
-body{background:#f5f0e6}
-.hero{height:45vh;min-height:340px}
-.hero-overlay{background:linear-gradient(to top,rgba(20,16,10,0.88) 0%,rgba(20,16,10,0.1) 60%,transparent 100%)}
-.hero-content{padding:0 3rem 4rem}
-.hero-h1{font-size:clamp(3rem,7vw,6rem);line-height:0.95;letter-spacing:-0.02em}
+/* --- Ported structural chrome (was inherited from style.css), recolored --- */
+
+/* --- Overrides of shared selectors (merged base + page override) --- */
 .footer-bottom{flex-wrap:wrap;gap:1rem}
 
 /* --- Hero --- */
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(184,151,42,0.08) 0%,transparent 55%),linear-gradient(155deg,#1a1510 0%,#2a2218 100%)}
-.hero-date{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,230,0.35);margin-top:1.25rem;display:block}
+.hero-date{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 35%,transparent);margin-top:1.25rem;display:block}
 
 /* --- Content + table of contents --- */
-.content-section{padding:7rem 3rem;background:#faf8f4}
+.content-section{padding:7rem 3rem;background:var(--surface)}
 .content-inner{max-width:760px;margin:0 auto}
-.toc{margin-bottom:4rem;padding:2rem 2.5rem;background:#fff;border:1px solid rgba(184,151,42,0.3)}
-.toc-label{font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:#aaa;margin-bottom:1rem;display:block}
+.toc{margin-bottom:4rem;padding:2rem 2.5rem;background:var(--ground);border:1px solid var(--hairline)}
+.toc-label{font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--body);margin-bottom:1rem;display:block}
 .toc-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
-.toc-list li a{font-size:0.68rem;color:#888;transition:color 0.2s;display:flex;gap:0.75rem;align-items:baseline}
-.toc-list li a:hover{color:#1a1510}
-.toc-list li a::before{content:attr(data-num);font-family:'Cormorant Garamond',serif;font-size:0.75rem;color:#ccc;flex-shrink:0}
+.toc-list li a{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body);transition:color 0.2s;display:flex;gap:0.75rem;align-items:baseline}
+.toc-list li a:hover{color:var(--ink)}
+.toc-list li a::before{content:attr(data-num);font-family:'Cormorant Garamond',serif;font-size:var(--fs-body);color:var(--surface);flex-shrink:0}
 
 /* --- Legal sections --- */
-.legal-section{margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid #ede8de}
+.legal-section{margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid var(--hairline)}
 .legal-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.legal-num{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(184,151,42,0.6);margin-bottom:0.5rem;display:block;letter-spacing:0.08em}
-.legal-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:300;color:#1a1510;line-height:1.2;margin-bottom:1.75rem}
-.legal-h3{font-size:0.75rem;letter-spacing:0.06em;font-weight:400;color:#1a1510;margin-top:1.75rem;margin-bottom:0.75rem}
-.legal-body{font-size:0.78rem;line-height:2.2;color:#666}
+.legal-num{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--body);margin-bottom:0.5rem;display:block;letter-spacing:0.08em}
+.legal-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:300;color:var(--ink);line-height:1.2;margin-bottom:1.75rem}
+.legal-h3{font-size:0.75rem;letter-spacing:0.06em;font-weight:400;color:var(--ink);margin-top:1.75rem;margin-bottom:0.75rem}
+.legal-body{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body)}
 .legal-body p+p{margin-top:1rem}
 .legal-body ul{margin:1rem 0 1rem 1.5rem;display:flex;flex-direction:column;gap:0.5rem}
-.legal-body ul li{font-size:0.75rem;line-height:1.9;color:#777}
+.legal-body ul li{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body)}
 
-/* --- Responsive (page-only; shared breakpoints from style.css) --- */
+/* --- Responsive (page-only) --- */
 @media(max-width:960px){
-  .hero-content{padding:0 1.5rem 3rem}
   .content-section{padding:5rem 1.5rem}
 }
 @media(max-width:540px){
