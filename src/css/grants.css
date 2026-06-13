@@ -1,86 +1,116 @@
-/* Grants page styles. Loaded after style.css; page-unique rules + property-level
-   overrides of shared selectors (including the shared form components and the
-   shared FAQ component, which grants reuses). */
+/* Grants page — Midnight/Stone/Oyster. Loaded after components.css (which @imports
+   tokens.css); no longer loads the legacy style.css/gold-beige grants styles. Shared chrome
+   (nav/footer), the canonical hero, headings (.display/.h2/.h3/.section-h2/.section-label),
+   the form family (.input-group/.input-label/.input/.form-msg) and buttons (.btn/.btn--*)
+   come from components.css. Only page-specific section layout + the grant applicant flow
+   (account gate, file input, application status / step indicator) live here. No gold/beige. */
 
-/* --- Overrides of shared selectors --- */
-body{background:#f5f0e6}
-.hero{height:90vh;min-height:680px}
-.hero-overlay{background:linear-gradient(to top,rgba(20,16,10,0.88) 0%,rgba(20,16,10,0.1) 60%,transparent 100%)}
-.hero-h1{font-size:clamp(3.5rem,8vw,7.5rem);line-height:0.95;letter-spacing:-0.02em}
-
-/* --- Hero --- */
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 35% 55%,rgba(184,151,42,0.1) 0%,transparent 55%),linear-gradient(150deg,#1a1510 0%,#2a2218 100%)}
-.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;font-style:normal;color:rgba(245,240,230,0.65);margin-top:1rem;line-height:26px;max-width:560px}
-.hero-actions{display:flex;gap:1.25rem;margin-top:2.5rem;flex-wrap:wrap;align-items:center}
-.hero-btn{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid #f5f0e6;background:#f5f0e6;color:#1a1510;transition:all 0.25s}
-.hero-btn:hover{background:transparent;color:#f5f0e6}
-.hero-btn-ghost{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.9rem 2.5rem;border:1px solid rgba(245,240,230,0.3);color:#f5f0e6;transition:all 0.25s}
-.hero-btn-ghost:hover{border-color:#f5f0e6}
+/* --- base (grants does not load style.css) --- */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:hidden}
 
 /* --- About / stats --- */
-.about-section{padding:8rem 3rem;background:#faf8f4}
+.about-section{padding:8rem 3rem;background:var(--ground)}
 .about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
-.section-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
-.section-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem}
-.section-h2 em{font-style:italic}
-.section-body{font-size:0.8rem;line-height:2.2;color:#666}
+.section-body{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body);margin-top:1.5rem}
 .section-body p+p{margin-top:1.25rem}
 .stat-row{display:flex;flex-direction:column;gap:2.5rem}
-.stat-block{border-left:2px solid rgba(184,151,42,0.4);padding-left:1.75rem}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:#1a1510;line-height:1}
-.stat-label{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#aaa;margin-top:0.4rem}
+.stat-block{border-left:2px solid var(--surface);padding-left:1.75rem}
+.stat-num{font-family:var(--font-serif);font-size:2.8rem;font-weight:300;color:var(--ink);line-height:1}
+.stat-label{font-size:var(--fs-small);letter-spacing:0.04em;color:var(--body);margin-top:0.4rem}
 
 /* --- Eligibility / coverage split --- */
-.split-section{background:#fff;display:grid;grid-template-columns:1fr 1fr}
+.split-section{background:var(--ground);display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hairline)}
 .split-col{padding:7rem 4.5rem}
-.split-col+.split-col{border-left:1px solid #ede8de}
-.split-h3{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:#1a1510;line-height:1.15;margin-bottom:2rem}
+.split-col+.split-col{border-left:1px solid var(--hairline)}
+.split-h3{font-family:var(--font-serif);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(--ink);line-height:1.15;margin:1.25rem 0 2rem}
 .split-h3 em{font-style:italic}
-.split-body{font-size:0.78rem;line-height:2.1;color:#666;margin-bottom:2.5rem}
+.split-body{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body);margin-bottom:2.5rem}
 .check-list{list-style:none;display:flex;flex-direction:column;gap:0.9rem}
-.check-list li{font-size:0.72rem;line-height:1.7;color:#555;display:flex;gap:0.85rem;align-items:flex-start}
-.check-list li::before{content:'→';color:#b8972a;flex-shrink:0;font-size:0.65rem;margin-top:0.12rem}
-.coverage-amount{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:#1a1510;line-height:1;margin-bottom:0.4rem}
-.coverage-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:#aaa;margin-bottom:2rem;display:block}
+.check-list li{font-size:var(--fs-small);line-height:1.7;color:var(--body);display:flex;gap:0.85rem;align-items:flex-start}
+.check-list li::before{content:'→';color:var(--ink);flex-shrink:0;margin-top:0.1rem}
+.coverage-amount{font-family:var(--font-serif);font-size:3.5rem;font-weight:300;color:var(--ink);line-height:1;margin:1.25rem 0 0.4rem}
+.coverage-label{font-size:var(--fs-eyebrow);letter-spacing:0.25em;text-transform:uppercase;color:var(--body);margin-bottom:2rem;display:block}
 
 /* --- How to apply (steps) --- */
-.steps-section{padding:8rem 3rem;background:#f5f0e6}
+.steps-section{padding:8rem 3rem;background:var(--surface)}
 .steps-inner{max-width:1100px;margin:0 auto}
 .steps-list{display:flex;flex-direction:column;margin-top:4rem}
-.step-item{display:grid;grid-template-columns:80px 1fr;gap:2.5rem;padding:2.5rem 0;border-bottom:1px solid #ddd8ce;align-items:start}
-.step-item:first-child{border-top:1px solid #ddd8ce}
-.step-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:rgba(184,151,42,0.35);line-height:1}
-.step-title{font-size:0.8rem;letter-spacing:0.04em;font-weight:400;color:#1a1510;margin-bottom:0.5rem}
-.step-body{font-size:0.68rem;line-height:1.9;color:#888}
+.step-item{display:grid;grid-template-columns:80px 1fr;gap:2.5rem;padding:2.5rem 0;border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent);align-items:start}
+.step-item:first-child{border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+.step-num{font-family:var(--font-serif);font-size:2.5rem;font-weight:300;color:color-mix(in srgb,var(--ink) 45%,transparent);line-height:1}
+.step-title{font-size:var(--fs-body);letter-spacing:0.02em;font-weight:400;color:var(--ink);margin-bottom:0.5rem}
+.step-body{font-size:var(--fs-small);line-height:1.8;color:var(--body)}
 
-/* --- Application form heading --- */
-.form-section{padding:8rem 3rem;background:#faf8f4}
+/* --- Application form (form family comes from components.css) --- */
+.form-section{padding:8rem 3rem;background:var(--ground)}
 .form-inner{max-width:780px;margin:0 auto}
-.form-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.15;margin-bottom:0.75rem}
-.form-h2 em{font-style:italic}
-.form-sub{font-size:0.75rem;line-height:2;color:#888;margin-bottom:3.5rem;max-width:540px}
-
-/* --- FAQ: grants reuses the shared FAQ component; only these differ --- */
-.faq-a-inner{font-size:0.75rem;line-height:2.1;color:#888;padding-bottom:1.5rem;max-width:none}
-
-/* --- Shared form components: grants' value overrides --- */
-.input{font-size:0.8rem}
-textarea.input{min-height:120px;padding-top:0.75rem;line-height:1.7}
-.form-row{gap:1.5rem}
-.form-divider{background:#e8e4dc;margin:1rem 0 1.75rem}
+.form-sub{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body);margin:0.75rem 0 3.5rem;max-width:560px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.form-divider{height:1px;background:var(--hairline);margin:1rem 0 1.75rem}
+.input-hint{display:block;font-size:var(--fs-small);color:var(--body);margin-top:0.5rem}
+.input-file{padding:0.6rem 0;font-size:var(--fs-small);color:var(--body)}
 .submit-btn{margin-top:0.5rem}
-.submit-btn:disabled{opacity:0.5}
-.form-msg{margin-top:1rem}
-.form-msg.success{color:#2a7a45}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
 
-/* --- Responsive (shared nav/footer breakpoints come from style.css) --- */
+/* --- Account-required gate (logged-out applicants) --- */
+.gate-card{border:1px solid var(--hairline);background:var(--ground);padding:2.5rem 2.75rem;margin-top:1rem}
+.gate-card .h3{margin:0.85rem 0 1rem}
+.gate-body{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--body);margin-bottom:1.75rem;max-width:520px}
+.gate-actions{display:flex;gap:1rem;flex-wrap:wrap}
+
+/* --- My applications (status view) --- */
+.status-section{padding:8rem 3rem;background:var(--surface)}
+.status-inner{max-width:780px;margin:0 auto}
+.status-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:1.5rem}
+.status-empty{font-size:var(--fs-small);color:var(--body)}
+.grant-card{background:var(--ground);border:1px solid var(--hairline);padding:2rem 2.25rem}
+.grant-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+.grant-card-title{font-family:var(--font-serif);font-size:1.4rem;font-weight:400;color:var(--ink);line-height:1.2}
+.grant-card-meta{font-size:var(--fs-small);color:var(--body);margin-top:0.35rem}
+.grant-cv-link{font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--surface);padding-bottom:2px;white-space:nowrap}
+.grant-cv-link:hover{border-bottom-color:var(--ink)}
+
+/* status step indicator: submitted → under_review → awaiting_decision → decision → receipts → reimbursed */
+.steps-indicator{display:flex;margin-top:1.75rem}
+.step-node{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.step-node::before{content:'';position:absolute;top:6px;left:-50%;width:100%;height:1px;background:var(--hairline);z-index:0}
+.step-node:first-child::before{display:none}
+.step-node.done::before,.step-node.current::before,.step-node.rejected::before{background:var(--ink)}
+.step-marker{position:relative;z-index:1;width:13px;height:13px;border-radius:50%;background:var(--ground);border:1px solid var(--hairline)}
+.step-node.done .step-marker{background:var(--ink);border-color:var(--ink)}
+.step-node.current .step-marker{background:var(--ink);border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 18%,transparent)}
+.step-node.rejected .step-marker{background:var(--error);border-color:var(--error)}
+.step-label{font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--body);margin-top:0.6rem;line-height:1.3}
+.step-node.current .step-label{color:var(--ink)}
+.step-node.rejected .step-label{color:var(--error)}
+
+/* --- FAQ --- */
+.faq{padding:8rem 3rem;background:var(--ground)}
+.faq-inner{max-width:780px;margin:0 auto}
+.faq-h2{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--ink);line-height:1.1;margin-top:1rem}
+.faq-h2 em{font-style:italic}
+.faq-list{margin-top:3rem;border-top:1px solid var(--hairline)}
+.faq-item{border-bottom:1px solid var(--hairline)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;padding:1.75rem 0;cursor:pointer}
+.faq-q-text{font-size:var(--fs-body);color:var(--ink);letter-spacing:0.01em}
+.faq-icon{position:relative;width:14px;height:14px;flex-shrink:0}
+.faq-icon::before,.faq-icon::after{content:'';position:absolute;background:var(--ink);transition:transform 0.3s}
+.faq-icon::before{top:6px;left:0;width:14px;height:1px}
+.faq-icon::after{top:0;left:6px;width:1px;height:14px}
+.faq-item.open .faq-icon::after{transform:scaleY(0)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a-inner{font-size:var(--fs-small);line-height:2;color:var(--body);padding-bottom:1.75rem;max-width:none}
+
+/* --- Responsive --- */
 @media(max-width:960px){
-  .hero-content{padding:0 1.5rem 4rem}
-  .about-section{padding:5rem 1.5rem}
+  .about-section,.steps-section,.form-section,.status-section,.faq{padding:5rem 1.5rem}
   .about-inner{grid-template-columns:1fr;gap:3rem}
   .split-section{grid-template-columns:1fr}
   .split-col{padding:4rem 1.5rem}
-  .split-col+.split-col{border-left:none;border-top:1px solid #ede8de}
-  .steps-section,.form-section,.faq{padding:5rem 1.5rem}
+  .split-col+.split-col{border-left:none;border-top:1px solid var(--hairline)}
   .form-row{grid-template-columns:1fr}
+  .step-label{font-size:0.46rem}
 }

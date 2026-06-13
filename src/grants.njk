@@ -2,6 +2,7 @@
 layout: marketing.njk
 title: Student Travel Grants — Jorgensen Foundation
 description: The Jorgensen Foundation awards travel grants to graduate students and postdoctoral researchers attending international computational chemistry conferences. Funded by industry partnerships.
+mainCss: /css/components.css
 pageCss: /css/grants.css
 permalink: /grants/index.html
 navActive: grants
@@ -13,11 +14,7 @@ navActive: grants
   <div class="hero-content">
     <span class="hero-tag">GRANTS · JORGENSEN FOUNDATION</span>
     <h1 class="hero-h1">Student<br><em>Travel Grants</em></h1>
-    <p class="hero-subtitle">Funded by industry partnerships, open to academic researchers</p>
-    <div class="hero-actions">
-      <a href="#apply" class="hero-btn">Apply Now →</a>
-      <a href="#eligibility" class="hero-btn-ghost">Check Eligibility</a>
-    </div>
+    <p class="hero-sub">Funded by industry partnerships, open to academic researchers using the Foundation's programs.</p>
   </div>
   <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
 </section>
@@ -127,67 +124,100 @@ navActive: grants
 <section class="form-section" id="apply">
   <div class="form-inner">
     <span class="section-label">Application</span>
-    <h2 class="form-h2">Apply for a<br><em>travel grant.</em></h2>
-    <p class="form-sub">Complete all fields below. Applications are reviewed on a rolling basis during open cycles. The current cycle closes 31 July 2026.</p>
+    <h2 class="section-h2">Apply for a<br><em>travel grant.</em></h2>
+    <p class="form-sub">Applying is free — you don't need a paid subscription. Applications are reviewed on a rolling basis during open cycles. The current cycle closes 31 July 2026.</p>
 
-    <div class="form-row">
-      <div class="input-group">
-        <label class="input-label" for="first-name">First Name</label>
-        <input class="input" type="text" id="first-name" placeholder="Jane" autocomplete="given-name">
-      </div>
-      <div class="input-group">
-        <label class="input-label" for="last-name">Last Name</label>
-        <input class="input" type="text" id="last-name" placeholder="Smith" autocomplete="family-name">
-      </div>
-    </div>
-
-    <div class="input-group">
-      <label class="input-label" for="email">Institutional Email</label>
-      <input class="input" type="email" id="email" placeholder="jane.smith@university.edu" autocomplete="email">
-    </div>
-
-    <div class="input-group">
-      <label class="input-label" for="institution">Institution</label>
-      <input class="input" type="text" id="institution" placeholder="University of Example" autocomplete="organization">
-    </div>
-
-    <div class="input-group">
-      <label class="input-label" for="supervisor">Supervisor Name</label>
-      <input class="input" type="text" id="supervisor" placeholder="Prof. A. Smith">
-    </div>
-
-    <div class="form-divider"></div>
-
-    <div class="input-group">
-      <label class="input-label" for="conference-name">Conference Name</label>
-      <input class="input" type="text" id="conference-name" placeholder="e.g. American Chemical Society National Meeting">
-    </div>
-
-    <div class="form-row">
-      <div class="input-group">
-        <label class="input-label" for="conference-date">Conference Date</label>
-        <input class="input" type="text" id="conference-date" placeholder="e.g. August 2026">
-      </div>
-      <div class="input-group">
-        <label class="input-label" for="conference-location">Conference Location</label>
-        <input class="input" type="text" id="conference-location" placeholder="e.g. San Francisco, CA">
+    <!-- LOGGED OUT: account-required gate (revealed by grants.js when not logged in) -->
+    <div class="gate-card" id="grant-gate" hidden>
+      <span class="eyebrow">Account Required</span>
+      <h3 class="h3">Log in to <em>apply</em></h3>
+      <p class="gate-body">Applying for a travel grant is free and needs no paid subscription. Please log in or create a free account to continue — your name and institution will be filled in automatically.</p>
+      <div class="gate-actions">
+        <a class="btn btn--primary" href="/login">Log In</a>
+        <a class="btn btn--secondary" href="/#access">Create Free Account</a>
       </div>
     </div>
 
-    <div class="input-group">
-      <label class="input-label" for="amount">Amount Requested (USD)</label>
-      <input class="input" type="text" id="amount" placeholder="e.g. 1500">
+    <!-- LOGGED IN: the application form (revealed by grants.js when logged in) -->
+    <form class="grant-form" id="grant-form" hidden>
+      <div class="form-row">
+        <div class="input-group">
+          <label class="input-label" for="first-name">First Name</label>
+          <input class="input" type="text" id="first-name" placeholder="Jane" autocomplete="given-name">
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="last-name">Last Name</label>
+          <input class="input" type="text" id="last-name" placeholder="Smith" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="email">Institutional Email</label>
+        <input class="input" type="email" id="email" placeholder="jane.smith@university.edu" autocomplete="email">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="institution">Institution</label>
+        <input class="input" type="text" id="institution" placeholder="University of Example" autocomplete="organization">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="supervisor">Supervisor Name</label>
+        <input class="input" type="text" id="supervisor" placeholder="Prof. A. Smith">
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="input-group">
+        <label class="input-label" for="conference-name">Conference Name</label>
+        <input class="input" type="text" id="conference-name" placeholder="e.g. American Chemical Society National Meeting">
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label class="input-label" for="conference-date">Conference Date</label>
+          <input class="input" type="text" id="conference-date" placeholder="e.g. August 2026">
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="conference-location">Conference Location</label>
+          <input class="input" type="text" id="conference-location" placeholder="e.g. San Francisco, CA">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="amount">Amount Requested (USD)</label>
+        <input class="input" type="number" id="amount" min="1" max="2000" step="1" placeholder="e.g. 1500">
+        <span class="input-hint">Maximum award is $2,000.</span>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="input-group">
+        <label class="input-label" for="description">Research Description</label>
+        <textarea class="input" id="description" maxlength="2000" placeholder="Describe the research you will present (200–400 words). Include which Jorgensen Foundation programs you are using and the key findings or work in progress."></textarea>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="cv">Supervisor Letter / CV (PDF)</label>
+        <input class="input input-file" type="file" id="cv" accept=".pdf,application/pdf">
+        <span class="input-hint">PDF only, maximum 10MB.</span>
+      </div>
+
+      <button class="btn btn--primary submit-btn" id="submit-btn" type="button" onclick="submitGrant()">Submit Application</button>
+      <p class="form-msg" id="form-msg"></p>
+    </form>
+  </div>
+</section>
+
+<!-- MY APPLICATIONS — status view (revealed by grants.js when logged in) -->
+<section class="status-section" id="my-applications" hidden>
+  <div class="status-inner">
+    <span class="section-label">Your Applications</span>
+    <h2 class="section-h2">Application<br><em>status.</em></h2>
+    <p class="form-sub">Track the progress of grant applications submitted with your account.</p>
+    <div class="status-list" id="my-grants-list">
+      <p class="status-empty">Loading your applications…</p>
     </div>
-
-    <div class="form-divider"></div>
-
-    <div class="input-group">
-      <label class="input-label" for="description">Research Description</label>
-      <textarea class="input" id="description" placeholder="Describe the research you will present (200–400 words). Include which Jorgensen Foundation programs you are using and the key findings or work in progress."></textarea>
-    </div>
-
-    <button class="submit-btn" id="submit-btn" onclick="submitGrant()">Submit Application</button>
-    <p class="form-msg" id="form-msg"></p>
   </div>
 </section>
 
@@ -252,4 +282,5 @@ navActive: grants
 </section>
 
 
+<script src="/js/auth.js"></script>
 <script src="/js/grants.js"></script>
