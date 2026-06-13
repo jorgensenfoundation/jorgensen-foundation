@@ -35,6 +35,13 @@ function showDashboard() {
   loadGrants();
 }
 
+// If a token-protected call returns 401 (expired/invalid token after the 8h TTL),
+// clear the stored token and return to the login screen to re-prompt for the password.
+function handleAuthError(res) {
+  if (res.status === 401) { logout(); return true; }
+  return false;
+}
+
 async function adminLogin() {
   const password = document.getElementById('admin-password').value;
   const errorEl = document.getElementById('login-error');
@@ -47,8 +54,10 @@ async function adminLogin() {
   btn.disabled = true;
   btn.textContent = 'Signing in...';
   try {
-    const res = await fetch(`${API}/admin/users`, {
-      headers: { 'Authorization': `Bearer ${password}` }
+    const res = await fetch(`${API}/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: password })
     });
     if (!res.ok) {
       errorEl.textContent = 'Invalid admin password.';
@@ -57,12 +66,10 @@ async function adminLogin() {
       btn.textContent = 'Sign In';
       return;
     }
-    adminToken = password;
-    sessionStorage.setItem('jf_admin_token', adminToken);
     const data = await res.json();
-    allUsers = data;
+    adminToken = data.token;
+    sessionStorage.setItem('jf_admin_token', adminToken);
     showDashboard();
-    renderUsers(allUsers);
   } catch(e) {
     errorEl.textContent = 'Connection error. Please try again.';
     errorEl.classList.add('show');
@@ -99,6 +106,7 @@ async function loadNewsletter() {
     const res = await fetch(`${API}/admin/newsletter`, {
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
+    if (handleAuthError(res)) return;
     if (!res.ok) return;
     allNewsletter = await res.json();
     document.getElementById('stat-newsletter').textContent = allNewsletter.length;
@@ -139,6 +147,7 @@ async function loadGrants() {
     const res = await fetch(`${API}/admin/grants`, {
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
+    if (handleAuthError(res)) return;
     if (!res.ok) return;
     allGrants = await res.json();
     document.getElementById('stat-grants').textContent = allGrants.length;
@@ -263,6 +272,7 @@ async function activateUser(email) {
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
       body: JSON.stringify({email})
     });
+    if (handleAuthError(res)) return;
     if (res.ok) loadUsers();
   } catch(e) { console.error(e); }
 }
@@ -275,6 +285,7 @@ async function deleteUser(email) {
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
       body: JSON.stringify({email})
     });
+    if (handleAuthError(res)) return;
     if (res.ok) loadUsers();
   } catch(e) { console.error(e); }
 }
@@ -287,6 +298,7 @@ async function deactivateUser(email) {
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
       body: JSON.stringify({email})
     });
+    if (handleAuthError(res)) return;
     if (res.ok) loadUsers();
   } catch(e) { console.error(e); }
 }
