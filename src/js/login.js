@@ -9,38 +9,9 @@ function toggleVis(inputId, btn) {
 const API = 'https://jorgensen-backend-production.up.railway.app';
 let currentUser = null;
 let selectedPlan = 'monthly';
-let storedCredentials = null;
-let pollInterval = null;
 
 const ACADEMIA_PRICES = { monthly: '$49/mo', annual: '$490/yr' };
 const INDUSTRY_PRICES = { monthly: '$199/mo', annual: '$1,990/yr' };
-
-function stopSubscriptionPolling() {
-  if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
-}
-
-function startSubscriptionPolling() {
-  stopSubscriptionPolling();
-  if (!storedCredentials) return;
-  pollInterval = setInterval(async () => {
-    try {
-      const res = await fetch(`${API}/login`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(storedCredentials)
-      });
-      if (!res.ok) return;
-      const data = await res.json();
-      if (data.subscription_status === 'active') {
-        stopSubscriptionPolling();
-        storedCredentials = null;
-        sessionStorage.setItem('jf_user', JSON.stringify(data));
-        currentUser = data;
-        showDashboard(data);
-      }
-    } catch(e) {}
-  }, 3000);
-}
 
 function showPage(id) {
   document.getElementById('page-login').classList.toggle('hidden', id !== 'page-login');
@@ -48,8 +19,6 @@ function showPage(id) {
   document.getElementById('dashboard').classList.toggle('active', id === 'dashboard');
   document.getElementById('page-login').style.display = id === 'page-login' ? 'flex' : 'none';
   document.getElementById('page-payment').style.display = id === 'page-payment' ? 'flex' : 'none';
-  if (id === 'page-payment') startSubscriptionPolling();
-  else stopSubscriptionPolling();
 }
 
 function setupPaymentPage(user) {
@@ -116,13 +85,19 @@ async function login() {
       btn.textContent = 'Sign In';
       return;
     }
-    sessionStorage.setItem('jf_user', JSON.stringify(data));
-    currentUser = data;
-    if (data.subscription_status === 'active') {
-      showDashboard(data);
+    const userInfo = {
+      email: data.email,
+      first_name: data.first_name,
+      account_type: data.account_type,
+      subscription_status: data.subscription_status
+    };
+    sessionStorage.setItem('jf_user_token', data.token);
+    sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
+    currentUser = userInfo;
+    if (userInfo.subscription_status === 'active') {
+      showDashboard(userInfo);
     } else {
-      storedCredentials = { email, password };
-      setupPaymentPage(data);
+      setupPaymentPage(userInfo);
       showPage('page-payment');
     }
   } catch(e) {
@@ -197,9 +172,9 @@ async function applyAccessCode() {
 }
 
 function logout() {
+  sessionStorage.removeItem('jf_user_token');
   sessionStorage.removeItem('jf_user');
   currentUser = null;
-  storedCredentials = null;
   document.getElementById('nav-user').style.display = 'none';
   document.getElementById('nav-logout').style.display = 'none';
   showPage('page-login');

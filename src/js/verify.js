@@ -83,7 +83,14 @@ async function setPassword() {
     });
     if (loginRes.ok) {
       const userData = await loginRes.json();
-      sessionStorage.setItem('jf_user', JSON.stringify(userData));
+      const userInfo = {
+        email: userData.email,
+        first_name: userData.first_name,
+        account_type: userData.account_type,
+        subscription_status: userData.subscription_status
+      };
+      sessionStorage.setItem('jf_user_token', userData.token);
+      sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
     }
     window.location.href = '/login';
   } catch(e) {
