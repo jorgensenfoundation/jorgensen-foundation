@@ -204,7 +204,7 @@ function filterGrants() {
 function renderGrants(grants) {
   const tbody = document.getElementById('grants-table');
   if (!grants.length) {
-    tbody.innerHTML = '<tr><td colspan="12" class="empty-state">No applications found</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No applications found</td></tr>';
     return;
   }
   // Sort a COPY (never mutate allGrants): by lifecycle stage, then newest-first within a stage.
@@ -216,37 +216,23 @@ function renderGrants(grants) {
     const tb = b.created_at ? Date.parse(b.created_at) : 0;
     return tb - ta;   // newest first within the same status
   });
-  tbody.innerHTML = sorted.map((g, i) => {
-    const date = g.created_at ? new Date(g.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
-    const desc = g.research_description || '';
-    const short = desc.length > 120 ? desc.slice(0, 120) + '…' : desc;
-    const hasMore = desc.length > 120;
+  tbody.innerHTML = sorted.map((g) => {
     const status = g.status || 'submitted';
-    const cv = g.cv_url ? `<a href="${escAttr(g.cv_url)}" target="_blank" rel="noopener" class="cv-link">View CV →</a>` : '—';
     const naText = NEXT_ACTION[status] || '—';
     const naClass = nextActionClass(status);
     const gid = escAttr(g.id);   // g.id (not the row index) drives all detail/action calls
     return `
       <tr>
         <td>${esc(g.first_name)} ${esc(g.last_name)}</td>
-        <td><a href="mailto:${escAttr(g.email)}" style="color:#1a1510;border-bottom:1px solid #e8e0d0">${esc(g.email)}</a></td>
         <td>${esc(g.institution || '—')}</td>
         <td>${esc(g.supervisor_name || '—')}</td>
-        <td style="min-width:160px">${esc(g.conference_name || '—')}<br><span style="font-size:0.62rem;color:#aaa">${esc(g.conference_date)} · ${esc(g.conference_location)}</span></td>
         <td style="white-space:nowrap">$${esc(g.amount_requested || '—')}</td>
-        <td style="white-space:nowrap">${esc(date)}</td>
-        <td style="min-width:200px;max-width:280px">
-          <span class="desc-short" id="desc-short-${i}">${esc(short)}</span>
-          <span class="desc-full" id="desc-full-${i}">${esc(desc)}</span>
-          ${hasMore ? `<button class="desc-toggle" onclick="toggleDesc(${i})">Show more</button>` : ''}
-        </td>
         <td><span class="badge badge-${escAttr(status)}">${esc(status)}</span></td>
         <td><span class="next-action ${naClass}">${esc(naText)}</span></td>
-        <td>${cv}</td>
         <td><button class="action-btn action-details" onclick="toggleDetail('${gid}')">Details</button></td>
       </tr>
       <tr class="detail-row" id="detail-${gid}" hidden>
-        <td colspan="12"><div class="detail-panel" id="detail-cell-${gid}">Loading…</div></td>
+        <td colspan="7"><div class="detail-panel" id="detail-cell-${gid}">Loading…</div></td>
       </tr>
     `;
   }).join('');
@@ -421,7 +407,7 @@ function renderBoardMembers(members) {
   const tbody = document.getElementById('board-members-table');
   if (!tbody) return;
   if (!Array.isArray(members) || !members.length) {
-    tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No board members yet</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No board members yet</td></tr>';
     return;
   }
   tbody.innerHTML = members.map(m => `
@@ -429,6 +415,7 @@ function renderBoardMembers(members) {
         <td>${esc(m.email)}</td>
         <td>${esc(m.first_name || '—')}</td>
         <td>${esc(m.last_name || '—')}</td>
+        <td><button class="action-btn action-deactivate" onclick="removeBoardMember('${escAttr(m.email)}')">Remove</button></td>
       </tr>`).join('');
 }
 
@@ -460,14 +447,26 @@ async function inviteBoardMember() {
   }
 }
 
-function toggleDesc(i) {
-  const s = document.getElementById(`desc-short-${i}`);
-  const f = document.getElementById(`desc-full-${i}`);
-  const btn = s.parentElement.querySelector('.desc-toggle');
-  const expanded = f.style.display === 'inline';
-  s.style.display = expanded ? 'inline' : 'none';
-  f.style.display = expanded ? 'none' : 'inline';
-  btn.textContent = expanded ? 'Show more' : 'Show less';
+async function removeBoardMember(email) {
+  if (!confirm(`Remove ${email} as a board member? They keep their account.`)) return;
+  const msg = document.getElementById('board-msg');
+  try {
+    const res = await fetch(`${API}/admin/remove-board-member`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ email })
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      if (msg) { msg.textContent = 'Board member removed.'; msg.className = 'board-msg success'; }
+      loadBoardMembers();
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (msg) { msg.textContent = data.detail || 'Could not remove board member.'; msg.className = 'board-msg error'; }
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'board-msg error'; }
+  }
 }
 
 function setFilter(filter, btn) {
