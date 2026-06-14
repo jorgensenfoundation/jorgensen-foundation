@@ -24,6 +24,7 @@ const API = 'https://jorgensen-backend-production.up.railway.app';
 let adminToken = '';
 let allUsers = [];
 let allGrants = [];
+let boardMembers = [];
 let currentFilter = 'all';
 
 function showDashboard() {
@@ -33,6 +34,7 @@ function showDashboard() {
   loadUsers();
   loadNewsletter();
   loadGrants();
+  loadBoardMembers();
 }
 
 // If a token-protected call returns 401 (expired/invalid token after the 8h TTL),
@@ -172,7 +174,7 @@ function filterGrants() {
 function renderGrants(grants) {
   const tbody = document.getElementById('grants-table');
   if (!grants.length) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No applications found</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="11" class="empty-state">No applications found</td></tr>';
     return;
   }
   tbody.innerHTML = grants.map((g, i) => {
@@ -180,6 +182,9 @@ function renderGrants(grants) {
     const desc = g.research_description || '';
     const short = desc.length > 120 ? desc.slice(0, 120) + '…' : desc;
     const hasMore = desc.length > 120;
+    const status = g.status || 'submitted';
+    const cv = g.cv_url ? `<a href="${escAttr(g.cv_url)}" target="_blank" rel="noopener" class="cv-link">View CV →</a>` : '—';
+    const gid = escAttr(g.id);   // g.id (not the row index) drives all detail/action calls
     return `
       <tr>
         <td>${esc(g.first_name)} ${esc(g.last_name)}</td>
@@ -194,9 +199,223 @@ function renderGrants(grants) {
           <span class="desc-full" id="desc-full-${i}">${esc(desc)}</span>
           ${hasMore ? `<button class="desc-toggle" onclick="toggleDesc(${i})">Show more</button>` : ''}
         </td>
+        <td><span class="badge badge-${escAttr(status)}">${esc(status)}</span></td>
+        <td>${cv}</td>
+        <td><button class="action-btn action-details" onclick="toggleDetail('${gid}')">Details</button></td>
+      </tr>
+      <tr class="detail-row" id="detail-${gid}" hidden>
+        <td colspan="11"><div class="detail-panel" id="detail-cell-${gid}">Loading…</div></td>
       </tr>
     `;
   }).join('');
+}
+
+// --- Inline grant detail panel (board votes) + assign/decide controls ---------
+function toggleDetail(id) {
+  const row = document.getElementById(`detail-${id}`);
+  if (!row) return;
+  const opening = row.hidden;
+  row.hidden = !row.hidden;
+  if (opening && row.dataset.loaded !== 'true') {
+    row.dataset.loaded = 'true';
+    loadGrantDetail(id);
+  }
+}
+
+async function loadGrantDetail(id) {
+  const cell = document.getElementById(`detail-cell-${id}`);
+  if (!cell) return;
+  try {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (!res.ok) { cell.innerHTML = '<p class="detail-empty">Could not load this application.</p>'; return; }
+    const g = await res.json();
+    await loadBoardMembers();   // ensure the assign list is populated/cached
+    renderGrantDetail(id, g);
+  } catch (e) {
+    cell.innerHTML = '<p class="detail-empty">Could not load this application.</p>';
+  }
+}
+
+function renderGrantDetail(id, g) {
+  const cell = document.getElementById(`detail-cell-${id}`);
+  if (!cell) return;
+  const gid = escAttr(id);
+  const status = g.status || 'submitted';
+  const date = g.created_at ? new Date(g.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+  const cv = g.cv_url ? `<a href="${escAttr(g.cv_url)}" target="_blank" rel="noopener" class="cv-link">View CV →</a>` : '—';
+  const reviewers = Array.isArray(g.reviewers) ? g.reviewers : [];
+  const assignedEmails = reviewers.map(r => (r.email || '').toLowerCase());
+
+  const reviewersHtml = reviewers.length ? reviewers.map(r => {
+    const rec = r.recommendation
+      ? `<span class="badge badge-vote-${escAttr(r.recommendation)}">${esc(r.recommendation)}</span>`
+      : '<span class="vote-pending">not yet voted</span>';
+    const votedAt = r.voted_at ? new Date(r.voted_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '';
+    return `<div class="reviewer-row">
+        <div class="reviewer-email">${esc(r.email)}</div>
+        <div class="reviewer-vote">${rec}${votedAt ? `<span class="reviewer-date">${esc(votedAt)}</span>` : ''}</div>
+        ${r.comment ? `<p class="reviewer-comment">${esc(r.comment)}</p>` : ''}
+      </div>`;
+  }).join('') : '<p class="detail-empty">No reviewers assigned yet.</p>';
+
+  const assignOptions = boardMembers.length ? boardMembers.map(m => {
+    const email = m.email || '';
+    const already = assignedEmails.indexOf(email.toLowerCase()) !== -1;
+    const name = `${esc(m.first_name || '')} ${esc(m.last_name || '')}`.trim();
+    return `<label class="assign-opt">
+        <input type="checkbox" value="${escAttr(email)}"${already ? ' checked disabled' : ''}>
+        ${esc(email)}${name ? ` <span class="assign-name">(${name})</span>` : ''}
+      </label>`;
+  }).join('') : '<p class="detail-empty">No board members yet — add one below.</p>';
+
+  cell.innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-main">
+        <span class="detail-label">Application</span>
+        <div class="detail-status">Status: <span class="badge badge-${escAttr(status)}">${esc(status)}</span></div>
+        <table class="detail-fields">
+          <tr><th>Applicant</th><td>${esc(g.first_name)} ${esc(g.last_name)}</td></tr>
+          <tr><th>Email</th><td>${esc(g.email || g.user_email || '—')}</td></tr>
+          <tr><th>Institution</th><td>${esc(g.institution || '—')}</td></tr>
+          <tr><th>Supervisor</th><td>${esc(g.supervisor_name || '—')}</td></tr>
+          <tr><th>Conference</th><td>${esc(g.conference_name || '—')}</td></tr>
+          <tr><th>Dates</th><td>${esc(g.conference_date || '—')}</td></tr>
+          <tr><th>Location</th><td>${esc(g.conference_location || '—')}</td></tr>
+          <tr><th>Amount</th><td>$${esc(g.amount_requested || '—')}</td></tr>
+          <tr><th>Submitted</th><td>${esc(date)}</td></tr>
+          <tr><th>CV</th><td>${cv}</td></tr>
+        </table>
+        <div class="detail-desc-label">Research description</div>
+        <p class="detail-desc">${esc(g.research_description || '—')}</p>
+      </div>
+      <div class="detail-side">
+        <span class="detail-label">Reviewers</span>
+        <div class="reviewers-list">${reviewersHtml}</div>
+
+        <span class="detail-label">Assign reviewers</span>
+        <div class="assign-list" id="assign-list-${gid}">${assignOptions}</div>
+        <button class="refresh-btn" type="button" onclick="assignReviewers('${gid}')">Assign</button>
+
+        <span class="detail-label">Decision</span>
+        <div class="decide-actions">
+          <button class="action-btn action-activate" type="button" onclick="decideGrant('${gid}','approve')">Approve</button>
+          <button class="action-btn action-deactivate" type="button" onclick="decideGrant('${gid}','reject')">Reject</button>
+        </div>
+        <p class="detail-msg" id="detail-msg-${gid}"></p>
+      </div>
+    </div>`;
+}
+
+async function assignReviewers(id) {
+  const msg = document.getElementById(`detail-msg-${id}`);
+  const container = document.getElementById(`assign-list-${id}`);
+  if (!container) return;
+  const emails = Array.from(container.querySelectorAll('input[type="checkbox"]:checked:not(:disabled)')).map(cb => cb.value);
+  if (!emails.length) {
+    if (msg) { msg.textContent = 'Select at least one board member to assign.'; msg.className = 'detail-msg error'; }
+    return;
+  }
+  try {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/assign`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ emails })
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      loadGrants();          // refresh the status badge in the main table (assign sets under_review)
+      loadGrantDetail(id);   // refresh this panel's reviewer list
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (msg) { msg.textContent = data.detail || 'Could not assign reviewers.'; msg.className = 'detail-msg error'; }
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
+  }
+}
+
+async function decideGrant(id, decision) {
+  const verb = decision === 'approve' ? 'Approve' : 'Reject';
+  if (!confirm(`${verb} this application? This records the board's decision.`)) return;
+  const msg = document.getElementById(`detail-msg-${id}`);
+  try {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/decide`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ decision })
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      loadGrants();
+      loadGrantDetail(id);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (msg) { msg.textContent = data.detail || 'Could not record the decision.'; msg.className = 'detail-msg error'; }
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
+  }
+}
+
+// --- Board members --------------------------------------------------------------
+async function loadBoardMembers() {
+  try {
+    const res = await fetch(`${API}/admin/board-members`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (!res.ok) return;
+    boardMembers = await res.json();
+    renderBoardMembers(boardMembers);
+  } catch (e) {
+    console.error('Failed to load board members', e);
+  }
+}
+
+function renderBoardMembers(members) {
+  const tbody = document.getElementById('board-members-table');
+  if (!tbody) return;
+  if (!Array.isArray(members) || !members.length) {
+    tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No board members yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = members.map(m => `
+      <tr>
+        <td>${esc(m.email)}</td>
+        <td>${esc(m.first_name || '—')}</td>
+        <td>${esc(m.last_name || '—')}</td>
+      </tr>`).join('');
+}
+
+async function inviteBoardMember() {
+  const input = document.getElementById('board-email');
+  const msg = document.getElementById('board-msg');
+  const email = input ? input.value.trim() : '';
+  if (!email) {
+    if (msg) { msg.textContent = 'Enter an email address.'; msg.className = 'board-msg error'; }
+    return;
+  }
+  try {
+    const res = await fetch(`${API}/admin/invite-board-member`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ email })
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      if (msg) { msg.textContent = 'Board member invited.'; msg.className = 'board-msg success'; }
+      input.value = '';
+      loadBoardMembers();
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (msg) { msg.textContent = data.detail || 'Could not invite board member.'; msg.className = 'board-msg error'; }
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'board-msg error'; }
+  }
 }
 
 function toggleDesc(i) {

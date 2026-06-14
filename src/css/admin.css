@@ -92,3 +92,59 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 }
 .card,.prog-card,.access-card,.price-card,.stat-box,.table-wrap,.plan-card,.dashboard-card,.user-info{border:1px solid var(--hairline);box-shadow:none}
 .card:hover,.prog-card:hover,.access-card:hover,.price-card:hover,.stat-box:hover,.table-wrap:hover,.plan-card:hover,.dashboard-card:hover,.user-info:hover{box-shadow:0 8px 30px color-mix(in srgb,var(--ink) 10%,transparent);transition:box-shadow 0.3s ease,border-color 0.3s ease}
+
+/* === Grant controls (status badges, CV link, detail panel, assign/decide, board) === */
+/* Grant status badges — token palette, matching the existing .badge pattern */
+.badge-submitted{border-color:var(--surface);color:var(--body)}
+.badge-under_review{border-color:var(--ink);color:var(--ink)}
+.badge-awaiting_decision{border-color:var(--ink);color:var(--ink)}
+.badge-approved{border-color:var(--success);color:var(--success)}
+.badge-rejected{border-color:var(--error);color:var(--error)}
+.badge-receipts_submitted{border-color:var(--body);color:var(--body)}
+.badge-reimbursed{border-color:var(--success);color:var(--success)}
+/* reviewer recommendation badges */
+.badge-vote-approve{border-color:var(--success);color:var(--success)}
+.badge-vote-reject{border-color:var(--error);color:var(--error)}
+.badge-vote-abstain{border-color:var(--surface);color:var(--body)}
+
+.cv-link{color:var(--ink);border-bottom:1px solid var(--surface);white-space:nowrap}
+.cv-link:hover{border-bottom-color:var(--ink)}
+.action-details{border-color:var(--ink);color:var(--ink)}
+.action-details:hover{background:var(--ink);color:var(--ground)}
+
+/* inline detail panel (full-width colspan row) */
+.detail-row>td{padding:0;background:var(--surface);border-bottom:1px solid var(--ink)}
+.detail-panel{padding:2rem 1.75rem}
+.detail-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:2.5rem}
+.detail-main,.detail-side{min-width:0}
+.detail-label{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--body);display:block;margin:1.5rem 0 0.75rem}
+.detail-main>.detail-label:first-child,.detail-side>.detail-label:first-child{margin-top:0}
+.detail-status{font-size:0.62rem;color:var(--body);margin-bottom:1rem}
+.detail-fields{width:100%;border-collapse:collapse}
+.detail-fields th{text-align:left;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--body);font-weight:400;padding:0.35rem 1rem 0.35rem 0;white-space:nowrap;vertical-align:top;border:none}
+.detail-fields td{font-size:0.7rem;color:var(--ink);padding:0.35rem 0;border:none}
+.detail-desc-label{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--body);margin:1.25rem 0 0.5rem}
+.detail-desc{font-size:0.72rem;line-height:1.8;color:var(--ink);white-space:pre-wrap}
+.detail-empty{font-size:0.66rem;color:var(--body)}
+
+.reviewers-list{display:flex;flex-direction:column;gap:0.85rem}
+.reviewer-row{padding:0.85rem 1rem;background:var(--ground);border:1px solid var(--hairline)}
+.reviewer-email{font-size:0.66rem;color:var(--ink);margin-bottom:0.4rem}
+.reviewer-vote{display:flex;align-items:center;gap:0.6rem}
+.reviewer-date{font-size:0.55rem;color:var(--body)}
+.vote-pending{font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--body)}
+.reviewer-comment{font-size:0.66rem;line-height:1.7;color:var(--body);margin-top:0.5rem}
+
+.assign-list{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem}
+.assign-opt{font-size:0.66rem;color:var(--ink);display:flex;align-items:center;gap:0.5rem;cursor:pointer}
+.assign-name{color:var(--body)}
+.decide-actions{display:flex;gap:0.6rem;flex-wrap:wrap}
+
+.detail-msg{font-size:0.66rem;margin-top:0.85rem;display:none}
+.detail-msg.error{color:var(--error);display:block}
+.detail-msg.success{color:var(--success);display:block}
+.board-msg{font-size:0.66rem;margin-top:0.75rem;max-width:1200px;display:none}
+.board-msg.error{color:var(--error);display:block}
+.board-msg.success{color:var(--success);display:block}
+
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr;gap:1.5rem}}
