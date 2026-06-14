@@ -334,15 +334,52 @@ function renderGrantDetail(id, g) {
       </div>`;
   }).join('') : '<p class="detail-empty">No reviewers assigned yet.</p>';
 
-  const assignOptions = boardMembers.length ? boardMembers.map(m => {
-    const email = m.email || '';
-    const already = assignedEmails.indexOf(email.toLowerCase()) !== -1;
-    const name = `${esc(m.first_name || '')} ${esc(m.last_name || '')}`.trim();
-    return `<label class="assign-opt">
-        <input type="checkbox" value="${escAttr(email)}"${already ? ' checked disabled' : ''}>
-        ${esc(email)}${name ? ` <span class="assign-name">(${name})</span>` : ''}
-      </label>`;
-  }).join('') : '<p class="detail-empty">No board members yet — add one below.</p>';
+  // Stage gating: reviewers can only be assigned and a decision only made BEFORE a decision exists.
+  const preDecision = ['submitted', 'under_review', 'awaiting_decision'].indexOf(status) !== -1;
+
+  // Always-on read-only "Assigned Reviewers" list (votes live in the Reviewers block above).
+  const assignedListHtml = reviewers.length
+    ? reviewers.map(r => `<div class="assigned-row"><span class="assigned-email">${esc(r.email)}</span><span class="assigned-mark">✓ Assigned</span></div>`).join('')
+    : '<p class="detail-empty">No reviewers assigned yet.</p>';
+
+  // Pick-list of board members NOT yet assigned + Assign button — pre-decision only.
+  let assignControls = '';
+  if (preDecision) {
+    const unassigned = boardMembers.filter(m => assignedEmails.indexOf((m.email || '').toLowerCase()) === -1);
+    if (!boardMembers.length) {
+      assignControls = '<p class="detail-empty">No board members yet — add one below.</p>';
+    } else if (!unassigned.length) {
+      assignControls = '<p class="detail-empty">All board members are assigned.</p>';
+    } else {
+      const opts = unassigned.map(m => {
+        const email = m.email || '';
+        const name = `${esc(m.first_name || '')} ${esc(m.last_name || '')}`.trim();
+        return `<label class="assign-opt">
+          <input type="checkbox" value="${escAttr(email)}" onchange="syncAssignBtn('${gid}')">
+          ${esc(email)}${name ? ` <span class="assign-name">(${name})</span>` : ''}
+        </label>`;
+      }).join('');
+      assignControls = `<div class="assign-list" id="assign-list-${gid}">${opts}</div>
+        <button class="refresh-btn" type="button" id="assign-btn-${gid}" onclick="assignReviewers('${gid}')" disabled>Assign</button>`;
+    }
+  }
+
+  // Decision: Approve/Reject buttons pre-decision; a read-only decision line once decided.
+  let decisionHtml;
+  if (preDecision) {
+    decisionHtml = `
+        <span class="detail-label">Decision</span>
+        <div class="decide-actions">
+          <button class="action-btn action-activate" type="button" onclick="decideGrant('${gid}','approve')">Approve</button>
+          <button class="action-btn action-deactivate" type="button" onclick="decideGrant('${gid}','reject')">Reject</button>
+        </div>`;
+  } else {
+    const decided = status === 'rejected' ? 'rejected' : 'approved';
+    const decidedLabel = status === 'rejected' ? 'Rejected' : 'Approved';
+    decisionHtml = `
+        <span class="detail-label">Decision</span>
+        <div class="detail-decision">Decision: <span class="badge badge-${decided}">${esc(decidedLabel)}</span></div>`;
+  }
 
   cell.innerHTML = `
     <div class="detail-grid">
@@ -371,15 +408,11 @@ function renderGrantDetail(id, g) {
         <span class="detail-label">Reviewers</span>
         <div class="reviewers-list">${reviewersHtml}</div>
 
-        <span class="detail-label">Assign reviewers</span>
-        <div class="assign-list" id="assign-list-${gid}">${assignOptions}</div>
-        <button class="refresh-btn" type="button" onclick="assignReviewers('${gid}')">Assign</button>
+        <span class="detail-label">Assign Reviewers</span>
+        <div class="assigned-reviewers">${assignedListHtml}</div>
+        ${assignControls}
 
-        <span class="detail-label">Decision</span>
-        <div class="decide-actions">
-          <button class="action-btn action-activate" type="button" onclick="decideGrant('${gid}','approve')">Approve</button>
-          <button class="action-btn action-deactivate" type="button" onclick="decideGrant('${gid}','reject')">Reject</button>
-        </div>
+        ${decisionHtml}
         ${status === 'receipts_submitted' ? `
         <span class="detail-label">Reimbursement</span>
         <div class="decide-actions">
@@ -388,6 +421,14 @@ function renderGrantDetail(id, g) {
         <p class="detail-msg" id="detail-msg-${gid}"></p>
       </div>
     </div>`;
+}
+
+// Enable the Assign button only once at least one (newly-listed) board member is checked.
+function syncAssignBtn(id) {
+  const container = document.getElementById(`assign-list-${id}`);
+  const btn = document.getElementById(`assign-btn-${id}`);
+  if (!container || !btn) return;
+  btn.disabled = !container.querySelector('input[type="checkbox"]:checked');
 }
 
 async function assignReviewers(id) {
