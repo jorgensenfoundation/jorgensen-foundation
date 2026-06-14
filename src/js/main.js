@@ -29,6 +29,14 @@ function toggleAccount(e) {
     if (d) d.classList.toggle('open');
   }
 }
+// Mobile-only: tap the search icon to reveal the search bar drawer.
+function toggleSearch(e) {
+  if (window.matchMedia('(max-width:960px)').matches) {
+    e.preventDefault();
+    const d = e.currentTarget.closest('.nav-msearch');
+    if (d) d.classList.toggle('open');
+  }
+}
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));

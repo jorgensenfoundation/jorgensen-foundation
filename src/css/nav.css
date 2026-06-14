@@ -83,6 +83,16 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero.scrolled .nav-account-toggle{color:var(--ink)}
 .nav--hero .nav-account-toggle:hover{opacity:0.8}
 .nav--hero .nav-account-icon{display:block}
+/* MOBILE-ONLY search icon + drawer (hidden on desktop via display:none here; shown in the ≤960 block) */
+.nav--hero .nav-msearch{display:none;align-items:center}
+.nav--hero .nav-msearch-toggle{display:flex;align-items:center;cursor:pointer;color:var(--cream);transition:color 0.4s}
+.nav--hero.scrolled .nav-msearch-toggle{color:var(--ink)}
+.nav--hero .nav-msearch-panel{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ground);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:1.25rem 1.5rem;z-index:120}
+.nav--hero .nav-msearch.open .nav-msearch-panel{display:block}
+.nav--hero .nav-msearch-inner{display:flex;align-items:center;gap:0.7rem;max-width:1080px;margin:0 auto;border:1px solid var(--hairline);border-radius:4px;padding:0.75rem 0.95rem;background:var(--ground)}
+.nav--hero .nav-msearch-inner svg{flex-shrink:0;color:color-mix(in srgb,var(--body) 60%,var(--ground))}
+.nav--hero .nav-msearch-input{flex:1;min-width:0;border:none;background:none;outline:none;font-family:var(--font-sans);font-size:0.9rem;color:var(--ink)}
+.nav--hero .nav-msearch-input::placeholder{color:color-mix(in srgb,var(--body) 55%,var(--ground))}
 .nav--hero .nav-login-mega{position:absolute;top:100%;left:0;right:0;background:color-mix(in srgb,var(--ground) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
 .nav--hero .nav-login-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;max-width:1080px;margin:0 auto;align-items:start}
 .nav--hero .nav-login-col{min-width:0}
@@ -124,11 +134,19 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero .nav-account-toggle::after{content:"";position:absolute;top:100%;left:-0.75rem;right:-0.75rem;height:2.5rem}
 }
 @media(max-width:960px){
+  /* Three spaced mobile icons: [search] [person] [hamburger], with ~40px tap targets. */
+  .nav--hero .nav-msearch{display:flex}
+  .nav--hero .nav-right-cta{gap:0.3rem}
+  .nav--hero .nav-msearch-toggle,.nav--hero .nav-account-toggle,.nav--hero .nav-hamburger{padding:0.6rem}
   /* Mobile (rough): icon stays visible; tap toggles a stacked single-column login drawer.
      Opaque (no frost) + min-height so it cleanly covers the hamburger menu behind it. */
   .nav--hero .nav-login-mega{display:none;opacity:1;visibility:visible;transform:none;padding:1.5rem;background:var(--ground);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-bottom:none;min-height:calc(100vh - 3.5rem)}
   .nav--hero .nav-account.open .nav-login-mega{display:block}
   .nav--hero .nav-login-grid{grid-template-columns:1fr;gap:1.75rem;max-width:none}
+  /* Mobile login shows ONLY the sign-in form (hide the discover: search + grants promo). */
+  .nav--hero .nav-login-discover{display:none}
+  /* Programs accordion: names only (hide descriptions). */
+  .nav--hero .nav-mega-desc{display:none}
 }
 
 /* ============================================================================
