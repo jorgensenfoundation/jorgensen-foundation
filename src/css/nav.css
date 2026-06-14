@@ -36,10 +36,11 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-hamburger span{display:block;width:22px;height:1px;background:var(--cream);transition:background 0.4s}
 .nav--hero.scrolled .nav-hamburger span{background:var(--ink)}
 /* --- PROGRAMS MEGA-MENU — full-width light panel, 3-col image tiles, Midnight text --- */
-.nav--hero .nav-dropdown{position:relative;display:flex;align-items:center}
-/* Full-width breakout: 100vw centered on the viewport (body has overflow-x:clip, so the
-   1px scrollbar overshoot is clipped). margin-top:0 → panel sits flush under the bar. */
-.nav--hero .nav-mega{position:absolute;top:100%;left:50%;transform:translateX(-50%);width:100vw;margin-top:0;background:var(--ground);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
+/* NOTE: .nav-dropdown is intentionally NOT position:relative — the mega panel anchors to the
+   position:fixed nav (its nearest positioned ancestor), so left:0;right:0 spans the full
+   viewport width and top:100% drops flush under the whole bar. */
+.nav--hero .nav-dropdown{display:flex;align-items:center}
+.nav--hero .nav-mega{position:absolute;top:100%;left:0;right:0;background:var(--ground);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
 .nav--hero .nav-mega-inner{max-width:1080px;margin:0 auto}
 .nav--hero .nav-mega-label{font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:color-mix(in srgb,var(--body) 55%,var(--ground));margin-bottom:1.6rem}
 .nav--hero .nav-mega-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
@@ -47,7 +48,7 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-mega-item{display:flex;flex-direction:column;gap:0.65rem;text-decoration:none;cursor:pointer}
 .nav--hero .nav-mega-img{aspect-ratio:16/10;width:100%;background:var(--surface);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-size:0.55rem;letter-spacing:0.18em;color:color-mix(in srgb,var(--body) 50%,var(--surface))}
 .nav--hero .nav-mega-name{font-family:var(--font-serif);font-size:1.45rem;font-weight:500;letter-spacing:0.03em;color:var(--ink);line-height:1;text-transform:none}
-.nav--hero .nav-mega-desc{font-family:var(--font-sans);font-size:0.8rem;line-height:1.5;color:var(--body)}
+.nav--hero .nav-mega-desc{font-family:var(--font-sans);font-size:0.8rem;line-height:1.5;color:var(--body);text-transform:none;letter-spacing:normal}
 .nav--hero .nav-mega-item:hover .nav-mega-name{color:color-mix(in srgb,var(--ink) 70%,var(--body))}
 @media(min-width:961px){
   /* Desktop hover mega: invisible until hover (visibility/opacity, not display, for the
@@ -56,7 +57,7 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero .nav-dropdown:hover .nav-mega{visibility:visible;opacity:1;transition:opacity 0.2s ease,visibility 0s}
   /* Transparent bridge across the trigger→panel seam so hover stays continuous (panel is
      flush, margin-top:0, so the bridge only needs to cover the seam). */
-  .nav--hero .nav-mega::before{content:"";position:absolute;left:0;right:0;top:-0.75rem;height:0.75rem}
+  .nav--hero .nav-mega::before{content:"";position:absolute;left:0;right:0;top:-2.5rem;height:2.5rem}
 }
 @media(max-width:960px){
   .nav--hero .nav-links,.nav--hero .nav-cta{display:none}
