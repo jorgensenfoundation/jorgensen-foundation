@@ -35,12 +35,12 @@ main{flex:1;padding:3rem}
 /* DASHBOARD */
 .admin-dashboard{display:none}
 .admin-dashboard.active{display:block}
-.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:1.5rem;margin-bottom:3rem;max-width:1600px}
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:1.5rem;margin:0 auto 3rem;max-width:1280px}
 .stat-box{background:var(--ground);border:1px solid var(--hairline);padding:1.5rem 2rem}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--ink);line-height:1}
 .stat-label{font-size:0.52rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--body);margin-top:0.4rem}
 
-.table-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;max-width:1600px}
+.table-header{display:flex;justify-content:space-between;align-items:center;margin:0 auto 1.25rem;max-width:1280px}
 .table-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--ink)}
 .filter-row{display:flex;gap:0.75rem}
 .filter-btn{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.5rem 1rem;border:1px solid var(--hairline);background:transparent;color:var(--body);cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif}
@@ -48,7 +48,7 @@ main{flex:1;padding:3rem}
 .search-input{border:none;border-bottom:1px solid var(--hairline);padding:0.5rem 0;font-size:0.72rem;font-family:Helvetica,Arial,sans-serif;color:var(--ink);outline:none;background:transparent;width:200px}
 .search-input::placeholder{color:color-mix(in srgb,var(--ink) 32%,var(--ground))}
 
-.table-wrap{background:var(--ground);border:1px solid var(--hairline);width:100%;max-width:1600px;overflow-x:auto}
+.table-wrap{background:var(--ground);border:1px solid var(--hairline);width:100%;max-width:1280px;margin-left:auto;margin-right:auto;overflow-x:auto}
 table{width:100%;border-collapse:collapse}
 thead tr{border-bottom:1px solid var(--ink)}
 th{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink);padding:1rem 1.25rem;text-align:left;font-weight:400;white-space:nowrap}
@@ -82,7 +82,7 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .desc-short{display:inline}
 .desc-full{display:none}
 .desc-toggle{font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;padding:0;margin-left:0.35rem}
-.section-divider{height:1px;background:var(--hairline);max-width:1600px;margin:3rem 0}
+.section-divider{height:1px;background:var(--hairline);max-width:1280px;margin:3rem auto}
 
 @media(max-width:900px){
   nav{padding:1.2rem 1.5rem}
@@ -109,6 +109,12 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 
 .cv-link{color:var(--ink);border-bottom:1px solid var(--surface);white-space:nowrap}
 .cv-link:hover{border-bottom-color:var(--ink)}
+
+/* Next-action hint — emphasized when the admin needs to act, muted when waiting/done */
+.next-action{font-size:0.6rem;letter-spacing:0.03em;white-space:nowrap}
+.next-action--action{color:var(--ink);font-weight:700}
+.next-action--wait{color:var(--body)}
+.next-action--done{color:color-mix(in srgb,var(--body) 65%,var(--ground))}
 .action-details{border-color:var(--ink);color:var(--ink)}
 .action-details:hover{background:var(--ink);color:var(--ground)}
 
@@ -143,7 +149,7 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .detail-msg{font-size:0.66rem;margin-top:0.85rem;display:none}
 .detail-msg.error{color:var(--error);display:block}
 .detail-msg.success{color:var(--success);display:block}
-.board-msg{font-size:0.66rem;margin-top:0.75rem;max-width:1600px;display:none}
+.board-msg{font-size:0.66rem;margin:0.75rem auto 0;max-width:1280px;display:none}
 .board-msg.error{color:var(--error);display:block}
 .board-msg.success{color:var(--success);display:block}
 

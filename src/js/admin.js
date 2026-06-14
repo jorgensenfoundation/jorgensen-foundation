@@ -159,6 +159,36 @@ async function loadGrants() {
   }
 }
 
+// Grant lifecycle ordering for the table (lower sorts higher); unknown/missing sinks last.
+const STATUS_ORDER = {
+  receipts_submitted: 1,
+  submitted: 2,
+  awaiting_decision: 3,
+  under_review: 4,
+  approved: 5,
+  reimbursed: 6,
+  rejected: 7
+};
+// Short "what happens next" hint per status.
+const NEXT_ACTION = {
+  receipts_submitted: 'Verify & reimburse',
+  submitted: 'Assign reviewers',
+  awaiting_decision: 'Make decision',
+  under_review: 'Awaiting board votes',
+  approved: 'Awaiting receipts',
+  reimbursed: 'Complete',
+  rejected: 'Closed — not funded'
+};
+// Statuses that need the admin to act (emphasized) vs waiting (muted, e.g. under_review/approved)
+// vs terminal (done). Anything not action/done — including approved and unknown — uses the wait style.
+const ACTION_STATES = ['receipts_submitted', 'submitted', 'awaiting_decision'];
+const DONE_STATES = ['reimbursed', 'rejected'];
+function nextActionClass(status) {
+  if (ACTION_STATES.indexOf(status) !== -1) return 'next-action--action';
+  if (DONE_STATES.indexOf(status) !== -1) return 'next-action--done';
+  return 'next-action--wait';
+}
+
 function filterGrants() {
   const search = document.getElementById('grants-search').value.toLowerCase();
   const filtered = !search ? allGrants : allGrants.filter(g =>
@@ -174,16 +204,27 @@ function filterGrants() {
 function renderGrants(grants) {
   const tbody = document.getElementById('grants-table');
   if (!grants.length) {
-    tbody.innerHTML = '<tr><td colspan="11" class="empty-state">No applications found</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="12" class="empty-state">No applications found</td></tr>';
     return;
   }
-  tbody.innerHTML = grants.map((g, i) => {
+  // Sort a COPY (never mutate allGrants): by lifecycle stage, then newest-first within a stage.
+  const sorted = grants.slice().sort((a, b) => {
+    const oa = STATUS_ORDER[a.status] || 99;
+    const ob = STATUS_ORDER[b.status] || 99;
+    if (oa !== ob) return oa - ob;
+    const ta = a.created_at ? Date.parse(a.created_at) : 0;
+    const tb = b.created_at ? Date.parse(b.created_at) : 0;
+    return tb - ta;   // newest first within the same status
+  });
+  tbody.innerHTML = sorted.map((g, i) => {
     const date = g.created_at ? new Date(g.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
     const desc = g.research_description || '';
     const short = desc.length > 120 ? desc.slice(0, 120) + '…' : desc;
     const hasMore = desc.length > 120;
     const status = g.status || 'submitted';
     const cv = g.cv_url ? `<a href="${escAttr(g.cv_url)}" target="_blank" rel="noopener" class="cv-link">View CV →</a>` : '—';
+    const naText = NEXT_ACTION[status] || '—';
+    const naClass = nextActionClass(status);
     const gid = escAttr(g.id);   // g.id (not the row index) drives all detail/action calls
     return `
       <tr>
@@ -200,11 +241,12 @@ function renderGrants(grants) {
           ${hasMore ? `<button class="desc-toggle" onclick="toggleDesc(${i})">Show more</button>` : ''}
         </td>
         <td><span class="badge badge-${escAttr(status)}">${esc(status)}</span></td>
+        <td><span class="next-action ${naClass}">${esc(naText)}</span></td>
         <td>${cv}</td>
         <td><button class="action-btn action-details" onclick="toggleDetail('${gid}')">Details</button></td>
       </tr>
       <tr class="detail-row" id="detail-${gid}" hidden>
-        <td colspan="11"><div class="detail-panel" id="detail-cell-${gid}">Loading…</div></td>
+        <td colspan="12"><div class="detail-panel" id="detail-cell-${gid}">Loading…</div></td>
       </tr>
     `;
   }).join('');
