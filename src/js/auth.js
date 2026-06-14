@@ -24,10 +24,19 @@
     return { 'Authorization': 'Bearer ' + getToken() };
   }
 
+  // DOM-free logout for the (future) global nav: clears the user session and returns home.
+  // Deliberately does NOT touch 'jf_admin_token' — admin is a separate auth domain.
+  function logout() {
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(USER_KEY);
+    window.location.href = '/';
+  }
+
   window.JFAuth = {
     isLoggedIn: isLoggedIn,
     getToken: getToken,
     getUser: getUser,
-    authHeader: authHeader
+    authHeader: authHeader,
+    logout: logout
   };
 })();
