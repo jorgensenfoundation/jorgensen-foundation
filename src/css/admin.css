@@ -7,11 +7,7 @@
 body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 
-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;background:var(--ink);border-bottom:1px solid color-mix(in srgb,var(--cream) 10%,transparent)}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;color:var(--cream)}
-.nav-tag{font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 35%,transparent)}
-.nav-logout{font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 50%,transparent);cursor:pointer;border:none;background:none;font-family:Helvetica,Arial,sans-serif;display:none}
-.nav-logout:hover{color:var(--cream)}
+/* Admin nav now lives in /css/nav.css (.nav--admin context), loaded via the navCss flag. */
 
 main{flex:1;padding:3rem}
 

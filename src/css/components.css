@@ -13,43 +13,10 @@
 }
 
 /* ============================================================================
-   SHARED CHROME — styles the ACTUAL class names in src/_includes/nav.njk and
-   footer.njk (do NOT rename that markup). Pages on the new layer (index) get the
-   new chrome by loading this file; the other 19 (on style.css) are unchanged.
-   The nav is transparent over the dark homepage hero → solid white on scroll.
+   SHARED CHROME (footer) — styles footer.njk class names (do NOT rename that
+   markup). The nav now lives in /css/nav.css (loaded via the navCss flag); the
+   marketing nav is its .nav--hero context.
    ============================================================================ */
-nav{display:flex;justify-content:space-between;align-items:center;padding:2rem 3rem;position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.4s,padding 0.4s}
-nav.scrolled{background:var(--ground);padding:1.2rem 3rem;border-bottom:1px solid var(--hairline)}
-nav.scrolled .nav-logo,nav.scrolled .nav-links a{color:var(--ink)}
-nav.scrolled .nav-cta{color:var(--ink);border-color:var(--ink)}
-nav.scrolled .nav-hamburger span{background:var(--ink)}
-.nav-logo{font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;color:var(--cream);transition:color 0.4s}
-.nav-links{display:flex;gap:2rem;align-items:center}
-.nav-links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);opacity:0.85;transition:opacity 0.2s,color 0.4s}
-.nav-links a:hover{opacity:1}
-.nav-links a.active{border-bottom:1px solid var(--cream)}            /* transparent/dark nav */
-nav.scrolled .nav-links a.active{border-bottom-color:var(--ink)}    /* white/scrolled — Midnight, legible */
-.nav-cta{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.2em;text-transform:uppercase;border:1px solid color-mix(in srgb,var(--cream) 55%,transparent);color:var(--cream);padding:0.55rem 1.2rem;transition:all 0.3s}
-.nav-cta:hover{background:var(--cream);color:var(--ink)}
-.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.nav-hamburger span{display:block;width:22px;height:1px;background:var(--cream);transition:background 0.4s}
-/* --- PROGRAMS DROPDOWN (shared nav) — white panel, Oyster hairline, Midnight links --- */
-.nav-dropdown{position:relative;display:flex;align-items:center}
-.nav-dropdown-menu{position:absolute;top:100%;left:0;margin-top:1.1rem;min-width:170px;display:none;flex-direction:column;gap:0.85rem;border-top:1px solid var(--surface);padding-top:1rem;z-index:120}
-@media(min-width:961px){
-  /* Desktop hover dropdown: laid out but invisible until hover. visibility/opacity (not
-     display) so a close-delay can apply. Instant open; ~220ms grace before close so an
-     imprecise cursor path doesn't snap it shut. */
-  .nav-dropdown-menu{display:flex;visibility:hidden;opacity:0;transition:opacity 0.2s ease,visibility 0s linear 0.22s}
-  .nav-dropdown:hover .nav-dropdown-menu{visibility:visible;opacity:1;transition:opacity 0.2s ease,visibility 0s}
-  /* Transparent bridge filling the 1.1rem gap between trigger and menu so the hover area
-     is continuous (cursor never crosses dead space). */
-  .nav-dropdown-menu::before{content:"";position:absolute;left:0;right:0;top:-1.1rem;height:1.1rem}
-}
-.nav-dropdown-menu a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;color:var(--cream);opacity:0.85;white-space:nowrap;transition:opacity 0.2s,color 0.4s}
-.nav-dropdown-menu a:hover{opacity:1}
-nav.scrolled .nav-dropdown-menu a{color:var(--ink)}
-
 footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:var(--ground)}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
 .footer-logo{font-family:var(--font-serif);font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block;color:var(--ink)}
@@ -64,14 +31,6 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:
 .footer-legal a{font-family:var(--font-sans);font-size:0.7rem;letter-spacing:0.08em;color:var(--body);transition:color 0.2s}
 .footer-legal a:hover{color:var(--ink)}
 @media(max-width:960px){
-  .nav-links,.nav-cta{display:none}
-  .nav-hamburger{display:flex}
-  .nav-dropdown{flex-direction:column;align-items:flex-start}
-  .nav-dropdown-menu{position:static;display:none;margin:0.85rem 0 0;padding:0 0 0 1rem;min-width:0;border-top:none}
-  .nav-dropdown.open .nav-dropdown-menu{display:flex}
-  .nav-dropdown-menu a{color:var(--ink)}
-  nav{padding:1.5rem 1.5rem}
-  nav.scrolled{padding:1rem 1.5rem}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
 }
 @media(max-width:540px){
