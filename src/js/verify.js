@@ -87,7 +87,8 @@ async function setPassword() {
         email: userData.email,
         first_name: userData.first_name,
         account_type: userData.account_type,
-        subscription_status: userData.subscription_status
+        subscription_status: userData.subscription_status,
+        is_board_member: userData.is_board_member
       };
       sessionStorage.setItem('jf_user_token', userData.token);
       sessionStorage.setItem('jf_user', JSON.stringify(userInfo));

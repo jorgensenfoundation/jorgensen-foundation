@@ -244,7 +244,17 @@ permalink: /login/index.html
     </div>
 
   </div>
+
+  <!-- BOARD REVIEW — revealed by showDashboard() only when jf_user.is_board_member is true -->
+  <div class="board-review" id="board-review" hidden>
+    <span class="programs-label" id="review-applications">Review Applications</span>
+    <p class="board-intro">Applications assigned to you for review. Record a recommendation and comments for each.</p>
+    <div class="review-list" id="review-list">
+      <p class="review-empty">Loading your assigned applications…</p>
+    </div>
+  </div>
 </div>
 
 
+<script src="/js/auth.js"></script>
 <script src="/js/login.js"></script>
