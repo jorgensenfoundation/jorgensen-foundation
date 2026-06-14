@@ -69,6 +69,9 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero .nav-dropdown.open .nav-mega{display:block}
   .nav--hero .nav-mega-grid{grid-template-columns:1fr;gap:1rem}
   .nav--hero .nav-mega-img{display:none}
+  /* Accordion caret (mobile only; desktop ::after is the hover bridge) */
+  .nav--hero .nav-dropdown-toggle::after{content:"▸";margin-left:0.5rem;font-size:0.7em;display:inline-block;transition:transform 0.2s}
+  .nav--hero .nav-dropdown.open .nav-dropdown-toggle::after{transform:rotate(90deg)}
   .nav--hero{padding:1.5rem 1.5rem}
   .nav--hero.scrolled{padding:1rem 1.5rem}
 }
@@ -121,8 +124,9 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero .nav-account-toggle::after{content:"";position:absolute;top:100%;left:-0.75rem;right:-0.75rem;height:2.5rem}
 }
 @media(max-width:960px){
-  /* Mobile (rough): icon stays visible; tap toggles a stacked single-column login panel. */
-  .nav--hero .nav-login-mega{display:none;opacity:1;visibility:visible;transform:none;padding:1.5rem}
+  /* Mobile (rough): icon stays visible; tap toggles a stacked single-column login drawer.
+     Opaque (no frost) + min-height so it cleanly covers the hamburger menu behind it. */
+  .nav--hero .nav-login-mega{display:none;opacity:1;visibility:visible;transform:none;padding:1.5rem;background:var(--ground);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-bottom:none;min-height:calc(100vh - 3.5rem)}
   .nav--hero .nav-account.open .nav-login-mega{display:block}
   .nav--hero .nav-login-grid{grid-template-columns:1fr;gap:1.75rem;max-width:none}
 }
