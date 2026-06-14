@@ -4,7 +4,7 @@
 :root{--error:#b3261e;--success:#2f6b43}
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 
 nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;background:var(--ink);border-bottom:1px solid color-mix(in srgb,var(--cream) 10%,transparent)}
@@ -48,7 +48,7 @@ main{flex:1;padding:3rem}
 .search-input{border:none;border-bottom:1px solid var(--hairline);padding:0.5rem 0;font-size:0.72rem;font-family:Helvetica,Arial,sans-serif;color:var(--ink);outline:none;background:transparent;width:200px}
 .search-input::placeholder{color:color-mix(in srgb,var(--ink) 32%,var(--ground))}
 
-.table-wrap{background:var(--ground);border:1px solid var(--hairline);max-width:1200px;overflow-x:auto}
+.table-wrap{background:var(--ground);border:1px solid var(--hairline);width:100%;max-width:1200px;overflow-x:auto}
 table{width:100%;border-collapse:collapse}
 thead tr{border-bottom:1px solid var(--ink)}
 th{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink);padding:1rem 1.25rem;text-align:left;font-weight:400;white-space:nowrap}
