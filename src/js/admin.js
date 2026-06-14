@@ -307,6 +307,18 @@ function renderGrantDetail(id, g) {
   const status = g.status || 'submitted';
   const date = g.created_at ? new Date(g.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
   const cv = g.cv_url ? `<a href="${escAttr(g.cv_url)}" target="_blank" rel="noopener" class="cv-link">View CV →</a>` : '—';
+  const fmtDate = v => v ? new Date(v).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+  // Receipts (Phase 3): extra field rows shown only when a value exists, plus download links.
+  const receipts = Array.isArray(g.receipts) ? g.receipts : [];
+  const hasClaim = g.amount_claimed !== null && g.amount_claimed !== undefined && g.amount_claimed !== '';
+  const receiptRows = [
+    hasClaim ? `<tr><th>Amount claimed</th><td>$${esc(g.amount_claimed)}</td></tr>` : '',
+    g.receipts_submitted_at ? `<tr><th>Receipts submitted</th><td>${esc(fmtDate(g.receipts_submitted_at))}</td></tr>` : '',
+    g.reimbursed_at ? `<tr><th>Reimbursed</th><td>${esc(fmtDate(g.reimbursed_at))}</td></tr>` : ''
+  ].join('');
+  const receiptLinks = receipts.length
+    ? receipts.map(r => `<a class="cv-link" href="${escAttr(r.download_url)}" target="_blank" rel="noopener">${esc(r.original_filename || 'Receipt')} →</a>`).join('')
+    : '<p class="detail-empty">No receipts submitted.</p>';
   const reviewers = Array.isArray(g.reviewers) ? g.reviewers : [];
   const assignedEmails = reviewers.map(r => (r.email || '').toLowerCase());
 
@@ -349,6 +361,9 @@ function renderGrantDetail(id, g) {
           <tr><th>Submitted</th><td>${esc(date)}</td></tr>
           <tr><th>CV</th><td>${cv}</td></tr>
         </table>
+        <span class="detail-label">Receipts</span>
+        ${receiptRows ? `<table class="detail-fields">${receiptRows}</table>` : ''}
+        <div class="receipts-files">${receiptLinks}</div>
         <div class="detail-desc-label">Research description</div>
         <p class="detail-desc">${esc(g.research_description || '—')}</p>
       </div>
@@ -365,6 +380,11 @@ function renderGrantDetail(id, g) {
           <button class="action-btn action-activate" type="button" onclick="decideGrant('${gid}','approve')">Approve</button>
           <button class="action-btn action-deactivate" type="button" onclick="decideGrant('${gid}','reject')">Reject</button>
         </div>
+        ${status === 'receipts_submitted' ? `
+        <span class="detail-label">Reimbursement</span>
+        <div class="decide-actions">
+          <button class="action-btn action-activate" type="button" onclick="markReimbursed('${gid}')">Mark Reimbursed</button>
+        </div>` : ''}
         <p class="detail-msg" id="detail-msg-${gid}"></p>
       </div>
     </div>`;
@@ -415,6 +435,27 @@ async function decideGrant(id, decision) {
     } else {
       const data = await res.json().catch(() => ({}));
       if (msg) { msg.textContent = data.detail || 'Could not record the decision.'; msg.className = 'detail-msg error'; }
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
+  }
+}
+
+async function markReimbursed(id) {
+  if (!confirm('Mark this grant as reimbursed? This records that payment has been made.')) return;
+  const msg = document.getElementById(`detail-msg-${id}`);
+  try {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/mark-reimbursed`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`}
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      loadGrants();
+      loadGrantDetail(id);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (msg) { msg.textContent = data.detail || 'Could not mark as reimbursed.'; msg.className = 'detail-msg error'; }
     }
   } catch (e) {
     if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }

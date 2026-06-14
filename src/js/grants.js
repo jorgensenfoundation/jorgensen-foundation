@@ -167,6 +167,60 @@ function renderSteps(status) {
   return html + '</div>';
 }
 
+// Short date formatter shared by the card + receipts summary.
+function fmtDate(value) {
+  return value ? new Date(value).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+}
+
+// Status-gated receipts UI appended below the step indicator on each grant card.
+//  - approved            -> upload form (multi-file + amount_claimed)
+//  - receipts_submitted  -> read-only summary + receipt download links
+//  - reimbursed          -> same summary, plus the reimbursed date
+//  - anything else        -> nothing
+function renderReceiptsBlock(g) {
+  const status = g.status || 'submitted';
+  const gid = escAttr(g.id);
+
+  if (status === 'approved') {
+    return `
+      <div class="receipts-block">
+        <span class="receipts-label">Submit Receipts</span>
+        <p class="input-hint">Upload your conference receipts (PDF or image, up to 10 files, 10MB each), then enter the total amount you are claiming. The claim cannot exceed your approved amount (max $2,000).</p>
+        <div class="input-group">
+          <label class="input-label" for="receipts-files-${gid}">Receipt files</label>
+          <input class="input input-file" type="file" id="receipts-files-${gid}" multiple accept=".pdf,.jpg,.jpeg,.png,.heic,application/pdf,image/jpeg,image/png,image/heic">
+          <span class="input-hint">PDF, JPG, PNG or HEIC. Up to 10 files, 10MB each.</span>
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="receipts-amount-${gid}">Amount claimed (USD)</label>
+          <input class="input" type="number" id="receipts-amount-${gid}" min="1" max="2000" step="0.01" placeholder="e.g. 1850">
+        </div>
+        <button class="btn btn--primary submit-btn" type="button" onclick="submitReceipts('${gid}')">Submit Receipts</button>
+        <p class="form-msg" id="receipts-msg-${gid}"></p>
+      </div>`;
+  }
+
+  if (status === 'receipts_submitted' || status === 'reimbursed') {
+    const claimed = (g.amount_claimed !== null && g.amount_claimed !== undefined && g.amount_claimed !== '') ? ('$' + esc(g.amount_claimed)) : '—';
+    const receipts = Array.isArray(g.receipts) ? g.receipts : [];
+    const links = receipts.length
+      ? receipts.map(r => `<a class="grant-cv-link" href="${escAttr(r.download_url)}" target="_blank" rel="noopener">${esc(r.original_filename || 'Receipt')} →</a>`).join('')
+      : '<span class="receipts-none">No receipt files on record.</span>';
+    return `
+      <div class="receipts-block">
+        <span class="receipts-label">Receipts</span>
+        <div class="receipts-summary">
+          <div>Amount claimed: <strong>${claimed}</strong></div>
+          <div>Receipts submitted: ${esc(fmtDate(g.receipts_submitted_at))}</div>
+          ${g.reimbursed_at ? `<div>Reimbursed: ${esc(fmtDate(g.reimbursed_at))}</div>` : ''}
+        </div>
+        <div class="receipts-files">${links}</div>
+      </div>`;
+  }
+
+  return '';
+}
+
 function renderMyGrants(list) {
   const wrap = document.getElementById('my-grants-list');
   if (!wrap) return;
@@ -175,7 +229,7 @@ function renderMyGrants(list) {
     return;
   }
   wrap.innerHTML = list.map(g => {
-    const date = g.created_at ? new Date(g.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+    const date = fmtDate(g.created_at);
     const amount = (g.amount_requested !== null && g.amount_requested !== undefined && g.amount_requested !== '') ? ('$' + esc(g.amount_requested)) : '—';
     const cv = g.cv_url ? `<a class="grant-cv-link" href="${escAttr(g.cv_url)}" target="_blank" rel="noopener">View CV →</a>` : '';
     return `
@@ -188,6 +242,7 @@ function renderMyGrants(list) {
           ${cv}
         </div>
         ${renderSteps(g.status || 'submitted')}
+        ${renderReceiptsBlock(g)}
       </div>`;
   }).join('');
 }
@@ -205,6 +260,61 @@ async function loadMyGrants() {
     renderMyGrants(list);
   } catch (e) {
     if (wrap) wrap.innerHTML = '<p class="status-empty">Could not load your applications right now.</p>';
+  }
+}
+
+// ---- Submit receipts for an approved grant (multipart, multiple files + amount_claimed) ----
+const RECEIPT_RE = /\.(pdf|jpe?g|png|heic)$/i;
+const RECEIPT_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/heic'];
+
+async function submitReceipts(grantId) {
+  const msg = document.getElementById(`receipts-msg-${grantId}`);
+  const filesInput = document.getElementById(`receipts-files-${grantId}`);
+  const amountInput = document.getElementById(`receipts-amount-${grantId}`);
+  const files = filesInput && filesInput.files ? Array.from(filesInput.files) : [];
+
+  if (!files.length) return fail(msg, 'Please attach at least one receipt file.');
+  if (files.length > 10) return fail(msg, 'Please attach no more than 10 files.');
+  for (const f of files) {
+    const okType = RECEIPT_TYPES.indexOf(f.type) !== -1 || RECEIPT_RE.test(f.name);
+    if (!okType) return fail(msg, `“${f.name}” is not an accepted file type. Use PDF, JPG, PNG or HEIC.`);
+    if (f.size > 10 * 1024 * 1024) return fail(msg, `“${f.name}” is larger than 10MB. Please attach smaller files.`);
+  }
+  const amount = amountInput ? amountInput.value.trim() : '';
+  const amt = Number(amount);
+  if (!amount || !Number.isFinite(amt) || amt <= 0) {
+    return fail(msg, 'Please enter a valid amount claimed in USD.');
+  }
+
+  if (!window.JFAuth || !JFAuth.isLoggedIn()) { promptRelogin(); return; }
+
+  const btn = filesInput ? filesInput.closest('.receipts-block').querySelector('.submit-btn') : null;
+  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+  if (msg) msg.className = 'form-msg';
+
+  // FormData -> multipart/form-data. Do NOT set Content-Type: the browser adds the boundary.
+  const fd = new FormData();
+  fd.append('amount_claimed', amount);
+  files.forEach(f => fd.append('files', f));
+
+  try {
+    const res = await fetch(`${API}/my/grants/${encodeURIComponent(grantId)}/receipts`, {
+      method: 'POST',
+      headers: JFAuth.authHeader(),
+      body: fd,
+    });
+    if (res.status === 401) { promptRelogin(); return; }
+    if (res.ok) {
+      if (msg) { msg.textContent = 'Receipts received. We will review them and arrange reimbursement.'; msg.className = 'form-msg success'; }
+      loadMyGrants();   // re-renders this card into its receipts_submitted state
+    } else {
+      const data = await res.json().catch(() => ({}));
+      fail(msg, data.detail || 'Something went wrong. Please try again or email info@jorgensenfoundation.org.');
+      if (btn) { btn.disabled = false; btn.textContent = 'Submit Receipts'; }
+    }
+  } catch (e) {
+    fail(msg, 'Unable to reach the server. Please try again or email info@jorgensenfoundation.org.');
+    if (btn) { btn.disabled = false; btn.textContent = 'Submit Receipts'; }
   }
 }
 

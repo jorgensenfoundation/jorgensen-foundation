@@ -86,6 +86,14 @@ body{font-family:var(--font-sans);background:var(--ground);color:var(--body);ove
 .step-node.current .step-label{color:var(--ink)}
 .step-node.rejected .step-label{color:var(--error)}
 
+/* --- Receipts (Phase 3): upload form + read-only summary on the grant card --- */
+.receipts-block{margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--hairline)}
+.receipts-label{display:block;font-size:var(--fs-eyebrow);letter-spacing:0.25em;text-transform:uppercase;color:var(--body);margin-bottom:0.75rem}
+.receipts-summary{font-size:var(--fs-small);color:var(--body);line-height:1.9}
+.receipts-summary strong{color:var(--ink)}
+.receipts-files{display:flex;flex-direction:column;gap:0.5rem;margin-top:0.75rem}
+.receipts-none{font-size:var(--fs-small);color:var(--body)}
+
 /* --- FAQ --- */
 .faq{padding:8rem 3rem;background:var(--ground)}
 .faq-inner{max-width:780px;margin:0 auto}
