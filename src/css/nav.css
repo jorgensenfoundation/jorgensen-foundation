@@ -35,27 +35,28 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav--hero .nav-hamburger span{display:block;width:22px;height:1px;background:var(--cream);transition:background 0.4s}
 .nav--hero.scrolled .nav-hamburger span{background:var(--ink)}
-/* --- PROGRAMS MEGA-MENU — full-width light panel, 3-column grid, Midnight text --- */
+/* --- PROGRAMS MEGA-MENU — full-width light panel, 3-col image tiles, Midnight text --- */
 .nav--hero .nav-dropdown{position:relative;display:flex;align-items:center}
 /* Full-width breakout: 100vw centered on the viewport (body has overflow-x:clip, so the
-   1px scrollbar overshoot is clipped). Drops 2rem below the trigger, just under the bar. */
-.nav--hero .nav-mega{position:absolute;top:100%;left:50%;transform:translateX(-50%);width:100vw;margin-top:2rem;display:none;background:var(--ground);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem 3rem;z-index:120}
-.nav--hero .nav-mega-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem 2rem;max-width:1100px;margin:0 auto}
-/* Items: links are always Midnight (readable on the light panel at top AND scrolled). */
-.nav--hero .nav-mega-item{display:flex;gap:14px;align-items:flex-start;padding:0.85rem;text-decoration:none;color:var(--ink);transition:background 0.2s}
-.nav--hero .nav-mega-item:hover{background:color-mix(in srgb,var(--surface) 45%,var(--ground))}
-.nav--hero .nav-mega-icon{flex-shrink:0;width:52px;height:52px;background:var(--surface)}   /* placeholder — real icons later */
-.nav--hero .nav-mega-text{display:flex;flex-direction:column;min-width:0}
-.nav--hero .nav-mega-name{font-family:var(--font-serif);font-size:1.1rem;font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:0.3rem}
+   1px scrollbar overshoot is clipped). margin-top:0 → panel sits flush under the bar. */
+.nav--hero .nav-mega{position:absolute;top:100%;left:50%;transform:translateX(-50%);width:100vw;margin-top:0;background:var(--ground);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
+.nav--hero .nav-mega-inner{max-width:1080px;margin:0 auto}
+.nav--hero .nav-mega-label{font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:color-mix(in srgb,var(--body) 55%,var(--ground));margin-bottom:1.6rem}
+.nav--hero .nav-mega-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+/* Tile links are always Midnight/Stone (readable on the light panel at top AND scrolled). */
+.nav--hero .nav-mega-item{display:flex;flex-direction:column;gap:0.65rem;text-decoration:none;cursor:pointer}
+.nav--hero .nav-mega-img{aspect-ratio:16/10;width:100%;background:var(--surface);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-size:0.55rem;letter-spacing:0.18em;color:color-mix(in srgb,var(--body) 50%,var(--surface))}
+.nav--hero .nav-mega-name{font-family:var(--font-serif);font-size:1.45rem;font-weight:500;letter-spacing:0.03em;color:var(--ink);line-height:1;text-transform:none}
 .nav--hero .nav-mega-desc{font-family:var(--font-sans);font-size:0.8rem;line-height:1.5;color:var(--body)}
+.nav--hero .nav-mega-item:hover .nav-mega-name{color:color-mix(in srgb,var(--ink) 70%,var(--body))}
 @media(min-width:961px){
-  /* Desktop hover mega: laid out but invisible until hover. visibility/opacity (not display)
-     so a close-delay applies. Instant open; ~220ms grace before close. */
-  .nav--hero .nav-mega{display:block;visibility:hidden;opacity:0;transition:opacity 0.2s ease,visibility 0s linear 0.22s}
+  /* Desktop hover mega: invisible until hover (visibility/opacity, not display, for the
+     close-delay). Instant open; ~220ms grace before close. */
+  .nav--hero .nav-mega{visibility:hidden;opacity:0;transition:opacity 0.2s ease,visibility 0s linear 0.22s}
   .nav--hero .nav-dropdown:hover .nav-mega{visibility:visible;opacity:1;transition:opacity 0.2s ease,visibility 0s}
-  /* Transparent bridge filling the 2rem gap between trigger and panel so the hover area is
-     continuous (cursor never crosses dead space) — spans the full-width panel. */
-  .nav--hero .nav-mega::before{content:"";position:absolute;left:0;right:0;top:-2rem;height:2rem}
+  /* Transparent bridge across the trigger→panel seam so hover stays continuous (panel is
+     flush, margin-top:0, so the bridge only needs to cover the seam). */
+  .nav--hero .nav-mega::before{content:"";position:absolute;left:0;right:0;top:-0.75rem;height:0.75rem}
 }
 @media(max-width:960px){
   .nav--hero .nav-links,.nav--hero .nav-cta{display:none}
@@ -64,11 +65,8 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   /* Mobile: mega collapses into the hamburger flow as a plain stacked list (no panel/grid). */
   .nav--hero .nav-mega{position:static;display:none;width:auto;transform:none;margin:0.85rem 0 0;padding:0 0 0 1rem;border:none;box-shadow:none;background:none;z-index:auto}
   .nav--hero .nav-dropdown.open .nav-mega{display:block}
-  .nav--hero .nav-mega-grid{grid-template-columns:1fr;gap:1rem;max-width:none}
-  .nav--hero .nav-mega-item{padding:0.4rem 0}
-  .nav--hero .nav-mega-item:hover{background:none}
-  .nav--hero .nav-mega-icon{display:none}
-  .nav--hero .nav-mega-name{font-size:0.95rem}
+  .nav--hero .nav-mega-grid{grid-template-columns:1fr;gap:1rem}
+  .nav--hero .nav-mega-img{display:none}
   .nav--hero{padding:1.5rem 1.5rem}
   .nav--hero.scrolled{padding:1rem 1.5rem}
 }
