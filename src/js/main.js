@@ -5,35 +5,44 @@ if (nav) {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 }
-function toggleMenu() {
-  const links = document.querySelector('.nav-links');
-  if (links) {
-    const open = links.style.display === 'flex';
-    links.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:#fff;padding:2rem 1.5rem;gap:1.5rem;border-bottom:1px solid #ede8de;z-index:99';
-    if (!open) document.querySelectorAll('.nav-links a').forEach(a => a.style.color = '#111');
-  }
+// The mobile nav has three mutually-exclusive top-level panels: the hamburger menu
+// (.menu-open on #nav), the login drawer (.nav-account.open) and the search drawer
+// (.nav-msearch.open). closeNavPanels() resets all of them (plus the nested Programs
+// accordion) so opening any one closes the others — styling/animation live in nav.css.
+function closeNavPanels() {
+  if (nav) nav.classList.remove('menu-open');
+  document.querySelectorAll('.nav-account, .nav-msearch, .nav-dropdown').forEach(el => el.classList.remove('open'));
 }
-// Mobile-only Programs dropdown: tap "Programs" to expand the submenu; desktop uses CSS hover.
+function toggleMenu() {
+  if (!nav) return;
+  const willOpen = !nav.classList.contains('menu-open');
+  closeNavPanels();
+  if (willOpen) nav.classList.add('menu-open');
+}
+// Mobile-only: tap the account icon → login drawer (closes the other two first).
+function toggleAccount(e) {
+  if (!window.matchMedia('(max-width:960px)').matches) return;
+  e.preventDefault();
+  const d = e.currentTarget.closest('.nav-account');
+  const willOpen = d && !d.classList.contains('open');
+  closeNavPanels();
+  if (willOpen) d.classList.add('open');
+}
+// Mobile-only: tap the search icon → search drawer (closes the other two first).
+function toggleSearch(e) {
+  if (!window.matchMedia('(max-width:960px)').matches) return;
+  e.preventDefault();
+  const d = e.currentTarget.closest('.nav-msearch');
+  const willOpen = d && !d.classList.contains('open');
+  closeNavPanels();
+  if (willOpen) d.classList.add('open');
+}
+// Mobile-only Programs: a SUB-accordion inside the hamburger menu — plain toggle, does
+// not close the hamburger (it lives inside it). Desktop uses CSS hover.
 function toggleDropdown(e) {
   if (window.matchMedia('(max-width:960px)').matches) {
     e.preventDefault();
     const d = e.currentTarget.closest('.nav-dropdown');
-    if (d) d.classList.toggle('open');
-  }
-}
-// Mobile-only: tap the account icon to expand the login section in the hamburger flow.
-function toggleAccount(e) {
-  if (window.matchMedia('(max-width:960px)').matches) {
-    e.preventDefault();
-    const d = e.currentTarget.closest('.nav-account');
-    if (d) d.classList.toggle('open');
-  }
-}
-// Mobile-only: tap the search icon to reveal the search bar drawer.
-function toggleSearch(e) {
-  if (window.matchMedia('(max-width:960px)').matches) {
-    e.preventDefault();
-    const d = e.currentTarget.closest('.nav-msearch');
     if (d) d.classList.toggle('open');
   }
 }

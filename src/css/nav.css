@@ -51,7 +51,7 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-mega-text{display:flex;flex-direction:column;flex:1;min-width:0;gap:0.3rem}
 .nav--hero .nav-mega-name{font-family:var(--font-serif);font-size:1.2rem;font-weight:500;letter-spacing:0.02em;color:var(--ink);line-height:1.1;text-transform:none}
 .nav--hero .nav-mega-desc{font-family:var(--font-sans);font-size:0.78rem;line-height:1.45;color:var(--body);text-transform:none;letter-spacing:normal}
-.nav--hero .nav-mega-item:hover .nav-mega-name{color:color-mix(in srgb,var(--ink) 70%,var(--body))}
+.nav--hero .nav-mega-item:hover .nav-mega-name{color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 @media(min-width:961px){
   /* Smooth slide-down + fade. Closed: faded, raised 8px, hidden. Open (hover): settled + visible. */
   .nav--hero .nav-mega{opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
@@ -61,14 +61,20 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero .nav-dropdown-toggle::after{content:"";position:absolute;top:100%;left:0;right:0;height:2.5rem}
 }
 @media(max-width:960px){
-  .nav--hero .nav-links,.nav--hero .nav-cta{display:none}
+  /* Hamburger menu = a left-aligned sliding panel under the bar (no more inline styles;
+     toggled by .menu-open on #nav). Slide-down + fade, like the other drawers. */
+  .nav--hero .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;text-align:left;gap:1.25rem;background:var(--ground);padding:2rem 1.5rem;border-bottom:1px solid var(--hairline);z-index:110;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
+  .nav--hero.menu-open .nav-links{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
+  .nav--hero .nav-links a{color:var(--ink)}
   .nav--hero .nav-hamburger{display:flex}
   .nav--hero .nav-dropdown{flex-direction:column;align-items:flex-start}
-  /* Mobile: mega collapses into the hamburger flow as a plain stacked list (no panel/grid/frost). */
-  .nav--hero .nav-mega{position:static;display:none;transform:none;margin:0.85rem 0 0;padding:0 0 0 1rem;border:none;box-shadow:none;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;z-index:auto}
+  /* Programs sub-list: static stacked; names styled like the other mobile menu links. */
+  .nav--hero .nav-mega{position:static;display:none;transform:none;margin:0.6rem 0 0;padding:0 0 0 1rem;border:none;box-shadow:none;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;z-index:auto}
   .nav--hero .nav-dropdown.open .nav-mega{display:block}
-  .nav--hero .nav-mega-grid{grid-template-columns:1fr;gap:1rem}
+  .nav--hero .nav-mega-grid{grid-template-columns:1fr;gap:0.9rem}
   .nav--hero .nav-mega-img{display:none}
+  .nav--hero .nav-mega-label{display:none}
+  .nav--hero .nav-mega-name{font-family:var(--font-sans);font-size:var(--fs-eyebrow);font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink);line-height:1.3}
   /* Accordion caret (mobile only; desktop ::after is the hover bridge) */
   .nav--hero .nav-dropdown-toggle::after{content:"▸";margin-left:0.5rem;font-size:0.7em;display:inline-block;transition:transform 0.2s}
   .nav--hero .nav-dropdown.open .nav-dropdown-toggle::after{transform:rotate(90deg)}
@@ -87,8 +93,8 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-msearch{display:none;align-items:center}
 .nav--hero .nav-msearch-toggle{display:flex;align-items:center;cursor:pointer;color:var(--cream);transition:color 0.4s}
 .nav--hero.scrolled .nav-msearch-toggle{color:var(--ink)}
-.nav--hero .nav-msearch-panel{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ground);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:1.25rem 1.5rem;z-index:120}
-.nav--hero .nav-msearch.open .nav-msearch-panel{display:block}
+.nav--hero .nav-msearch-panel{position:absolute;top:100%;left:0;right:0;background:var(--ground);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:1.25rem 1.5rem;z-index:120;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
+.nav--hero .nav-msearch.open .nav-msearch-panel{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
 .nav--hero .nav-msearch-inner{display:flex;align-items:center;gap:0.7rem;max-width:1080px;margin:0 auto;border:1px solid var(--hairline);border-radius:4px;padding:0.75rem 0.95rem;background:var(--ground)}
 .nav--hero .nav-msearch-inner svg{flex-shrink:0;color:color-mix(in srgb,var(--body) 60%,var(--ground))}
 .nav--hero .nav-msearch-input{flex:1;min-width:0;border:none;background:none;outline:none;font-family:var(--font-sans);font-size:0.9rem;color:var(--ink)}
@@ -138,10 +144,9 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero .nav-msearch{display:flex}
   .nav--hero .nav-right-cta{gap:0.3rem}
   .nav--hero .nav-msearch-toggle,.nav--hero .nav-account-toggle,.nav--hero .nav-hamburger{padding:0.6rem}
-  /* Mobile (rough): icon stays visible; tap toggles a stacked single-column login drawer.
-     Opaque (no frost) + min-height so it cleanly covers the hamburger menu behind it. */
-  .nav--hero .nav-login-mega{display:none;opacity:1;visibility:visible;transform:none;padding:1.5rem;background:var(--ground);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-bottom:none;min-height:calc(100vh - 3.5rem)}
-  .nav--hero .nav-account.open .nav-login-mega{display:block}
+  /* Login drawer: opaque single-column sign-in form, slide-down + fade like the others. */
+  .nav--hero .nav-login-mega{opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s;padding:1.5rem;background:var(--ground);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-bottom:none;min-height:calc(100vh - 3.5rem)}
+  .nav--hero .nav-account.open .nav-login-mega{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
   .nav--hero .nav-login-grid{grid-template-columns:1fr;gap:1.75rem;max-width:none}
   /* Mobile login shows ONLY the sign-in form (hide the discover: search + grants promo). */
   .nav--hero .nav-login-discover{display:none}
