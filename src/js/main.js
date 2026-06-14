@@ -1,8 +1,10 @@
 // Shared site chrome behaviour: nav scroll-state, mobile hamburger, smooth anchor scroll.
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
+if (nav) {
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+}
 function toggleMenu() {
   const links = document.querySelector('.nav-links');
   if (links) {

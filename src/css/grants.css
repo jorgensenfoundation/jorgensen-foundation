@@ -8,7 +8,7 @@
 /* --- base (grants does not load style.css) --- */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:hidden}
+body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:clip}
 
 /* --- About / stats --- */
 .about-section{padding:8rem 3rem;background:var(--ground)}

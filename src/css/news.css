@@ -5,7 +5,7 @@
    hero container, scroll cue, keyframes) are ported here, recolored. */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--body);overflow-x:hidden}
+body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--body);overflow-x:clip}
 a{text-decoration:none;color:inherit}
 
 /* --- Ported structural chrome (was inherited from style.css), recolored --- */

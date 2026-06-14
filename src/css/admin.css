@@ -4,7 +4,7 @@
 :root{--error:#b3261e;--success:#2f6b43}
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:clip}
 a{text-decoration:none;color:inherit}
 
 /* Admin nav now lives in /css/nav.css (.nav--admin context), loaded via the navCss flag. */

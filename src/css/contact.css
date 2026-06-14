@@ -4,7 +4,7 @@
 /* --- base (contact does not load style.css; components.css has no reset/body) --- */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:hidden}
+body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:clip}
 a{text-decoration:none;color:inherit}
 
 /* --- Overrides of shared selectors --- */
