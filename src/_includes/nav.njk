@@ -60,9 +60,66 @@
     <a href="/grants"{% if navActive == "grants" %} class="active"{% endif %}>Grants</a>
     <a href="/contact"{% if navActive == "contact" %} class="active"{% endif %}>Contact</a>
   </div>
-  <div style="display:flex;gap:0.75rem;align-items:center">
-    <a href="/login" class="nav-cta">Sign In</a>
+  <div class="nav-right-cta">
     <a href="/#access" class="nav-cta">Request Access</a>
+    <div class="nav-account">
+      <a class="nav-account-toggle" role="button" tabindex="0" aria-label="Sign in" onclick="toggleAccount(event)">
+        <svg class="nav-account-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+      <div class="nav-login-mega">
+        <div class="nav-mega-inner">
+          <div class="nav-login-grid">
+
+            <!-- LEFT: discover -->
+            <div class="nav-login-col">
+              <span class="nav-mega-label">Discover</span>
+              <div class="nav-search">
+                <svg class="nav-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input class="nav-search-input" type="search" placeholder="Search the site…" aria-label="Search the site">
+              </div>
+              <div class="nav-promo">
+                <span class="nav-promo-title">Grants Program</span>
+                <p class="nav-promo-body">Funding for students in computational chemistry — learn about eligibility and how to apply.</p>
+                <a class="nav-promo-link" href="/grants/">Explore the Grants Program →</a>
+              </div>
+            </div>
+
+            <!-- RIGHT: sign in -->
+            <div class="nav-login-col nav-login-signin">
+              <div class="nav-login-head">
+                <span class="nav-login-title">Sign In</span>
+                <a class="nav-login-create" href="/#access">Create Account</a>
+              </div>
+              <label class="nav-login-field">
+                <span class="nav-login-label">Email</span>
+                <input class="nav-login-input" type="email" placeholder="you@institution.edu" autocomplete="off">
+              </label>
+              <label class="nav-login-field">
+                <span class="nav-login-label">Password</span>
+                <input class="nav-login-input" type="password" placeholder="Your password" autocomplete="off">
+              </label>
+              <div class="nav-login-meta">
+                <label class="nav-login-remember"><input type="checkbox"> Remember me</label>
+                <a class="nav-login-forgot" href="/reset-password">Forgot password?</a>
+              </div>
+              <button class="btn btn--primary nav-login-submit" type="button">Sign In</button>
+              <div class="nav-login-or"><span>or</span></div>
+              <div class="nav-social">
+                <button class="nav-social-btn" type="button" disabled aria-disabled="true">Facebook</button>
+                <button class="nav-social-btn" type="button" disabled aria-disabled="true">Google</button>
+                <button class="nav-social-btn" type="button" disabled aria-disabled="true">Apple</button>
+              </div>
+              <span class="nav-social-note">Social sign-in coming soon</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="nav-hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>

@@ -21,6 +21,14 @@ function toggleDropdown(e) {
     if (d) d.classList.toggle('open');
   }
 }
+// Mobile-only: tap the account icon to expand the login section in the hamburger flow.
+function toggleAccount(e) {
+  if (window.matchMedia('(max-width:960px)').matches) {
+    e.preventDefault();
+    const d = e.currentTarget.closest('.nav-account');
+    if (d) d.classList.toggle('open');
+  }
+}
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));

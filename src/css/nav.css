@@ -73,6 +73,60 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero.scrolled{padding:1rem 1.5rem}
 }
 
+/* --- LOGIN MEGA-MENU (right-side account icon) — same panel language as Programs --- */
+.nav--hero .nav-right-cta{display:flex;align-items:center;gap:1.1rem}
+.nav--hero .nav-account{display:flex;align-items:center}
+.nav--hero .nav-account-toggle{position:relative;display:flex;align-items:center;cursor:pointer;color:var(--cream);transition:color 0.4s}
+.nav--hero.scrolled .nav-account-toggle{color:var(--ink)}
+.nav--hero .nav-account-toggle:hover{opacity:0.8}
+.nav--hero .nav-account-icon{display:block}
+.nav--hero .nav-login-mega{position:absolute;top:100%;left:0;right:0;background:color-mix(in srgb,var(--ground) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
+.nav--hero .nav-login-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;max-width:1080px;margin:0 auto;align-items:start}
+.nav--hero .nav-login-col{min-width:0}
+/* LEFT: search + grants promo */
+.nav--hero .nav-search{display:flex;align-items:center;gap:0.6rem;border:1px solid var(--hairline);border-radius:4px;padding:0.7rem 0.9rem;background:var(--ground)}
+.nav--hero .nav-search-icon{flex-shrink:0;color:color-mix(in srgb,var(--body) 60%,var(--ground))}
+.nav--hero .nav-search-input{flex:1;min-width:0;border:none;background:none;outline:none;font-family:var(--font-sans);font-size:0.85rem;color:var(--ink)}
+.nav--hero .nav-search-input::placeholder{color:color-mix(in srgb,var(--body) 55%,var(--ground))}
+.nav--hero .nav-promo{margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--hairline)}
+.nav--hero .nav-promo-title{font-family:var(--font-serif);font-size:1.3rem;font-weight:500;color:var(--ink);display:block;margin-bottom:0.5rem}
+.nav--hero .nav-promo-body{font-family:var(--font-sans);font-size:0.82rem;line-height:1.55;color:var(--body);margin-bottom:0.9rem}
+.nav--hero .nav-promo-link{font-family:var(--font-sans);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+/* RIGHT: sign-in form */
+.nav--hero .nav-login-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.3rem}
+.nav--hero .nav-login-title{font-family:var(--font-serif);font-size:1.6rem;font-weight:500;color:var(--ink)}
+.nav--hero .nav-login-create{font-family:var(--font-sans);font-size:0.72rem;letter-spacing:0.04em;color:var(--body);text-decoration:none;border-bottom:1px solid var(--hairline);padding-bottom:1px}
+.nav--hero .nav-login-create:hover{color:var(--ink)}
+.nav--hero .nav-login-field{display:block;margin-bottom:1rem}
+.nav--hero .nav-login-label{display:block;font-family:var(--font-sans);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--body);margin-bottom:0.4rem}
+.nav--hero .nav-login-input{width:100%;border:none;border-bottom:1px solid var(--hairline);background:none;padding:0.5rem 0;font-family:var(--font-sans);font-size:0.85rem;color:var(--ink);outline:none}
+.nav--hero .nav-login-input:focus{border-bottom-color:var(--ink)}
+.nav--hero .nav-login-input::placeholder{color:color-mix(in srgb,var(--ink) 32%,var(--ground))}
+.nav--hero .nav-login-meta{display:flex;align-items:center;justify-content:space-between;margin:0.4rem 0 1.3rem}
+.nav--hero .nav-login-remember{display:flex;align-items:center;gap:0.45rem;font-family:var(--font-sans);font-size:0.74rem;color:var(--body);cursor:pointer}
+.nav--hero .nav-login-forgot{font-family:var(--font-sans);font-size:0.74rem;color:var(--body);text-decoration:none}
+.nav--hero .nav-login-forgot:hover{color:var(--ink)}
+.nav--hero .nav-login-submit{width:100%;font-size:0.62rem;letter-spacing:0.2em}
+.nav--hero .nav-login-or{display:flex;align-items:center;margin:1.3rem 0;color:color-mix(in srgb,var(--body) 60%,var(--ground));font-family:var(--font-sans);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase}
+.nav--hero .nav-login-or::before,.nav--hero .nav-login-or::after{content:"";flex:1;height:1px;background:var(--hairline)}
+.nav--hero .nav-login-or span{padding:0 0.9rem}
+/* Social buttons — visual only, disabled / coming soon */
+.nav--hero .nav-social{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem}
+.nav--hero .nav-social-btn{font-family:var(--font-sans);font-size:0.72rem;letter-spacing:0.04em;padding:0.65rem 0.5rem;border:1px solid var(--hairline);background:var(--ground);color:var(--body);cursor:not-allowed;opacity:0.45}
+.nav--hero .nav-social-note{display:block;margin-top:0.7rem;font-family:var(--font-sans);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb,var(--body) 60%,var(--ground));text-align:center}
+@media(min-width:961px){
+  .nav--hero .nav-login-mega{opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
+  .nav--hero .nav-account:hover .nav-login-mega{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
+  /* Hover bridge under the icon only (slightly wider than the 20px icon for catch). */
+  .nav--hero .nav-account-toggle::after{content:"";position:absolute;top:100%;left:-0.75rem;right:-0.75rem;height:2.5rem}
+}
+@media(max-width:960px){
+  /* Mobile (rough): icon stays visible; tap toggles a stacked single-column login panel. */
+  .nav--hero .nav-login-mega{display:none;opacity:1;visibility:visible;transform:none;padding:1.5rem}
+  .nav--hero .nav-account.open .nav-login-mega{display:block}
+  .nav--hero .nav-login-grid{grid-template-columns:1fr;gap:1.75rem;max-width:none}
+}
+
 /* ============================================================================
    .nav--solid — APP (from app.css:15–23 + @media(max-width:600px))
    sticky, solid white, ink links; user/logout shown only when logged in.
