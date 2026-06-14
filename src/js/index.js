@@ -80,3 +80,11 @@ function toggleFaq(qEl) {
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
 }
+
+// Open the registration modal when arriving via the nav "Create Account" link (#signup) —
+// on initial load, and when the hash changes while already on the homepage.
+function maybeOpenSignup() {
+  if (location.hash === '#signup') openModal();
+}
+maybeOpenSignup();
+window.addEventListener('hashchange', maybeOpenSignup);

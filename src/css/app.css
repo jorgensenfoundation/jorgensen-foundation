@@ -21,6 +21,12 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .footer-legal a{font-size:0.55rem;letter-spacing:0.1em;color:var(--body);text-decoration:none;transition:color 0.2s}
 .footer-legal a:hover{color:var(--ink)}
 
+/* --- Custom show/hide password eye: sit above native password-manager / autofill controls
+   (raise z-index), and hide Edge's built-in reveal so we don't get two reveal buttons. The
+   input's padding-right (set per-field) keeps our eye clear of the Safari/iCloud key glyph. --- */
+.eye-btn{z-index:2}
+.input::-ms-reveal,.input::-ms-clear{display:none}
+
 /* --- Card component (shared across app pages) — white ground, Oyster hairline --- */
 .card,.prog-card,.access-card,.price-card,.stat-box,.table-wrap,.plan-card,.dashboard-card,.user-info{border:1px solid var(--hairline);box-shadow:none}
 .card:hover,.prog-card:hover,.access-card:hover,.price-card:hover,.stat-box:hover,.table-wrap:hover,.plan-card:hover,.dashboard-card:hover,.user-info:hover{box-shadow:0 8px 30px color-mix(in srgb,var(--ink) 10%,transparent);transition:box-shadow 0.3s ease,border-color 0.3s ease}

@@ -26,7 +26,9 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem 
 .input::placeholder{color:color-mix(in srgb,var(--ink) 32%,var(--ground))}
 input[type=password]{-webkit-appearance:none;appearance:none}
 .input-hint{font-size:0.6rem;color:var(--body);margin-top:0.4rem;display:block}
-.show-hide-btn{display:block;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--body);background:none;border:none;cursor:pointer;margin-top:0.5rem;padding:0;font-family:Helvetica,Arial,sans-serif}
+/* SVG show/hide eye — consistent with login / reset-password (z-index comes from app.css). */
+.eye-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--body);padding:0;display:flex;align-items:center;line-height:0}
+.eye-btn:hover{color:var(--ink)}
 
 .btn{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid var(--ink);background:var(--ink);color:var(--ground);cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.5rem;box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 22%,transparent)}
 .btn:hover{background:var(--ink-hover);box-shadow:0 8px 22px color-mix(in srgb,var(--ink) 30%,transparent)}
