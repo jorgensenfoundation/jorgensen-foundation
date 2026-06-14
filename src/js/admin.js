@@ -27,6 +27,30 @@ let allGrants = [];
 let boardMembers = [];
 let currentFilter = 'all';
 
+// --- Per-table "show 10, then Show more / Show less" -----------------------------
+const ROW_LIMIT = 10;
+// Independent expanded state per table (false = collapsed to first 10).
+const showMoreState = { users: false, grants: false, newsletter: false, board: false };
+
+// Build the show-more/less button for a table; '' when the (filtered) set is <= 10 rows.
+function showMoreBtn(key, total) {
+  if (total <= ROW_LIMIT) return '';
+  const label = showMoreState[key]
+    ? 'Show less'
+    : `Show more (${total - ROW_LIMIT} more)`;
+  return `<button class="show-more-btn" type="button" onclick="toggleShowMore('${key}')">${label}</button>`;
+}
+
+// Toggle a table's expanded state, then re-derive its rows through the SAME path
+// (filter → render) so the search filter and any sort are preserved.
+function toggleShowMore(key) {
+  showMoreState[key] = !showMoreState[key];
+  if (key === 'users') filterUsers();
+  else if (key === 'grants') filterGrants();
+  else if (key === 'newsletter') filterNewsletter();
+  else if (key === 'board') renderBoardMembers(boardMembers);
+}
+
 function showDashboard() {
   document.getElementById('login-wrap').style.display = 'none';
   document.getElementById('admin-dashboard').classList.add('active');
@@ -128,11 +152,14 @@ function filterNewsletter() {
 
 function renderNewsletter(subscribers) {
   const tbody = document.getElementById('newsletter-table');
+  const more = document.getElementById('newsletter-more');
   if (!subscribers.length) {
     tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No subscribers found</td></tr>';
+    if (more) more.innerHTML = '';
     return;
   }
-  tbody.innerHTML = subscribers.map((s, i) => {
+  const visible = showMoreState.newsletter ? subscribers : subscribers.slice(0, ROW_LIMIT);
+  tbody.innerHTML = visible.map((s, i) => {
     const date = s.subscribed_at ? new Date(s.subscribed_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
     return `
       <tr>
@@ -142,6 +169,7 @@ function renderNewsletter(subscribers) {
       </tr>
     `;
   }).join('');
+  if (more) more.innerHTML = showMoreBtn('newsletter', subscribers.length);
 }
 
 async function loadGrants() {
@@ -203,8 +231,10 @@ function filterGrants() {
 
 function renderGrants(grants) {
   const tbody = document.getElementById('grants-table');
+  const more = document.getElementById('grants-more');
   if (!grants.length) {
     tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No applications found</td></tr>';
+    if (more) more.innerHTML = '';
     return;
   }
   // Sort a COPY (never mutate allGrants): by lifecycle stage, then newest-first within a stage.
@@ -216,7 +246,9 @@ function renderGrants(grants) {
     const tb = b.created_at ? Date.parse(b.created_at) : 0;
     return tb - ta;   // newest first within the same status
   });
-  tbody.innerHTML = sorted.map((g) => {
+  // 10-row limit applies AFTER sorting, counting DATA rows (detail rows don't count).
+  const visible = showMoreState.grants ? sorted : sorted.slice(0, ROW_LIMIT);
+  tbody.innerHTML = visible.map((g) => {
     const status = g.status || 'submitted';
     const naText = NEXT_ACTION[status] || '—';
     const naClass = nextActionClass(status);
@@ -236,6 +268,7 @@ function renderGrants(grants) {
       </tr>
     `;
   }).join('');
+  if (more) more.innerHTML = showMoreBtn('grants', sorted.length);
 }
 
 // --- Inline grant detail panel (board votes) + assign/decide controls ---------
@@ -405,18 +438,22 @@ async function loadBoardMembers() {
 
 function renderBoardMembers(members) {
   const tbody = document.getElementById('board-members-table');
+  const more = document.getElementById('board-more');
   if (!tbody) return;
   if (!Array.isArray(members) || !members.length) {
     tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No board members yet</td></tr>';
+    if (more) more.innerHTML = '';
     return;
   }
-  tbody.innerHTML = members.map(m => `
+  const visible = showMoreState.board ? members : members.slice(0, ROW_LIMIT);
+  tbody.innerHTML = visible.map(m => `
       <tr>
         <td>${esc(m.email)}</td>
         <td>${esc(m.first_name || '—')}</td>
         <td>${esc(m.last_name || '—')}</td>
         <td><button class="action-btn action-deactivate" onclick="removeBoardMember('${escAttr(m.email)}')">Remove</button></td>
       </tr>`).join('');
+  if (more) more.innerHTML = showMoreBtn('board', members.length);
 }
 
 async function inviteBoardMember() {
@@ -497,11 +534,14 @@ function filterUsers() {
 
 function renderUsers(users) {
   const tbody = document.getElementById('users-table');
+  const more = document.getElementById('users-more');
   if (!users.length) {
     tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No users found</td></tr>';
+    if (more) more.innerHTML = '';
     return;
   }
-  tbody.innerHTML = users.map(u => {
+  const visible = showMoreState.users ? users : users.slice(0, ROW_LIMIT);
+  tbody.innerHTML = visible.map(u => {
     const date = u.created_at ? new Date(u.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
     const isActive = u.subscription_status === 'active';
     return `
@@ -523,6 +563,7 @@ function renderUsers(users) {
       </tr>
     `;
   }).join('');
+  if (more) more.innerHTML = showMoreBtn('users', users.length);
 }
 
 async function activateUser(email) {
