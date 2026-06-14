@@ -70,8 +70,11 @@ function isBoardMember(user) {
 
 function setupBoardReview(user) {
   const section = document.getElementById('board-review');
+  const choiceBtn = document.getElementById('choice-review');
   if (!section) return;
-  if (!isBoardMember(user)) { section.hidden = true; return; }
+  const board = isBoardMember(user);
+  if (choiceBtn) choiceBtn.hidden = !board;
+  if (!board) { section.hidden = true; return; }
   section.hidden = false;
   loadAssignments();
 }
