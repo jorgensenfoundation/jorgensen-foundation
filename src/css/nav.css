@@ -40,6 +40,7 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
    nav (nearest positioned ancestor), so left:0;right:0 spans the full viewport and top:100% drops
    flush under the whole bar. */
 .nav--hero .nav-dropdown{display:flex;align-items:center}
+.nav--hero .nav-dropdown-toggle{position:relative;cursor:pointer}   /* relative: anchors the narrow hover bridge (::after); does NOT affect the panel (a sibling, not a descendant) */
 .nav--hero .nav-mega{position:absolute;top:100%;left:0;right:0;background:color-mix(in srgb,var(--ground) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
 .nav--hero .nav-mega-inner{max-width:1080px;margin:0 auto}
 .nav--hero .nav-mega-label{font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:color-mix(in srgb,var(--body) 55%,var(--ground));margin-bottom:1.6rem}
@@ -55,8 +56,9 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   /* Smooth slide-down + fade. Closed: faded, raised 8px, hidden. Open (hover): settled + visible. */
   .nav--hero .nav-mega{opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
   .nav--hero .nav-dropdown:hover .nav-mega{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
-  /* Transparent bridge across the trigger→panel seam so moving into the panel doesn't close it. */
-  .nav--hero .nav-mega::before{content:"";position:absolute;left:0;right:0;top:-2.5rem;height:2.5rem}
+  /* Hover bridge: a narrow transparent strip BELOW THE TRIGGER ONLY (trigger width, not full
+     width), so moving Programs→panel stays open but moving sideways to another nav link closes it. */
+  .nav--hero .nav-dropdown-toggle::after{content:"";position:absolute;top:100%;left:0;right:0;height:2.5rem}
 }
 @media(max-width:960px){
   .nav--hero .nav-links,.nav--hero .nav-cta{display:none}
