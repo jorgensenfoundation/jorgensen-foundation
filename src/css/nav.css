@@ -35,29 +35,40 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav--hero .nav-hamburger span{display:block;width:22px;height:1px;background:var(--cream);transition:background 0.4s}
 .nav--hero.scrolled .nav-hamburger span{background:var(--ink)}
-/* --- PROGRAMS DROPDOWN — white panel, Oyster hairline, Midnight links --- */
+/* --- PROGRAMS MEGA-MENU — full-width light panel, 3-column grid, Midnight text --- */
 .nav--hero .nav-dropdown{position:relative;display:flex;align-items:center}
-.nav--hero .nav-dropdown-menu{position:absolute;top:100%;left:0;margin-top:1.1rem;min-width:180px;display:none;flex-direction:column;gap:0.85rem;background:var(--ground);border:1px solid var(--hairline);box-shadow:0 8px 24px color-mix(in srgb,var(--ink) 12%,transparent);padding:0.85rem 1.1rem;z-index:120}
-/* Solid light panel → dropdown links are always Midnight (readable at top AND scrolled). */
-.nav--hero .nav-dropdown-menu a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.75;white-space:nowrap;transition:opacity 0.2s,color 0.4s}
-.nav--hero .nav-dropdown-menu a:hover{opacity:1}
+/* Full-width breakout: 100vw centered on the viewport (body has overflow-x:clip, so the
+   1px scrollbar overshoot is clipped). Drops 2rem below the trigger, just under the bar. */
+.nav--hero .nav-mega{position:absolute;top:100%;left:50%;transform:translateX(-50%);width:100vw;margin-top:2rem;display:none;background:var(--ground);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem 3rem;z-index:120}
+.nav--hero .nav-mega-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem 2rem;max-width:1100px;margin:0 auto}
+/* Items: links are always Midnight (readable on the light panel at top AND scrolled). */
+.nav--hero .nav-mega-item{display:flex;gap:14px;align-items:flex-start;padding:0.85rem;text-decoration:none;color:var(--ink);transition:background 0.2s}
+.nav--hero .nav-mega-item:hover{background:color-mix(in srgb,var(--surface) 45%,var(--ground))}
+.nav--hero .nav-mega-icon{flex-shrink:0;width:52px;height:52px;background:var(--surface)}   /* placeholder — real icons later */
+.nav--hero .nav-mega-text{display:flex;flex-direction:column;min-width:0}
+.nav--hero .nav-mega-name{font-family:var(--font-serif);font-size:1.1rem;font-weight:400;color:var(--ink);line-height:1.2;margin-bottom:0.3rem}
+.nav--hero .nav-mega-desc{font-family:var(--font-sans);font-size:0.8rem;line-height:1.5;color:var(--body)}
 @media(min-width:961px){
-  /* Desktop hover dropdown: laid out but invisible until hover. visibility/opacity (not
-     display) so a close-delay can apply. Instant open; ~220ms grace before close so an
-     imprecise cursor path doesn't snap it shut. */
-  .nav--hero .nav-dropdown-menu{display:flex;visibility:hidden;opacity:0;transition:opacity 0.2s ease,visibility 0s linear 0.22s}
-  .nav--hero .nav-dropdown:hover .nav-dropdown-menu{visibility:visible;opacity:1;transition:opacity 0.2s ease,visibility 0s}
-  /* Transparent bridge filling the 1.1rem gap between trigger and menu so the hover area
-     is continuous (cursor never crosses dead space). */
-  .nav--hero .nav-dropdown-menu::before{content:"";position:absolute;left:0;right:0;top:-1.1rem;height:1.1rem}
+  /* Desktop hover mega: laid out but invisible until hover. visibility/opacity (not display)
+     so a close-delay applies. Instant open; ~220ms grace before close. */
+  .nav--hero .nav-mega{display:block;visibility:hidden;opacity:0;transition:opacity 0.2s ease,visibility 0s linear 0.22s}
+  .nav--hero .nav-dropdown:hover .nav-mega{visibility:visible;opacity:1;transition:opacity 0.2s ease,visibility 0s}
+  /* Transparent bridge filling the 2rem gap between trigger and panel so the hover area is
+     continuous (cursor never crosses dead space) — spans the full-width panel. */
+  .nav--hero .nav-mega::before{content:"";position:absolute;left:0;right:0;top:-2rem;height:2rem}
 }
 @media(max-width:960px){
   .nav--hero .nav-links,.nav--hero .nav-cta{display:none}
   .nav--hero .nav-hamburger{display:flex}
   .nav--hero .nav-dropdown{flex-direction:column;align-items:flex-start}
-  .nav--hero .nav-dropdown-menu{position:static;display:none;margin:0.85rem 0 0;padding:0 0 0 1rem;min-width:0;border:none;box-shadow:none;background:none}
-  .nav--hero .nav-dropdown.open .nav-dropdown-menu{display:flex}
-  .nav--hero .nav-dropdown-menu a{color:var(--ink)}
+  /* Mobile: mega collapses into the hamburger flow as a plain stacked list (no panel/grid). */
+  .nav--hero .nav-mega{position:static;display:none;width:auto;transform:none;margin:0.85rem 0 0;padding:0 0 0 1rem;border:none;box-shadow:none;background:none;z-index:auto}
+  .nav--hero .nav-dropdown.open .nav-mega{display:block}
+  .nav--hero .nav-mega-grid{grid-template-columns:1fr;gap:1rem;max-width:none}
+  .nav--hero .nav-mega-item{padding:0.4rem 0}
+  .nav--hero .nav-mega-item:hover{background:none}
+  .nav--hero .nav-mega-icon{display:none}
+  .nav--hero .nav-mega-name{font-size:0.95rem}
   .nav--hero{padding:1.5rem 1.5rem}
   .nav--hero.scrolled{padding:1rem 1.5rem}
 }

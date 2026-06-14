@@ -4,13 +4,51 @@
   <div class="nav-links">
     <div class="nav-dropdown">
       <a href="/#programs" class="nav-dropdown-toggle{% if navActive == "programs" %} active{% endif %}" onclick="toggleDropdown(event)">Programs</a>
-      <div class="nav-dropdown-menu">
-        <a href="/boss">BOSS</a>
-        <a href="/mcpro">MCPRO</a>
-        <a href="/bomb">BOMB</a>
-        <a href="/fep">FEP</a>
-        <a href="/opls">OPLS</a>
-        <a href="/visualisation">Visualisation</a>
+      <div class="nav-mega">
+        <div class="nav-mega-grid">
+          <a class="nav-mega-item" href="/boss/">
+            <span class="nav-mega-icon" aria-hidden="true"></span>
+            <span class="nav-mega-text">
+              <span class="nav-mega-name">BOSS</span>
+              <span class="nav-mega-desc">Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution</span>
+            </span>
+          </a>
+          <a class="nav-mega-item" href="/mcpro/">
+            <span class="nav-mega-icon" aria-hidden="true"></span>
+            <span class="nav-mega-text">
+              <span class="nav-mega-name">MCPRO</span>
+              <span class="nav-mega-desc">Monte Carlo simulations of peptides, proteins, and nucleic acids in explicit solvent</span>
+            </span>
+          </a>
+          <a class="nav-mega-item" href="/bomb/">
+            <span class="nav-mega-icon" aria-hidden="true"></span>
+            <span class="nav-mega-text">
+              <span class="nav-mega-name">BOMB</span>
+              <span class="nav-mega-desc">Combinatorial library growth and virtual screening inside protein binding sites</span>
+            </span>
+          </a>
+          <a class="nav-mega-item" href="/fep/">
+            <span class="nav-mega-icon" aria-hidden="true"></span>
+            <span class="nav-mega-text">
+              <span class="nav-mega-name">FEP</span>
+              <span class="nav-mega-desc">Rigorous alchemical free energy calculations for binding affinities, solvation thermodynamics, and chemical equilibria</span>
+            </span>
+          </a>
+          <a class="nav-mega-item" href="/opls/">
+            <span class="nav-mega-icon" aria-hidden="true"></span>
+            <span class="nav-mega-text">
+              <span class="nav-mega-name">OPLS</span>
+              <span class="nav-mega-desc">Industry-standard force fields for organic molecules, proteins, nucleic acids, and lipids</span>
+            </span>
+          </a>
+          <a class="nav-mega-item" href="/visualisation/">
+            <span class="nav-mega-icon" aria-hidden="true"></span>
+            <span class="nav-mega-text">
+              <span class="nav-mega-name">Visualisation</span>
+              <span class="nav-mega-desc">Browser-based 3D rendering of all simulation outputs from the foundation's programs</span>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
     <a href="/about"{% if navActive == "about" %} class="active"{% endif %}>About</a>
