@@ -51,6 +51,19 @@ eleventyExcludeFromCollections: true
   .favgrid{display:flex;gap:1.75rem;flex-wrap:wrap;align-items:flex-end}
   .favcell{display:flex;flex-direction:column;align-items:center;gap:0.5rem}
   .favcell canvas{border:1px solid var(--hairline);image-rendering:pixelated;display:block}
+
+  /* Wordmark-pairing exploration */
+  .pair-note{font-size:0.62rem;color:var(--stone);line-height:1.7;margin:0.4rem 0 0}
+  .lk-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.5rem}
+  .lk-stage{border:1px solid var(--hairline);padding:3.5rem 2.5rem;display:flex;align-items:center;justify-content:center;min-height:220px;background:#fff}
+  .lk-stage.dark{background:var(--ink);border-color:var(--ink)}
+  .lk-stage.dark .lk-word{color:var(--cream)}
+  .lk-stage.dark .sym{color:var(--cream)}
+  .lk{display:flex}
+  .lk-h{flex-direction:row;align-items:center}
+  .lk-s{flex-direction:column;align-items:center;text-align:center}
+  .lk-word{font-family:'Cormorant Garamond',serif;font-weight:400;text-transform:uppercase;color:var(--ink);line-height:1.02;white-space:nowrap}
+  .lk-word.two{white-space:normal;line-height:1.0}
 </style>
 </head>
 <body>
@@ -99,6 +112,82 @@ eleventyExcludeFromCollections: true
         <div class="favcell"><canvas data-sym="fav" data-size="24" data-mode="dark"></canvas><span class="szlab">24px · dark</span></div>
         <div class="favcell"><canvas data-sym="fav" data-size="32" data-mode="dark"></canvas><span class="szlab">32px · dark</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== WORDMARK PAIRING EXPLORATION (symbol fixed = D-final) ===== -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">Pairing</span><span class="dname">D-final symbol × "Jorgensen Foundation" wordmark — large/display lockups</span></div>
+    <p class="page-sub" style="margin-top:-1rem;margin-bottom:0.5rem">Symbol is locked (D-final). These vary only the pairing: size ratio, gap, alignment, one- vs two-line, letter-spacing, weight. Judge at display size. Recommended "house" lockups noted at the end.</p>
+  </section>
+
+  <!-- H1 -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">H1</span><span class="dname">Horizontal — symbol dominant, one line</span></div>
+    <p class="pair-note">Symbol (100px) noticeably larger than cap-height · one line · gap 1.5rem · 0.30em · weight 400.</p>
+    <div class="lk-row">
+      <div class="lk-stage"><div class="lk lk-h" style="gap:1.5rem"><svg class="sym" width="100" height="100" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.55rem;letter-spacing:0.30em;font-weight:400">Jorgensen Foundation</span></div></div>
+      <div class="lk-stage dark"><div class="lk lk-h" style="gap:1.5rem"><svg class="sym" width="100" height="100" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.55rem;letter-spacing:0.30em;font-weight:400">Jorgensen Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- H2 -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">H2</span><span class="dname">Horizontal — two-line wordmark, symbol matches block height</span></div>
+    <p class="pair-note">Two lines (Jorgensen / Foundation) · symbol (88px) ≈ two-line block height · gap 1.25rem · 0.28em · weight 500 · centered to block.</p>
+    <div class="lk-row">
+      <div class="lk-stage"><div class="lk lk-h" style="gap:1.25rem"><svg class="sym" width="88" height="88" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word two" style="font-size:1.55rem;letter-spacing:0.28em;font-weight:500">Jorgensen<br>Foundation</span></div></div>
+      <div class="lk-stage dark"><div class="lk lk-h" style="gap:1.25rem"><svg class="sym" width="88" height="88" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word two" style="font-size:1.55rem;letter-spacing:0.28em;font-weight:500">Jorgensen<br>Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- H3 -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">H3</span><span class="dname">Horizontal — subordinate symbol, airy (editorial)</span></div>
+    <p class="pair-note">Smaller symbol (60px) below cap-height feel · one line · airy gap 2.25rem · 0.35em · weight 400.</p>
+    <div class="lk-row">
+      <div class="lk-stage"><div class="lk lk-h" style="gap:2.25rem"><svg class="sym" width="60" height="60" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.55rem;letter-spacing:0.35em;font-weight:400">Jorgensen Foundation</span></div></div>
+      <div class="lk-stage dark"><div class="lk lk-h" style="gap:2.25rem"><svg class="sym" width="60" height="60" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.55rem;letter-spacing:0.35em;font-weight:400">Jorgensen Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- H4 -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">H4</span><span class="dname">Horizontal — symbol ≈ cap-height, tight &amp; solid</span></div>
+    <p class="pair-note">Symbol (72px) ≈ cap-height of one line · gap 1.25rem · tighter 0.25em · weight 500 · solid/grounded.</p>
+    <div class="lk-row">
+      <div class="lk-stage"><div class="lk lk-h" style="gap:1.25rem"><svg class="sym" width="72" height="72" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.6rem;letter-spacing:0.25em;font-weight:500">Jorgensen Foundation</span></div></div>
+      <div class="lk-stage dark"><div class="lk lk-h" style="gap:1.25rem"><svg class="sym" width="72" height="72" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.6rem;letter-spacing:0.25em;font-weight:500">Jorgensen Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- S1 -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">S1</span><span class="dname">Stacked — large symbol over one line, generous</span></div>
+    <p class="pair-note">Large symbol (110px) above one line · space 1.5rem · 0.30em · weight 400 · trailing letter-spacing optically re-centred.</p>
+    <div class="lk-row">
+      <div class="lk-stage"><div class="lk lk-s" style="gap:1.5rem"><svg class="sym" width="110" height="110" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.4rem;letter-spacing:0.30em;font-weight:400;margin-right:-0.30em">Jorgensen Foundation</span></div></div>
+      <div class="lk-stage dark"><div class="lk lk-s" style="gap:1.5rem"><svg class="sym" width="110" height="110" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.4rem;letter-spacing:0.30em;font-weight:400;margin-right:-0.30em">Jorgensen Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- S2 -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">S2</span><span class="dname">Stacked — medium symbol over two centered lines, tight</span></div>
+    <p class="pair-note">Medium symbol (88px) above two centered lines · space 1.25rem · 0.32em · weight 500 · compact poster block.</p>
+    <div class="lk-row">
+      <div class="lk-stage"><div class="lk lk-s" style="gap:1.25rem"><svg class="sym" width="88" height="88" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word two" style="font-size:1.6rem;letter-spacing:0.32em;font-weight:500;margin-right:-0.32em">Jorgensen<br>Foundation</span></div></div>
+      <div class="lk-stage dark"><div class="lk lk-s" style="gap:1.25rem"><svg class="sym" width="88" height="88" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word two" style="font-size:1.6rem;letter-spacing:0.32em;font-weight:500;margin-right:-0.32em">Jorgensen<br>Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- S3 -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">S3</span><span class="dname">Stacked — symbol width ≈ wordmark width, balanced</span></div>
+    <p class="pair-note">Symbol (96px) sized so its width ≈ one-line wordmark width · space 1.75rem · 0.28em · weight 400.</p>
+    <div class="lk-row">
+      <div class="lk-stage"><div class="lk lk-s" style="gap:1.75rem"><svg class="sym" width="96" height="96" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.35rem;letter-spacing:0.28em;font-weight:400;margin-right:-0.28em">Jorgensen Foundation</span></div></div>
+      <div class="lk-stage dark"><div class="lk lk-s" style="gap:1.75rem"><svg class="sym" width="96" height="96" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.35rem;letter-spacing:0.28em;font-weight:400;margin-right:-0.28em">Jorgensen Foundation</span></div></div>
     </div>
   </section>
 
