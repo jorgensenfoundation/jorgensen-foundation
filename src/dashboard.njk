@@ -1,0 +1,222 @@
+---
+layout: marketing.njk
+comingSoonGate: false
+mainCss: /css/components.css
+pageCss: /css/dashboard.css
+permalink: /dashboard/index.html
+title: Dashboard — Jorgensen Foundation
+description: Your Jorgensen Foundation account dashboard.
+---
+
+<!-- DARK HERO BAND — gives the transparent .nav--hero nav a dark backdrop (legible cream) -->
+<section class="dash-hero">
+  <div class="dash-hero-bg"></div>
+  <div class="dash-hero-inner">
+    <span class="dash-hero-tag">Your Account</span>
+    <h1 class="dash-hero-h1">Dashboard</h1>
+    <p class="dash-hero-sub">Welcome back to the Jorgensen Foundation.</p>
+  </div>
+</section>
+
+<!-- SIGN-IN GATE — shown by dashboard.js when logged out (sign in via the account menu, top right) -->
+<section class="dash-gate" id="dash-gate" hidden>
+  <div class="dash-gate-card">
+    <span class="dash-gate-label">Account Required</span>
+    <h2 class="dash-gate-title">Please sign in</h2>
+    <p class="dash-gate-body">Use the account icon at the top right to sign in, then your dashboard will appear here.</p>
+  </div>
+</section>
+
+<!-- DASHBOARD CONTENT — revealed by dashboard.js when logged in -->
+<div class="dashboard-content" id="dashboard-content" hidden>
+  <div class="dashboard-header">
+    <div class="dashboard-welcome">Good to see you,<br><em id="dash-name">—</em></div>
+    <div class="dashboard-meta">
+      <div class="dashboard-email" id="dash-email"></div>
+      <span class="dashboard-type" id="dash-type"></span>
+    </div>
+  </div>
+
+  <!-- Activate prompt — shown by dashboard.js only when subscription_status !== 'active' -->
+  <div class="activate-banner" id="activate-banner" hidden>
+    <div class="activate-banner-text">
+      <span class="activate-banner-title">Activate your subscription</span>
+      <p class="activate-banner-body">Subscribe to unlock the computational chemistry programs below. Applying for a student travel grant is always free and needs no subscription.</p>
+    </div>
+    <button class="choice-btn choice-btn-primary" type="button" onclick="window.location.href='/login'">Activate Subscription</button>
+  </div>
+
+  <div class="dash-choice">
+    <span class="dash-choice-label">Get Started</span>
+    <h2 class="dash-choice-title">What would you like<br><em>to do?</em></h2>
+    <p class="dash-choice-sub">Access the Foundation's computational chemistry programs, or apply for a student travel grant — applying is free and needs no paid subscription.</p>
+    <div class="dash-choice-actions">
+      <a class="choice-btn choice-btn-primary" href="#your-programs">Access Programs</a>
+      <a class="choice-btn choice-btn-secondary" id="choice-review" href="/review" hidden>Review Applications</a>
+      <a class="choice-btn choice-btn-secondary" href="/grants#apply">Apply for a Grant</a>
+    </div>
+  </div>
+
+  <span class="programs-label" id="your-programs">Your Programs</span>
+  <div class="programs-grid">
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#1a1510">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="10" stroke="#f5f0e6" stroke-width="1"/><circle cx="24" cy="8" r="4" fill="#f5f0e6" opacity="0.5"/><circle cx="38" cy="32" r="4" fill="#f5f0e6" opacity="0.5"/><circle cx="10" cy="32" r="4" fill="#f5f0e6" opacity="0.5"/><line x1="24" y1="12" x2="24" y2="14" stroke="#f5f0e6" opacity="0.4"/><line x1="35" y1="29" x2="33" y2="28" stroke="#f5f0e6" opacity="0.4"/><line x1="13" y1="29" x2="15" y2="28" stroke="#f5f0e6" opacity="0.4"/></svg>
+        <span class="prog-img-label">Molecular Simulation</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">01</div>
+        <div class="prog-name">BOSS</div>
+        <div class="prog-tagline">Biochemical & Organic Simulation System</div>
+        <p class="prog-short">Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Monte Carlo simulations in NPT, NVT, and μVT ensembles</li>
+            <li>OPLS force fields for organic molecules and biomolecules</li>
+            <li>Semi-empirical QM methods: AM1, PM3, PDDG/PM3</li>
+            <li>Energy minimisation and normal mode analysis</li>
+            <li>Free energy perturbation and thermodynamic integration</li>
+            <li>Conformational searching and geometry optimisation</li>
+          </ul>
+          <a href="/boss" class="prog-launch">Launch BOSS →</a>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#2a1f14">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="24" rx="18" ry="10" stroke="#f5f0e6" stroke-width="1" opacity="0.4"/><ellipse cx="24" cy="24" rx="10" ry="18" stroke="#f5f0e6" stroke-width="1" opacity="0.4"/><circle cx="24" cy="24" r="4" fill="#f5f0e6" opacity="0.6"/></svg>
+        <span class="prog-img-label">Protein Simulation</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">02</div>
+        <div class="prog-name">MCPRO</div>
+        <div class="prog-tagline">Monte Carlo for Proteins</div>
+        <p class="prog-short">Monte Carlo simulations of peptides, proteins, and nucleic acids in solution with full solvent treatment.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Protein-ligand binding free energy calculations</li>
+            <li>Explicit and implicit solvent models</li>
+            <li>Residue-based cutoffs for efficient sampling</li>
+            <li>Z-matrix internal coordinate moves</li>
+            <li>Solute-solvent and solute-solute energy decomposition</li>
+            <li>Compatible with OPLS-AA force fields</li>
+          </ul>
+          <a href="/mcpro" class="prog-launch">Launch MCPRO →</a>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#141a1a">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="16" y="16" width="16" height="16" stroke="#f5f0e6" stroke-width="1" opacity="0.5"/><circle cx="24" cy="24" r="3" fill="#f5f0e6" opacity="0.7"/><line x1="8" y1="24" x2="16" y2="24" stroke="#f5f0e6" opacity="0.3"/><line x1="32" y1="24" x2="40" y2="24" stroke="#f5f0e6" opacity="0.3"/><line x1="24" y1="8" x2="24" y2="16" stroke="#f5f0e6" opacity="0.3"/><line x1="24" y1="32" x2="24" y2="40" stroke="#f5f0e6" opacity="0.3"/></svg>
+        <span class="prog-img-label">Drug Discovery</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">03</div>
+        <div class="prog-name">BOMB</div>
+        <div class="prog-tagline">Biochemical & Organic Model Builder</div>
+        <p class="prog-short">Combinatorial library growth inside protein binding sites for structure-based drug discovery and lead optimisation.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>De novo ligand growth in protein binding sites</li>
+            <li>Virtual screening of combinatorial libraries</li>
+            <li>Docking with scoring and ranking</li>
+            <li>Lead optimisation guided by FEP calculations</li>
+            <li>Fragment-based drug design support</li>
+            <li>Protein structure preparation and editing</li>
+          </ul>
+          <a href="/bomb" class="prog-launch">Launch BOMB →</a>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#0d1a14">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M8 36 Q16 20 24 24 Q32 28 40 12" stroke="#f5f0e6" stroke-width="1.5" fill="none" opacity="0.6"/><circle cx="8" cy="36" r="2" fill="#f5f0e6" opacity="0.5"/><circle cx="24" cy="24" r="2" fill="#f5f0e6" opacity="0.5"/><circle cx="40" cy="12" r="2" fill="#f5f0e6" opacity="0.5"/></svg>
+        <span class="prog-img-label">Free Energy</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">04</div>
+        <div class="prog-name">FEP</div>
+        <div class="prog-tagline">Free Energy Perturbation</div>
+        <p class="prog-short">Rigorous free energy calculations for binding affinities, solvation, and chemical transformations.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Relative and absolute binding free energies</li>
+            <li>Free energies of hydration and solvation</li>
+            <li>Thermodynamic integration protocols</li>
+            <li>Bennett Acceptance Ratio (BAR) analysis</li>
+            <li>Alchemical transformations between ligands</li>
+            <li>Industry-standard accuracy for lead optimisation</li>
+          </ul>
+          <a href="/fep" class="prog-launch">Launch FEP →</a>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#1a1414">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><polygon points="24,8 38,32 10,32" stroke="#f5f0e6" stroke-width="1" fill="none" opacity="0.5"/><circle cx="24" cy="8" r="3" fill="#f5f0e6" opacity="0.6"/><circle cx="38" cy="32" r="3" fill="#f5f0e6" opacity="0.6"/><circle cx="10" cy="32" r="3" fill="#f5f0e6" opacity="0.6"/></svg>
+        <span class="prog-img-label">Force Fields</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">05</div>
+        <div class="prog-name">OPLS Force Fields</div>
+        <div class="prog-tagline">Optimised Potentials for Liquid Simulations</div>
+        <p class="prog-short">Industry-standard force fields covering organic molecules, proteins, nucleic acids, and lipids.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>OPLS-AA: all-atom parameters for organic molecules</li>
+            <li>OPLS-AA/L: improved backbone parameters for proteins</li>
+            <li>Coverage of 100+ functional groups</li>
+            <li>Validated against experimental liquid properties</li>
+            <li>Compatible with BOSS, MCPRO, and major MD packages</li>
+            <li>Custom parameterisation tools for novel compounds</li>
+          </ul>
+          <a href="/opls" class="prog-launch">Launch OPLS →</a>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-img-placeholder" style="background:#0d0d1a">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="12" stroke="#f5f0e6" stroke-width="1" opacity="0.5"/><circle cx="24" cy="24" r="5" fill="#f5f0e6" opacity="0.7"/><circle cx="24" cy="12" r="2.5" fill="#f5f0e6" opacity="0.4"/><circle cx="35" cy="30" r="2.5" fill="#f5f0e6" opacity="0.4"/><circle cx="13" cy="30" r="2.5" fill="#f5f0e6" opacity="0.4"/></svg>
+        <span class="prog-img-label">3D Visualisation</span>
+      </div>
+      <div class="prog-body">
+        <div class="prog-number">06</div>
+        <div class="prog-name">Visualisation Suite</div>
+        <div class="prog-tagline">3D Molecular Rendering</div>
+        <p class="prog-short">Browser-based interactive 3D rendering of all simulation outputs — no installation required.</p>
+        <button class="prog-toggle" onclick="toggleCard(this)">Learn more <span>↓</span></button>
+        <div class="prog-expanded"><div class="prog-expanded-inner">
+          <p class="prog-detail-title">Capabilities</p>
+          <ul class="prog-features">
+            <li>Interactive 3D molecular viewer in the browser</li>
+            <li>Ball-and-stick, space-fill, ribbon, and surface modes</li>
+            <li>Trajectory playback for MD and MC simulations</li>
+            <li>Electron density and electrostatic potential surfaces</li>
+            <li>Protein-ligand binding mode visualisation</li>
+            <li>Export publication-quality images and animations</li>
+          </ul>
+          <a href="/visualisation" class="prog-launch">Launch Visualiser →</a>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
