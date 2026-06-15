@@ -64,6 +64,13 @@ eleventyExcludeFromCollections: true
   .lk-s{flex-direction:column;align-items:center;text-align:center}
   .lk-word{font-family:'Cormorant Garamond',serif;font-weight:400;text-transform:uppercase;color:var(--ink);line-height:1.02;white-space:nowrap}
   .lk-word.two{white-space:normal;line-height:1.0}
+
+  /* Letter-mark comparison */
+  .group-h{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--ink);margin-top:3.5rem;border-bottom:1px solid var(--hairline);padding-bottom:0.6rem}
+  .mk-row{display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1.25rem}
+  .mk-stage{border:1px solid var(--hairline);background:#fff;display:flex;align-items:center;justify-content:center;padding:2rem 3rem;min-width:200px}
+  .mk-stage.dark{background:var(--ink);border-color:var(--ink)}
+  .mk-stage canvas{display:block}
 </style>
 </head>
 <body>
@@ -189,6 +196,90 @@ eleventyExcludeFromCollections: true
       <div class="lk-stage"><div class="lk lk-s" style="gap:1.75rem"><svg class="sym" width="96" height="96" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.35rem;letter-spacing:0.28em;font-weight:400;margin-right:-0.28em">Jorgensen Foundation</span></div></div>
       <div class="lk-stage dark"><div class="lk lk-s" style="gap:1.75rem"><svg class="sym" width="96" height="96" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="lk-word" style="font-size:1.35rem;letter-spacing:0.28em;font-weight:400;margin-right:-0.28em">Jorgensen Foundation</span></div></div>
     </div>
+  </section>
+
+  <!-- ===== LETTER-MARK EXPLORATION (canvas-rendered for honest favicon test) ===== -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">Letter marks</span><span class="dname">J / JF / Letter+Science marks — vs the D-final molecule</span></div>
+    <p class="page-sub" style="margin-top:-1rem;margin-bottom:0.5rem">Alternatives to the molecule mark. All Midnight #302C2E, geometric/minimal, currentColor. Each: large on light, large inverted, and rasterised at 16/24px (magnified 9×) for favicon legibility.</p>
+  </section>
+
+  <div class="group-h">Single “J” marks</div>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">J1</span><span class="dname">Refined serif J (Cormorant) — classic / institutional</span></div>
+    <p class="pair-note">The wordmark's own letterform as the mark. Elegant, but a bare serif J is low on ownability.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="J1" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="J1" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="J1" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="J1" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="J1" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="J1" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">J2</span><span class="dname">Geometric constructed J — modern, even stroke</span></div>
+    <p class="pair-note">Built J: short top bar + stem + hook, uniform weight. Cleaner/more ownable than the serif.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="J2" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="J2" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="J2" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="J2" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="J2" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="J2" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">J3</span><span class="dname">Serif J inside a circle frame</span></div>
+    <p class="pair-note">Midnight ring + centred serif J. Badge/seal feel; rings get muddy at favicon size.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="J3" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="J3" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="J3" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="J3" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="J3" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="J3" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">J4</span><span class="dname">Serif J inside a square frame — matches no-radius site aesthetic</span></div>
+    <p class="pair-note">Sharp square frame + serif J. Aligns with the site's hairline boxes.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="J4" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="J4" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="J4" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="J4" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="J4" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="J4" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <div class="group-h">“JF” monogram marks</div>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">JF1</span><span class="dname">Serif J + F together (Cormorant)</span></div>
+    <p class="pair-note">Two serif letters set close. More distinctive than a lone J; can crowd at small size.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="JF1" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="JF1" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="JF1" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="JF1" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="JF1" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="JF1" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">JF2</span><span class="dname">Geometric interlocked JF — shared stem (constructed monogram)</span></div>
+    <p class="pair-note">F's stem doubles as the J's stem; J-hook curls off the base. One connected mark.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="JF2" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="JF2" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="JF2" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="JF2" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="JF2" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="JF2" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">JF3</span><span class="dname">JF monogram inside a circle frame</span></div>
+    <p class="pair-note">Geometric JF enclosed in a ring — seal/crest. Most elements = hardest to keep clean small.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="JF3" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="JF3" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="JF3" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="JF3" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="JF3" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="JF3" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <div class="group-h">Letter + Science</div>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">JS1</span><span class="dname">J with a molecular node as its top terminal (earlier “Direction 3”)</span></div>
+    <p class="pair-note">Geometric J; its top terminal is a floating node (gap echoes D-final's bonds). Letter + chemistry.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="JS1" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="JS1" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="JS1" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="JS1" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="JS1" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="JS1" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">JS2</span><span class="dname">J built from the molecular vocabulary — node at each terminal</span></div>
+    <p class="pair-note">The J's stem reads as a bond; both terminals are atoms. Strongest bridge of letter + molecule.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="JS2" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="JS2" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="JS2" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="JS2" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="JS2" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="JS2" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
+  </section>
+
+  <div class="group-h">Molecule mark (for comparison)</div>
+
+  <section class="card">
+    <div class="card-h"><span class="dnum">D-final</span><span class="dname">The current chosen molecular mark</span></div>
+    <p class="pair-note">Shown here at identical treatment for direct side-by-side comparison with the letter marks.</p>
+    <div class="mk-row"><div class="mk-stage"><canvas data-mark="Dfinal" data-size="130"></canvas></div><div class="mk-stage dark"><canvas data-mark="Dfinal" data-size="130" data-mode="dark"></canvas></div></div>
+    <div class="panel favtest"><span class="panel-label">Favicon — 16/24px, magnified 9×</span><div class="favgrid"><div class="favcell"><canvas data-mark="Dfinal" data-size="16" data-mag="9"></canvas><span class="szlab">16px</span></div><div class="favcell"><canvas data-mark="Dfinal" data-size="24" data-mag="9"></canvas><span class="szlab">24px</span></div><div class="favcell"><canvas data-mark="Dfinal" data-size="16" data-mag="9" data-mode="dark"></canvas><span class="szlab">16·dark</span></div><div class="favcell"><canvas data-mark="Dfinal" data-size="24" data-mag="9" data-mode="dark"></canvas><span class="szlab">24·dark</span></div></div></div>
   </section>
 
   <!-- ===== SVG SYMBOL DEFINITIONS (currentColor so they invert) ===== -->
@@ -358,6 +449,94 @@ eleventyExcludeFromCollections: true
     };
     img.src = svgURL(sym, mode === 'dark' ? CREAM : INK, size);
   });
+</script>
+
+<script>
+  // Letter-mark comparison. Every mark is drawn on a 64-unit grid via a per-mark
+  // function so the favicon (rasterise-at-size then magnify) is honest and matches
+  // the large display exactly. Serif marks use the loaded Cormorant web font.
+  (async function(){
+    var INK = '#302C2E', CREAM = '#f4efe4';
+    try { await document.fonts.load("500 48px 'Cormorant Garamond'"); await document.fonts.ready; } catch(e){}
+
+    function pen(ctx, c, w){ ctx.strokeStyle = c; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; }
+    function serif(ctx, c, px){ ctx.fillStyle = c; ctx.font = "500 " + px + "px 'Cormorant Garamond', Georgia, serif"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; }
+
+    var DFINAL = '<g fill="none" stroke="COLOR" stroke-width="2.4" stroke-linecap="round"><line x1="32" y1="28.5" x2="32" y2="23.5"/><line x1="25.5" y1="39.8" x2="21.2" y2="42.3"/><line x1="38.5" y1="39.8" x2="42.8" y2="42.3"/></g><circle cx="32" cy="17" r="4" fill="COLOR"/><circle cx="15.5" cy="45.5" r="4" fill="COLOR"/><circle cx="48.5" cy="45.5" r="4" fill="COLOR"/><circle cx="32" cy="36" r="5" fill="COLOR"/>';
+
+    var DRAW = {
+      J1: function(ctx, c){ serif(ctx, c, 56); ctx.fillText('J', 33, 33); },
+      J2: function(ctx, c){ pen(ctx, c, 5); ctx.beginPath();
+        ctx.moveTo(33,16); ctx.lineTo(47,16);
+        ctx.moveTo(40,16); ctx.lineTo(40,38);
+        ctx.moveTo(40,38); ctx.quadraticCurveTo(40,48,31,48); ctx.quadraticCurveTo(23,48,23,41);
+        ctx.stroke(); },
+      J3: function(ctx, c){ pen(ctx, c, 3.4); ctx.beginPath(); ctx.arc(32,32,25,0,6.2832); ctx.stroke();
+        serif(ctx, c, 34); ctx.fillText('J', 33, 33); },
+      J4: function(ctx, c){ pen(ctx, c, 3.4); ctx.strokeRect(8,8,48,48);
+        serif(ctx, c, 34); ctx.fillText('J', 33, 33); },
+      JF1: function(ctx, c){ serif(ctx, c, 46); ctx.fillText('J', 23, 33); ctx.fillText('F', 43, 33); },
+      JF2: function(ctx, c){ pen(ctx, c, 5); ctx.beginPath();
+        ctx.moveTo(29,15); ctx.lineTo(29,44);
+        ctx.moveTo(29,15); ctx.lineTo(46,15);
+        ctx.moveTo(29,28); ctx.lineTo(42,28);
+        ctx.moveTo(29,44); ctx.quadraticCurveTo(29,50,22,50); ctx.quadraticCurveTo(16,50,16,44);
+        ctx.stroke(); },
+      JF3: function(ctx, c){ pen(ctx, c, 3.4); ctx.beginPath(); ctx.arc(32,32,26,0,6.2832); ctx.stroke();
+        ctx.save(); ctx.translate(32,33); ctx.scale(0.6,0.6); ctx.translate(-31,-32);
+        pen(ctx, c, 6); ctx.beginPath();
+        ctx.moveTo(29,15); ctx.lineTo(29,44);
+        ctx.moveTo(29,15); ctx.lineTo(46,15);
+        ctx.moveTo(29,28); ctx.lineTo(42,28);
+        ctx.moveTo(29,44); ctx.quadraticCurveTo(29,50,22,50); ctx.quadraticCurveTo(16,50,16,44);
+        ctx.stroke(); ctx.restore(); },
+      JS1: function(ctx, c){ pen(ctx, c, 5); ctx.beginPath();
+        ctx.moveTo(40,23); ctx.lineTo(40,40); ctx.quadraticCurveTo(40,48,31,48); ctx.quadraticCurveTo(24,48,24,42);
+        ctx.stroke();
+        ctx.fillStyle = c; ctx.beginPath(); ctx.arc(40,15,4.5,0,6.2832); ctx.fill(); },
+      JS2: function(ctx, c){ pen(ctx, c, 4); ctx.beginPath();
+        ctx.moveTo(40,21); ctx.lineTo(40,39); ctx.quadraticCurveTo(40,47,32,47); ctx.quadraticCurveTo(26,47,26,44);
+        ctx.stroke();
+        ctx.fillStyle = c; ctx.beginPath(); ctx.arc(40,15,4,0,6.2832); ctx.fill();
+        ctx.beginPath(); ctx.arc(25,41,4,0,6.2832); ctx.fill(); }
+    };
+
+    function svgURL(inner, color, size){
+      var s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="' + size + '" height="' + size + '">' + inner.replace(/COLOR/g, color) + '</svg>';
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+    }
+
+    document.querySelectorAll('canvas[data-mark]').forEach(function(cv){
+      var id = cv.dataset.mark, size = +cv.dataset.size, mode = cv.dataset.mode || 'light', mag = +(cv.dataset.mag || 1);
+      var color = mode === 'dark' ? CREAM : INK;
+      var disp = size * mag;
+      cv.width = disp; cv.height = disp;
+      var ctx = cv.getContext('2d');
+      function bg(c){ if (mode === 'dark') { c.fillStyle = INK; c.fillRect(0, 0, c.canvas.width, c.canvas.height); } }
+
+      if (id === 'Dfinal') {
+        var img = new Image();
+        img.onload = function(){
+          if (mag > 1) {
+            var sm = document.createElement('canvas'); sm.width = size; sm.height = size; var sc = sm.getContext('2d');
+            bg(sc); sc.drawImage(img, 0, 0, size, size);
+            ctx.imageSmoothingEnabled = false; ctx.drawImage(sm, 0, 0, disp, disp);
+          } else { bg(ctx); ctx.drawImage(img, 0, 0, disp, disp); }
+        };
+        img.src = svgURL(DFINAL, color, size);
+        return;
+      }
+
+      var fn = DRAW[id]; if (!fn) return;
+      if (mag > 1) {
+        var sm = document.createElement('canvas'); sm.width = size; sm.height = size; var sc = sm.getContext('2d');
+        bg(sc); sc.save(); sc.scale(size / 64, size / 64); fn(sc, color); sc.restore();
+        ctx.imageSmoothingEnabled = false; ctx.drawImage(sm, 0, 0, disp, disp);
+      } else {
+        bg(ctx); ctx.save(); ctx.scale(disp / 64, disp / 64); fn(ctx, color); ctx.restore();
+      }
+    });
+  })();
 </script>
 </body>
 </html>
