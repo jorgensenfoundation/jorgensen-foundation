@@ -43,6 +43,14 @@ eleventyExcludeFromCollections: true
   .panel.dark .sym{color:var(--cream)}
   .panel.dark .wordmark{color:var(--cream);font-size:0.92rem;letter-spacing:0.26em}
   .panel.dark .lockup{gap:0.85rem}
+
+  /* FINAL candidate highlight + favicon stress test */
+  .card.final{border:2px solid var(--ink)}
+  .card.final .dnum{color:#b3261e}
+  .panel.favtest{margin-top:2rem;flex:1 1 100%}
+  .favgrid{display:flex;gap:1.75rem;flex-wrap:wrap;align-items:flex-end}
+  .favcell{display:flex;flex-direction:column;align-items:center;gap:0.5rem}
+  .favcell canvas{border:1px solid var(--hairline);image-rendering:pixelated;display:block}
 </style>
 </head>
 <body>
@@ -50,6 +58,49 @@ eleventyExcludeFromCollections: true
   <div class="page-title">Jorgensen Foundation — Logo Variations</div>
   <p class="page-sub"><strong>Direction 1: molecular node-and-bond cluster.</strong> Eight executions (A–H) of the chosen mark · Midnight #302C2E · wordmark in Cormorant Garamond.<br>Each shows the lockup (light), scalability at 24/48/80px, and inverted on Midnight (the real nav background).</p>
   <span class="temp">Temporary preview — not linked, will be deleted</span>
+
+  <!-- ===== FINAL: D-final + favicon variant ===== -->
+  <section class="card final">
+    <div class="card-h"><span class="dnum">FINAL · D-final</span><span class="dname">Refined floating-bond molecule (the chosen mark, tuned)</span></div>
+    <p class="page-sub" style="margin-top:-1rem;margin-bottom:1.5rem">Equilateral tripod, optically centred · center node r5, outer r4 · bonds stroke 2.4 floating with a ~2.5px gap at both ends · Midnight #302C2E, <code>currentColor</code> so it inverts to cream.</p>
+    <div class="lockup"><svg class="sym" width="60" height="60" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="row">
+      <div class="panel"><span class="panel-label">Scalability (vector)</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="42" height="42" viewBox="0 0 64 64"><use href="#sDfinal"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+    </div>
+    <div class="panel favtest">
+      <span class="panel-label">Favicon stress test — SVG rasterised at the real pixel size, then magnified 10× (nearest-neighbour) so you see exactly what survives</span>
+      <div class="favgrid">
+        <div class="favcell"><canvas data-sym="final" data-size="16" data-mode="light"></canvas><span class="szlab">16px</span></div>
+        <div class="favcell"><canvas data-sym="final" data-size="24" data-mode="light"></canvas><span class="szlab">24px</span></div>
+        <div class="favcell"><canvas data-sym="final" data-size="32" data-mode="light"></canvas><span class="szlab">32px</span></div>
+        <div class="favcell"><canvas data-sym="final" data-size="16" data-mode="dark"></canvas><span class="szlab">16px · dark</span></div>
+        <div class="favcell"><canvas data-sym="final" data-size="24" data-mode="dark"></canvas><span class="szlab">24px · dark</span></div>
+        <div class="favcell"><canvas data-sym="final" data-size="32" data-mode="dark"></canvas><span class="szlab">32px · dark</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card final">
+    <div class="card-h"><span class="dnum">FINAL · D-favicon</span><span class="dname">Favicon-optimised cousin — same molecule, thicker bonds + bigger nodes for tiny sizes</span></div>
+    <p class="page-sub" style="margin-top:-1rem;margin-bottom:1.5rem">Identical node positions to D-final, but center r5.5 / outer r4.5 and bonds stroke 3.2 with shorter, clearer stubs — so the four dots and the gap still read at 16px where D-final's hairline bonds thin out.</p>
+    <div class="lockup"><svg class="sym" width="60" height="60" viewBox="0 0 64 64"><use href="#sDfav"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="row">
+      <div class="panel"><span class="panel-label">Scalability (vector)</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sDfav"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sDfav"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sDfav"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="42" height="42" viewBox="0 0 64 64"><use href="#sDfav"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+    </div>
+    <div class="panel favtest">
+      <span class="panel-label">Favicon stress test — rasterised at real size, magnified 10×</span>
+      <div class="favgrid">
+        <div class="favcell"><canvas data-sym="fav" data-size="16" data-mode="light"></canvas><span class="szlab">16px</span></div>
+        <div class="favcell"><canvas data-sym="fav" data-size="24" data-mode="light"></canvas><span class="szlab">24px</span></div>
+        <div class="favcell"><canvas data-sym="fav" data-size="32" data-mode="light"></canvas><span class="szlab">32px</span></div>
+        <div class="favcell"><canvas data-sym="fav" data-size="16" data-mode="dark"></canvas><span class="szlab">16px · dark</span></div>
+        <div class="favcell"><canvas data-sym="fav" data-size="24" data-mode="dark"></canvas><span class="szlab">24px · dark</span></div>
+        <div class="favcell"><canvas data-sym="fav" data-size="32" data-mode="dark"></canvas><span class="szlab">32px · dark</span></div>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== SVG SYMBOL DEFINITIONS (currentColor so they invert) ===== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -92,6 +143,16 @@ eleventyExcludeFromCollections: true
     <g id="sH">
       <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="15" y1="40" x2="30" y2="26"/><line x1="30" y1="26" x2="49" y2="34"/><line x1="30" y1="26" x2="37" y2="51"/></g>
       <circle cx="15" cy="40" r="3.6" fill="currentColor"/><circle cx="49" cy="34" r="3.6" fill="currentColor"/><circle cx="37" cy="51" r="3.6" fill="currentColor"/><circle cx="30" cy="26" r="4.4" fill="currentColor"/>
+    </g>
+    <!-- D-final: refined floating-bond molecule (chosen mark, tuned) -->
+    <g id="sDfinal">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="32" y1="28.5" x2="32" y2="23.5"/><line x1="25.5" y1="39.8" x2="21.2" y2="42.3"/><line x1="38.5" y1="39.8" x2="42.8" y2="42.3"/></g>
+      <circle cx="32" cy="17" r="4" fill="currentColor"/><circle cx="15.5" cy="45.5" r="4" fill="currentColor"/><circle cx="48.5" cy="45.5" r="4" fill="currentColor"/><circle cx="32" cy="36" r="5" fill="currentColor"/>
+    </g>
+    <!-- D-favicon: thicker bonds + bigger nodes, same molecule, for tiny sizes -->
+    <g id="sDfav">
+      <g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><line x1="32" y1="28" x2="32" y2="24"/><line x1="25.07" y1="40" x2="21.61" y2="42"/><line x1="38.93" y1="40" x2="42.39" y2="42"/></g>
+      <circle cx="32" cy="17" r="4.5" fill="currentColor"/><circle cx="15.5" cy="45.5" r="4.5" fill="currentColor"/><circle cx="48.5" cy="45.5" r="4.5" fill="currentColor"/><circle cx="32" cy="36" r="5.5" fill="currentColor"/>
     </g>
   </defs></svg>
 
@@ -176,5 +237,38 @@ eleventyExcludeFromCollections: true
   </section>
 
 </div>
+
+<script>
+  // Favicon stress test: rasterise each symbol at its REAL favicon size (16/24/32),
+  // then magnify 10x with nearest-neighbour so the actual pixels are visible.
+  // Colors are baked in (canvas can't read currentColor through <use>).
+  var INK = '#302C2E', CREAM = '#f4efe4';
+  var SYMS = {
+    final: '<g fill="none" stroke="COLOR" stroke-width="2.4" stroke-linecap="round"><line x1="32" y1="28.5" x2="32" y2="23.5"/><line x1="25.5" y1="39.8" x2="21.2" y2="42.3"/><line x1="38.5" y1="39.8" x2="42.8" y2="42.3"/></g><circle cx="32" cy="17" r="4" fill="COLOR"/><circle cx="15.5" cy="45.5" r="4" fill="COLOR"/><circle cx="48.5" cy="45.5" r="4" fill="COLOR"/><circle cx="32" cy="36" r="5" fill="COLOR"/>',
+    fav: '<g fill="none" stroke="COLOR" stroke-width="3.2" stroke-linecap="round"><line x1="32" y1="28" x2="32" y2="24"/><line x1="25.07" y1="40" x2="21.61" y2="42"/><line x1="38.93" y1="40" x2="42.39" y2="42"/></g><circle cx="32" cy="17" r="4.5" fill="COLOR"/><circle cx="15.5" cy="45.5" r="4.5" fill="COLOR"/><circle cx="48.5" cy="45.5" r="4.5" fill="COLOR"/><circle cx="32" cy="36" r="5.5" fill="COLOR"/>'
+  };
+  function svgURL(sym, color, size){
+    var inner = SYMS[sym].replace(/COLOR/g, color);
+    var s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="' + size + '" height="' + size + '">' + inner + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+  }
+  document.querySelectorAll('canvas[data-sym]').forEach(function(cv){
+    var sym = cv.dataset.sym, size = +cv.dataset.size, mode = cv.dataset.mode || 'light';
+    var Z = 10;
+    cv.width = size * Z; cv.height = size * Z;
+    var ctx = cv.getContext('2d');
+    if (mode === 'dark') { ctx.fillStyle = INK; ctx.fillRect(0, 0, cv.width, cv.height); }
+    var small = document.createElement('canvas'); small.width = size; small.height = size;
+    var sctx = small.getContext('2d');             // antialiased raster at favicon size (like a real favicon)
+    var img = new Image();
+    img.onload = function(){
+      sctx.clearRect(0, 0, size, size);
+      sctx.drawImage(img, 0, 0, size, size);
+      ctx.imageSmoothingEnabled = false;           // blocky magnify = honest pixel view
+      ctx.drawImage(small, 0, 0, cv.width, cv.height);
+    };
+    img.src = svgURL(sym, mode === 'dark' ? CREAM : INK, size);
+  });
+</script>
 </body>
 </html>
