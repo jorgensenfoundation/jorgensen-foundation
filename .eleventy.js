@@ -3,6 +3,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/videos");
+  eleventyConfig.addPassthroughCopy("src/img");
 
   // Legacy pages not yet migrated to the shared layout. Copy them through unchanged
   // so every existing URL keeps working; convert to base.njk later, one at a time.

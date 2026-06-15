@@ -12,7 +12,8 @@
 
 /* --- Shared base (common to all three) --- */
 nav{display:flex;justify-content:space-between;align-items:center;transition:background 0.4s,padding 0.4s}
-.nav-logo{font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;text-decoration:none}
+.nav-logo{display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;text-decoration:none}
+.nav-logo-mark{flex-shrink:0;display:block}   /* inherits .nav-logo color (currentColor) in every context */
 .nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;transition:opacity 0.2s,color 0.4s}
 .nav-links a:hover{opacity:1}
