@@ -8,7 +8,7 @@ eleventyExcludeFromCollections: true
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jorgensen Foundation — Logo Exploration</title>
+<title>Jorgensen Foundation — Logo Variations (Direction 1)</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,10 +22,10 @@ eleventyExcludeFromCollections: true
   .page-sub{font-size:0.78rem;color:var(--stone);margin:0.5rem 0 0.25rem;line-height:1.7}
   .temp{display:inline-block;margin-top:1rem;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#b3261e;border:1px solid #b3261e;padding:0.35rem 0.8rem}
 
-  .card{background:#fff;border:1px solid var(--hairline);margin-top:2.5rem;padding:2.25rem 2.5rem 2.5rem}
+  .card{background:#fff;border:1px solid var(--hairline);margin-top:2.25rem;padding:2.25rem 2.5rem 2.5rem}
   .card-h{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--hairline);padding-bottom:1.1rem;margin-bottom:1.75rem}
-  .dnum{font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--stone)}
-  .dname{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;color:var(--ink)}
+  .dnum{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink);font-weight:bold}
+  .dname{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--stone)}
 
   .lockup{display:flex;align-items:center;gap:1.25rem}
   .sym{color:var(--ink);flex-shrink:0}
@@ -47,89 +47,131 @@ eleventyExcludeFromCollections: true
 </head>
 <body>
 <div class="wrap">
-  <div class="page-title">Jorgensen Foundation — Logo Exploration</div>
-  <p class="page-sub">Five geometric symbol directions · Midnight #302C2E · wordmark in Cormorant Garamond.<br>Each shows the lockup (light), scalability at 24/48/80px, and inverted on Midnight (the real nav background).</p>
+  <div class="page-title">Jorgensen Foundation — Logo Variations</div>
+  <p class="page-sub"><strong>Direction 1: molecular node-and-bond cluster.</strong> Eight executions (A–H) of the chosen mark · Midnight #302C2E · wordmark in Cormorant Garamond.<br>Each shows the lockup (light), scalability at 24/48/80px, and inverted on Midnight (the real nav background).</p>
   <span class="temp">Temporary preview — not linked, will be deleted</span>
 
   <!-- ===== SVG SYMBOL DEFINITIONS (currentColor so they invert) ===== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-    <g id="s1">
-      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="32" y1="32" x2="32" y2="13"/><line x1="32" y1="32" x2="15" y2="47"/><line x1="32" y1="32" x2="49" y2="47"/>
-      </g>
+    <!-- A: baseline — center + 3 bonds to 3 filled outer nodes -->
+    <g id="sA">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="32" y1="32" x2="32" y2="13"/><line x1="32" y1="32" x2="15" y2="47"/><line x1="32" y1="32" x2="49" y2="47"/></g>
       <circle cx="32" cy="13" r="4" fill="currentColor"/><circle cx="15" cy="47" r="4" fill="currentColor"/><circle cx="49" cy="47" r="4" fill="currentColor"/><circle cx="32" cy="32" r="4.6" fill="currentColor"/>
     </g>
-    <g id="s2">
-      <g fill="none" stroke="currentColor" stroke-width="2">
-        <ellipse cx="32" cy="32" rx="22" ry="8.5" transform="rotate(32 32 32)"/>
-        <ellipse cx="32" cy="32" rx="22" ry="8.5" transform="rotate(-32 32 32)"/>
-      </g>
-      <circle cx="32" cy="32" r="4.4" fill="currentColor"/><circle cx="49" cy="22.5" r="2.3" fill="currentColor"/>
+    <!-- B: tetrahedral 4-outer (X arrangement) -->
+    <g id="sB">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="32" y1="32" x2="47" y2="17"/><line x1="32" y1="32" x2="47" y2="47"/><line x1="32" y1="32" x2="17" y2="47"/><line x1="32" y1="32" x2="17" y2="17"/></g>
+      <circle cx="47" cy="17" r="3.8" fill="currentColor"/><circle cx="47" cy="47" r="3.8" fill="currentColor"/><circle cx="17" cy="47" r="3.8" fill="currentColor"/><circle cx="17" cy="17" r="3.8" fill="currentColor"/><circle cx="32" cy="32" r="4.6" fill="currentColor"/>
     </g>
-    <g id="s3">
-      <path d="M40 16 L40 40 Q40 49 30.5 49 Q22 49 22 41.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="40" cy="14" r="4" fill="currentColor"/>
+    <!-- C: open outer nodes (outlined), filled center; bonds stop at node edges -->
+    <g id="sC">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="32" y1="27" x2="32" y2="17"/><line x1="28" y1="35" x2="18" y2="44"/><line x1="36" y1="35" x2="46" y2="44"/></g>
+      <circle cx="32" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="47" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="49" cy="47" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="32" r="4.6" fill="currentColor"/>
     </g>
-    <g id="s4">
-      <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round">
-        <path d="M13 49 L51 49 L32 12 Z"/>
-        <line x1="32" y1="37.5" x2="13" y2="49"/><line x1="32" y1="37.5" x2="51" y2="49"/><line x1="32" y1="37.5" x2="32" y2="12"/>
-      </g>
-      <circle cx="13" cy="49" r="2.4" fill="currentColor"/><circle cx="51" cy="49" r="2.4" fill="currentColor"/><circle cx="32" cy="12" r="2.4" fill="currentColor"/><circle cx="32" cy="37.5" r="2.4" fill="currentColor"/>
+    <!-- D: bonds with a gap — bonds float between nodes (designed feel) -->
+    <g id="sD">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="32" y1="25.4" x2="32" y2="19"/><line x1="27.05" y1="36.4" x2="19.5" y2="43"/><line x1="36.95" y1="36.4" x2="44.5" y2="43"/></g>
+      <circle cx="32" cy="13" r="4" fill="currentColor"/><circle cx="15" cy="47" r="4" fill="currentColor"/><circle cx="49" cy="47" r="4" fill="currentColor"/><circle cx="32" cy="32" r="4.6" fill="currentColor"/>
     </g>
-    <g id="s5">
-      <polygon points="32,10 51.05,21 51.05,43 32,54 12.95,43 12.95,21" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-      <circle cx="32" cy="32" r="3.6" fill="currentColor"/>
+    <!-- E: bolder strokes + larger nodes -->
+    <g id="sE">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="32" y1="32" x2="32" y2="14"/><line x1="32" y1="32" x2="16" y2="46"/><line x1="32" y1="32" x2="48" y2="46"/></g>
+      <circle cx="32" cy="14" r="5" fill="currentColor"/><circle cx="16" cy="46" r="5" fill="currentColor"/><circle cx="48" cy="46" r="5" fill="currentColor"/><circle cx="32" cy="32" r="6" fill="currentColor"/>
+    </g>
+    <!-- F: hairline-elegant — thin strokes, small nodes -->
+    <g id="sF">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><line x1="32" y1="32" x2="32" y2="12"/><line x1="32" y1="32" x2="14" y2="48"/><line x1="32" y1="32" x2="50" y2="48"/></g>
+      <circle cx="32" cy="12" r="2.6" fill="currentColor"/><circle cx="14" cy="48" r="2.6" fill="currentColor"/><circle cx="50" cy="48" r="2.6" fill="currentColor"/><circle cx="32" cy="32" r="3.2" fill="currentColor"/>
+    </g>
+    <!-- G: triangle — 3 bonded nodes, closed loop, no center -->
+    <g id="sG">
+      <polygon points="32,14 16,46 48,46" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="32" cy="14" r="4" fill="currentColor"/><circle cx="16" cy="46" r="4" fill="currentColor"/><circle cx="48" cy="46" r="4" fill="currentColor"/>
+    </g>
+    <!-- H: asymmetric / organic — branched 4-node molecule -->
+    <g id="sH">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="15" y1="40" x2="30" y2="26"/><line x1="30" y1="26" x2="49" y2="34"/><line x1="30" y1="26" x2="37" y2="51"/></g>
+      <circle cx="15" cy="40" r="3.6" fill="currentColor"/><circle cx="49" cy="34" r="3.6" fill="currentColor"/><circle cx="37" cy="51" r="3.6" fill="currentColor"/><circle cx="30" cy="26" r="4.4" fill="currentColor"/>
     </g>
   </defs></svg>
 
-  <!-- ===== DIRECTION 1 ===== -->
+  <!-- A -->
   <section class="card">
-    <div class="card-h"><span class="dnum">Direction 1</span><span class="dname">Molecular node-and-bond cluster</span></div>
-    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#s1"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="card-h"><span class="dnum">A</span><span class="dname">Baseline — center + 3 bonds to 3 filled outer nodes</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sA"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
     <div class="row">
-      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#s1"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#s1"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#s1"/></svg><span class="szlab">80px</span></div></div></div>
-      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#s1"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sA"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sA"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sA"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sA"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
     </div>
   </section>
 
-  <!-- ===== DIRECTION 2 ===== -->
+  <!-- B -->
   <section class="card">
-    <div class="card-h"><span class="dnum">Direction 2</span><span class="dname">Atom / crossed orbitals</span></div>
-    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#s2"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="card-h"><span class="dnum">B</span><span class="dname">Tetrahedral — center + 4 outer nodes (fuller, more molecular)</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sB"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
     <div class="row">
-      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#s2"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#s2"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#s2"/></svg><span class="szlab">80px</span></div></div></div>
-      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#s2"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sB"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sB"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sB"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sB"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
     </div>
   </section>
 
-  <!-- ===== DIRECTION 3 ===== -->
+  <!-- C -->
   <section class="card">
-    <div class="card-h"><span class="dnum">Direction 3</span><span class="dname">Geometric monogram “J” + node</span></div>
-    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#s3"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="card-h"><span class="dnum">C</span><span class="dname">Open nodes — outlined outer rings, filled center (lighter, refined)</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sC"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
     <div class="row">
-      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#s3"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#s3"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#s3"/></svg><span class="szlab">80px</span></div></div></div>
-      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#s3"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sC"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sC"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sC"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sC"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
     </div>
   </section>
 
-  <!-- ===== DIRECTION 4 ===== -->
+  <!-- D -->
   <section class="card">
-    <div class="card-h"><span class="dnum">Direction 4</span><span class="dname">Tetrahedron / lattice unit</span></div>
-    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#s4"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="card-h"><span class="dnum">D</span><span class="dname">Bonds with gap — bonds float between nodes (designed feel)</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sD"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
     <div class="row">
-      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#s4"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#s4"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#s4"/></svg><span class="szlab">80px</span></div></div></div>
-      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#s4"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sD"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sD"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sD"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sD"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
     </div>
   </section>
 
-  <!-- ===== DIRECTION 5 ===== -->
+  <!-- E -->
   <section class="card">
-    <div class="card-h"><span class="dnum">Direction 5</span><span class="dname">Hexagonal ring (benzene) + core</span></div>
-    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#s5"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="card-h"><span class="dnum">E</span><span class="dname">Bolder — heavier strokes + larger nodes (more presence)</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sE"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
     <div class="row">
-      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#s5"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#s5"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#s5"/></svg><span class="szlab">80px</span></div></div></div>
-      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#s5"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sE"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sE"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sE"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sE"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- F -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">F</span><span class="dname">Hairline — thin strokes, small nodes (airy, delicate)</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sF"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="row">
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sF"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sF"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sF"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sF"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- G -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">G</span><span class="dname">Triangle — 3 bonded nodes, closed loop, no center (ring-like)</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sG"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="row">
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sG"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sG"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sG"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sG"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
+    </div>
+  </section>
+
+  <!-- H -->
+  <section class="card">
+    <div class="card-h"><span class="dnum">H</span><span class="dname">Asymmetric — branched 4-node molecule (organic, real-feeling)</span></div>
+    <div class="lockup"><svg class="sym" width="56" height="56" viewBox="0 0 64 64"><use href="#sH"/></svg><span class="wordmark">Jorgensen Foundation</span></div>
+    <div class="row">
+      <div class="panel"><span class="panel-label">Scalability</span><div class="sizes"><div class="szcell"><svg class="sym" width="24" height="24" viewBox="0 0 64 64"><use href="#sH"/></svg><span class="szlab">24px</span></div><div class="szcell"><svg class="sym" width="48" height="48" viewBox="0 0 64 64"><use href="#sH"/></svg><span class="szlab">48px</span></div><div class="szcell"><svg class="sym" width="80" height="80" viewBox="0 0 64 64"><use href="#sH"/></svg><span class="szlab">80px</span></div></div></div>
+      <div class="panel dark"><span class="panel-label">Inverted (nav)</span><div class="lockup"><svg class="sym" width="40" height="40" viewBox="0 0 64 64"><use href="#sH"/></svg><span class="wordmark">Jorgensen Foundation</span></div></div>
     </div>
   </section>
 
