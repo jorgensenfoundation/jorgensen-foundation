@@ -59,18 +59,31 @@ function renderAssignments(list) {
     const status = esc(a.status || 'submitted');
     const cv = a.cv_url ? `<a class="rv-cv" href="${escAttr(a.cv_url)}" target="_blank" rel="noopener">View CV →</a>` : '';
     const voted = a.recommendation;
+    // "Open" = the pre-decision window where board voting applies (same set admin.js uses).
+    // Anything else (approved/rejected/receipts_submitted/reimbursed) is a final decision: no voting.
+    const OPEN = ['submitted', 'under_review', 'awaiting_decision'];
+    const isOpen = OPEN.indexOf(a.status || 'submitted') !== -1;
 
-    // Right-hand cell of the collapsed row: a voted chip OR the status badge.
-    const rowState = voted
-      ? `<span class="rv-voted"><span class="rv-chip">✓ ${esc(voted)}</span></span>`
-      : `<span class="rv-badge rv-badge-${escAttr(status)}">${status}</span>`;
+    // Right-hand cell of the collapsed row: voted chip (open+voted) else the status/outcome badge.
+    const rowState = (isOpen && voted)
+      ? `<span class="rv-voted"><span class="rv-chip rv-chip-${escAttr(voted)}">✓ ${esc(voted)}</span></span>`
+      : `<span class="rv-badge rv-badge-${escAttr(status)}">${status.replace(/_/g, ' ')}</span>`;
 
-    // Expanded panel action area: recorded vote OR the vote controls.
-    const action = voted
-      ? `<div class="rv-recorded"><span class="rv-recorded-label">Your recommendation</span>
+    // Expanded panel action area — three states:
+    let action;
+    if (!isOpen) {
+      // 1) FINAL DECISION — no voting controls; show the outcome read-only.
+      action = `<div class="rv-final"><span class="rv-final-label">Decision</span>
+           <span class="rv-badge rv-badge-${escAttr(status)}">${status.replace(/_/g, ' ')}</span>
+           <span class="rv-final-note">Voting is closed for this application.</span></div>`;
+    } else if (voted) {
+      // 2) OPEN, already voted — compact recorded chip, no resubmit.
+      action = `<div class="rv-recorded"><span class="rv-recorded-label">You voted</span>
            <span class="rv-chip rv-chip-${escAttr(voted)}">✓ ${esc(voted)}</span>
-           ${a.comment ? `<p class="rv-comment">${esc(a.comment)}</p>` : ''}</div>`
-      : `<div class="rv-vote" id="rv-vote-${sid}">
+           ${a.comment ? `<p class="rv-comment">${esc(a.comment)}</p>` : ''}</div>`;
+    } else {
+      // 3) OPEN, not yet voted — the only state with active voting controls.
+      action = `<div class="rv-vote" id="rv-vote-${sid}">
            <div class="rv-vote-btns">
              <button class="rv-vbtn rv-vbtn-app" type="button" data-rec="approve" onclick="pickVote('${sid}', this)">Approve</button>
              <button class="rv-vbtn rv-vbtn-rej" type="button" data-rec="reject" onclick="pickVote('${sid}', this)">Reject</button>
@@ -80,6 +93,7 @@ function renderAssignments(list) {
            <button class="rv-submit" type="button" onclick="submitVote('${sid}')">Submit Review</button>
            <p class="rv-msg" id="rv-msg-${sid}"></p>
          </div>`;
+    }
 
     return `
       <div class="rv-item">

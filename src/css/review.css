@@ -39,6 +39,10 @@ a{text-decoration:none;color:inherit}
 .rv-state{display:flex;justify-content:flex-end}
 .rv-badge{display:inline-block;font-size:0.5rem;letter-spacing:0.16em;text-transform:uppercase;padding:0.25rem 0.6rem;border:1px solid var(--ink);color:var(--ink);white-space:nowrap}
 .rv-badge-submitted{border-color:var(--surface);color:var(--body)}
+.rv-badge-under_review,.rv-badge-awaiting_decision{border-color:var(--ink);color:var(--ink)}
+.rv-badge-approved,.rv-badge-reimbursed{border-color:var(--success);color:var(--success)}
+.rv-badge-rejected{border-color:var(--error);color:var(--error)}
+.rv-badge-receipts_submitted{border-color:var(--body);color:var(--body)}
 .rv-voted{display:inline-flex;align-items:center}
 .rv-chip{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--success);color:var(--success);padding:0.22rem 0.6rem;white-space:nowrap}
 .rv-chip-reject{border-color:var(--error);color:var(--error)}
@@ -72,10 +76,15 @@ a{text-decoration:none;color:inherit}
 .rv-msg.error{color:var(--error);display:block}
 .rv-msg.success{color:var(--success);display:block}
 
-/* recorded vote (already reviewed) */
+/* recorded vote (open + already reviewed) */
 .rv-recorded{display:flex;flex-direction:column;gap:0.5rem;align-items:flex-start}
 .rv-recorded-label{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--body)}
 .rv-comment{font-size:0.72rem;line-height:1.7;color:var(--body);max-width:680px}
+
+/* final decision (no voting) */
+.rv-final{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
+.rv-final-label{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--body)}
+.rv-final-note{font-size:0.7rem;color:var(--body)}
 
 @media(max-width:900px){
   .rv-hero{padding:8rem 1.5rem 3rem}
