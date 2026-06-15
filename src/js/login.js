@@ -45,7 +45,34 @@ function showDashboard(user) {
   document.getElementById('nav-user').style.display = 'inline';
   document.getElementById('nav-logout').style.display = 'inline';
   showPage('dashboard');
+
+  // Non-active users still get the dashboard, but with an activate prompt; the programs grid
+  // is shown as locked (Launch buttons disabled) until they subscribe. Grants + board review stay open.
+  const active = user.subscription_status === 'active';
+  const dash = document.getElementById('dashboard');
+  if (dash) dash.classList.toggle('needs-activation', !active);
+  const banner = document.getElementById('activate-banner');
+  if (banner) banner.hidden = active;
+
   setupBoardReview(user);
+
+  // Honor a deep-link hash (e.g. #your-programs / #board-review) now that the section is visible.
+  // offsetParent === null means the target is hidden (e.g. board-review for a non-board user) → ignore.
+  const h = location.hash;
+  if (h) {
+    requestAnimationFrame(() => {
+      const t = document.querySelector(h);
+      if (t && t.offsetParent !== null) t.scrollIntoView({ behavior: 'auto' });
+    });
+  }
+}
+
+// Reuse the existing payment page / Stripe checkout flow, reached from the in-dashboard
+// activate prompt (instead of a forced gate on load).
+function goToPayment() {
+  if (!currentUser) return;
+  setupPaymentPage(currentUser);
+  showPage('page-payment');
 }
 
 // --- Board review (only for board members) ---------------------------------
@@ -329,17 +356,14 @@ function logout() {
   showPage('page-login');
 }
 
-// Check existing session
+// Check existing session. Any logged-in user lands on the dashboard — a subscription gates
+// PROGRAM ACCESS (shown via the in-dashboard activate prompt), not the dashboard itself, so
+// grant applicants and board members are never bounced to the payment page.
 const saved = sessionStorage.getItem('jf_user');
 if (saved) {
   const user = JSON.parse(saved);
   currentUser = user;
-  if (user.subscription_status === 'active') {
-    showDashboard(user);
-  } else {
-    setupPaymentPage(user);
-    showPage('page-payment');
-  }
+  showDashboard(user);
 } else {
   showPage('page-login');
 }

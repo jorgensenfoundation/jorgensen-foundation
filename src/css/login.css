@@ -68,6 +68,15 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .programs-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--body);margin-bottom:1.5rem;max-width:1100px;margin-left:auto;margin-right:auto;display:block}
 .programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto}
 
+/* --- Activate prompt (non-active users): non-blocking banner + locked program launches --- */
+.activate-banner{max-width:1100px;margin:0 auto 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--hairline);padding:1.75rem 2.25rem}
+.activate-banner-title{display:block;font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--ink);margin-bottom:0.35rem}
+.activate-banner-body{font-size:0.72rem;line-height:1.7;color:var(--body);max-width:560px}
+.activate-banner .choice-btn{flex-shrink:0}
+/* When the subscription isn't active, the program Launch buttons are disabled (activate via the banner). */
+.dashboard.needs-activation .prog-launch{opacity:0.4;pointer-events:none;box-shadow:none}
+.dashboard.needs-activation .prog-launch::after{content:' · subscription required';font-size:0.85em}
+
 /* --- Post-login choice band (Access Programs / Apply for a Grant) — Midnight canon --- */
 .dash-choice{max-width:1100px;margin:0 auto 3rem;background:var(--ground);border:1px solid var(--hairline);padding:2.5rem 3rem}
 .dash-choice-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--body);margin-bottom:1rem;display:block}

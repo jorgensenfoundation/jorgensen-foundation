@@ -74,6 +74,14 @@ permalink: /login/index.html
       <span class="dashboard-type" id="dash-type"></span>
     </div>
   </div>
+  <!-- Activate prompt — shown by login.js only when subscription_status !== 'active' -->
+  <div class="activate-banner" id="activate-banner" hidden>
+    <div class="activate-banner-text">
+      <span class="activate-banner-title">Activate your subscription</span>
+      <p class="activate-banner-body">Subscribe to unlock the computational chemistry programs below. Applying for a student travel grant is always free and needs no subscription.</p>
+    </div>
+    <button class="choice-btn choice-btn-primary" type="button" onclick="goToPayment()">Activate Subscription</button>
+  </div>
   <div class="dash-choice">
     <span class="dash-choice-label">Get Started</span>
     <h2 class="dash-choice-title">What would you like<br><em>to do?</em></h2>
