@@ -133,9 +133,25 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-social{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem}
 .nav--hero .nav-social-btn{font-family:var(--font-sans);font-size:0.72rem;letter-spacing:0.04em;padding:0.65rem 0.5rem;border:1px solid var(--hairline);background:var(--ground);color:var(--body);cursor:not-allowed;opacity:0.45}
 .nav--hero .nav-social-note{display:block;margin-top:0.7rem;font-family:var(--font-sans);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb,var(--body) 60%,var(--ground));text-align:center}
+/* Inline login error (tokened) */
+.nav--hero .nav-login-error{font-family:var(--font-sans);font-size:0.72rem;line-height:1.4;color:var(--error);margin-top:0.75rem;display:none}
+.nav--hero .nav-login-error.show{display:block}
+
+/* --- ACCOUNT MENU (logged in) — .is-authed on #nav swaps it for the login mega --- */
+.nav--hero .nav-account-menu{position:absolute;top:100%;right:2rem;width:240px;display:none;background:color-mix(in srgb,var(--ground) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:1rem 0.5rem;z-index:120}
+.nav--hero .nav-acct-head{font-family:var(--font-serif);font-size:1.05rem;color:var(--ink);padding:0.4rem 0.9rem 0.7rem;border-bottom:1px solid var(--hairline);margin-bottom:0.4rem}
+.nav--hero .nav-acct-link{display:block;width:100%;text-align:left;font-family:var(--font-sans);font-size:0.78rem;letter-spacing:0.02em;color:var(--body);text-decoration:none;padding:0.55rem 0.9rem;background:none;border:none;cursor:pointer;transition:background 0.2s,color 0.2s}
+.nav--hero .nav-acct-link:hover{background:color-mix(in srgb,var(--surface) 45%,var(--ground));color:var(--ink)}
+.nav--hero .nav-acct-signout{border-top:1px solid var(--hairline);margin-top:0.4rem;color:var(--ink)}
+/* Swap panels by auth state */
+.nav--hero.is-authed .nav-login-mega{display:none}
+.nav--hero.is-authed .nav-account-menu{display:block}
 @media(min-width:961px){
   .nav--hero .nav-login-mega{opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
   .nav--hero .nav-account:hover .nav-login-mega{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
+  /* Account menu: same hover slide (only meaningful when .is-authed makes it display:block). */
+  .nav--hero .nav-account-menu{opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
+  .nav--hero.is-authed .nav-account:hover .nav-account-menu{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
   /* Hover bridge under the icon only (slightly wider than the 20px icon for catch). */
   .nav--hero .nav-account-toggle::after{content:"";position:absolute;top:100%;left:-0.75rem;right:-0.75rem;height:2.5rem}
 }
@@ -152,6 +168,12 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
   .nav--hero .nav-login-discover{display:none}
   /* Programs accordion: names only (hide descriptions). */
   .nav--hero .nav-mega-desc{display:none}
+  /* Logged-in: account menu becomes an opaque drawer, tapped open (replaces the login drawer). */
+  .nav--hero .nav-account-menu{left:0;right:0;width:auto;background:var(--ground);-webkit-backdrop-filter:none;backdrop-filter:none;border:none;border-bottom:1px solid var(--hairline);padding:1.25rem 1rem}
+  .nav--hero.is-authed .nav-account-menu{display:none}
+  .nav--hero.is-authed .nav-account.open .nav-account-menu{display:block}
+  .nav--hero .nav-acct-link{font-size:0.95rem;padding:0.7rem 0.5rem}
+  .nav--hero .nav-acct-head{font-size:1.2rem;padding:0.2rem 0.5rem 0.8rem}
 }
 
 /* ============================================================================

@@ -52,3 +52,74 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
+
+// --- Inline login + logged-in account menu -------------------------------------
+// Same backend contract as the /login page (login.js): POST /login → {token, email,
+// first_name, account_type, subscription_status, is_board_member}. JFAuth (auth.js,
+// global) owns the session keys 'jf_user_token' / 'jf_user'.
+const NAV_API = 'https://jorgensen-backend-production.up.railway.app';
+
+// Reflect auth state in the nav: .is-authed swaps the login mega for the account menu
+// (CSS), and we fill the welcome name + board-only "Review Applications" item.
+function applyAuthState() {
+  if (!nav) return;
+  const authed = !!(window.JFAuth && JFAuth.isLoggedIn());
+  nav.classList.toggle('is-authed', authed);
+  if (authed && window.JFAuth) {
+    const u = JFAuth.getUser() || {};
+    const nameEl = document.getElementById('nav-acct-name');
+    if (nameEl) nameEl.textContent = u.first_name || 'there';
+    const review = document.getElementById('nav-acct-review');
+    if (review) review.hidden = !u.is_board_member;
+  }
+}
+
+async function navLogin() {
+  const emailEl = document.getElementById('nav-login-email');
+  const pwEl = document.getElementById('nav-login-password');
+  const errEl = document.getElementById('nav-login-error');
+  const btn = document.getElementById('nav-login-btn');
+  if (!emailEl || !pwEl) return;
+  const email = emailEl.value.trim();
+  const password = pwEl.value;
+  const showErr = (msg) => { if (errEl) { errEl.textContent = msg; errEl.classList.add('show'); } };
+  if (errEl) { errEl.textContent = ''; errEl.classList.remove('show'); }
+  if (!email || !password) { showErr('Please enter your email and password.'); return; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Signing in…'; }
+  try {
+    const res = await fetch(`${NAV_API}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      showErr(data.detail || 'Invalid email or password.');
+      if (btn) { btn.disabled = false; btn.textContent = 'Sign In'; }
+      return;
+    }
+    const userInfo = {
+      email: data.email,
+      first_name: data.first_name,
+      account_type: data.account_type,
+      subscription_status: data.subscription_status,
+      is_board_member: data.is_board_member
+    };
+    sessionStorage.setItem('jf_user_token', data.token);
+    sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
+    if (userInfo.subscription_status === 'active') {
+      // Active subscriber → flip the nav to logged-in in place (no page jump).
+      applyAuthState();
+      closeNavPanels();
+      if (btn) { btn.disabled = false; btn.textContent = 'Sign In'; }
+    } else {
+      // Needs payment/activation — that flow lives on the /login page.
+      window.location.href = '/login';
+    }
+  } catch (e) {
+    showErr('Connection error. Please try again.');
+    if (btn) { btn.disabled = false; btn.textContent = 'Sign In'; }
+  }
+}
+
+applyAuthState();   // main.js runs at end of body → DOM is ready

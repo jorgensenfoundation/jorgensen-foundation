@@ -111,17 +111,18 @@
               </div>
               <label class="nav-login-field">
                 <span class="nav-login-label">Email</span>
-                <input class="nav-login-input" type="email" placeholder="you@institution.edu" autocomplete="off">
+                <input class="nav-login-input" id="nav-login-email" type="email" placeholder="you@institution.edu" autocomplete="username">
               </label>
               <label class="nav-login-field">
                 <span class="nav-login-label">Password</span>
-                <input class="nav-login-input" type="password" placeholder="Your password" autocomplete="off">
+                <input class="nav-login-input" id="nav-login-password" type="password" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')navLogin()">
               </label>
               <div class="nav-login-meta">
                 <label class="nav-login-remember"><input type="checkbox"> Remember me</label>
                 <a class="nav-login-forgot" href="/reset-password">Forgot password?</a>
               </div>
-              <button class="btn btn--primary nav-login-submit" type="button">Sign In</button>
+              <button class="btn btn--primary nav-login-submit" id="nav-login-btn" type="button" onclick="navLogin()">Sign In</button>
+              <p class="nav-login-error" id="nav-login-error"></p>
               <div class="nav-login-or"><span>or</span></div>
               <div class="nav-social">
                 <button class="nav-social-btn" type="button" disabled aria-disabled="true">Facebook</button>
@@ -133,6 +134,15 @@
 
           </div>
         </div>
+      </div>
+      <!-- ACCOUNT MENU (shown when logged in — populated by main.js applyAuthState) -->
+      <div class="nav-account-menu">
+        <div class="nav-acct-head">Welcome, <span id="nav-acct-name">there</span></div>
+        <a class="nav-acct-link" href="/login">Dashboard</a>
+        <a class="nav-acct-link" href="/login#your-programs">Access Programs</a>
+        <a class="nav-acct-link" href="/grants">My Grants</a>
+        <a class="nav-acct-link" id="nav-acct-review" href="/login#board-review" hidden>Review Applications</a>
+        <button class="nav-acct-link nav-acct-signout" type="button" onclick="JFAuth.logout()">Sign Out</button>
       </div>
     </div>
     <div class="nav-hamburger" onclick="toggleMenu()">
