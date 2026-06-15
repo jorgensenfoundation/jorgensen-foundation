@@ -1,0 +1,88 @@
+/* Review page — board-only, unified nav (.nav--hero). Tokenised (Midnight/Stone/Oyster).
+   Option 1 design: compact list rows that expand inline to full detail + voting. */
+
+/* --- base (components.css has no reset/body) --- */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:clip}
+a{text-decoration:none;color:inherit}
+[hidden]{display:none !important}   /* make the hidden attribute authoritative over display rules */
+
+/* --- Dark hero band --- */
+.rv-hero{position:relative;background:var(--ink);overflow:hidden;padding:9rem 3rem 4rem}
+.rv-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,color-mix(in srgb,var(--cream) 7%,transparent) 0%,transparent 55%),linear-gradient(135deg,var(--ink) 0%,var(--ink) 100%)}
+.rv-hero-inner{position:relative;z-index:1;max-width:1080px;margin:0 auto}
+.rv-hero-tag{display:block;font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.3em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 50%,transparent);margin-bottom:1rem}
+.rv-hero-h1{font-family:var(--font-serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;color:var(--cream);line-height:1.05}
+.rv-hero-sub{font-family:var(--font-sans);font-size:0.85rem;line-height:1.7;color:color-mix(in srgb,var(--cream) 65%,transparent);margin-top:1rem}
+
+/* --- Board gate (logged-out / non-board) --- */
+.rv-gate{padding:5rem 3rem 7rem;display:flex;justify-content:center}
+.rv-gate-card{max-width:520px;width:100%;background:var(--ground);border:1px solid var(--hairline);padding:3rem;text-align:center}
+.rv-gate-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--body);margin-bottom:1.25rem;display:block}
+.rv-gate-title{font-family:var(--font-serif);font-size:1.8rem;font-weight:300;color:var(--ink);margin-bottom:0.85rem}
+.rv-gate-body{font-size:0.78rem;line-height:1.9;color:var(--body)}
+
+/* --- Content + list --- */
+.rv-content{padding:3rem 3rem 5rem;max-width:1080px;margin:0 auto}
+.rv-label{font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--body);display:block;margin-bottom:1.25rem}
+.rv-empty{font-size:0.75rem;color:var(--body);padding:1.5rem 0}
+.rv-list{border:1px solid var(--hairline);background:var(--ground)}
+.rv-item{border-bottom:1px solid var(--surface)}
+.rv-item:last-child{border-bottom:none}
+
+/* collapsed row */
+.rv-row{display:grid;grid-template-columns:1.4fr 1.3fr auto auto auto;gap:1.25rem;align-items:center;padding:1.1rem 1.5rem}
+.rv-title{font-family:var(--font-serif);font-size:1.05rem;color:var(--ink);line-height:1.2}
+.rv-applicant{font-size:0.72rem;color:var(--body)}
+.rv-amount{font-size:0.8rem;color:var(--ink);white-space:nowrap}
+.rv-state{display:flex;justify-content:flex-end}
+.rv-badge{display:inline-block;font-size:0.5rem;letter-spacing:0.16em;text-transform:uppercase;padding:0.25rem 0.6rem;border:1px solid var(--ink);color:var(--ink);white-space:nowrap}
+.rv-badge-submitted{border-color:var(--surface);color:var(--body)}
+.rv-voted{display:inline-flex;align-items:center}
+.rv-chip{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--success);color:var(--success);padding:0.22rem 0.6rem;white-space:nowrap}
+.rv-chip-reject{border-color:var(--error);color:var(--error)}
+.rv-chip-abstain{border-color:var(--surface);color:var(--body)}
+.rv-details{font-size:0.55rem;letter-spacing:0.16em;text-transform:uppercase;padding:0.5rem 1rem;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;font-family:var(--font-sans);white-space:nowrap}
+.rv-details:hover{background:var(--ink);color:var(--ground)}
+
+/* expanded panel */
+.rv-panel{padding:1.5rem 1.5rem 1.75rem;background:color-mix(in srgb,var(--surface) 40%,var(--ground));border-top:1px solid var(--surface)}
+.rv-meta{display:flex;gap:1.5rem;flex-wrap:wrap;font-size:0.72rem;color:var(--body);margin-bottom:0.9rem}
+.rv-meta b{color:var(--ink);font-weight:400}
+.rv-cv{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--surface);white-space:nowrap}
+.rv-cv:hover{border-bottom-color:var(--ink)}
+.rv-desc{font-size:0.75rem;line-height:1.8;color:var(--body);max-width:680px;margin-bottom:1.1rem;white-space:pre-wrap}
+
+/* voting controls */
+.rv-vote-btns{display:flex;gap:0.6rem;flex-wrap:wrap}
+.rv-vbtn{font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.55rem 1.2rem;border:1px solid;background:transparent;cursor:pointer;font-family:var(--font-sans)}
+.rv-vbtn-app{border-color:var(--success);color:var(--success)}
+.rv-vbtn-app.selected{background:var(--success);color:var(--ground)}
+.rv-vbtn-rej{border-color:var(--error);color:var(--error)}
+.rv-vbtn-rej.selected{background:var(--error);color:var(--ground)}
+.rv-vbtn-abs{border-color:var(--surface);color:var(--body)}
+.rv-vbtn-abs.selected{background:var(--surface);color:var(--ink)}
+.rv-textarea{display:block;width:100%;margin-top:0.85rem;border:1px solid var(--hairline);background:var(--ground);padding:0.7rem 0.85rem;font-family:var(--font-sans);font-size:0.75rem;color:var(--ink);min-height:64px;resize:vertical;outline:none}
+.rv-textarea:focus{border-color:var(--ink)}
+.rv-submit{margin-top:0.85rem;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.7rem 1.6rem;border:1px solid var(--ink);background:var(--ink);color:var(--ground);cursor:pointer;font-family:var(--font-sans);box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 22%,transparent)}
+.rv-submit:hover{background:var(--ink-hover)}
+.rv-submit:disabled{opacity:0.5;cursor:not-allowed}
+.rv-msg{font-size:0.7rem;margin-top:0.75rem;display:none}
+.rv-msg.error{color:var(--error);display:block}
+.rv-msg.success{color:var(--success);display:block}
+
+/* recorded vote (already reviewed) */
+.rv-recorded{display:flex;flex-direction:column;gap:0.5rem;align-items:flex-start}
+.rv-recorded-label{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--body)}
+.rv-comment{font-size:0.72rem;line-height:1.7;color:var(--body);max-width:680px}
+
+@media(max-width:900px){
+  .rv-hero{padding:8rem 1.5rem 3rem}
+  .rv-content{padding:2rem 1.5rem 4rem}
+  .rv-row{grid-template-columns:1fr auto;gap:0.5rem 1rem}
+  .rv-applicant{grid-column:1 / -1;order:3}
+  .rv-amount{order:4}
+  .rv-state{order:5;justify-content:flex-start}
+  .rv-details{order:2}
+}

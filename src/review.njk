@@ -1,0 +1,38 @@
+---
+layout: marketing.njk
+comingSoonGate: false
+mainCss: /css/components.css
+pageCss: /css/review.css
+permalink: /review/index.html
+title: Review Applications — Jorgensen Foundation
+description: Board review of grant applications.
+---
+
+<!-- DARK HERO BAND — gives the transparent .nav--hero nav a legible dark backdrop -->
+<section class="rv-hero">
+  <div class="rv-hero-bg"></div>
+  <div class="rv-hero-inner">
+    <span class="rv-hero-tag">Board Review</span>
+    <h1 class="rv-hero-h1">Review Applications</h1>
+    <p class="rv-hero-sub">Grant applications assigned to you — record a recommendation for each.</p>
+  </div>
+</section>
+
+<!-- BOARD GATE — shown by review.js for logged-out / non-board users -->
+<section class="rv-gate" id="review-gate" hidden>
+  <div class="rv-gate-card">
+    <span class="rv-gate-label">Board Members Only</span>
+    <h2 class="rv-gate-title">Restricted area</h2>
+    <p class="rv-gate-body">This page is for Jorgensen Foundation board members reviewing grant applications. Sign in with a board account using the account icon at the top right.</p>
+  </div>
+</section>
+
+<!-- REVIEW CONTENT — revealed by review.js for board members -->
+<div class="rv-content" id="review-content" hidden>
+  <span class="rv-label">Applications assigned to you</span>
+  <div class="rv-list" id="review-list">
+    <p class="rv-empty">Loading your assigned applications…</p>
+  </div>
+</div>
+
+<script src="/js/review.js"></script>
