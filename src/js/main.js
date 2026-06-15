@@ -70,7 +70,9 @@ function applyAuthState() {
     const nameEl = document.getElementById('nav-acct-name');
     if (nameEl) nameEl.textContent = u.first_name || 'there';
     const review = document.getElementById('nav-acct-review');
-    if (review) review.hidden = !u.is_board_member;
+    if (review) review.hidden = !u.is_board_member;            // board only
+    const grants = document.getElementById('nav-acct-grants');
+    if (grants) grants.hidden = !!u.is_board_member;           // applicants only (inverse of review)
   }
 }
 
