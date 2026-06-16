@@ -12,15 +12,9 @@
 
 /* --- Shared base (common to all three) --- */
 nav{display:flex;justify-content:space-between;align-items:center;transition:background 0.4s,padding 0.4s}
-.nav-logo{display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;text-decoration:none}
-.nav-logo-mark{flex-shrink:0;display:block}   /* inherits .nav-logo color (currentColor) in every context */
-/* Mobile (phones): drop the symbol, keep the wordmark on ONE line (tighter tracking/size
-   so it doesn't wrap or crowd the search/account/hamburger icons). Applies to both
-   .nav--hero (nav.njk) and .nav--solid (nav-app.njk). Desktop/tablet keep symbol + text. */
-@media(max-width:600px){
-  .nav-logo-mark{display:none}
-  .nav-logo-text{font-size:0.78rem;letter-spacing:0.15em;white-space:nowrap}
-}
+.nav-logo{font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;text-decoration:none}
+/* Phones: keep the text wordmark on one line (tighter than the 1rem/0.35em desktop size) so it doesn't wrap or crowd the nav icons. */
+@media(max-width:600px){ .nav-logo{font-size:0.78rem;letter-spacing:0.15em;white-space:nowrap} }
 .nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;transition:opacity 0.2s,color 0.4s}
 .nav-links a:hover{opacity:1}
