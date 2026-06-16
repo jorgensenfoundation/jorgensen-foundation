@@ -1,0 +1,42 @@
+/* Brand & Logo page — marketing nav (.nav--hero). Tokenised (Midnight/Stone/Oyster, serif headings). */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:clip}
+a{text-decoration:none;color:inherit}
+
+/* --- Dark hero band (gives the transparent .nav--hero a legible backdrop) --- */
+.brand-hero{position:relative;background:var(--ink);overflow:hidden;padding:9rem 3rem 4.5rem}
+.brand-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 72% 38%,color-mix(in srgb,var(--cream) 7%,transparent) 0%,transparent 55%)}
+.brand-hero-inner{position:relative;z-index:1;max-width:1080px;margin:0 auto}
+.brand-eyebrow{display:block;font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.3em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 50%,transparent);margin-bottom:1rem}
+.brand-h1{font-family:var(--font-serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;color:var(--cream);line-height:1.05}
+.brand-sub{font-family:var(--font-sans);font-size:0.9rem;line-height:1.8;color:color-mix(in srgb,var(--cream) 68%,transparent);margin-top:1.1rem;max-width:580px}
+
+/* --- Body --- */
+.brand-body{max-width:1080px;margin:0 auto;padding:3.5rem 3rem 5rem}
+.brand-zip{margin-bottom:1rem}
+.brand-group{margin-top:3.25rem}
+.brand-group-h{font-family:var(--font-serif);font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:1.5rem;padding-bottom:0.6rem;border-bottom:1px solid var(--hairline)}
+
+.brand-swatches{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.brand-swatch{border:1px solid var(--hairline);display:flex;align-items:center;justify-content:center;padding:3rem 2rem;min-height:170px}
+.brand-swatch.dark{background:var(--ink);border-color:var(--ink)}
+.brand-swatch img{display:block;max-width:100%;height:auto}
+.brand-swatch.sym img{width:92px;height:92px}
+.brand-swatch.lock img{width:360px;max-width:100%;height:auto}
+
+.brand-dl{display:flex;flex-wrap:wrap;gap:0.7rem;margin-top:1.5rem}
+.brand-dl .btn{padding:0.7rem 1.3rem;font-size:0.58rem}
+
+.brand-note{margin-top:3.5rem;border-top:1px solid var(--hairline);padding-top:1.75rem;font-size:0.82rem;line-height:1.95;color:var(--body);max-width:760px}
+.brand-note b{color:var(--ink);font-weight:400}
+.brand-sw{display:inline-block;width:0.72em;height:0.72em;border:1px solid var(--hairline);vertical-align:-1px;margin-right:0.15em}
+.brand-sw.mid{background:#302C2E}
+.brand-sw.cream{background:#f4efe4}
+
+@media(max-width:720px){
+  .brand-hero{padding:8rem 1.5rem 3rem}
+  .brand-body{padding:2.5rem 1.5rem 4rem}
+  .brand-swatches{grid-template-columns:1fr}
+  .brand-swatch.lock img{width:280px}
+}
