@@ -62,8 +62,8 @@ async function setPassword() {
   const errorEl = document.getElementById('password-error');
   const btn = document.getElementById('set-password-btn');
   errorEl.classList.remove('show');
-  if (password.length < 8) {
-    errorEl.textContent = 'Password must be at least 8 characters.';
+  if (password.length < 10) {
+    errorEl.textContent = 'Password must be at least 10 characters.';
     errorEl.classList.add('show'); return;
   }
   btn.disabled = true;

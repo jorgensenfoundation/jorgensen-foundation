@@ -26,9 +26,10 @@ comingSoonGate: false
       <div class="input-group">
         <label class="input-label" for="password">Password</label>
         <div style="position:relative">
-          <input class="input" type="password" id="password" placeholder="Minimum 8 characters" autocomplete="new-password" style="padding-right:2.75rem">
+          <input class="input" type="password" id="password" placeholder="Minimum 10 characters" autocomplete="new-password" style="padding-right:2.75rem">
           <button onclick="toggleVis('password', this)" class="eye-btn" type="button" aria-label="Show password"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
         </div>
+        <p class="hint">At least 10 characters.</p>
       </div>
 
       <p class="error-msg" id="password-error"></p>
