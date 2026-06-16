@@ -37,6 +37,14 @@ function toggleSearch(e) {
   closeNavPanels();
   if (willOpen) d.classList.add('open');
 }
+// Mobile: the "Search" row at the end of the hamburger menu opens the existing search
+// drawer. closeNavPanels() shuts the menu first, preserving mutual exclusivity.
+function openSearchFromMenu(e) {
+  if (e) e.preventDefault();
+  const d = document.querySelector('.nav-msearch');
+  closeNavPanels();
+  if (d) d.classList.add('open');
+}
 // Mobile-only Programs: a SUB-accordion inside the hamburger menu — plain toggle, does
 // not close the hamburger (it lives inside it). Desktop uses CSS hover.
 function toggleDropdown(e) {
