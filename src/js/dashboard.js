@@ -2,13 +2,6 @@
 // (auth.js, global). Login-gated like grants.js: logged out → sign-in gate card. The
 // Stripe payment/activate flow stays on /login — the activate banner just links there.
 
-function toggleCard(btn) {
-  const expanded = btn.nextElementSibling;
-  const isOpen = expanded.classList.contains('open');
-  expanded.classList.toggle('open', !isOpen);
-  btn.querySelector('span').textContent = isOpen ? '↓' : '↑';
-}
-
 function setText(id, txt) {
   const el = document.getElementById(id);
   if (el) el.textContent = txt;
@@ -35,11 +28,20 @@ function setText(id, txt) {
   setText('dash-email', user.email || '');
   setText('dash-type', user.account_type === 'academia' ? 'Academic Access' : 'Industry Access');
 
-  // Subscription gating: non-active users get the activate prompt + locked program launches.
+  // Subscription gating: non-active users get the activate prompt; the per-card Launch
+  // buttons become a friendly "Subscribe to launch →" invitation pointing at the activate
+  // flow (/login), rather than a dead, disabled control. Active users keep the static
+  // "Launch [NAME] →" → /<program> markup as authored.
   const active = user.subscription_status === 'active';
   if (content) content.classList.toggle('needs-activation', !active);
   const banner = document.getElementById('activate-banner');
   if (banner) banner.hidden = active;
+  if (!active) {
+    document.querySelectorAll('.prog-launch').forEach(a => {
+      a.setAttribute('href', '/login');
+      a.textContent = 'Subscribe to launch →';
+    });
+  }
 
   // Board-only "Review Applications" choice button (links to /review).
   const review = document.getElementById('choice-review');
