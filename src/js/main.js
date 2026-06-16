@@ -5,13 +5,13 @@ if (nav) {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 }
-// The mobile nav has three mutually-exclusive top-level panels: the hamburger menu
-// (.menu-open on #nav), the login drawer (.nav-account.open) and the search drawer
-// (.nav-msearch.open). closeNavPanels() resets all of them (plus the nested Programs
-// accordion) so opening any one closes the others — styling/animation live in nav.css.
+// The mobile nav has two mutually-exclusive top-level panels: the hamburger menu
+// (.menu-open on #nav) and the login drawer (.nav-account.open). closeNavPanels() resets
+// both (plus the nested Programs accordion) so opening either closes the other — styling/
+// animation live in nav.css. (Search is now an inline field inside the hamburger menu.)
 function closeNavPanels() {
   if (nav) nav.classList.remove('menu-open');
-  document.querySelectorAll('.nav-account, .nav-msearch, .nav-dropdown').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('.nav-account, .nav-dropdown').forEach(el => el.classList.remove('open'));
 }
 function toggleMenu() {
   if (!nav) return;
@@ -28,22 +28,15 @@ function toggleAccount(e) {
   closeNavPanels();
   if (willOpen) d.classList.add('open');
 }
-// Mobile-only: tap the search icon → search drawer (closes the other two first).
-function toggleSearch(e) {
-  if (!window.matchMedia('(max-width:960px)').matches) return;
-  e.preventDefault();
-  const d = e.currentTarget.closest('.nav-msearch');
-  const willOpen = d && !d.classList.contains('open');
-  closeNavPanels();
-  if (willOpen) d.classList.add('open');
-}
-// Mobile: the "Search" row at the end of the hamburger menu opens the existing search
-// drawer. closeNavPanels() shuts the menu first, preserving mutual exclusivity.
-function openSearchFromMenu(e) {
+// Mobile menu search box. Results aren't wired yet (later project): prevent the default
+// form submit so nothing navigates or errors; just log the query. Graceful no-op for now.
+function navMenuSearch(e) {
   if (e) e.preventDefault();
-  const d = document.querySelector('.nav-msearch');
-  closeNavPanels();
-  if (d) d.classList.add('open');
+  const form = e && e.currentTarget;
+  const input = form ? form.querySelector('.nav-menu-search-input') : null;
+  const q = input ? input.value.trim() : '';
+  if (q) console.log('[nav search] query:', q);
+  return false;
 }
 // Mobile-only Programs: a SUB-accordion inside the hamburger menu — plain toggle, does
 // not close the hamburger (it lives inside it). Desktop uses CSS hover.

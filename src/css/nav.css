@@ -18,8 +18,13 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 @media(max-width:600px){ .nav-logo{font-size:0.92rem;letter-spacing:0.2em;white-space:nowrap} }
 .nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;transition:opacity 0.2s,color 0.4s}
-.nav-search-row{display:none;cursor:pointer}   /* mobile-only: revealed as the last row in the hamburger drawer */
-.nav-search-row-icon{flex-shrink:0}
+/* Mobile-menu search box (hidden on desktop; revealed inside the hamburger drawer below). */
+.nav-menu-search-wrap{display:none}
+.nav-menu-search{display:flex;align-items:center;gap:0.55rem;border:1px solid var(--hairline);border-radius:4px;background:var(--ground);padding:0.6rem 0.85rem}
+.nav-menu-search-btn{flex-shrink:0;display:flex;align-items:center;justify-content:center;background:none;border:none;padding:0;margin:0;cursor:pointer;color:var(--body);transition:color 0.2s}
+.nav-menu-search-btn:hover{color:var(--ink)}
+.nav-menu-search-input{flex:1;min-width:0;border:none;background:none;outline:none;font-family:var(--font-sans);font-size:0.95rem;color:var(--ink)}
+.nav-menu-search-input::placeholder{color:color-mix(in srgb,var(--body) 55%,var(--ground))}
 .nav-links a:hover{opacity:1}
 .nav-user,.nav-logout{display:none}   /* revealed by login.js / admin.js */
 
@@ -94,16 +99,6 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero.scrolled .nav-account-toggle{color:var(--ink)}
 .nav--hero .nav-account-toggle:hover{opacity:0.8}
 .nav--hero .nav-account-icon{display:block}
-/* MOBILE-ONLY search icon + drawer (hidden on desktop via display:none here; shown in the ≤960 block) */
-.nav--hero .nav-msearch{display:none;align-items:center}
-.nav--hero .nav-msearch-toggle{display:flex;align-items:center;cursor:pointer;color:var(--cream);transition:color 0.4s}
-.nav--hero.scrolled .nav-msearch-toggle{color:var(--ink)}
-.nav--hero .nav-msearch-panel{position:absolute;top:100%;left:0;right:0;background:var(--ground);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:1.25rem 1.5rem;z-index:120;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s linear 0.28s}
-.nav--hero .nav-msearch.open .nav-msearch-panel{opacity:1;visibility:visible;transform:translateY(0);transition:opacity 0.28s ease,transform 0.28s ease,visibility 0s}
-.nav--hero .nav-msearch-inner{display:flex;align-items:center;gap:0.7rem;max-width:1080px;margin:0 auto;border:1px solid var(--hairline);border-radius:4px;padding:0.75rem 0.95rem;background:var(--ground)}
-.nav--hero .nav-msearch-inner svg{flex-shrink:0;color:color-mix(in srgb,var(--body) 60%,var(--ground))}
-.nav--hero .nav-msearch-input{flex:1;min-width:0;border:none;background:none;outline:none;font-family:var(--font-sans);font-size:0.9rem;color:var(--ink)}
-.nav--hero .nav-msearch-input::placeholder{color:color-mix(in srgb,var(--body) 55%,var(--ground))}
 .nav--hero .nav-login-mega{position:absolute;top:100%;left:0;right:0;background:color-mix(in srgb,var(--ground) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
 .nav--hero .nav-login-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;max-width:1080px;margin:0 auto;align-items:start}
 .nav--hero .nav-login-col{min-width:0}
@@ -162,9 +157,8 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 }
 @media(max-width:960px){
   /* Two mobile icons: [person] [hamburger], with ~40px tap targets. Search lives in the menu now. */
-  .nav--hero .nav-msearch{display:contents}   /* keep the search drawer (panel) but no top-bar icon/footprint */
-  /* "Search the site" row: magnifier + label, set off from the links above by a hairline + space. */
-  .nav--hero .nav-search-row{display:flex;align-items:center;gap:0.55rem;align-self:stretch;margin-top:0.4rem;padding-top:1.35rem;border-top:1px solid var(--hairline)}
+  /* Search box: a real input at the end of the hamburger menu, set off by a hairline + space. */
+  .nav--hero .nav-menu-search-wrap{display:block;align-self:stretch;margin-top:0.4rem;padding-top:1.35rem;border-top:1px solid var(--hairline)}
   .nav--hero .nav-right-cta{gap:0.3rem}
   .nav--hero .nav-account-toggle,.nav--hero .nav-hamburger{padding:0.6rem}
   /* Login drawer: opaque single-column sign-in form, slide-down + fade like the others. */
