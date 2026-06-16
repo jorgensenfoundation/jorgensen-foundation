@@ -48,22 +48,13 @@ function submitRequest() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ first_name: firstName, last_name: lastName, institution, email })
-  }).then(res => res.json()).then(data => {
+  }).then(res => res.json()).then(() => {
     btn.disabled = false;
     btn.textContent = 'Create Account';
-    if (data.message && data.message.includes('resent')) {
-      document.getElementById('modal-form').style.display = 'none';
-      document.getElementById('modal-success').style.display = 'block';
-      document.querySelector('.modal-success p').textContent = 'Check your inbox.';
-      document.querySelector('.modal-success span').textContent = 'We resent your verification email. Click the link inside to activate your account.';
-    } else if (data.message && data.message.includes('log in')) {
-      noteEl.style.color = '#1a1510';
-      noteEl.textContent = data.message + ' → ' ;
-      noteEl.innerHTML = data.message + ' <a href="/login" style="color:#1a1510;border-bottom:1px solid #ccc">Sign in here</a>';
-    } else {
-      document.getElementById('modal-form').style.display = 'none';
-      document.getElementById('modal-success').style.display = 'block';
-    }
+    // Any successful registration shows the generic success modal — the backend now returns a
+    // single generic message (the old 'resent' / 'log in' message branches are dead).
+    document.getElementById('modal-form').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
   }).catch(() => {
     btn.disabled = false;
     btn.textContent = 'Create Account';

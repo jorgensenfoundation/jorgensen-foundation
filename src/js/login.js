@@ -102,8 +102,8 @@ async function proceedToPayment() {
   try {
     const res = await fetch(`${API}/create-checkout`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email: currentUser.email, billing_period: selectedPlan})
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem('jf_user_token')},
+      body: JSON.stringify({billing_period: selectedPlan})
     });
     const data = await res.json();
     if (!res.ok) {
