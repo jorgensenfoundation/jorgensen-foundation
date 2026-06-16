@@ -38,7 +38,7 @@ function setText(id, txt) {
   if (banner) banner.hidden = active;
   if (!active) {
     document.querySelectorAll('.prog-launch').forEach(a => {
-      a.setAttribute('href', '/login');
+      a.setAttribute('href', '/login#activate');
       a.textContent = 'Subscribe to launch →';
     });
   }

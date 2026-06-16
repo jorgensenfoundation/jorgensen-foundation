@@ -85,13 +85,10 @@ async function login() {
     sessionStorage.setItem('jf_user_token', data.token);
     sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
     currentUser = userInfo;
-    if (userInfo.subscription_status === 'active') {
-      window.location.href = '/dashboard';
-    } else {
-      showAppNavUser(userInfo);
-      setupPaymentPage(userInfo);
-      showPage('page-payment');
-    }
+    // Every logged-in user lands on the dashboard (active or non-active). The dashboard shows
+    // the activate banner for non-active users; the payment page is only reached when they
+    // explicitly choose to activate (which arrives here as /login#activate — see bootstrap).
+    window.location.href = '/dashboard';
   } catch(e) {
     errorEl.textContent = 'Connection error. Please try again.';
     errorEl.classList.add('show');
@@ -172,21 +169,24 @@ function logout() {
   showPage('page-login');
 }
 
-// Bootstrap. The dashboard + board review now live on the real /dashboard and /review pages;
-// /login only handles sign-in and the subscription/Stripe activate step.
-//   logged-out                  → login form
-//   logged-in + active          → redirect to the real /dashboard
-//   logged-in + NOT active      → payment/activate page here (Stripe flow)
+// Bootstrap. Every logged-in user (active OR non-active) lands on the real /dashboard; the
+// payment page is shown ONLY when the user explicitly chose to activate — the dashboard's
+// "Activate" / "Subscribe to launch" buttons link to /login#activate, and that flag (for a
+// non-active user) opens the Stripe activate page here instead of bouncing to the dashboard.
+//   logged-out                          → login form
+//   logged-in + #activate + non-active  → payment/activate page (Stripe flow)
+//   logged-in (everything else)         → redirect to /dashboard
 const saved = sessionStorage.getItem('jf_user');
 if (saved) {
   const user = JSON.parse(saved);
   currentUser = user;
-  if (user.subscription_status === 'active') {
-    window.location.href = '/dashboard';
-  } else {
+  const wantsActivate = location.hash === '#activate';
+  if (wantsActivate && user.subscription_status !== 'active') {
     showAppNavUser(user);
     setupPaymentPage(user);
     showPage('page-payment');
+  } else {
+    window.location.href = '/dashboard';
   }
 } else {
   showPage('page-login');
