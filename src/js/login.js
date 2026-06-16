@@ -122,13 +122,28 @@ async function proceedToPayment() {
   }
 }
 
+// Revoke the token server-side (POST /logout), THEN clear the local session and show the login
+// form. Local clear always happens regardless of the network result; a safety cap avoids hangs.
 function logout() {
-  sessionStorage.removeItem('jf_user_token');
-  sessionStorage.removeItem('jf_user');
-  currentUser = null;
-  document.getElementById('nav-user').style.display = 'none';
-  document.getElementById('nav-logout').style.display = 'none';
-  showPage('page-login');
+  const token = sessionStorage.getItem('jf_user_token');
+  let done = false;
+  function finish() {
+    if (done) return;
+    done = true;
+    sessionStorage.removeItem('jf_user_token');
+    sessionStorage.removeItem('jf_user');
+    currentUser = null;
+    const u = document.getElementById('nav-user'); if (u) u.style.display = 'none';
+    const lo = document.getElementById('nav-logout'); if (lo) lo.style.display = 'none';
+    showPage('page-login');
+  }
+  if (!token) { finish(); return; }
+  setTimeout(finish, 2500);
+  try {
+    fetch(`${API}/logout`, { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } }).then(finish, finish);
+  } catch (e) {
+    finish();
+  }
 }
 
 // Bootstrap. Every logged-in user (active OR non-active) lands on the real /dashboard; the

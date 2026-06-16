@@ -5,6 +5,7 @@
 (function () {
   var USER_KEY = 'jf_user';
   var TOKEN_KEY = 'jf_user_token';
+  var API = 'https://jorgensen-backend-production.up.railway.app';   // same Railway backend as login.js / verify.js
 
   function getToken() {
     return sessionStorage.getItem(TOKEN_KEY);
@@ -24,12 +25,28 @@
     return { 'Authorization': 'Bearer ' + getToken() };
   }
 
-  // DOM-free logout for the (future) global nav: clears the user session and returns home.
+  // DOM-free logout for the global nav: revoke the token server-side (POST /logout with the
+  // Bearer token), THEN clear the local session and return home. Robust by design — the local
+  // clear + redirect ALWAYS happen, regardless of the network result (success/failure/offline),
+  // and a short safety cap prevents getting stuck if the request hangs. No token → just clear.
   // Deliberately does NOT touch 'jf_admin_token' — admin is a separate auth domain.
   function logout() {
-    sessionStorage.removeItem(TOKEN_KEY);
-    sessionStorage.removeItem(USER_KEY);
-    window.location.href = '/';
+    var token = getToken();
+    var done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      sessionStorage.removeItem(TOKEN_KEY);
+      sessionStorage.removeItem(USER_KEY);
+      window.location.href = '/';
+    }
+    if (!token) { finish(); return; }
+    setTimeout(finish, 2500);   // never get stuck if the network hangs
+    try {
+      fetch(API + '/logout', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } }).then(finish, finish);
+    } catch (e) {
+      finish();
+    }
   }
 
   window.JFAuth = {
