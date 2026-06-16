@@ -16,9 +16,18 @@ const INDUSTRY_PRICES = { monthly: '$199/mo', annual: '$1,990/yr' };
 function showPage(id) {
   document.getElementById('page-login').classList.toggle('hidden', id !== 'page-login');
   document.getElementById('page-payment').classList.toggle('hidden', id !== 'page-payment');
-  document.getElementById('dashboard').classList.toggle('active', id === 'dashboard');
   document.getElementById('page-login').style.display = id === 'page-login' ? 'flex' : 'none';
   document.getElementById('page-payment').style.display = id === 'page-payment' ? 'flex' : 'none';
+}
+
+// Reflect the logged-in state in the app nav (name + Sign Out) for a non-active user who stays
+// on the payment/activate page — mirrors what the old in-page dashboard used to set.
+function showAppNavUser(user) {
+  const first = user.first_name || user.email.split('@')[0];
+  const u = document.getElementById('nav-user');
+  const lo = document.getElementById('nav-logout');
+  if (u) { u.textContent = first; u.style.display = 'inline'; }
+  if (lo) lo.style.display = 'inline';
 }
 
 function setupPaymentPage(user) {
@@ -33,200 +42,6 @@ function selectPlan(period) {
   selectedPlan = period;
   document.getElementById('plan-monthly').classList.toggle('selected', period === 'monthly');
   document.getElementById('plan-annual').classList.toggle('selected', period === 'annual');
-}
-
-function showDashboard(user) {
-  currentUser = user;
-  const first = user.first_name || user.email.split('@')[0];
-  document.getElementById('dash-name').textContent = first;
-  document.getElementById('dash-email').textContent = user.email;
-  document.getElementById('dash-type').textContent = user.account_type === 'academia' ? 'Academic Access' : 'Industry Access';
-  document.getElementById('nav-user').textContent = first;
-  document.getElementById('nav-user').style.display = 'inline';
-  document.getElementById('nav-logout').style.display = 'inline';
-  showPage('dashboard');
-
-  // Non-active users still get the dashboard, but with an activate prompt; the programs grid
-  // is shown as locked (Launch buttons disabled) until they subscribe. Grants + board review stay open.
-  const active = user.subscription_status === 'active';
-  const dash = document.getElementById('dashboard');
-  if (dash) dash.classList.toggle('needs-activation', !active);
-  const banner = document.getElementById('activate-banner');
-  if (banner) banner.hidden = active;
-
-  setupBoardReview(user);
-
-  // Honor a deep-link hash (e.g. #your-programs / #board-review) now that the section is visible.
-  // offsetParent === null means the target is hidden (e.g. board-review for a non-board user) → ignore.
-  const h = location.hash;
-  if (h) {
-    requestAnimationFrame(() => {
-      const t = document.querySelector(h);
-      if (t && t.offsetParent !== null) t.scrollIntoView({ behavior: 'auto' });
-    });
-  }
-}
-
-// Reuse the existing payment page / Stripe checkout flow, reached from the in-dashboard
-// activate prompt (instead of a forced gate on load).
-function goToPayment() {
-  if (!currentUser) return;
-  setupPaymentPage(currentUser);
-  showPage('page-payment');
-}
-
-// --- Board review (only for board members) ---------------------------------
-// esc/escAttr: entity-encode any backend-supplied data before it touches innerHTML.
-function esc(value) {
-  if (value === null || value === undefined) return '';
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-function escAttr(value) { return esc(value); }
-
-function isBoardMember(user) {
-  // Prefer the stored session (JFAuth), fall back to the passed-in user object.
-  const stored = (window.JFAuth && JFAuth.getUser && JFAuth.getUser()) || null;
-  if (stored && stored.is_board_member) return true;
-  return !!(user && user.is_board_member);
-}
-
-function setupBoardReview(user) {
-  const section = document.getElementById('board-review');
-  const choiceBtn = document.getElementById('choice-review');
-  if (!section) return;
-  const board = isBoardMember(user);
-  if (choiceBtn) choiceBtn.hidden = !board;
-  if (!board) { section.hidden = true; return; }
-  section.hidden = false;
-  loadAssignments();
-}
-
-function reviewAuthHeader() {
-  // Board endpoints use the regular user Bearer token.
-  if (window.JFAuth && JFAuth.authHeader) return JFAuth.authHeader();
-  return { 'Authorization': 'Bearer ' + sessionStorage.getItem('jf_user_token') };
-}
-
-// On an expired/invalid user token, clear the session and return to login.
-function reviewRelogin() {
-  logout();
-}
-
-async function loadAssignments() {
-  const wrap = document.getElementById('review-list');
-  try {
-    const res = await fetch(`${API}/board/assignments`, { headers: reviewAuthHeader() });
-    if (res.status === 401) { reviewRelogin(); return; }
-    if (!res.ok) {
-      if (wrap) wrap.innerHTML = '<p class="review-empty">Could not load your assignments right now.</p>';
-      return;
-    }
-    const list = await res.json();
-    renderAssignments(list);
-  } catch (e) {
-    if (wrap) wrap.innerHTML = '<p class="review-empty">Could not load your assignments right now.</p>';
-  }
-}
-
-function renderAssignments(list) {
-  const wrap = document.getElementById('review-list');
-  if (!wrap) return;
-  if (!Array.isArray(list) || list.length === 0) {
-    wrap.innerHTML = '<p class="review-empty">You have no applications assigned for review.</p>';
-    return;
-  }
-  wrap.innerHTML = list.map(a => {
-    const id = a.grant_id != null ? a.grant_id : a.id;
-    const applicant = `${esc(a.first_name || '')} ${esc(a.last_name || '')}`.trim() || '—';
-    const amount = (a.amount_requested !== null && a.amount_requested !== undefined && a.amount_requested !== '') ? ('$' + esc(a.amount_requested)) : '—';
-    const conf = esc(a.conference_name || 'Conference');
-    const confMeta = [a.conference_date, a.conference_location].filter(Boolean).map(esc).join(' · ');
-    const cv = a.cv_url ? `<a class="grant-cv-link" href="${escAttr(a.cv_url)}" target="_blank" rel="noopener">View CV →</a>` : '';
-    const status = esc(a.status || 'submitted');
-    const voted = a.recommendation;
-    const voteBlock = voted
-      ? `<div class="vote-recorded">
-           <span class="vote-recorded-label">Your recommendation</span>
-           <span class="badge-vote badge-vote-${escAttr(voted)}">${esc(voted)}</span>
-           ${a.comment ? `<p class="vote-comment">${esc(a.comment)}</p>` : ''}
-         </div>`
-      : renderVoteForm(id);
-    return `
-      <div class="review-card">
-        <div class="review-card-head">
-          <div>
-            <div class="review-card-title">${conf}</div>
-            <div class="review-card-meta">${applicant} · ${esc(a.institution || '—')}</div>
-            <div class="review-card-meta">${confMeta || '—'} · ${amount}</div>
-          </div>
-          <span class="tag-status">${status}</span>
-        </div>
-        ${a.research_description ? `<p class="review-desc">${esc(a.research_description)}</p>` : ''}
-        ${cv}
-        ${voteBlock}
-        <p class="form-msg review-msg" id="vote-msg-${escAttr(id)}"></p>
-      </div>`;
-  }).join('');
-}
-
-function renderVoteForm(id) {
-  const safeId = escAttr(id);
-  return `
-    <div class="vote-form" id="vote-form-${safeId}">
-      <span class="vote-label">Your recommendation</span>
-      <div class="vote-options">
-        <label class="vote-opt"><input type="radio" name="rec-${safeId}" value="approve"> Approve</label>
-        <label class="vote-opt"><input type="radio" name="rec-${safeId}" value="reject"> Reject</label>
-        <label class="vote-opt"><input type="radio" name="rec-${safeId}" value="abstain"> Abstain</label>
-      </div>
-      <textarea class="input vote-textarea" id="vote-comment-${safeId}" placeholder="Comments (optional) — rationale for your recommendation."></textarea>
-      <button class="choice-btn choice-btn-primary vote-submit" type="button" onclick="submitVote('${safeId}')">Submit Review</button>
-    </div>`;
-}
-
-async function submitVote(id) {
-  const msg = document.getElementById(`vote-msg-${id}`);
-  const picked = document.querySelector(`input[name="rec-${id}"]:checked`);
-  if (!picked) {
-    if (msg) { msg.textContent = 'Please choose a recommendation before submitting.'; msg.className = 'form-msg review-msg error'; }
-    return;
-  }
-  const commentEl = document.getElementById(`vote-comment-${id}`);
-  const comment = commentEl ? commentEl.value.trim() : '';
-  const btn = document.querySelector(`#vote-form-${id} .vote-submit`);
-  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
-  if (msg) msg.className = 'form-msg review-msg';
-  try {
-    const res = await fetch(`${API}/board/assignments/${encodeURIComponent(id)}/vote`, {
-      method: 'POST',
-      headers: Object.assign({ 'Content-Type': 'application/json' }, reviewAuthHeader()),
-      body: JSON.stringify({ recommendation: picked.value, comment })
-    });
-    if (res.status === 401) { reviewRelogin(); return; }
-    if (res.ok) {
-      if (msg) { msg.textContent = 'Review submitted.'; msg.className = 'form-msg review-msg success'; }
-      loadAssignments();
-    } else {
-      const data = await res.json().catch(() => ({}));
-      if (msg) { msg.textContent = data.detail || 'Could not submit your review. Please try again.'; msg.className = 'form-msg review-msg error'; }
-      if (btn) { btn.disabled = false; btn.textContent = 'Submit Review'; }
-    }
-  } catch (e) {
-    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'form-msg review-msg error'; }
-    if (btn) { btn.disabled = false; btn.textContent = 'Submit Review'; }
-  }
-}
-
-function toggleCard(btn) {
-  const expanded = btn.nextElementSibling;
-  const isOpen = expanded.classList.contains('open');
-  expanded.classList.toggle('open', !isOpen);
-  btn.querySelector('span').textContent = isOpen ? '↓' : '↑';
 }
 
 function toggleAccessCode() {
@@ -271,8 +86,9 @@ async function login() {
     sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
     currentUser = userInfo;
     if (userInfo.subscription_status === 'active') {
-      showDashboard(userInfo);
+      window.location.href = '/dashboard';
     } else {
+      showAppNavUser(userInfo);
       setupPaymentPage(userInfo);
       showPage('page-payment');
     }
@@ -340,7 +156,7 @@ async function applyAccessCode() {
     successEl.classList.add('show');
     currentUser.subscription_status = 'active';
     sessionStorage.setItem('jf_user', JSON.stringify(currentUser));
-    setTimeout(() => showDashboard(currentUser), 1200);
+    setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
   } catch(e) {
     errorEl.textContent = 'Connection error. Please try again.';
     errorEl.classList.add('show');
@@ -356,14 +172,22 @@ function logout() {
   showPage('page-login');
 }
 
-// Check existing session. Any logged-in user lands on the dashboard — a subscription gates
-// PROGRAM ACCESS (shown via the in-dashboard activate prompt), not the dashboard itself, so
-// grant applicants and board members are never bounced to the payment page.
+// Bootstrap. The dashboard + board review now live on the real /dashboard and /review pages;
+// /login only handles sign-in and the subscription/Stripe activate step.
+//   logged-out                  → login form
+//   logged-in + active          → redirect to the real /dashboard
+//   logged-in + NOT active      → payment/activate page here (Stripe flow)
 const saved = sessionStorage.getItem('jf_user');
 if (saved) {
   const user = JSON.parse(saved);
   currentUser = user;
-  showDashboard(user);
+  if (user.subscription_status === 'active') {
+    window.location.href = '/dashboard';
+  } else {
+    showAppNavUser(user);
+    setupPaymentPage(user);
+    showPage('page-payment');
+  }
 } else {
   showPage('page-login');
 }
