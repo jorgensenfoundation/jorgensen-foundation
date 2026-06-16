@@ -32,6 +32,10 @@ async function verifyToken() {
   const token = params.get('token');
   if (!token) { showState('state-error'); return; }
   currentToken = token;
+  // Token is now captured in JS state (currentToken). Strip ?token= from the address bar so it
+  // doesn't linger in history/Referer — the GET below uses the local `token`, and set-password
+  // uses `currentToken`, so neither depends on the URL after this point.
+  history.replaceState({}, '', '/verify');
   try {
     const res = await fetch(`${API}/verify?token=${token}`);
     const data = await res.json();
