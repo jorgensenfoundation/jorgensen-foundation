@@ -78,7 +78,9 @@ async function setPassword() {
       btn.textContent = 'Create Account & Continue';
       return;
     }
-    // Auto-login and redirect to payment
+    // Auto-login, then send the new (non-active) user to their dashboard — where a
+    // subscription is OPTIONAL (activate banner), not forced. Fall back to /login only
+    // if the auto-login somehow fails (no session stored).
     const loginRes = await fetch(`${API}/login`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -95,8 +97,10 @@ async function setPassword() {
       };
       sessionStorage.setItem('jf_user_token', userData.token);
       sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
+      window.location.href = '/dashboard';
+    } else {
+      window.location.href = '/login';
     }
-    window.location.href = '/login';
   } catch(e) {
     errorEl.textContent = 'Connection error. Please try again.';
     errorEl.classList.add('show');
