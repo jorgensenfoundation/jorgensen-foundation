@@ -27,8 +27,6 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .btn-outline-dark:hover{background:var(--surface)}
 .error-msg{font-size:0.68rem;color:var(--error);margin-top:0.75rem;display:none}
 .error-msg.show{display:block}
-.success-msg{font-size:0.68rem;color:var(--success);margin-top:0.75rem;display:none}
-.success-msg.show{display:block}
 .link-small{font-size:0.58rem;letter-spacing:0.1em;color:var(--body);text-align:center;margin-top:1.5rem;display:block}
 .link-small a{color:var(--ink);border-bottom:1px solid var(--surface)}
 .eye-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--body);padding:0;display:flex;align-items:center;line-height:0}
@@ -45,16 +43,6 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .plan-price span{font-size:0.65rem;color:var(--body);font-family:Helvetica,Arial,sans-serif}
 .plan-save{font-size:0.55rem;color:var(--success);margin-top:0.3rem;letter-spacing:0.05em}
 .plan-type-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--body);margin-bottom:1rem;display:block}
-
-/* --- Access code --- */
-.access-code-toggle{font-size:0.58rem;letter-spacing:0.1em;color:var(--body);cursor:pointer;display:block;text-align:center;margin-top:1.25rem;border:none;background:none;font-family:Helvetica,Arial,sans-serif;width:100%}
-.access-code-toggle:hover{color:var(--ink)}
-.access-code-section{display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--hairline)}
-.access-code-section.show{display:block}
-.access-code-row{display:flex;gap:0.75rem}
-.access-code-row .input{flex:1}
-.btn-apply{font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.25rem;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif;white-space:nowrap;flex-shrink:0}
-.btn-apply:hover{background:var(--ink);color:var(--ground)}
 
 
 /* --- Big footer (overrides app.css's minimal footer) --- */

@@ -44,11 +44,6 @@ function selectPlan(period) {
   document.getElementById('plan-annual').classList.toggle('selected', period === 'annual');
 }
 
-function toggleAccessCode() {
-  const section = document.getElementById('access-code-section');
-  section.classList.toggle('show');
-}
-
 async function login() {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
@@ -124,39 +119,6 @@ async function proceedToPayment() {
     errorEl.classList.add('show');
     btn.disabled = false;
     btn.textContent = 'Continue to Payment';
-  }
-}
-
-async function applyAccessCode() {
-  if (!currentUser) return;
-  const code = document.getElementById('access-code-input').value.trim();
-  const errorEl = document.getElementById('code-error');
-  const successEl = document.getElementById('code-success');
-  errorEl.classList.remove('show');
-  successEl.classList.remove('show');
-  if (!code) {
-    errorEl.textContent = 'Please enter an access code.';
-    errorEl.classList.add('show'); return;
-  }
-  try {
-    const res = await fetch(`${API}/apply-access-code`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email: currentUser.email, code})
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      errorEl.textContent = data.detail || 'Invalid access code.';
-      errorEl.classList.add('show'); return;
-    }
-    successEl.textContent = 'Access code accepted! Redirecting...';
-    successEl.classList.add('show');
-    currentUser.subscription_status = 'active';
-    sessionStorage.setItem('jf_user', JSON.stringify(currentUser));
-    setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
-  } catch(e) {
-    errorEl.textContent = 'Connection error. Please try again.';
-    errorEl.classList.add('show');
   }
 }
 
