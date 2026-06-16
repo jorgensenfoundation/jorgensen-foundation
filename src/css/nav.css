@@ -19,6 +19,7 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;transition:opacity 0.2s,color 0.4s}
 .nav-search-row{display:none;cursor:pointer}   /* mobile-only: revealed as the last row in the hamburger drawer */
+.nav-search-row-icon{flex-shrink:0}
 .nav-links a:hover{opacity:1}
 .nav-user,.nav-logout{display:none}   /* revealed by login.js / admin.js */
 
@@ -162,7 +163,8 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 @media(max-width:960px){
   /* Two mobile icons: [person] [hamburger], with ~40px tap targets. Search lives in the menu now. */
   .nav--hero .nav-msearch{display:contents}   /* keep the search drawer (panel) but no top-bar icon/footprint */
-  .nav--hero .nav-search-row{display:block}    /* "Search" row at the end of the hamburger menu */
+  /* "Search the site" row: magnifier + label, set off from the links above by a hairline + space. */
+  .nav--hero .nav-search-row{display:flex;align-items:center;gap:0.55rem;align-self:stretch;margin-top:0.4rem;padding-top:1.35rem;border-top:1px solid var(--hairline)}
   .nav--hero .nav-right-cta{gap:0.3rem}
   .nav--hero .nav-account-toggle,.nav--hero .nav-hamburger{padding:0.6rem}
   /* Login drawer: opaque single-column sign-in form, slide-down + fade like the others. */

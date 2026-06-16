@@ -59,7 +59,10 @@
     <a href="/news"{% if navActive == "news" %} class="active"{% endif %}>News</a>
     <a href="/grants"{% if navActive == "grants" %} class="active"{% endif %}>Grants</a>
     <a href="/contact"{% if navActive == "contact" %} class="active"{% endif %}>Contact</a>
-    <a class="nav-search-row" role="button" tabindex="0" aria-label="Search" onclick="openSearchFromMenu(event)">Search</a>
+    <a class="nav-search-row" role="button" tabindex="0" aria-label="Search the site" onclick="openSearchFromMenu(event)">
+      <svg class="nav-search-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Search the site</span>
+    </a>
   </div>
   <div class="nav-right-cta">
     <!-- Search drawer (mobile) — opened from the "Search" row in the hamburger menu; hidden on desktop -->
