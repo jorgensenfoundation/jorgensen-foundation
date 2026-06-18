@@ -23,9 +23,9 @@ description: Download the Jorgensen Foundation logo for posters, presentations, 
     <a class="btn btn--primary" href="/img/brand/jorgensen-brand-pack.zip" download>Download everything (.zip)</a>
   </div>
 
-  <!-- LOGO: symbol + name -->
+  <!-- LOGO: horizontal (symbol + name) -->
   <section class="brand-group">
-    <h2 class="brand-group-h">Logo (symbol + name)</h2>
+    <h2 class="brand-group-h">Logo — Horizontal</h2>
     <div class="brand-swatches">
       <div class="brand-swatch light lock"><img src="/img/brand/jf-lockup-midnight.svg" alt="Jorgensen Foundation logo in Midnight"></div>
       <div class="brand-swatch dark lock"><img src="/img/brand/jf-lockup-cream.svg" alt="Jorgensen Foundation logo in Cream"></div>
@@ -35,6 +35,21 @@ description: Download the Jorgensen Foundation logo for posters, presentations, 
       <a class="btn btn--secondary" href="/img/brand/jf-lockup-cream.svg" download>SVG · Cream</a>
       <a class="btn btn--secondary" href="/img/brand/jf-lockup-midnight-2048.png" download>PNG · Midnight</a>
       <a class="btn btn--secondary" href="/img/brand/jf-lockup-cream-2048.png" download>PNG · Cream</a>
+    </div>
+  </section>
+
+  <!-- LOGO: stacked (symbol over name) -->
+  <section class="brand-group">
+    <h2 class="brand-group-h">Logo — Stacked</h2>
+    <div class="brand-swatches">
+      <div class="brand-swatch light lock-stacked"><img src="/img/brand/jf-lockup-stacked-midnight.svg" alt="Jorgensen Foundation stacked logo in Midnight"></div>
+      <div class="brand-swatch dark lock-stacked"><img src="/img/brand/jf-lockup-stacked-cream.svg" alt="Jorgensen Foundation stacked logo in Cream"></div>
+    </div>
+    <div class="brand-dl">
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-midnight.svg" download>SVG · Midnight</a>
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-cream.svg" download>SVG · Cream</a>
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-midnight-1024.png" download>PNG · Midnight</a>
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-cream-1024.png" download>PNG · Cream</a>
     </div>
   </section>
 
@@ -50,6 +65,33 @@ description: Download the Jorgensen Foundation logo for posters, presentations, 
       <a class="btn btn--secondary" href="/img/brand/jf-symbol-cream.svg" download>SVG · Cream</a>
       <a class="btn btn--secondary" href="/img/brand/jf-symbol-midnight-2048.png" download>PNG · Midnight</a>
       <a class="btn btn--secondary" href="/img/brand/jf-symbol-cream-2048.png" download>PNG · Cream</a>
+    </div>
+  </section>
+
+  <!-- PROGRAM LOGOS -->
+  <section class="brand-group">
+    <h2 class="brand-group-h">Program Logos</h2>
+    {% set programs = [
+      { slug: "boss", label: "BOSS" },
+      { slug: "mcpro", label: "MCPRO" },
+      { slug: "bomb", label: "BOMB" },
+      { slug: "fep", label: "FEP" },
+      { slug: "opls", label: "OPLS" },
+      { slug: "visualisation", label: "Visualisation" }
+    ] %}
+    <div class="brand-swatches brand-progs">
+      {% for p in programs %}
+      <div class="brand-prog">
+        <div class="brand-swatch light sym"><img src="/img/brand/programs/{{ p.slug }}-midnight.svg" alt="{{ p.label }} program mark"></div>
+        <p class="brand-prog-label">{{ p.label }}</p>
+        <div class="brand-dl brand-dl--prog">
+          <a class="btn btn--secondary" href="/img/brand/programs/{{ p.slug }}-midnight.svg" download>SVG · Midnight</a>
+          <a class="btn btn--secondary" href="/img/brand/programs/{{ p.slug }}-cream.svg" download>SVG · Cream</a>
+          <a class="btn btn--secondary" href="/img/brand/programs/{{ p.slug }}-midnight-1024.png" download>PNG · Midnight</a>
+          <a class="btn btn--secondary" href="/img/brand/programs/{{ p.slug }}-cream-1024.png" download>PNG · Cream</a>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </section>
 
