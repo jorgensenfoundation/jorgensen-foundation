@@ -28,15 +28,26 @@ function setText(id, txt) {
   setText('dash-email', user.email || '');
   setText('dash-type', user.account_type === 'academia' ? 'Academic Access' : 'Industry Access');
 
-  // Subscription gating: non-active users get the activate prompt; the per-card Launch
-  // buttons become a friendly "Subscribe to launch →" invitation pointing at the activate
-  // flow (/login), rather than a dead, disabled control. Active users keep the static
-  // "Launch [NAME] →" → /<program> markup as authored.
+  // Access gating. Entitlement mirrors the backend's policy (has_boss_access /
+  // has_free_program_access): a user may launch programs if they have an ACTIVE paid
+  // subscription OR they fall in the free tier (academics AND board members). We prefer
+  // the backend's authoritative boss_access flag when the stored session carries it
+  // (/me exposes it); otherwise we derive the free tier locally from account_type /
+  // is_board_member, which the login + /me responses always include.
   const active = user.subscription_status === 'active';
-  if (content) content.classList.toggle('needs-activation', !active);
+  const freeAccess = (typeof user.boss_access === 'boolean')
+    ? user.boss_access
+    : (user.account_type === 'academia' || !!user.is_board_member);
+  const entitled = active || freeAccess;
+
+  // Only genuinely non-entitled users (industry path: not academic, not board, not active)
+  // get the activate prompt and the "Subscribe to launch →" buttons pointing at the Stripe
+  // flow (/login#activate). Entitled users keep the static "Launch [NAME] →" → /<program>
+  // markup as authored, and never see the activate banner.
+  if (content) content.classList.toggle('needs-activation', !entitled);
   const banner = document.getElementById('activate-banner');
-  if (banner) banner.hidden = active;
-  if (!active) {
+  if (banner) banner.hidden = entitled;
+  if (!entitled) {
     document.querySelectorAll('.prog-launch').forEach(a => {
       a.setAttribute('href', '/login#activate');
       a.textContent = 'Subscribe to launch →';

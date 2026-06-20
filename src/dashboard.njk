@@ -37,13 +37,17 @@ description: Your Jorgensen Foundation account dashboard.
     </div>
   </div>
 
-  <!-- Activate prompt — shown by dashboard.js only when subscription_status !== 'active' -->
+  <!-- Activate prompt — shown by dashboard.js only for non-entitled (industry-path) users:
+       not academic, not board member, no active subscription. Because the whole banner is
+       hidden for entitled users, the academic-status request line below is automatically
+       scoped to the industry path only. -->
   <div class="activate-banner" id="activate-banner" hidden>
     <div class="activate-banner-text">
       <span class="activate-banner-title">Activate your subscription</span>
       <p class="activate-banner-body">Subscribe to unlock the computational-chemistry programs below.</p>
     </div>
     <button class="choice-btn choice-btn-primary" type="button" onclick="window.location.href='/login#activate'">Activate Subscription</button>
+    <p class="activate-banner-request">Believe you should have free academic access? <a href="/contact?subject=Academic%20Access">Request academic status →</a></p>
   </div>
 
   <!-- ACTIONS ROW — shown to everyone (grants are free for all) -->

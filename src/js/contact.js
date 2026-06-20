@@ -61,3 +61,16 @@ function submitContact() {
       msgEl.textContent = 'Connection error. Please try again.';
     });
 }
+
+// Deep-link support: a ?subject= query param (e.g. from the dashboard's "Request academic
+// status" link, /contact?subject=Academic%20Access) preselects the matching Subject option.
+// Purely additive and guarded — if the param is absent or doesn't match an option, the form
+// is left exactly as authored.
+(function preselectSubject() {
+  const wanted = new URLSearchParams(window.location.search).get('subject');
+  if (!wanted) return;
+  const select = document.getElementById('subject');
+  if (!select) return;
+  const match = Array.from(select.options).find(o => o.value === wanted);
+  if (match) select.value = wanted;
+})();

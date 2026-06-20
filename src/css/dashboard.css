@@ -41,6 +41,8 @@ a{text-decoration:none;color:inherit}
 .activate-banner-title{display:block;font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--ink);margin-bottom:0.35rem}
 .activate-banner-body{font-size:0.72rem;line-height:1.7;color:var(--body);max-width:560px}
 .activate-banner .choice-btn{flex-shrink:0}
+.activate-banner-request{flex-basis:100%;margin:0;padding-top:1rem;border-top:1px solid var(--hairline);font-size:0.72rem;line-height:1.7;color:var(--body)}
+.activate-banner-request a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
 
 /* --- Actions row (everyone): free-grant CTA + board review — the single "grant is free" message --- */
 .dash-actions{max-width:1100px;margin:0 auto 3rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;background:var(--ground);border:1px solid var(--hairline);padding:1.5rem 2rem}
