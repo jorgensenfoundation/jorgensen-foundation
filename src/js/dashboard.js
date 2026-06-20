@@ -30,20 +30,15 @@ function setText(id, txt) {
 
   // Access gating. Entitlement mirrors the backend's policy (has_boss_access /
   // has_free_program_access): a user may launch programs if they have an ACTIVE paid
-  // subscription OR they fall in the free tier (academics AND board members). We prefer
-  // the backend's authoritative boss_access flag when the stored session carries it
-  // (/me exposes it); otherwise we derive the free tier locally from account_type /
-  // is_board_member, which the login + /me responses always include.
-  const active = user.subscription_status === 'active';
-  const freeAccess = (typeof user.boss_access === 'boolean')
-    ? user.boss_access
-    : (user.account_type === 'academia' || !!user.is_board_member);
-  const entitled = active || freeAccess;
+  // subscription OR they fall in the free tier (academics AND board members). The single
+  // source of truth lives in JFAuth.hasProgramAccess (auth.js) so this gate and the BOSS
+  // launch handler can't diverge.
+  const entitled = JFAuth.hasProgramAccess(user);
 
   // Only genuinely non-entitled users (industry path: not academic, not board, not active)
   // get the activate prompt and the "Subscribe to launch →" buttons pointing at the Stripe
-  // flow (/login#activate). Entitled users keep the static "Launch [NAME] →" → /<program>
-  // markup as authored, and never see the activate banner.
+  // flow (/login#activate). Entitled users keep the static "Launch [NAME] →" markup, and
+  // never see the activate banner.
   if (content) content.classList.toggle('needs-activation', !entitled);
   const banner = document.getElementById('activate-banner');
   if (banner) banner.hidden = entitled;
@@ -52,6 +47,13 @@ function setText(id, txt) {
       a.setAttribute('href', '/login#activate');
       a.textContent = 'Subscribe to launch →';
     });
+  } else {
+    // Entitled: the BOSS card opens the actual app (handing off the session token in the URL
+    // fragment) instead of looping back to the /boss marketing page. Setting the href — rather
+    // than a click handler — keeps middle-click / open-in-new-tab working. Other program cards
+    // keep their authored marketing links untouched.
+    const bossLaunch = document.querySelector('.prog-launch[data-launch="boss"]');
+    if (bossLaunch) bossLaunch.setAttribute('href', JFAuth.bossAppUrl());
   }
 
   // Board-only "Review Applications" choice button (links to /review).

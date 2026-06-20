@@ -18,7 +18,7 @@ navActive: programs
     <p class="hero-subtitle">Biochemical and Organic Simulation System</p>
     <p class="hero-desc">Monte Carlo statistical mechanics and molecular mechanics for organic and biological molecules in solution. Developed over forty years in the Jorgensen group at Yale University, BOSS is the computational core of the Foundation's simulation platform.</p>
     <div class="hero-actions">
-      <a href="/login" class="hero-btn">Launch BOSS →</a>
+      <a href="/login" class="hero-btn" onclick="return JFAuth.launchBoss()">Launch BOSS →</a>
       <a href="#overview" class="hero-btn-ghost">Learn More</a>
     </div>
   </div>
@@ -265,7 +265,7 @@ navActive: programs
   <span class="cta-symbol">{% include "symbols/boss.njk" %}</span>
   <p class="cta-band-sub">Sign in to your account to access BOSS through the browser — no installation required. Academic subscriptions from $49/month.</p>
   <div class="cta-btns">
-    <a href="/login" class="cta-btn-dark">Launch BOSS →</a>
+    <a href="/login" class="cta-btn-dark" onclick="return JFAuth.launchBoss()">Launch BOSS →</a>
     <a href="/#access" class="cta-btn-ghost">View Pricing</a>
   </div>
 </section>
