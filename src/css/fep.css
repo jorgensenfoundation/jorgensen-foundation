@@ -92,3 +92,34 @@ a{text-decoration:none;color:inherit}
   .cap-grid{grid-template-columns:1fr}
   .cta-btns{flex-direction:column;align-items:center}
 }
+
+/* --- LIVE FEP λ-MORPH (fep-morph.js) --------------------------------------- */
+.fep-live{display:grid;grid-template-columns:1.05fr 1fr;background:var(--ink);min-height:90vh}
+.fep-live__stage{position:relative;overflow:hidden;background:var(--ink);min-height:60vh}
+.fep-live__viewer{position:absolute;inset:0;width:100%;height:100%}
+.fep-live__viewer canvas{display:block}
+.fep-live__readout{position:absolute;left:3rem;bottom:3rem;z-index:2;pointer-events:none;display:flex;flex-direction:column;gap:0.4rem}
+.fep-live__lambda{font-family:var(--font-serif);font-weight:300;font-size:2rem;color:var(--cream);line-height:1}
+.fep-live__lambda b{font-weight:400;font-variant-numeric:tabular-nums}
+.fep-live__cap{font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 45%,transparent)}
+.fep-live__panel{display:flex;flex-direction:column;justify-content:center;padding:6rem 4rem;background:var(--ink)}
+.fep-live__panel .section-label{color:var(--cream);margin-bottom:1.25rem}
+.fep-live__panel .section-h2{color:var(--cream);margin-bottom:1.25rem}
+.fep-live__desc{font-family:var(--font-sans);font-size:var(--fs-body);line-height:var(--lh-body);color:color-mix(in srgb,var(--cream) 65%,transparent);max-width:32rem;margin-bottom:2rem}
+.fep-curve{width:100%;max-width:30rem;height:auto;display:block}
+.fep-axis{stroke:color-mix(in srgb,var(--cream) 28%,transparent);stroke-width:1}
+.fep-line{stroke:var(--cream);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.fep-fill{fill:color-mix(in srgb,#C9824E 36%,transparent);stroke:none}
+.fep-mark{fill:#C9824E}
+.fep-axis-lab{fill:color-mix(in srgb,var(--cream) 50%,transparent);font-family:var(--font-sans);font-size:9px;letter-spacing:0.1em;text-transform:uppercase}
+.fep-live__dg{margin-top:1.5rem;font-family:var(--font-serif);font-weight:300;font-size:1.5rem;color:var(--cream)}
+.fep-live__dg b{font-weight:400;font-variant-numeric:tabular-nums}
+.fep-live__note{font-family:var(--font-sans);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--cream) 45%,transparent);vertical-align:middle;margin-left:0.5rem;
+  border:1px solid color-mix(in srgb,var(--cream) 25%,transparent);padding:0.15rem 0.45rem;border-radius:999px}
+@media (max-width:900px){
+  .fep-live{grid-template-columns:1fr}
+  .fep-live__stage{min-height:55vh}
+  .fep-live__panel{padding:4rem 2rem}
+  .fep-live__readout{left:1.5rem;bottom:1.5rem}
+}

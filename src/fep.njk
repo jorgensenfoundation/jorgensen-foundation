@@ -31,6 +31,32 @@ navActive: programs
   </div>
 </div>
 
+<!-- LIVE FEP λ-MORPH -->
+<section class="fep-live">
+  <div class="fep-live__stage">
+    <div id="fep-viewer" class="fep-live__viewer"></div>
+    <div class="fep-live__readout">
+      <span class="fep-live__lambda">λ = <b id="fep-lambda">0.00</b></span>
+      <span class="fep-live__cap">Alchemical perturbation · benzene → chlorobenzene</span>
+    </div>
+  </div>
+  <div class="fep-live__panel">
+    <span class="section-label">Live · Alchemical Transformation</span>
+    <h2 class="section-h2">Watch λ<br><em>do the work.</em></h2>
+    <p class="fep-live__desc">FEP couples one molecule into another through a parameter λ from 0 to 1, integrating ⟨∂H/∂λ⟩ along the path to recover the free-energy difference ΔG.</p>
+    <svg class="fep-curve" viewBox="0 0 320 180" role="img" aria-label="Schematic free-energy curve">
+      <line class="fep-axis" x1="44" y1="146" x2="304" y2="146"/>
+      <line class="fep-axis" x1="44" y1="18" x2="44" y2="146"/>
+      <path id="fep-fill" class="fep-fill" d=""/>
+      <path id="fep-line" class="fep-line" d="" fill="none"/>
+      <circle id="fep-mark" class="fep-mark" cx="44" cy="146" r="4"/>
+      <text class="fep-axis-lab" x="174" y="170" text-anchor="middle">coupling parameter λ →</text>
+      <text class="fep-axis-lab" x="15" y="82" text-anchor="middle" transform="rotate(-90 15 82)">⟨∂H/∂λ⟩</text>
+    </svg>
+    <div class="fep-live__dg">ΔG ≈ <b id="fep-dg">0.0</b> kcal/mol <span class="fep-live__note">schematic</span></div>
+  </div>
+</section>
+
 <section class="overview" id="overview">
   <div class="overview-inner">
     <span class="section-label">Overview</span>
@@ -192,3 +218,5 @@ navActive: programs
 
 
 <script src="/js/fep.js"></script>
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/fep-morph.js"></script>
