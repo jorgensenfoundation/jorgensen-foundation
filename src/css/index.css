@@ -168,3 +168,57 @@ a{text-decoration:none;color:inherit}
   .hp-hero .display{font-size:2.8rem}
   .access{padding:5rem 1.5rem}
 }
+
+/* --- LIVE MOLECULE LAB (replaces FEP feature band) -------------------------
+   Dark split band: editorial copy + try-it on the left, live 3D molecule on
+   the right. 3Dmol paints the #jf-viewer canvas on Midnight (--ink #302C2E).
+   Powered by /js/lab.js (shared with the /lab preview page). -------------------*/
+.hp-lab{display:grid;grid-template-columns:1fr 1.05fr;background:var(--ink);min-height:90vh}
+
+/* left: copy + try-it (on dark) */
+.hp-lab__copy{display:flex;flex-direction:column;justify-content:center;padding:7rem 3rem}
+.hp-lab__copy .eyebrow{color:var(--cream);margin-bottom:1.5rem}
+.hp-lab__copy .h2{color:var(--cream);margin-bottom:1.25rem}
+.hp-lab__copy .body{color:color-mix(in srgb,var(--cream) 62%,transparent);max-width:30rem}
+
+.hp-lab__try{margin-top:2.75rem;max-width:30rem}
+.hp-lab__try .input-label{color:color-mix(in srgb,var(--cream) 55%,transparent)}
+.hp-lab__row{display:flex;gap:1rem;align-items:flex-end}
+.hp-lab__row .input{flex:1;color:var(--cream);border-bottom-color:color-mix(in srgb,var(--cream) 30%,transparent)}
+.hp-lab__row .input::placeholder{color:color-mix(in srgb,var(--cream) 32%,transparent)}
+.hp-lab__row .input:focus{border-bottom-color:var(--cream)}
+.hp-lab__row .btn{white-space:nowrap;flex-shrink:0}
+
+.hp-lab__chips{display:flex;flex-wrap:wrap;gap:0.6rem;max-width:30rem;margin-top:1.75rem}
+.hp-chip{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.2em;
+  text-transform:uppercase;color:color-mix(in srgb,var(--cream) 70%,transparent);
+  background:transparent;border:1px solid color-mix(in srgb,var(--cream) 28%,transparent);
+  border-radius:999px;padding:0.5rem 1rem;cursor:pointer;transition:all 0.2s ease}
+.hp-chip:hover{border-color:var(--cream);color:var(--cream);background:color-mix(in srgb,var(--cream) 10%,transparent)}
+
+.hp-lab__cta{margin-top:2.75rem;align-self:flex-start;background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.hp-lab__cta:hover{background:#fff;border-color:#fff;color:var(--ink)}
+
+/* right: live molecule stage */
+.hp-lab__stage{position:relative;overflow:hidden;min-height:60vh;background:var(--ink)}
+.hp-lab__viewer{position:absolute;inset:0;width:100%;height:100%}
+.hp-lab__viewer canvas{display:block}
+.hp-lab__glow{position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--cream) 15%,transparent) 0%,transparent 55%)}
+.hp-lab__readout{position:absolute;left:3rem;bottom:3rem;z-index:3;pointer-events:none;display:flex;flex-direction:column;gap:0.35rem}
+.hp-lab__name{font-family:var(--font-serif);font-weight:300;font-size:clamp(1.6rem,2.4vw,2rem);line-height:1;letter-spacing:-0.01em;color:var(--cream)}
+.hp-lab__formula{font-family:var(--font-sans);font-size:var(--fs-small);letter-spacing:0.12em;color:color-mix(in srgb,var(--cream) 55%,transparent)}
+.hp-lab__status{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;font-family:var(--font-sans);font-size:var(--fs-small);color:color-mix(in srgb,var(--cream) 70%,transparent);text-align:center;max-width:18rem;pointer-events:none}
+.hp-lab__hint{position:absolute;right:3rem;bottom:3rem;z-index:3;pointer-events:none;font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 35%,transparent)}
+
+@media (max-width:900px){
+  .hp-lab{grid-template-columns:1fr}
+  .hp-lab__stage{order:1;min-height:58vh}
+  .hp-lab__copy{order:2;padding:5rem 2rem}
+  .hp-lab__readout{left:1.5rem;bottom:1.5rem}
+  .hp-lab__hint{right:1.5rem;bottom:1.5rem}
+}
+@media (max-width:560px){
+  .hp-lab__row{flex-direction:column;align-items:stretch}
+  .hp-lab__row .btn{width:100%}
+}

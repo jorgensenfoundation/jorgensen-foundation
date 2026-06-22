@@ -125,18 +125,41 @@ pageCss: /css/index.css
   </div>
 </section>
 
-<!-- FEATURE BAND 2 (FEP) -->
-<section class="hp-feature">
-  <div class="hp-feature__placeholder">
-    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="video-hint">FEP — free energy perturbation calculation</span>
-  </div>
-  <!-- <video autoplay muted loop playsinline src="/videos/fep.mp4"></video> -->
-  <div class="hp-feature__overlay"></div>
-  <div class="hp-feature__content">
+<!-- FEATURE BAND 2 — LIVE MOLECULE LAB (replaces the FEP placeholder band) -->
+<section class="hp-lab" id="lab">
+  <div class="hp-lab__copy">
+    <span class="eyebrow">Parameters to Insight · Live</span>
     <h2 class="h2">From parameters<br>to <em>insight</em>.</h2>
     <p class="body">Submit your inputs. Run in the cloud. Visualise and export results instantly.</p>
-    <a href="#access" class="link-on-dark">Request access</a>
+
+    <form id="try-form" class="hp-lab__try" autocomplete="off">
+      <label class="input-label" for="try-input">Try a molecule</label>
+      <div class="hp-lab__row">
+        <input id="try-input" class="input" type="text" placeholder="caffeine, aspirin, penicillin…" />
+        <button type="submit" class="btn btn--ghost">Render →</button>
+      </div>
+    </form>
+
+    <div class="hp-lab__chips">
+      <button class="hp-chip" data-mol="caffeine">Caffeine</button>
+      <button class="hp-chip" data-mol="aspirin">Aspirin</button>
+      <button class="hp-chip" data-mol="ibuprofen">Ibuprofen</button>
+      <button class="hp-chip" data-mol="glucose">Glucose</button>
+      <button class="hp-chip" data-mol="dopamine">Dopamine</button>
+    </div>
+
+    <a href="#access" class="btn btn--primary hp-lab__cta">Request Access</a>
+  </div>
+
+  <div class="hp-lab__stage">
+    <div id="jf-viewer" class="hp-lab__viewer"></div>
+    <div class="hp-lab__glow" aria-hidden="true"></div>
+    <div class="hp-lab__readout">
+      <span class="hp-lab__name" id="mol-name">Caffeine</span>
+      <span class="hp-lab__formula" id="mol-formula"></span>
+    </div>
+    <div class="hp-lab__status" id="mol-status"></div>
+    <div class="hp-lab__hint">Drag to rotate · scroll to zoom</div>
   </div>
 </section>
 
@@ -359,3 +382,7 @@ pageCss: /css/index.css
 </section>
 
 <script src="/js/index.js"></script>
+
+<!-- Live molecule lab (powers the "From parameters to insight" section) -->
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/lab.js"></script>
