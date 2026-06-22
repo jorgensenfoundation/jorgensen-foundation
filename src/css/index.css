@@ -253,3 +253,10 @@ a{text-decoration:none;color:inherit}
 @media (max-width:760px){
   .hp-stats__grid{grid-template-columns:repeat(2,1fr);gap:3rem 1.5rem}
 }
+
+/* --- "OPEN SCIENCE" SPLIT — live molecular surface (surface.js) ------------- */
+.split-surface{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.split-surface canvas{display:block}
+.split-media__label{position:absolute;left:1.75rem;bottom:1.5rem;z-index:2;pointer-events:none;
+  font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.24em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--cream) 42%,transparent)}

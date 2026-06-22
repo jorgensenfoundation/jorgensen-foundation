@@ -226,11 +226,8 @@ pageCss: /css/index.css
 <!-- SPLIT — SECURITY -->
 <section class="split">
   <div class="split-media">
-    <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem">
-      <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <span class="video-hint">Laboratory — the science behind the programs</span>
-    </div>
-    <!-- <video autoplay muted loop playsinline src="/videos/lab.mp4"></video> -->
+    <div id="jf-surface" class="split-surface"></div>
+    <div class="split-media__label">Molecular surface · cholesterol</div>
   </div>
   <div class="split-text">
     <span class="eyebrow">The Foundation</span>
@@ -411,5 +408,6 @@ pageCss: /css/index.css
 <!-- Live molecule visuals (BOSS protein band + "From parameters to insight" lab) -->
 <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
 <script src="/js/bio.js"></script>
+<script src="/js/surface.js"></script>
 <script src="/js/lab.js"></script>
 <script src="/js/counter.js"></script>
