@@ -1,7 +1,8 @@
 /* Homepage BOSS/MCPRO band — ambient live protein–ligand structure.
-   Renders HIV-1 protease bound to indinavir (PDB 1HSG): Oyster cartoon ribbon
-   with the ligand in stick, brand-coloured atoms, slow auto-spin (drag to rotate).
-   Shares the 3Dmol global loaded on the homepage. */
+   Renders HIV-1 reverse transcriptase bound to the Jorgensen lab's NNRTI
+   inhibitor JLJ334 (PDB 8U69, from the group's own crystallography): Oyster
+   cartoon ribbon with the ligand in stick, brand-coloured atoms, slow auto-spin
+   (drag to rotate). Shares the 3Dmol global loaded on the homepage. */
 (function () {
   var el = document.getElementById('jf-bio');
   if (!el || !window.$3Dmol) return;
@@ -11,7 +12,7 @@
 
   var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E' });
 
-  $3Dmol.download('pdb:1HSG', viewer, {}, function () {
+  $3Dmol.download('pdb:8U69', viewer, {}, function () {
     // Protein backbone as an Oyster ribbon
     viewer.setStyle({}, { cartoon: { color: 0xDEDCD5, thickness: 0.4, arrows: true } });
 
@@ -27,8 +28,8 @@
       });
     });
 
-    // Hide crystallographic waters last so they never reappear
-    viewer.setStyle({ resn: 'HOH' }, {});
+    // Hide waters, ions and cryoprotectants last so only protein + inhibitor show
+    viewer.setStyle({ resn: ['HOH', 'SO4', 'PO4', 'GOL', 'EDO', 'NA', 'MG', 'CL', 'MN', 'ZN', 'ACT'] }, {});
 
     viewer.zoomTo();
     viewer.render();

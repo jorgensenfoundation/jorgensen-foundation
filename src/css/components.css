@@ -201,3 +201,12 @@ select.input{appearance:none;-webkit-appearance:none;cursor:pointer;padding-righ
 .legal-body p+p{margin-top:1rem}
 .legal-body ul{margin:1rem 0 1rem 1.5rem;display:flex;flex-direction:column;gap:0.5rem}
 .legal-body li{font-size:var(--fs-body);line-height:1.9;color:var(--body)}
+
+/* --- SCROLL REVEAL (.reveal added per-element by /js/reveal.js, site-wide) ---
+   Hidden initial state applies ONLY under prefers-reduced-motion:no-preference,
+   so reduced-motion users and any no-JS fallback always see visible content. */
+@media (prefers-reduced-motion: no-preference){
+  .reveal{opacity:0;transform:translateY(20px);
+    transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+  .reveal.is-visible{opacity:1;transform:none}
+}
