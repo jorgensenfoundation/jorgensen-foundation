@@ -222,3 +222,18 @@ a{text-decoration:none;color:inherit}
   .hp-lab__row{flex-direction:column;align-items:stretch}
   .hp-lab__row .btn{width:100%}
 }
+
+/* --- BOSS/MCPRO BAND — live protein–ligand structure (jf-bio) --------------
+   Full-bleed Midnight feature band; 3Dmol paints an ambient protein ribbon
+   behind the existing overlay + content. Powered by /js/bio.js. ---------------*/
+.hp-bio{background:var(--ink)}
+.hp-bio__viewer{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hp-bio__viewer canvas{display:block}
+.hp-bio .hp-feature__overlay{z-index:1}
+.hp-bio .hp-feature__content{z-index:2}
+.hp-bio__label{position:absolute;top:2.5rem;right:3rem;z-index:3;pointer-events:none;
+  font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.24em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--cream) 42%,transparent)}
+@media (max-width:900px){
+  .hp-bio__label{top:1.5rem;right:1.5rem;left:1.5rem;text-align:right}
+}

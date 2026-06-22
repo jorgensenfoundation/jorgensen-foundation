@@ -18,6 +18,10 @@
 
   var viewer = $3Dmol.createViewer(el, { backgroundColor: MIDNIGHT });
 
+  // Brand atom palette — Oyster carbons / Cream hydrogens on Midnight, one warm
+  // accent on oxygen, soft slate on nitrogen. Reads as art-directed, not CPK-default.
+  var BRAND = { C: 0xDEDCD5, H: 0xF4EFE4, O: 0xC9824E, N: 0x9AA0AE, S: 0xE3C766, P: 0xCB8E5A };
+
   // Subscript digits so formulas read like chemistry (C8H10N4O2 -> C₈H₁₀N₄O₂)
   var SUBS = { '0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉' };
   function pretty(formula) {
@@ -25,9 +29,16 @@
   }
 
   function paint() {
+    // Base (covers any element not in BRAND), then per-element brand colours
     viewer.setStyle({}, {
-      stick: { radius: 0.15, colorscheme: 'Jmol' },
-      sphere: { scale: 0.23 }
+      stick: { radius: 0.15, color: 0xDEDCD5 },
+      sphere: { scale: 0.23, color: 0xDEDCD5 }
+    });
+    Object.keys(BRAND).forEach(function (e) {
+      viewer.setStyle({ elem: e }, {
+        stick: { radius: 0.15, color: BRAND[e] },
+        sphere: { scale: 0.23, color: BRAND[e] }
+      });
     });
     viewer.zoomTo();
     viewer.render();

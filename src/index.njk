@@ -52,14 +52,11 @@ pageCss: /css/index.css
   </div>
 </section>
 
-<!-- FEATURE BAND 1 (BOSS) -->
-<section class="hp-feature">
-  <div class="hp-feature__placeholder">
-    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="video-hint">BOSS — Monte Carlo simulation in solution</span>
-  </div>
-  <!-- <video autoplay muted loop playsinline src="/videos/boss.mp4"></video> -->
+<!-- FEATURE BAND 1 (BOSS / MCPRO) — live protein–ligand structure -->
+<section class="hp-feature hp-bio">
+  <div id="jf-bio" class="hp-bio__viewer"></div>
   <div class="hp-feature__overlay"></div>
+  <div class="hp-bio__label">HIV-1 protease · ligand-bound · PDB 1HSG</div>
   <div class="hp-feature__content">
     <h2 class="h2">Molecules simulated.<br><em>Results visualised.</em></h2>
     <p class="body">The power of BOSS and MCPRO with a modern 3D interface. No command line required.</p>
@@ -383,6 +380,7 @@ pageCss: /css/index.css
 
 <script src="/js/index.js"></script>
 
-<!-- Live molecule lab (powers the "From parameters to insight" section) -->
+<!-- Live molecule visuals (BOSS protein band + "From parameters to insight" lab) -->
 <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/bio.js"></script>
 <script src="/js/lab.js"></script>
