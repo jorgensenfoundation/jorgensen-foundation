@@ -253,3 +253,33 @@ a{text-decoration:none;color:inherit}
 @media (max-width:760px){
   .hp-stats__grid{grid-template-columns:repeat(2,1fr);gap:3rem 1.5rem}
 }
+
+/* --- HERO (symbol variant) — JF mark drawn on, no video --------------------- */
+.hp-hero--mark{align-items:center;justify-content:center}
+.hp-hero__glow{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at 38% 50%,color-mix(in srgb,var(--cream) 12%,transparent) 0%,transparent 52%)}
+.hp-hero--mark .hp-hero__inner{position:relative;z-index:1;display:grid;
+  grid-template-columns:auto 1fr;gap:clamp(2.5rem,6vw,6rem);align-items:center;
+  width:100%;max-width:1080px;padding:0 3rem}
+.hp-hero__mark{display:flex;justify-content:center}
+.hero-mark{width:clamp(168px,25vw,330px);height:auto;display:block;overflow:visible}
+.hp-hero__text .display{color:var(--cream);margin-bottom:2.25rem}
+.hp-hero__text .eyebrow{color:var(--cream);margin-bottom:1.25rem}
+
+/* dot + JF need a local box so scale/transform-origin behave */
+.hero-mark__dot,.hero-mark__jf{transform-box:fill-box;transform-origin:center}
+/* default (and reduced-motion): fully drawn, fully visible */
+.hero-mark__box{stroke-dasharray:540}
+@media (prefers-reduced-motion: no-preference){
+  .hero-mark__box{stroke-dashoffset:540;animation:markDraw 1.7s cubic-bezier(.6,0,.2,1) .15s forwards}
+  .hero-mark__dot{opacity:0;animation:markPop .55s cubic-bezier(.2,.7,.2,1) 1.5s forwards}
+  .hero-mark__jf{opacity:0;animation:markFade .9s ease 1.05s forwards}
+}
+@keyframes markDraw{to{stroke-dashoffset:0}}
+@keyframes markPop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+@keyframes markFade{from{opacity:0}to{opacity:1}}
+
+@media (max-width:760px){
+  .hp-hero--mark .hp-hero__inner{grid-template-columns:1fr;gap:2.5rem;padding:0 2rem}
+  .hero-mark{width:132px}
+}
