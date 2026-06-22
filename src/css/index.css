@@ -246,3 +246,17 @@ a{text-decoration:none;color:inherit}
     transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
   .reveal.is-visible{opacity:1;transform:none}
 }
+
+/* --- BY THE NUMBERS — credibility band (counter.js animates .stat__num) ----- */
+.hp-stats{background:var(--surface);padding:7rem 3rem;text-align:center}
+.hp-stats__hd{margin-bottom:4rem}
+.hp-stats__hd .eyebrow{margin-bottom:1.25rem}
+.hp-stats__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem;max-width:1000px;margin:0 auto}
+.stat{display:flex;flex-direction:column;gap:0.75rem}
+.stat__num{font-family:var(--font-serif);font-weight:300;font-size:clamp(2.8rem,5vw,4rem);
+  line-height:1;letter-spacing:-0.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat__label{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.5;
+  color:var(--body);letter-spacing:0.02em;max-width:14rem;margin:0 auto}
+@media (max-width:760px){
+  .hp-stats__grid{grid-template-columns:repeat(2,1fr);gap:3rem 1.5rem}
+}
