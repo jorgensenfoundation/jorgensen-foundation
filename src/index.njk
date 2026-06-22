@@ -7,14 +7,22 @@ mainCss: /css/components.css
 pageCss: /css/index.css
 ---
 
-<!-- HERO -->
-<section class="hp-hero">
-  <video autoplay muted loop playsinline src="/videos/hero.mp4"></video>
-  <div class="hp-hero__overlay"></div>
-  <div class="hp-hero__content">
-    <span class="eyebrow">JORGENSEN FOUNDATION · EST. 2026</span>
-    <h1 class="display">The Shape<br>of <em>Discovery</em></h1>
-    <a href="#programs" class="btn btn--ghost">Explore Our Programs</a>
+<!-- HERO — Foundation symbol, drawn on (no stock video) -->
+<section class="hp-hero hp-hero--mark">
+  <div class="hp-hero__glow" aria-hidden="true"></div>
+  <div class="hp-hero__inner">
+    <div class="hp-hero__mark">
+      <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="Jorgensen Foundation">
+        <rect class="hero-mark__box" x="25" y="25" width="150" height="150" rx="38" fill="none" stroke="#f4efe4" stroke-width="8"/>
+        <circle class="hero-mark__dot" cx="55" cy="55" r="9" fill="#f4efe4"/>
+        <text class="hero-mark__jf" x="100" y="128" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="78" fill="#f4efe4">JF</text>
+      </svg>
+    </div>
+    <div class="hp-hero__text">
+      <span class="eyebrow">JORGENSEN FOUNDATION · EST. 2026</span>
+      <h1 class="display">The Shape<br>of <em>Discovery</em></h1>
+      <a href="#programs" class="btn btn--ghost">Explore Our Programs</a>
+    </div>
   </div>
   <div class="hp-hero__scroll">
     <span>Scroll</span>
