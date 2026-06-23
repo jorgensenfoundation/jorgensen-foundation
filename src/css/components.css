@@ -19,7 +19,13 @@
    ============================================================================ */
 footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:var(--ground)}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
-.footer-logo{font-family:var(--font-serif);font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block;color:var(--ink)}
+/* Brand stacked lockup — Ink mark · Oyster hairline · Stone EST, left-aligned. */
+.footer-logo{display:inline-flex;flex-direction:column;align-items:flex-start;font-family:var(--font-serif);color:var(--ink);margin-bottom:1.5rem}
+.footer-logo-mono{font-weight:600;font-size:2rem;letter-spacing:-0.05em;line-height:1}
+.footer-logo-word{font-weight:500;font-size:1.55rem;letter-spacing:0.05em;text-transform:uppercase;line-height:1;margin-top:0.22em}
+.footer-logo-rule{width:188px;height:1px;background:var(--surface);margin:0.42em 0}
+.footer-logo-sub{font-weight:500;font-size:0.66rem;letter-spacing:0.5em;text-transform:uppercase;padding-left:0.5em}
+.footer-logo-est{font-weight:500;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--body);padding-left:0.4em;margin-top:0.7em}
 .footer-desc{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.9;color:var(--body);max-width:280px}
 .footer-col h4{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.28em;text-transform:uppercase;color:var(--ink);margin-bottom:1.25rem}
 .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}

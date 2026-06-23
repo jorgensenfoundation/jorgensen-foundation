@@ -1,6 +1,10 @@
 <!-- NAV -->
 <nav id="nav" class="nav--hero">
-  <a href="/" class="nav-logo">Jorgensen Foundation</a>
+  <a href="/" class="nav-logo" aria-label="Jorgensen Foundation — home">
+    <span class="nav-logo-mono">JF</span>
+    <span class="nav-logo-bar" aria-hidden="true"></span>
+    <span class="nav-logo-word">Jorgensen Foundation</span>
+  </a>
   <div class="nav-links">
     <div class="nav-dropdown">
       <a class="nav-dropdown-toggle{% if navActive == "programs" %} active{% endif %}" role="button" tabindex="0" onclick="toggleDropdown(event)">Programs</a>
