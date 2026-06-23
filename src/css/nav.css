@@ -12,10 +12,20 @@
 
 /* --- Shared base (common to all three) --- */
 nav{display:flex;justify-content:space-between;align-items:center;transition:background 0.4s,padding 0.4s}
-.nav-logo{font-family:var(--font-serif);font-size:1rem;font-weight:400;letter-spacing:0.35em;text-transform:uppercase;text-decoration:none}
-/* Phones: readable wordmark on one line. With Search moved into the hamburger menu the
-   top bar has room, so this is only slightly smaller/tighter than the 1rem/0.35em desktop. */
-@media(max-width:600px){ .nav-logo{font-size:0.92rem;letter-spacing:0.2em;white-space:nowrap} }
+/* Brand lockup: kerned JF monogram · hairline divider · letterspaced wordmark.
+   Colour is inherited from the nav-variant rules (cream over hero, ink scrolled),
+   so the divider uses currentColor and the spans inherit. */
+.nav-logo{display:inline-flex;align-items:center;gap:0.62rem;font-family:var(--font-serif);text-decoration:none;line-height:1}
+.nav-logo-mono{font-weight:600;font-size:1.3rem;letter-spacing:-0.04em;line-height:1}
+.nav-logo-bar{width:1px;height:1.3rem;background:currentColor;opacity:0.38}
+.nav-logo-word{font-weight:500;font-size:0.9rem;letter-spacing:0.32em;text-transform:uppercase;line-height:1;white-space:nowrap}
+/* Phones: keep the lockup on one line, slightly tighter. */
+@media(max-width:600px){
+  .nav-logo{gap:0.5rem}
+  .nav-logo-mono{font-size:1.15rem}
+  .nav-logo-word{font-size:0.78rem;letter-spacing:0.18em}
+}
+@media(max-width:380px){ .nav-logo-word{display:none} }
 .nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;transition:opacity 0.2s,color 0.4s}
 /* Mobile-menu search box (hidden on desktop; revealed inside the hamburger drawer below). */
