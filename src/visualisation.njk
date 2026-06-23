@@ -8,9 +8,14 @@ permalink: /visualisation/index.html
 navActive: programs
 ---
 
-<section class="hero">
+<section class="hero hero--vis">
   <div class="hero-bg"></div>
+  <div id="vis-viewer" class="vis-hero__viewer"></div>
   <div class="hero-overlay"></div>
+  <div class="vis-hero__readout">
+    <span class="lam" id="vis-mode">ribbon</span>
+    <span class="cap">rendering mode · trypsin–benzamidine</span>
+  </div>
   <div class="hero-content">
     <span class="hero-tag">VISUALISATION · JORGENSEN FOUNDATION</span>
     <h1 class="hero-h1">Visualisation</h1>
@@ -167,4 +172,8 @@ navActive: programs
     <a href="/#access" class="cta-btn-ghost">View Pricing</a>
   </div>
 </section>
+
+
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/visualisation-suite.js"></script>
 
