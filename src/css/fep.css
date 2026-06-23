@@ -98,8 +98,8 @@ a{text-decoration:none;color:inherit}
 .fep-hero__viewer canvas{display:block}
 .hero--fep .hero-overlay{z-index:2}
 .hero--fep .hero-content{z-index:3}
-.fep-hero__lambda{position:absolute;left:72.5%;top:64%;transform:translateX(-50%);z-index:3;pointer-events:none;
-  display:flex;flex-direction:column;gap:0.3rem;align-items:center;text-align:center}
+.fep-hero__lambda{position:absolute;left:72.5%;top:76%;transform:translateX(-50%);z-index:3;pointer-events:none;
+  display:flex;flex-direction:column;gap:0.4rem;align-items:center;text-align:center}
 .fep-hero__lambda .lam{font-family:var(--font-serif);font-weight:300;font-size:1.9rem;color:var(--cream);line-height:1}
 .fep-hero__lambda .lam b{font-weight:400;font-variant-numeric:tabular-nums}
 .fep-hero__lambda .cap{font-family:var(--font-sans);font-size:0.55rem;letter-spacing:0.2em;
