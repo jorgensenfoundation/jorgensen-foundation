@@ -53,7 +53,7 @@
 
   $3Dmol.download('pdb:3PTB', viewer, {}, function () {
     viewer.zoomTo(PROTEIN);
-    viewer.zoom(0.85, 400);
+    viewer.zoom(0.6, 400);
     show(0);
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
