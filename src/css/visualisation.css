@@ -74,3 +74,18 @@ a{text-decoration:none;color:inherit}
   .cap-grid{grid-template-columns:1fr}
   .cta-btns{flex-direction:column;align-items:center}
 }
+
+/* --- LIVE VISUALISATION-SUITE DEMO in the hero (visualisation-suite.js) --- */
+.vis-hero__viewer{position:absolute;top:0;right:0;bottom:0;width:55%;z-index:1}
+.vis-hero__viewer canvas{display:block}
+.hero--vis .hero-overlay{z-index:2}
+.hero--vis .hero-content{z-index:3}
+.vis-hero__readout{position:absolute;left:72.5%;top:76%;transform:translateX(-50%);z-index:3;pointer-events:none;
+  display:flex;flex-direction:column;gap:0.4rem;align-items:center;text-align:center}
+.vis-hero__readout .lam{font-family:var(--font-serif);font-weight:300;font-size:1.9rem;color:var(--cream);line-height:1;text-transform:lowercase}
+.vis-hero__readout .cap{font-family:var(--font-sans);font-size:0.55rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:color-mix(in srgb,var(--cream) 45%,transparent)}
+@media (max-width:900px){
+  .vis-hero__viewer{width:100%;opacity:0.5}
+  .vis-hero__readout{left:50%;top:auto;bottom:9rem;transform:translateX(-50%)}
+}
