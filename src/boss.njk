@@ -9,9 +9,14 @@ navActive: programs
 ---
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero hero--boss">
   <div class="hero-bg"></div>
+  <div id="boss-viewer" class="boss-hero__viewer"></div>
   <div class="hero-overlay"></div>
+  <div class="boss-hero__readout">
+    <span class="lam"><b id="boss-step">0</b> configurations</span>
+    <span class="cap">monte carlo · phenol in explicit solvent</span>
+  </div>
   <div class="hero-content">
     <span class="hero-tag">BOSS · JORGENSEN FOUNDATION</span>
     <h1 class="hero-h1">BOSS</h1>
@@ -275,3 +280,5 @@ navActive: programs
 
 
 <script src="/js/boss.js"></script>
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/boss-mc.js"></script>
