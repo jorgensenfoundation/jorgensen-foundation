@@ -8,9 +8,14 @@ permalink: /fep/index.html
 navActive: programs
 ---
 
-<section class="hero">
+<section class="hero hero--fep">
   <div class="hero-bg"></div>
+  <div id="fep-viewer" class="fep-hero__viewer"></div>
   <div class="hero-overlay"></div>
+  <div class="fep-hero__lambda">
+    <span class="lam">λ = <b id="fep-lambda">0.00</b></span>
+    <span class="cap">alchemical perturbation · benzene → chlorobenzene</span>
+  </div>
   <div class="hero-content">
     <span class="hero-tag">FEP · JORGENSEN FOUNDATION</span>
     <h1 class="hero-h1">FEP</h1>
@@ -192,3 +197,5 @@ navActive: programs
 
 
 <script src="/js/fep.js"></script>
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/fep-morph.js"></script>
