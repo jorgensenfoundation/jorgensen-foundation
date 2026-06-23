@@ -9,7 +9,8 @@
 
   var OYSTER = 0xDEDCD5, AMBER = 0xC9824E;
   var BRAND = { C: OYSTER, H: 0xF4EFE4, O: AMBER, N: 0x9AA0AE };
-  var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E' });
+  // Transparent canvas so the hero's gradient background shows through (not a flat box)
+  var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E', backgroundAlpha: 0 });
   var lambdaEl = document.getElementById('fep-lambda');
 
   function styleMol(L) {
@@ -23,7 +24,7 @@
     viewer.zoomTo();
     styleMol(0);
     if (lambdaEl) lambdaEl.textContent = '0.00';
-    viewer.zoom(1.15, 400);
+    viewer.zoom(0.6, 400);   // smaller, more restrained presence
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) { styleMol(1); if (lambdaEl) lambdaEl.textContent = '1.00'; return; }
