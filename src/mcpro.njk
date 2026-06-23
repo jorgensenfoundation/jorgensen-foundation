@@ -8,9 +8,14 @@ permalink: /mcpro/index.html
 navActive: programs
 ---
 
-<section class="hero">
+<section class="hero hero--mcpro">
   <div class="hero-bg"></div>
+  <div id="mcpro-viewer" class="mcpro-hero__viewer"></div>
   <div class="hero-overlay"></div>
+  <div class="mcpro-hero__readout">
+    <span class="lam"><b id="mcpro-step">0</b> configurations</span>
+    <span class="cap">monte carlo sampling · crambin</span>
+  </div>
   <div class="hero-content">
     <span class="hero-tag">MCPRO · JORGENSEN FOUNDATION</span>
     <h1 class="hero-h1">MCPRO</h1>
@@ -192,3 +197,5 @@ navActive: programs
 
 
 <script src="/js/mcpro.js"></script>
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/mcpro-mc.js"></script>
