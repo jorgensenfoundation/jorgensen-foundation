@@ -17,12 +17,14 @@
 
   var PROTEIN = { hetflag: false };
   var LIGAND = { resn: 'MK1' };
+  var CORE = 14; // atoms of the starting scaffold already seated in the pocket
 
   function paint(count, order) {
     viewer.setStyle(LIGAND, {}); // hide whole ligand
     var shown = order.slice(0, count);
     viewer.setStyle({ index: shown }, { stick: { radius: 0.2, color: OYSTER }, sphere: { scale: 0.32, color: OYSTER } });
-    var front = order.slice(Math.max(0, count - 3), count); // most recently placed
+    // Flash only the fragments grown beyond the core — the core stays settled.
+    var front = order.slice(Math.max(CORE, count - 3), count);
     viewer.setStyle({ index: front }, { stick: { radius: 0.22, color: AMBER }, sphere: { scale: 0.40, color: AMBER } });
     if (nEl) nEl.textContent = count;
     viewer.render();
@@ -56,8 +58,8 @@
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.05 }).observe(el);
     }
 
-    var count = 1, phase = 'grow', holdStart = 0, last = 0;
-    var STEP = 2, GROW_INTERVAL = 190, HOLD = 1400, SEED = 1;
+    var count = Math.min(CORE, N), phase = 'grow', holdStart = 0, last = 0;
+    var STEP = 2, GROW_INTERVAL = 190, HOLD = 1400, SEED = count;
     paint(count, order);
 
     function loop(ts) {
