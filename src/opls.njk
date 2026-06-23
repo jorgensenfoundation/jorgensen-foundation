@@ -8,9 +8,14 @@ permalink: /opls/index.html
 navActive: programs
 ---
 
-<section class="hero">
+<section class="hero hero--opls">
   <div class="hero-bg"></div>
+  <div id="opls-viewer" class="opls-hero__viewer"></div>
   <div class="hero-overlay"></div>
+  <div class="opls-hero__readout">
+    <span class="lam"><b id="opls-q">0.000</b> e</span>
+    <span class="cap" id="opls-type">opls-aa parameters · methanol</span>
+  </div>
   <div class="hero-content">
     <span class="hero-tag">OPLS · JORGENSEN FOUNDATION</span>
     <h1 class="hero-h1">OPLS</h1>
@@ -190,3 +195,5 @@ navActive: programs
 
 
 <script src="/js/opls.js"></script>
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/opls-ff.js"></script>
