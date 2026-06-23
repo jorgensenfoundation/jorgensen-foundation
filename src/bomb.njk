@@ -8,9 +8,14 @@ permalink: /bomb/index.html
 navActive: programs
 ---
 
-<section class="hero">
+<section class="hero hero--bomb">
   <div class="hero-bg"></div>
+  <div id="bomb-viewer" class="bomb-hero__viewer"></div>
   <div class="hero-overlay"></div>
+  <div class="bomb-hero__readout">
+    <span class="lam"><b id="bomb-n">1</b> <span id="bomb-unit">fragment</span></span>
+    <span class="cap">structure-based growth · HIV-1 protease</span>
+  </div>
   <div class="hero-content">
     <span class="hero-tag">BOMB · JORGENSEN FOUNDATION</span>
     <h1 class="hero-h1">BOMB</h1>
@@ -192,3 +197,5 @@ navActive: programs
 
 
 <script src="/js/bomb.js"></script>
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/bomb-grow.js"></script>
