@@ -32,7 +32,7 @@
   $3Dmol.download('pdb:1CRN', viewer, {}, function () {
     styleProtein();
     viewer.zoomTo();
-    viewer.zoom(0.6, 400);
+    viewer.zoom(0.5, 400);
     viewer.render();
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
