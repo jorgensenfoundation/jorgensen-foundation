@@ -59,7 +59,7 @@ a{text-decoration:none;color:inherit}
 .prog-card:hover{box-shadow:0 8px 30px color-mix(in srgb,var(--ink) 10%,transparent)}
 .prog-body{padding:1.75rem;display:flex;flex-direction:column;flex:1}
 .prog-icon{color:var(--ink);margin-bottom:1.1rem}
-.prog-icon .prog-symbol{display:block;width:56px;height:56px}
+.prog-icon .prog-symbol{display:block;width:auto;height:42px}
 .prog-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:0.45rem;line-height:1.2}
 .prog-tagline{font-size:0.62rem;letter-spacing:0.1em;color:var(--body);text-transform:uppercase;margin-bottom:0.9rem}
 .prog-short{font-size:0.72rem;line-height:1.8;color:var(--body)}

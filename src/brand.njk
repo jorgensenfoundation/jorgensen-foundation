@@ -53,18 +53,27 @@ description: Download the Jorgensen Foundation logo for posters, presentations, 
     </div>
   </section>
 
-  <!-- SYMBOL only -->
+  <!-- LOGO: stacked, centered -->
   <section class="brand-group">
-    <h2 class="brand-group-h">Symbol only</h2>
+    <h2 class="brand-group-h">Logo — Stacked (Centered)</h2>
     <div class="brand-swatches">
-      <div class="brand-swatch light sym"><img src="/img/brand/jf-symbol-midnight.svg" alt="Jorgensen Foundation JF symbol in Midnight"></div>
-      <div class="brand-swatch dark sym"><img src="/img/brand/jf-symbol-cream.svg" alt="Jorgensen Foundation JF symbol in Cream"></div>
+      <div class="brand-swatch light lock-stacked"><img src="/img/brand/jf-lockup-stacked-centered-midnight.svg" alt="Jorgensen Foundation centered stacked logo in Midnight"></div>
+      <div class="brand-swatch dark lock-stacked"><img src="/img/brand/jf-lockup-stacked-centered-cream.svg" alt="Jorgensen Foundation centered stacked logo in Cream"></div>
     </div>
     <div class="brand-dl">
-      <a class="btn btn--secondary" href="/img/brand/jf-symbol-midnight.svg" download>SVG · Midnight</a>
-      <a class="btn btn--secondary" href="/img/brand/jf-symbol-cream.svg" download>SVG · Cream</a>
-      <a class="btn btn--secondary" href="/img/brand/jf-symbol-midnight-2048.png" download>PNG · Midnight</a>
-      <a class="btn btn--secondary" href="/img/brand/jf-symbol-cream-2048.png" download>PNG · Cream</a>
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-centered-midnight.svg" download>SVG · Midnight</a>
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-centered-cream.svg" download>SVG · Cream</a>
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-centered-midnight-1024.png" download>PNG · Midnight</a>
+      <a class="btn btn--secondary" href="/img/brand/jf-lockup-stacked-centered-cream-1024.png" download>PNG · Cream</a>
+    </div>
+  </section>
+
+  <!-- LEGACY: retired rounded-square JF symbol (reference only, no downloads) -->
+  <section class="brand-group brand-legacy">
+    <h2 class="brand-group-h">Early mark — retired</h2>
+    <div class="brand-legacy-row">
+      <div class="brand-legacy-mark"><img src="/img/brand/jf-symbol-midnight.svg" alt="Retired rounded-square JF symbol" width="56" height="56"></div>
+      <p class="brand-legacy-note"><b>No longer in use.</b> An early rounded-square JF symbol, retired in favour of the typographic lockup above. Shown for reference only — please don't use it on new materials.</p>
     </div>
   </section>
 
@@ -82,8 +91,7 @@ description: Download the Jorgensen Foundation logo for posters, presentations, 
     <div class="brand-swatches brand-progs">
       {% for p in programs %}
       <div class="brand-prog">
-        <div class="brand-swatch light sym"><img src="/img/brand/programs/{{ p.slug }}-midnight.svg" alt="{{ p.label }} program mark"></div>
-        <p class="brand-prog-label">{{ p.label }}</p>
+        <div class="brand-swatch light prog"><img src="/img/brand/programs/{{ p.slug }}-midnight.svg" alt="{{ p.label }} program mark"></div>
         <div class="brand-dl brand-dl--prog">
           <a class="btn btn--secondary" href="/img/brand/programs/{{ p.slug }}-midnight.svg" download>SVG · Midnight</a>
           <a class="btn btn--secondary" href="/img/brand/programs/{{ p.slug }}-cream.svg" download>SVG · Cream</a>
