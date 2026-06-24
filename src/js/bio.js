@@ -12,6 +12,10 @@
 
   var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E' });
 
+  // Drag-to-rotate stays; let the wheel/two-finger gesture scroll the page rather
+  // than being hijacked for zoom (intercept before 3Dmol's canvas handler).
+  el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
+
   $3Dmol.download('pdb:8U69', viewer, {}, function () {
     // Protein backbone as an Oyster ribbon
     viewer.setStyle({}, { cartoon: { color: 0xDEDCD5, thickness: 0.4, arrows: true } });

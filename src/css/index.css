@@ -290,3 +290,15 @@ a{text-decoration:none;color:inherit}
   .hp-hero--mark .hp-hero__inner{grid-template-columns:1fr;gap:2.5rem;padding:0 2rem}
   .hero-mark{width:132px}
 }
+
+/* --- Homepage hero: signature live structure (hp-hero-bio.js) ------------- */
+.hp-hero--bio{align-items:flex-end}
+.hp-hero__viewer{position:absolute;inset:0;z-index:0}
+.hp-hero__viewer canvas{display:block}
+.hp-hero--bio .hp-hero__overlay{z-index:1;pointer-events:none}
+.hp-hero--bio .hp-hero__content{position:relative;z-index:2;pointer-events:none}
+.hp-hero--bio .hp-hero__content .btn{pointer-events:auto}
+.hp-hero__credit{position:absolute;top:6.75rem;right:3rem;z-index:2;text-align:right;line-height:1.7;pointer-events:none;
+  font-family:var(--font-sans);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--cream) 48%,transparent)}
+@media(max-width:760px){ .hp-hero__credit{display:none} }

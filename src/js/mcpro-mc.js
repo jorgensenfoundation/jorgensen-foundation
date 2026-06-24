@@ -12,6 +12,8 @@
 
   var OYSTER = 0xDEDCD5, CREAM = 0xF4EFE4, AMBER = 0xC9824E;
   var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E', backgroundAlpha: 0 });
+  // Let the wheel/two-finger gesture scroll the page instead of zooming the canvas.
+  el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
   var stepEl = document.getElementById('mcpro-step');
 
   function styleProtein() {
