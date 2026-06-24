@@ -1,11 +1,11 @@
 // Homepage-only behaviour: billing toggle, registration modal, FAQ accordion.
+// The billing toggle now affects Industry only — Academia is free, so its card
+// stays "Free" in both monthly and annual states.
 let isAnnual = false;
 function toggleBilling() {
   isAnnual = !isAnnual;
   const knob = document.getElementById('toggle-knob');
   knob.style.transform = isAnnual ? 'translateX(20px)' : 'translateX(0)';
-  document.getElementById('academia-price').textContent = isAnnual ? '$490' : '$49';
-  document.getElementById('academia-period').textContent = isAnnual ? 'per year' : 'per month';
   document.getElementById('industry-price').textContent = isAnnual ? '$1,990' : '$199';
   document.getElementById('industry-period').textContent = isAnnual ? 'per year' : 'per month';
 }

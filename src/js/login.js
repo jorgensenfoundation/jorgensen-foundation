@@ -10,7 +10,9 @@ const API = 'https://jorgensen-backend-production.up.railway.app';
 let currentUser = null;
 let selectedPlan = 'monthly';
 
-const ACADEMIA_PRICES = { monthly: '$49/mo', annual: '$490/yr' };
+// Academic access is free — academics are entitled and never reach the payment page (see the
+// entitlement gate in the bootstrap). Kept only as a defensive label if opened directly.
+const ACADEMIA_PRICES = { monthly: 'Free', annual: 'Free' };
 const INDUSTRY_PRICES = { monthly: '$199/mo', annual: '$1,990/yr' };
 
 function showPage(id) {
@@ -30,12 +32,19 @@ function showAppNavUser(user) {
   if (lo) lo.style.display = 'inline';
 }
 
+// Wrap the "/period" suffix in a <span> for styling — but only when there is one. A plain
+// string like "Free" (no slash) renders as-is, avoiding a stray closing tag.
+function priceHtml(p) {
+  const i = p.indexOf('/');
+  return i === -1 ? p : p.slice(0, i) + '<span>' + p.slice(i) + '</span>';
+}
+
 function setupPaymentPage(user) {
   const isAcademia = user.account_type === 'academia';
   const prices = isAcademia ? ACADEMIA_PRICES : INDUSTRY_PRICES;
   document.getElementById('plan-type-label').textContent = isAcademia ? 'Academia Access' : 'Industry Access';
-  document.getElementById('price-monthly').innerHTML = prices.monthly.replace('/', '<span>/') + '</span>';
-  document.getElementById('price-annual').innerHTML = prices.annual.replace('/', '<span>/') + '</span>';
+  document.getElementById('price-monthly').innerHTML = priceHtml(prices.monthly);
+  document.getElementById('price-annual').innerHTML = priceHtml(prices.annual);
 }
 
 function selectPlan(period) {
@@ -158,7 +167,13 @@ if (saved) {
   const user = JSON.parse(saved);
   currentUser = user;
   const wantsActivate = location.hash === '#activate';
-  if (wantsActivate && user.subscription_status !== 'active') {
+  // Only genuinely non-entitled users (industry path, not yet active) see the Stripe payment
+  // page. Academics and board members are the free tier — entitled, so they go straight to the
+  // dashboard and never see a price. Mirrors JFAuth.hasProgramAccess / the backend.
+  const entitled = (window.JFAuth && JFAuth.hasProgramAccess)
+    ? JFAuth.hasProgramAccess(user)
+    : (user.subscription_status === 'active' || user.account_type === 'academia' || user.is_board_member);
+  if (wantsActivate && !entitled) {
     showAppNavUser(user);
     setupPaymentPage(user);
     showPage('page-payment');
