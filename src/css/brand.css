@@ -22,7 +22,6 @@ a{text-decoration:none;color:inherit}
 .brand-swatch{border:1px solid var(--hairline);display:flex;align-items:center;justify-content:center;padding:3rem 2rem;min-height:170px}
 .brand-swatch.dark{background:var(--ink);border-color:var(--ink)}
 .brand-swatch img{display:block;max-width:100%;height:auto}
-.brand-swatch.sym img{width:92px;height:92px}
 .brand-swatch.lock img{width:360px;max-width:100%;height:auto}
 .brand-swatch.lock-stacked img{width:240px;max-width:100%;height:auto}
 
