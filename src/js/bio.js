@@ -1,8 +1,9 @@
-/* Homepage BOSS/MCPRO band — ambient live protein–ligand structure.
-   Renders HIV-1 reverse transcriptase bound to the Jorgensen lab's NNRTI
-   inhibitor JLJ334 (PDB 8U69, from the group's own crystallography): Oyster
-   cartoon ribbon with the ligand in stick, brand-coloured atoms, slow auto-spin
-   (drag to rotate). Shares the 3Dmol global loaded on the homepage. */
+/* Homepage BOSS/MCPRO band — live molecular surface.
+   Cholesterol (PubChem CID 5997) as a brand-coloured stick model wrapped in a
+   translucent Connolly (molecular) surface, reading as soft electron density —
+   a different representation from the hero's protein ribbon, so the page doesn't
+   repeat a look. Slow auto-spin; drag to rotate; the wheel/two-finger gesture
+   scrolls the page. Shares the 3Dmol global loaded on the homepage. */
 (function () {
   var el = document.getElementById('jf-bio');
   if (!el || !window.$3Dmol) return;
@@ -16,28 +17,16 @@
   // than being hijacked for zoom (intercept before 3Dmol's canvas handler).
   el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
 
-  $3Dmol.download('pdb:8U69', viewer, {}, function () {
-    // Protein backbone as an Oyster ribbon
-    viewer.setStyle({}, { cartoon: { color: 0xDEDCD5, thickness: 0.4, arrows: true } });
-
-    // Ligand (all hetero atoms) as sticks + small spheres
-    viewer.setStyle({ hetflag: true }, {
-      stick: { radius: 0.2, color: 0xDEDCD5 },
-      sphere: { scale: 0.25, color: 0xDEDCD5 }
-    });
+  $3Dmol.download('cid:5997', viewer, {}, function () {
+    viewer.setStyle({}, { stick: { radius: 0.15, color: 0xDEDCD5 } });
     Object.keys(BRAND).forEach(function (e) {
-      viewer.setStyle({ hetflag: true, elem: e }, {
-        stick: { radius: 0.2, color: BRAND[e] },
-        sphere: { scale: 0.25, color: BRAND[e] }
-      });
+      viewer.setStyle({ elem: e }, { stick: { radius: 0.15, color: BRAND[e] } });
     });
-
-    // Hide waters, ions and cryoprotectants last so only protein + inhibitor show
-    viewer.setStyle({ resn: ['HOH', 'SO4', 'PO4', 'GOL', 'EDO', 'NA', 'MG', 'CL', 'MN', 'ZN', 'ACT'] }, {});
-
+    // Translucent molecular surface in Oyster — reads as soft electron density
+    viewer.addSurface($3Dmol.SurfaceType.MS, { opacity: 0.5, color: 0xDEDCD5 });
     viewer.zoomTo();
     viewer.render();
-    viewer.zoom(0.78, 800);
+    viewer.zoom(1.1, 800);
     viewer.spin('y', 0.3);
   });
 }());
