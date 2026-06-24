@@ -10,7 +10,9 @@ const API = 'https://jorgensen-backend-production.up.railway.app';
 let currentUser = null;
 let selectedPlan = 'monthly';
 
-const ACADEMIA_PRICES = { monthly: '$49/mo', annual: '$490/yr' };
+// Academic access is free — academics are entitled and never reach the payment page (see the
+// entitlement gate in the bootstrap). Kept only as a defensive label if opened directly.
+const ACADEMIA_PRICES = { monthly: 'Free', annual: 'Free' };
 const INDUSTRY_PRICES = { monthly: '$199/mo', annual: '$1,990/yr' };
 
 function showPage(id) {
@@ -158,7 +160,13 @@ if (saved) {
   const user = JSON.parse(saved);
   currentUser = user;
   const wantsActivate = location.hash === '#activate';
-  if (wantsActivate && user.subscription_status !== 'active') {
+  // Only genuinely non-entitled users (industry path, not yet active) see the Stripe payment
+  // page. Academics and board members are the free tier — entitled, so they go straight to the
+  // dashboard and never see a price. Mirrors JFAuth.hasProgramAccess / the backend.
+  const entitled = (window.JFAuth && JFAuth.hasProgramAccess)
+    ? JFAuth.hasProgramAccess(user)
+    : (user.subscription_status === 'active' || user.account_type === 'academia' || user.is_board_member);
+  if (wantsActivate && !entitled) {
     showAppNavUser(user);
     setupPaymentPage(user);
     showPage('page-payment');
