@@ -12,6 +12,8 @@
   var OYSTER = 0xDEDCD5, AMBER = 0xC9824E;
   var BRAND = { C: OYSTER, H: 0xF4EFE4, O: AMBER, N: 0x9AA0AE };
   var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E', backgroundAlpha: 0 });
+  // Let the wheel/two-finger gesture scroll the page instead of zooming the canvas.
+  el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
   var stepEl = document.getElementById('boss-step');
 
   function styleMol() {

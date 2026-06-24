@@ -11,6 +11,8 @@
   var BRAND = { C: OYSTER, H: 0xF4EFE4, O: AMBER, N: 0x9AA0AE };
   // Transparent canvas so the hero's gradient background shows through (not a flat box)
   var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E', backgroundAlpha: 0 });
+  // Let the wheel/two-finger gesture scroll the page instead of zooming the canvas.
+  el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
   var lambdaEl = document.getElementById('fep-lambda');
 
   function styleMol(L) {

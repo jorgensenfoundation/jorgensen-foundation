@@ -7,22 +7,16 @@ mainCss: /css/components.css
 pageCss: /css/index.css
 ---
 
-<!-- HERO — Foundation symbol, drawn on (no stock video) -->
-<section class="hp-hero hp-hero--mark">
-  <div class="hp-hero__glow" aria-hidden="true"></div>
-  <div class="hp-hero__inner">
-    <div class="hp-hero__mark">
-      <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="Jorgensen Foundation">
-        <rect class="hero-mark__box" x="25" y="25" width="150" height="150" rx="38" fill="none" stroke="#f4efe4" stroke-width="8"/>
-        <circle class="hero-mark__dot" cx="55" cy="55" r="9" fill="#f4efe4"/>
-        <text class="hero-mark__jf" x="100" y="128" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="78" fill="#f4efe4">JF</text>
-      </svg>
-    </div>
-    <div class="hp-hero__text">
-      <span class="eyebrow">JORGENSEN FOUNDATION · EST. 2026</span>
-      <h1 class="display">The Shape<br>of <em>Discovery</em></h1>
-      <a href="#programs" class="btn btn--ghost">Explore Our Programs</a>
-    </div>
+<!-- HERO — signature live structure (the lab's own HIV-1 RT, PDB 8U69) -->
+<section class="hp-hero hp-hero--bio">
+  <div id="hp-hero-bio" class="hp-hero__viewer"></div>
+  <div class="hp-hero__overlay"></div>
+  <div class="hp-hero__credit">HIV-1 reverse transcriptase<br>Jorgensen-lab inhibitor · PDB 8U69</div>
+  <div class="hp-hero__content">
+    <span class="hp-hero__mono">JF</span>
+    <span class="eyebrow">JORGENSEN FOUNDATION · EST. 2026</span>
+    <h1 class="display">The Shape<br>of <em>Discovery</em></h1>
+    <a href="#programs" class="btn btn--ghost">Explore Our Programs</a>
   </div>
   <div class="hp-hero__scroll">
     <span>Scroll</span>
@@ -413,8 +407,9 @@ pageCss: /css/index.css
 
 <script src="/js/index.js"></script>
 
-<!-- Live molecule visuals (BOSS protein band + "From parameters to insight" lab) -->
+<!-- Live molecule visuals (hero structure + BOSS protein band + "From parameters to insight" lab) -->
 <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/hp-hero-bio.js"></script>
 <script src="/js/bio.js"></script>
 <script src="/js/surface.js"></script>
 <script src="/js/lab.js"></script>

@@ -10,6 +10,10 @@
   var BRAND = { C: 0xDEDCD5, H: 0xF4EFE4, O: 0xC9824E, N: 0x9AA0AE, S: 0xE3C766 };
   var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E' });
 
+  // Drag-to-rotate stays; let the wheel/two-finger gesture scroll the page rather
+  // than being hijacked for zoom (intercept before 3Dmol's canvas handler).
+  el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
+
   $3Dmol.download('cid:5997', viewer, {}, function () {
     viewer.setStyle({}, { stick: { radius: 0.13, color: 0xDEDCD5 } });
     Object.keys(BRAND).forEach(function (e) {

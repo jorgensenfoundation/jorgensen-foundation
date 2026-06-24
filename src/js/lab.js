@@ -18,6 +18,10 @@
 
   var viewer = $3Dmol.createViewer(el, { backgroundColor: MIDNIGHT });
 
+  // Drag-to-rotate stays; let the wheel/two-finger gesture scroll the page rather
+  // than being hijacked for zoom (intercept before 3Dmol's canvas handler).
+  el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
+
   // Brand atom palette — Oyster carbons / Cream hydrogens on Midnight, one warm
   // accent on oxygen, soft slate on nitrogen. Reads as art-directed, not CPK-default.
   var BRAND = { C: 0xDEDCD5, H: 0xF4EFE4, O: 0xC9824E, N: 0x9AA0AE, S: 0xE3C766, P: 0xCB8E5A };
