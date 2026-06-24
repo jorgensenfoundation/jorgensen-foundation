@@ -32,12 +32,19 @@ function showAppNavUser(user) {
   if (lo) lo.style.display = 'inline';
 }
 
+// Wrap the "/period" suffix in a <span> for styling — but only when there is one. A plain
+// string like "Free" (no slash) renders as-is, avoiding a stray closing tag.
+function priceHtml(p) {
+  const i = p.indexOf('/');
+  return i === -1 ? p : p.slice(0, i) + '<span>' + p.slice(i) + '</span>';
+}
+
 function setupPaymentPage(user) {
   const isAcademia = user.account_type === 'academia';
   const prices = isAcademia ? ACADEMIA_PRICES : INDUSTRY_PRICES;
   document.getElementById('plan-type-label').textContent = isAcademia ? 'Academia Access' : 'Industry Access';
-  document.getElementById('price-monthly').innerHTML = prices.monthly.replace('/', '<span>/') + '</span>';
-  document.getElementById('price-annual').innerHTML = prices.annual.replace('/', '<span>/') + '</span>';
+  document.getElementById('price-monthly').innerHTML = priceHtml(prices.monthly);
+  document.getElementById('price-annual').innerHTML = priceHtml(prices.annual);
 }
 
 function selectPlan(period) {
