@@ -1,8 +1,9 @@
 /* Homepage BOSS/MCPRO band — ambient live protein–ligand structure.
-   Renders HIV-1 reverse transcriptase bound to the Jorgensen lab's NNRTI
-   inhibitor JLJ334 (PDB 8U69, from the group's own crystallography): Oyster
-   cartoon ribbon with the ligand in stick, brand-coloured atoms, slow auto-spin
-   (drag to rotate). Shares the 3Dmol global loaded on the homepage. */
+   Renders the Abl tyrosine kinase bound to imatinib (PDB 2HYY), a landmark
+   structure-based drug-design target: Oyster cartoon ribbon with the inhibitor
+   in stick, brand-coloured atoms, slow auto-spin (drag to rotate). A different
+   structure from the hero's HIV-1 RT so the page doesn't repeat a molecule.
+   Shares the 3Dmol global loaded on the homepage. */
 (function () {
   var el = document.getElementById('jf-bio');
   if (!el || !window.$3Dmol) return;
@@ -16,7 +17,7 @@
   // than being hijacked for zoom (intercept before 3Dmol's canvas handler).
   el.addEventListener('wheel', function (e) { e.stopPropagation(); }, { capture: true, passive: true });
 
-  $3Dmol.download('pdb:8U69', viewer, {}, function () {
+  $3Dmol.download('pdb:2HYY', viewer, {}, function () {
     // Protein backbone as an Oyster ribbon
     viewer.setStyle({}, { cartoon: { color: 0xDEDCD5, thickness: 0.4, arrows: true } });
 
