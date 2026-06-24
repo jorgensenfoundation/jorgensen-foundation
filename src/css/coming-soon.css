@@ -1,18 +1,21 @@
+/* Coming Soon splash — on-brand: Midnight ground, Cream content, all from tokens. */
+@import url('/css/tokens.css');
+
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
-body{font-family:Helvetica,Arial,sans-serif;background:#1a1510;color:#f5f0e6;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+body{font-family:var(--font-sans);background:var(--ink);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
 .logo-mark{display:block;width:340px;max-width:82vw;height:auto;margin:0 auto 2.25rem}
-.heading{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.4vw,2.4rem);font-weight:300;line-height:1.05;letter-spacing:0.01em;text-align:center;margin-bottom:1rem}
+.heading{font-family:var(--font-serif);font-size:clamp(1.5rem,3.4vw,2.4rem);font-weight:300;line-height:1.05;letter-spacing:0.01em;text-align:center;margin-bottom:1rem}
 .heading em{font-style:italic}
-.sub{font-size:0.75rem;line-height:2;color:rgba(245,240,230,0.4);text-align:center;max-width:380px;margin-bottom:3.5rem}
+.sub{font-size:0.75rem;line-height:2;color:color-mix(in srgb,var(--cream) 40%,transparent);text-align:center;max-width:380px;margin-bottom:3.5rem}
 .form{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;max-width:320px}
 .input-wrap{position:relative;width:100%}
-.input{width:100%;border:none;border-bottom:1px solid rgba(245,240,230,0.2);background:transparent;padding:0.85rem 2.5rem 0.85rem 0;font-size:0.82rem;font-family:Helvetica,Arial,sans-serif;color:#f5f0e6;outline:none;transition:border-color 0.2s;letter-spacing:0.05em}
-.input::placeholder{color:rgba(245,240,230,0.2);letter-spacing:0.05em}
-.input:focus{border-bottom-color:rgba(245,240,230,0.5)}
-.eye-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(245,240,230,0.25);font-size:0.6rem;letter-spacing:0.1em;font-family:Helvetica,Arial,sans-serif;transition:color 0.2s}
-.eye-btn:hover{color:rgba(245,240,230,0.6)}
-.submit{margin-top:2rem;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;padding:0.9rem 3rem;border:1px solid rgba(245,240,230,0.3);background:transparent;color:#f5f0e6;cursor:pointer;font-family:Helvetica,Arial,sans-serif;transition:all 0.25s}
-.submit:hover{background:rgba(245,240,230,0.08);border-color:rgba(245,240,230,0.6)}
-.error{font-size:0.6rem;letter-spacing:0.08em;color:rgba(220,100,80,0.8);margin-top:1rem;min-height:1rem;text-align:center}
-.footer-note{position:fixed;bottom:2rem;font-size:0.52rem;letter-spacing:0.12em;color:rgba(245,240,230,0.15)}
+.input{width:100%;border:none;border-bottom:1px solid color-mix(in srgb,var(--cream) 20%,transparent);background:transparent;padding:0.85rem 2.5rem 0.85rem 0;font-size:0.82rem;font-family:var(--font-sans);color:var(--cream);outline:none;transition:border-color 0.2s;letter-spacing:0.05em}
+.input::placeholder{color:color-mix(in srgb,var(--cream) 20%,transparent);letter-spacing:0.05em}
+.input:focus{border-bottom-color:color-mix(in srgb,var(--cream) 50%,transparent)}
+.eye-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:color-mix(in srgb,var(--cream) 25%,transparent);font-size:0.6rem;letter-spacing:0.1em;font-family:var(--font-sans);transition:color 0.2s}
+.eye-btn:hover{color:color-mix(in srgb,var(--cream) 60%,transparent)}
+.submit{margin-top:2rem;font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;padding:0.9rem 3rem;border:1px solid color-mix(in srgb,var(--cream) 30%,transparent);background:transparent;color:var(--cream);cursor:pointer;font-family:var(--font-sans);transition:all 0.25s}
+.submit:hover{background:color-mix(in srgb,var(--cream) 8%,transparent);border-color:color-mix(in srgb,var(--cream) 60%,transparent)}
+.error{font-size:0.6rem;letter-spacing:0.08em;color:#d8654f;margin-top:1rem;min-height:1rem;text-align:center}
+.footer-note{position:fixed;bottom:2rem;font-size:0.52rem;letter-spacing:0.12em;color:color-mix(in srgb,var(--cream) 18%,transparent)}
