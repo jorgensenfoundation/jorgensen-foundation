@@ -309,13 +309,12 @@ a{text-decoration:none;color:inherit}
   font-family:var(--font-sans);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
   color:color-mix(in srgb,var(--cream) 48%,transparent)}
 @media(max-width:760px){ .hp-hero__credit{display:none} }
-/* Mobile: confine the rotatable molecule to the upper area so the lower
-   part of the hero stays touch-scrollable (the canvas otherwise eats every
-   swipe). Below the canvas there's no interactive layer, so the page scrolls. */
+/* Mobile: full-bleed molecule like iPad (big proportions) — the viewer keeps
+   the base inset:0. The scroll guards keep the page scrollable; on mobile they
+   grow so the central drag-to-rotate band is smaller. */
 @media(max-width:760px){
-  /* Sit the molecule just above the eyebrow. The strip above it and the text
-     block below it have no canvas, so both stay touch-scrollable. */
-  .hp-hero__viewer{top:auto;bottom:18rem;height:22rem}
+  .hp-hero--bio::before{height:42%}
+  .hp-hero--bio::after{height:38%}
   /* Drop the scroll cue clear of the CTA so they no longer touch. */
   .hp-hero__scroll{bottom:0.75rem;right:1.5rem}
 }

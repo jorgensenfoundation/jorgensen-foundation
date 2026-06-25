@@ -81,11 +81,10 @@ Two hero systems share the cream-on-ink language but differ structurally.
   canvas but below the content. They confine drag-to-rotate to the central band
   so swipes over the top/bottom scroll the page; the molecule's size/visuals are
   unchanged and the CTA (above them) stays clickable.
-- **Mobile (`max-width:760px`):** the molecule canvas is confined to a band that
-  sits just above the eyebrow (`top:auto;bottom:18rem;height:22rem`). This (a) keeps
-  the strip above and the text block below canvas-free so the page stays
-  touch-scrollable, and (b) places the structure "almost touching" the eyebrow.
-  The scroll cue drops to `bottom:0.75rem` so it never touches the CTA.
+- **Mobile (`max-width:760px`):** the molecule stays full-bleed (`inset:0`) for
+  the same large proportions as iPad; the scroll guards grow (top `42%`, bottom
+  `38%`) so the central drag-to-rotate band is smaller. The scroll cue drops to
+  `bottom:0.75rem` so it never touches the CTA.
 
 ### 4b. Program heroes (`.hero.hero--<name>`)
 boss · mcpro · fep · opls · bomb · visualisation. Shared base in
