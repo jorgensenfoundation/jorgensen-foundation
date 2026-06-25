@@ -38,6 +38,10 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:
 .footer-legal a:hover{color:var(--ink)}
 @media(max-width:960px){
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+  /* Stack the bottom bar and let the legal links wrap (instead of space-between
+     cramming each into a narrow, two-line column) — covers iPad portrait. */
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:1rem}
+  .footer-legal{flex-wrap:wrap;gap:0.6rem 1.5rem}
 }
 @media(max-width:540px){
   footer{padding:3.5rem 1.5rem 2rem}
