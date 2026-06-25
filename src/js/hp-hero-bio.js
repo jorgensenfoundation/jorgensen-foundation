@@ -32,17 +32,10 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.02 }).observe(el);
     }
-    var FRAME = 200, lastFrame = 0, resync = true; // advance the spin on a 200ms beat (~5fps) on every device
-    function loop(ts) {
+    function loop() {
       requestAnimationFrame(loop);
-      if (!visible) { resync = true; return; }
-      if (resync) { resync = false; lastFrame = ts; return; } // re-anchor after a pause — no jump
-      var dt = ts - lastFrame;
-      if (dt < FRAME) return;
-      lastFrame = ts;
-      // 200ms ceiling on dt: limits the per-frame "lurch" when the device renders
-      // slowly (trade-off: spins a bit slower below ~5fps).
-      viewer.rotate(0.14 * Math.min(dt, 200) / 16.67, { x: 0, y: 1, z: 0 });
+      if (!visible) return;
+      viewer.rotate(0.14, { x: 0, y: 1, z: 0 }); // slow auto-spin
       viewer.render();
     }
     requestAnimationFrame(loop);
