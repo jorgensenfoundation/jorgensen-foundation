@@ -298,6 +298,13 @@ a{text-decoration:none;color:inherit}
 .hp-hero--bio .hp-hero__overlay{z-index:1;pointer-events:none}
 .hp-hero--bio .hp-hero__content{position:relative;z-index:2;pointer-events:none}
 .hp-hero--bio .hp-hero__content .btn{pointer-events:auto}
+/* Scroll guards: confine the molecule's drag/rotate zone to a central band so
+   swipes over the top and bottom of the hero scroll the page (the canvas would
+   otherwise capture every gesture). Transparent, above the viewer but below the
+   content so the CTA stays clickable. Molecule size/visuals are unaffected. */
+.hp-hero--bio::before,.hp-hero--bio::after{content:'';position:absolute;left:0;right:0;z-index:1;pointer-events:auto}
+.hp-hero--bio::before{top:0;height:32%}
+.hp-hero--bio::after{bottom:0;height:30%}
 .hp-hero__credit{position:absolute;top:6.75rem;right:3rem;z-index:2;text-align:right;line-height:1.7;pointer-events:none;
   font-family:var(--font-sans);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
   color:color-mix(in srgb,var(--cream) 48%,transparent)}

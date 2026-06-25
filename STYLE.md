@@ -76,6 +76,11 @@ Two hero systems share the cream-on-ink language but differ structurally.
 ### 4a. Homepage hero (`.hp-hero`)
 - Full-bleed, `height:100svh` (see §6 on viewport units), content bottom-aligned.
 - Carries a live 3Dmol structure (`.hp-hero__viewer`, `#hp-hero-bio`) at `inset:0`.
+- **Scroll guards (all breakpoints):** transparent `::before`/`::after` strips
+  (top ~32%, bottom ~30%, `z-index:1`, `pointer-events:auto`) sit above the
+  canvas but below the content. They confine drag-to-rotate to the central band
+  so swipes over the top/bottom scroll the page; the molecule's size/visuals are
+  unchanged and the CTA (above them) stays clickable.
 - **Mobile (`max-width:760px`):** the molecule canvas is confined to a band that
   sits just above the eyebrow (`top:auto;bottom:18rem;height:22rem`). This (a) keeps
   the strip above and the text block below canvas-free so the page stays
