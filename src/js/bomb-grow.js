@@ -157,7 +157,7 @@
       var dt = ts - lastFrame;
       if (dt < FRAME) return;
       lastFrame = ts;
-      viewer.rotate(0.22 * Math.min(dt, 50) / 16.67, { x: 0, y: 1, z: 0 }); // fps-independent
+      viewer.rotate(0.22 * Math.min(dt, 120) / 16.67, { x: 0, y: 1, z: 0 }); // fps-independent
       if (phase === 'grow') {
         if (ts - last > FRAG_INTERVAL) {
           k = Math.min(F, k + 1);
