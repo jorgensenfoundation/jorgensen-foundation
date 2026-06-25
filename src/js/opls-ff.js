@@ -84,13 +84,14 @@
     }
 
     var last = 0, INTERVAL = 1500; // ms each atom is featured
-    var FRAME = 1000 / 30, lastFrame = 0; // cap to ~30fps to ease GPU load/heat
+    var FRAME = 1000 / 45, lastFrame = 0; // cap to ~45fps to ease GPU load/heat
     function loop(ts) {
       requestAnimationFrame(loop);
       if (!visible) return;
-      if (ts - lastFrame < FRAME) return;
+      var dt = ts - lastFrame;
+      if (dt < FRAME) return;
       lastFrame = ts;
-      viewer.rotate(0.5, { x: 0, y: 1, z: 0 }); // slow continuous turn (2x/frame at 30fps)
+      viewer.rotate(0.25 * Math.min(dt, 50) / 16.67, { x: 0, y: 1, z: 0 }); // fps-independent
       if (ts - last > INTERVAL) { step(); last = ts; }
       viewer.render();
     }

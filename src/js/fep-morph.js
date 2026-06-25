@@ -37,17 +37,18 @@
     }
 
     var start = null, period = 5200, hold = 1100, lastL = -1;
-    var FRAME = 1000 / 30, lastFrame = 0; // cap to ~30fps to ease GPU load/heat
+    var FRAME = 1000 / 45, lastFrame = 0; // cap to ~45fps to ease GPU load/heat
     function loop(ts) {
       requestAnimationFrame(loop);
       if (!visible) { start = null; return; }
-      if (ts - lastFrame < FRAME) return;
+      var dt = ts - lastFrame;
+      if (dt < FRAME) return;
       lastFrame = ts;
       if (!start) start = ts;
       var t = (ts - start) % (period + hold);
       var L = t < period ? t / period : 1;
       if (lambdaEl) lambdaEl.textContent = L.toFixed(2);
-      viewer.rotate(0.8, 'y'); // 2x/frame at 30fps
+      viewer.rotate(0.4 * Math.min(dt, 50) / 16.67, 'y'); // fps-independent
       if (Math.abs(L - lastL) > 0.03) { styleMol(L); lastL = L; } else { viewer.render(); }
     }
     requestAnimationFrame(loop);

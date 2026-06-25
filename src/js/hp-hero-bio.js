@@ -32,13 +32,14 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.02 }).observe(el);
     }
-    var FRAME = 1000 / 30, lastFrame = 0; // cap to ~30fps to ease GPU load/heat
+    var FRAME = 1000 / 45, lastFrame = 0; // cap to ~45fps to ease GPU load/heat
     function loop(ts) {
       requestAnimationFrame(loop);
       if (!visible) return;
-      if (ts - lastFrame < FRAME) return;
+      var dt = ts - lastFrame;
+      if (dt < FRAME) return;
       lastFrame = ts;
-      viewer.rotate(0.28, { x: 0, y: 1, z: 0 }); // slow auto-spin (2x/frame at 30fps)
+      viewer.rotate(0.14 * Math.min(dt, 50) / 16.67, { x: 0, y: 1, z: 0 }); // ~8.4°/s, fps-independent
       viewer.render();
     }
     requestAnimationFrame(loop);
