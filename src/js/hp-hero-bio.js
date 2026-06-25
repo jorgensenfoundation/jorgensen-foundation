@@ -32,7 +32,7 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.02 }).observe(el);
     }
-    var FRAME = 1000 / 45, lastFrame = 0, resync = true; // cap fast devices to ~45fps
+    var FRAME = 200, lastFrame = 0, resync = true; // advance the spin on a 200ms beat (~5fps) on every device
     function loop(ts) {
       requestAnimationFrame(loop);
       if (!visible) { resync = true; return; }
