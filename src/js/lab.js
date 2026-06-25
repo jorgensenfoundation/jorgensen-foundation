@@ -46,7 +46,9 @@
     });
     viewer.zoomTo();
     viewer.render();
-    viewer.zoom(1.15, 600);
+    // Sit a little back from the fit so the molecule isn't oversized (smaller still on mobile).
+    var fit = window.matchMedia && window.matchMedia('(max-width:760px)').matches ? 0.28 : 0.4;
+    viewer.zoom(fit, 600);
     viewer.spin('y', 0.5);
   }
 
