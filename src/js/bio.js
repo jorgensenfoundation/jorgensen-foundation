@@ -9,7 +9,7 @@
   if (!el || !window.$3Dmol) return;
 
   // Brand atom palette (light enough to read on Midnight; one warm accent on O)
-  var BRAND = { C: 0xDEDCD5, H: 0xF4EFE4, O: 0xC9824E, N: 0x9AA0AE, S: 0xE3C766 };
+  var BRAND = { C: 0xDEDCD5, H: 0xF4EFE4, O: 0xC9824E, N: 0xAFA290, S: 0xE3C766 };
 
   var viewer = $3Dmol.createViewer(el, { backgroundColor: '#302C2E' });
 
