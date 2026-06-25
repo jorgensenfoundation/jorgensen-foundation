@@ -4,6 +4,7 @@
    every component layer consumes these custom properties.
    ============================================================================ */
 :root {
+  color-scheme: light;                /* force light rendering on every device — no Dark-Mode UA tinting */
   /* --- COLORS --- */
   --ground: #ffffff;                  /* White — page background */
   --ink: #302C2E;                     /* Midnight — headings, primary text */

@@ -4,6 +4,14 @@
 {% if comingSoonGate != false %}<script>if(sessionStorage.getItem('jf_access')!=='true'){window.location.replace('/coming-soon');}</script>{% endif %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Always render in light appearance, regardless of the device's Dark Mode, so
+     colours look identical on iPad, iPhone and Mac (no UA dark-mode tinting). -->
+<meta name="color-scheme" content="light">
+<!-- Cap the pixel ratio the 3Dmol viewers render at (it reads window.devicePixelRatio,
+     floor 2). On 3x retina phones this renders the heavy molecule canvases at 2x
+     instead of 3x (~56% fewer pixels/frame) to cut GPU load/heat, with no visible
+     quality loss. CSS/media-query retina is unaffected. Must run before any viewer. -->
+<script>(function(){try{var real=window.devicePixelRatio||1;if(real>2){Object.defineProperty(window,'devicePixelRatio',{configurable:true,get:function(){return 2;}});}}catch(e){}})();</script>
 <title>{{ title }}</title>
 <meta name="description" content="{{ description }}">
 <link rel="icon" href="/img/favicon.svg?v=4" type="image/svg+xml">
