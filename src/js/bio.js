@@ -26,7 +26,10 @@
     viewer.addSurface($3Dmol.SurfaceType.MS, { opacity: 0.5, color: 0xDEDCD5 });
     viewer.zoomTo();
     viewer.render();
-    viewer.zoom(1.1, 800);
+    // On the narrow mobile canvas, zoom out so the whole molecule fits (it
+    // otherwise overflows the sides); a touch closer on wider screens.
+    var fit = window.matchMedia && window.matchMedia('(max-width:760px)').matches ? 0.7 : 1.1;
+    viewer.zoom(fit, 800);
     viewer.spin('y', 0.3);
   });
 }());
