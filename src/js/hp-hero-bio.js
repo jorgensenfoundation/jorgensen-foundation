@@ -40,9 +40,9 @@
       var dt = ts - lastFrame;
       if (dt < FRAME) return;
       lastFrame = ts;
-      // No ceiling on dt: rotation scales with the full frame time, so the angular
-      // speed is identical no matter how slowly the device renders (~8.4°/s).
-      viewer.rotate(0.14 * dt / 16.67, { x: 0, y: 1, z: 0 });
+      // 200ms ceiling on dt: limits the per-frame "lurch" when the device renders
+      // slowly (trade-off: spins a bit slower below ~5fps).
+      viewer.rotate(0.14 * Math.min(dt, 200) / 16.67, { x: 0, y: 1, z: 0 });
       viewer.render();
     }
     requestAnimationFrame(loop);
