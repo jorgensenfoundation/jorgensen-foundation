@@ -18,7 +18,7 @@ a{text-decoration:none;color:inherit}
 .split-text .link-accent{align-self:flex-start}
 
 /* --- HERO (the one video hero; dark Midnight band + near-black overlay + cream serif) --- */
-.hp-hero{position:relative;height:100vh;min-height:560px;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink)}
+.hp-hero{position:relative;height:100vh;height:100svh;min-height:560px;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink)}
 .hp-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55}
 .hp-hero__overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--hero-overlay) 0%,color-mix(in srgb,var(--hero-overlay) 25%,transparent) 55%,transparent 100%)}
 .hp-hero__content{position:relative;z-index:2;padding:0 3rem 5rem}
@@ -46,7 +46,7 @@ a{text-decoration:none;color:inherit}
 .hp-link{display:inline-block;margin-top:2.5rem}
 
 /* --- MID-PAGE DARK FEATURE BANDS (BOSS/FEP placeholders) — Midnight by default --- */
-.hp-feature{position:relative;width:100%;min-height:78vh;background:var(--feature-bg);display:flex;align-items:flex-end;overflow:hidden}
+.hp-feature{position:relative;width:100%;min-height:78svh;background:var(--feature-bg);display:flex;align-items:flex-end;overflow:hidden}
 .hp-feature__placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.85rem}
 .hp-feature__overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--hero-overlay) 0%,transparent 65%)}
 .hp-feature__content{position:relative;z-index:2;padding:0 3rem 4rem}
@@ -173,7 +173,7 @@ a{text-decoration:none;color:inherit}
    Dark split band: editorial copy + try-it on the left, live 3D molecule on
    the right. 3Dmol paints the #jf-viewer canvas on Midnight (--ink #302C2E).
    Powered by /js/lab.js (shared with the /lab preview page). -------------------*/
-.hp-lab{display:grid;grid-template-columns:1fr 1.05fr;background:var(--ink);min-height:90vh}
+.hp-lab{display:grid;grid-template-columns:1fr 1.05fr;background:var(--ink);min-height:90svh}
 
 /* left: copy + try-it (on dark) */
 .hp-lab__copy{display:flex;flex-direction:column;justify-content:center;padding:7rem 3rem}
@@ -200,7 +200,7 @@ a{text-decoration:none;color:inherit}
 .hp-lab__cta:hover{background:#fff;border-color:#fff;color:var(--ink)}
 
 /* right: live molecule stage */
-.hp-lab__stage{position:relative;overflow:hidden;min-height:60vh;background:var(--ink)}
+.hp-lab__stage{position:relative;overflow:hidden;min-height:60svh;background:var(--ink)}
 .hp-lab__viewer{position:absolute;inset:0;width:100%;height:100%}
 .hp-lab__viewer canvas{display:block}
 .hp-lab__glow{position:absolute;inset:0;pointer-events:none;z-index:1;
@@ -213,7 +213,7 @@ a{text-decoration:none;color:inherit}
 
 @media (max-width:900px){
   .hp-lab{grid-template-columns:1fr}
-  .hp-lab__stage{order:1;min-height:58vh}
+  .hp-lab__stage{order:1;min-height:58svh}
   .hp-lab__copy{order:2;padding:5rem 2rem}
   .hp-lab__readout{left:1.5rem;bottom:1.5rem}
   .hp-lab__hint{right:1.5rem;bottom:1.5rem}
@@ -302,3 +302,9 @@ a{text-decoration:none;color:inherit}
   font-family:var(--font-sans);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
   color:color-mix(in srgb,var(--cream) 48%,transparent)}
 @media(max-width:760px){ .hp-hero__credit{display:none} }
+/* Mobile: confine the rotatable molecule to the upper area so the lower
+   part of the hero stays touch-scrollable (the canvas otherwise eats every
+   swipe). Below the canvas there's no interactive layer, so the page scrolls. */
+@media(max-width:760px){
+  .hp-hero__viewer{inset:0 0 auto 0;height:55%}
+}

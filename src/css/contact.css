@@ -9,7 +9,7 @@ a{text-decoration:none;color:inherit}
 
 /* --- Overrides of shared selectors --- */
 body{background:var(--cream)}
-.hero{height:65vh;min-height:420px}
+.hero{height:65vh;height:65svh;min-height:420px}
 .hero-overlay{background:linear-gradient(to top,color-mix(in srgb,var(--ink) 80%,transparent) 0%,color-mix(in srgb,var(--ink) 10%,transparent) 60%,transparent 100%)}
 .hero-h1{font-size:clamp(3rem,7vw,5.5rem)}
 

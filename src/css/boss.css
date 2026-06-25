@@ -7,7 +7,7 @@
 html{scroll-behavior:smooth}
 body{font-family:Helvetica,Arial,sans-serif;background:var(--ground);color:var(--body);overflow-x:clip}
 a{text-decoration:none;color:inherit}
-.hero{height:90vh;min-height:680px}
+.hero{height:90vh;height:90svh;min-height:680px}
 .ticker{background:var(--surface);padding:0.85rem 0;overflow:hidden}
 .ticker-inner span{font-size:0.55rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--ink)}
 .ticker-inner b{color:color-mix(in srgb,var(--ink) 35%,var(--surface));font-weight:300}
@@ -110,6 +110,17 @@ a{text-decoration:none;color:inherit}
 .boss-hero__readout .cap{font-family:var(--font-sans);font-size:0.55rem;letter-spacing:0.2em;
   text-transform:uppercase;color:color-mix(in srgb,var(--cream) 45%,transparent)}
 @media (max-width:900px){
-  .boss-hero__viewer{width:100%;opacity:0.5}
+  .boss-hero__viewer{width:100%;opacity:0.2}
   .boss-hero__readout{left:50%;top:auto;bottom:9rem;transform:translateX(-50%)}
+}
+
+/* --- responsive hero fixes: mobile + iPad (added 2026-06) --- */
+@media (min-width:901px) and (max-width:1024px){
+  .boss-hero__viewer{width:50%;opacity:0.85}
+}
+@media (max-width:900px){
+  .boss-hero__readout{display:none}
+}
+@media (max-width:600px){
+  .hero{min-height:560px}
 }
