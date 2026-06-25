@@ -11,18 +11,57 @@
   // The app reads the session token from the URL fragment: <BOSS_APP_URL>/login#token=<TOKEN>.
   var BOSS_APP_URL = 'https://app.jorgensenfoundation.org';
 
+  // Session storage policy ("Remember me"):
+  //   remember = true  → localStorage  (survives a browser restart, up to the
+  //                       backend's 30-day token TTL)
+  //   remember = false → sessionStorage (cleared when the tab/window closes)
+  // Reads always check sessionStorage first, then localStorage, so a freshly
+  // signed-in (non-remembered) session takes precedence over a stale remembered
+  // one. saveSession writes ONE store and clears the other, so the two can never
+  // hold divergent tokens. All access is wrapped in try/catch — storage can throw
+  // in private-mode / disabled-storage browsers, and auth must never hard-fail.
+  function readKey(key) {
+    try {
+      var v = sessionStorage.getItem(key);
+      if (v !== null) return v;
+      return localStorage.getItem(key);
+    } catch (e) { return null; }
+  }
+
+  // Persist a logged-in session. `user` is the curated profile object; `token` the
+  // bearer token; `remember` selects the store (see policy above).
+  function saveSession(user, token, remember) {
+    var primary = remember ? localStorage : sessionStorage;
+    var other = remember ? sessionStorage : localStorage;
+    try {
+      primary.setItem(TOKEN_KEY, token);
+      primary.setItem(USER_KEY, JSON.stringify(user));
+    } catch (e) {}
+    try {
+      other.removeItem(TOKEN_KEY);
+      other.removeItem(USER_KEY);
+    } catch (e) {}
+  }
+
+  // Drop the session from BOTH stores. Used on logout and whenever a token is
+  // found to be expired/invalid. Leaves unrelated keys (admin, coming-soon) alone.
+  function clearSession() {
+    try { sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); } catch (e) {}
+    try { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY); } catch (e) {}
+  }
+
   function getToken() {
-    return sessionStorage.getItem(TOKEN_KEY);
+    return readKey(TOKEN_KEY);
   }
 
   function getUser() {
-    var raw = sessionStorage.getItem(USER_KEY);
+    var raw = readKey(USER_KEY);
     if (!raw) return null;
     try { return JSON.parse(raw); } catch (e) { return null; }
   }
 
   function isLoggedIn() {
-    return !!sessionStorage.getItem(USER_KEY);
+    return !!readKey(USER_KEY);
   }
 
   function authHeader() {
@@ -40,8 +79,7 @@
     function finish() {
       if (done) return;
       done = true;
-      sessionStorage.removeItem(TOKEN_KEY);
-      sessionStorage.removeItem(USER_KEY);
+      clearSession();
       window.location.href = '/';
     }
     if (!token) { finish(); return; }
@@ -86,6 +124,8 @@
     isLoggedIn: isLoggedIn,
     getToken: getToken,
     getUser: getUser,
+    saveSession: saveSession,
+    clearSession: clearSession,
     authHeader: authHeader,
     logout: logout,
     hasProgramAccess: hasProgramAccess,

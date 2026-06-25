@@ -25,6 +25,8 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
 .btn-outline-dark{display:block;width:100%;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;padding:1rem;text-align:center;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:all 0.25s;font-family:Helvetica,Arial,sans-serif;margin-top:0.75rem}
 .btn-outline-dark:hover{background:var(--surface)}
+.login-remember{display:flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-family:Helvetica,Arial,sans-serif;color:var(--body);cursor:pointer;margin-top:-0.5rem}
+.login-remember input{accent-color:var(--ink);cursor:pointer}
 .error-msg{font-size:0.68rem;color:var(--error);margin-top:0.75rem;display:none}
 .error-msg.show{display:block}
 .link-small{font-size:0.58rem;letter-spacing:0.1em;color:var(--body);text-align:center;margin-top:1.5rem;display:block}

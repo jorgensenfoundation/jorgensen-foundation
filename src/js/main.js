@@ -85,6 +85,8 @@ async function navLogin() {
   if (!emailEl || !pwEl) return;
   const email = emailEl.value.trim();
   const password = pwEl.value;
+  const rememberEl = document.getElementById('nav-login-remember');
+  const remember = !!(rememberEl && rememberEl.checked);
   const showErr = (msg) => { if (errEl) { errEl.textContent = msg; errEl.classList.add('show'); } };
   if (errEl) { errEl.textContent = ''; errEl.classList.remove('show'); }
   if (!email || !password) { showErr('Please enter your email and password.'); return; }
@@ -93,7 +95,7 @@ async function navLogin() {
     const res = await fetch(`${NAV_API}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password, remember })
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
@@ -108,8 +110,7 @@ async function navLogin() {
       subscription_status: data.subscription_status,
       is_board_member: data.is_board_member
     };
-    sessionStorage.setItem('jf_user_token', data.token);
-    sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
+    JFAuth.saveSession(userInfo, data.token, remember);
     if (userInfo.subscription_status === 'active') {
       // Active subscriber → flip the nav to logged-in in place (no page jump).
       applyAuthState();

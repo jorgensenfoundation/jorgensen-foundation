@@ -99,8 +99,7 @@ async function setPassword() {
         subscription_status: userData.subscription_status,
         is_board_member: userData.is_board_member
       };
-      sessionStorage.setItem('jf_user_token', userData.token);
-      sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
+      JFAuth.saveSession(userInfo, userData.token, false);
       window.location.href = '/dashboard';
     } else {
       window.location.href = '/login';
