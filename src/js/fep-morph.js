@@ -37,14 +37,17 @@
     }
 
     var start = null, period = 5200, hold = 1100, lastL = -1;
+    var FRAME = 1000 / 30, lastFrame = 0; // cap to ~30fps to ease GPU load/heat
     function loop(ts) {
       requestAnimationFrame(loop);
       if (!visible) { start = null; return; }
+      if (ts - lastFrame < FRAME) return;
+      lastFrame = ts;
       if (!start) start = ts;
       var t = (ts - start) % (period + hold);
       var L = t < period ? t / period : 1;
       if (lambdaEl) lambdaEl.textContent = L.toFixed(2);
-      viewer.rotate(0.4, 'y');
+      viewer.rotate(0.8, 'y'); // 2x/frame at 30fps
       if (Math.abs(L - lastL) > 0.03) { styleMol(L); lastL = L; } else { viewer.render(); }
     }
     requestAnimationFrame(loop);

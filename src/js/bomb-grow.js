@@ -150,10 +150,13 @@
     var FRAG_INTERVAL = 520, HOLD = 1500;
     paint(k);
 
+    var FRAME = 1000 / 30, lastFrame = 0; // cap to ~30fps to ease GPU load/heat
     function loop(ts) {
       requestAnimationFrame(loop);
       if (!visible) return;
-      viewer.rotate(0.22, { x: 0, y: 1, z: 0 }); // slow continuous turn
+      if (ts - lastFrame < FRAME) return;
+      lastFrame = ts;
+      viewer.rotate(0.44, { x: 0, y: 1, z: 0 }); // slow continuous turn (2x/frame at 30fps)
       if (phase === 'grow') {
         if (ts - last > FRAG_INTERVAL) {
           k = Math.min(F, k + 1);

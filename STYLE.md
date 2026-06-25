@@ -123,6 +123,12 @@ boss · mcpro · fep · opls · bomb · visualisation. Shared base in
   either shrink/relocate the canvas (homepage) or rely on the page area below it.
 - Decorative readouts (`.*-hero__readout`) are **hidden ≤900px**.
 - Mobile molecule opacity is **0.2** (backdrop); desktop is full strength.
+- **Battery/heat:** continuous spin/animation loops must (a) pause off-screen via
+  `IntersectionObserver`, (b) respect `prefers-reduced-motion`, and (c) **cap
+  rendering at ~30fps** (`FRAME = 1000/30` gate in the rAF loop; double the
+  per-frame rotation to keep the speed). Rendering a complex structure at 60fps
+  on a retina device pins the GPU and overheats it. Monte-Carlo viewers that only
+  re-render on an interval are already light.
 
 ---
 
