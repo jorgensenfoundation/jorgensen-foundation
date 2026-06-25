@@ -143,8 +143,8 @@ select.input{appearance:none;-webkit-appearance:none;cursor:pointer;padding-righ
    program page and every device (instead of scaling with viewport height).
    Targets only .hero--<name> (program pages); plain .hero pages are untouched. */
 @media(max-width:600px){
-  .hero[class*="hero--"]{height:auto;min-height:0;align-items:flex-start}
-  .hero[class*="hero--"] .hero-content{padding-top:15rem}
+  .hero[class*="hero--"]{height:auto;min-height:90svh;align-items:flex-start}
+  .hero[class*="hero--"] .hero-content{padding-top:16rem}
 }
 
 /* ============================================================================

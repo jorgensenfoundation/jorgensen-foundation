@@ -93,8 +93,9 @@ boss · mcpro · fep · opls · bomb · visualisation. Shared base in
   (`opacity:0.2`)** as a pure backdrop; the floating readout is **hidden**
   (`display:none`) so it never collides with the headline.
 - **Mobile spacing (`max-width:600px`):** program heroes switch to
-  `height:auto; align-items:flex-start` and the content gets `padding-top:15rem`.
-  This anchors the eyebrow a **fixed distance below the fixed nav (~150px gap)** so
+  `min-height:90svh; height:auto; align-items:flex-start` (fills ~90% of the
+  viewport with a peek of the next section) and the content gets `padding-top:16rem`.
+  This anchors the eyebrow a **fixed distance below the fixed nav (~170px gap)** so
   the nav→eyebrow spacing is identical on every program page and every device,
   instead of scaling with viewport height. This single rule lives in
   `components.css` and targets `.hero[class*="hero--"]`, so plain `.hero` pages
