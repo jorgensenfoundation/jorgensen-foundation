@@ -32,14 +32,17 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.02 }).observe(el);
     }
-    var FRAME = 1000 / 45, lastFrame = 0; // cap to ~45fps to ease GPU load/heat
+    var FRAME = 1000 / 45, lastFrame = 0, resync = true; // cap fast devices to ~45fps
     function loop(ts) {
       requestAnimationFrame(loop);
-      if (!visible) return;
+      if (!visible) { resync = true; return; }
+      if (resync) { resync = false; lastFrame = ts; return; } // re-anchor after a pause — no jump
       var dt = ts - lastFrame;
       if (dt < FRAME) return;
       lastFrame = ts;
-      viewer.rotate(0.14 * Math.min(dt, 400) / 16.67, { x: 0, y: 1, z: 0 }); // ~8.4°/s, fps-independent
+      // No ceiling on dt: rotation scales with the full frame time, so the angular
+      // speed is identical no matter how slowly the device renders (~8.4°/s).
+      viewer.rotate(0.14 * dt / 16.67, { x: 0, y: 1, z: 0 });
       viewer.render();
     }
     requestAnimationFrame(loop);
