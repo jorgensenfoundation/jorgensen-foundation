@@ -56,6 +56,8 @@ function selectPlan(period) {
 async function login() {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
+  const rememberEl = document.getElementById('login-remember');
+  const remember = !!(rememberEl && rememberEl.checked);
   const errorEl = document.getElementById('login-error');
   const btn = document.getElementById('login-btn');
   errorEl.classList.remove('show');
@@ -69,7 +71,7 @@ async function login() {
     const res = await fetch(`${API}/login`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email, password})
+      body: JSON.stringify({email, password, remember})
     });
     const data = await res.json();
     if (!res.ok) {
@@ -86,8 +88,7 @@ async function login() {
       subscription_status: data.subscription_status,
       is_board_member: data.is_board_member
     };
-    sessionStorage.setItem('jf_user_token', data.token);
-    sessionStorage.setItem('jf_user', JSON.stringify(userInfo));
+    JFAuth.saveSession(userInfo, data.token, remember);
     currentUser = userInfo;
     // Every logged-in user lands on the dashboard (active or non-active). The dashboard shows
     // the activate banner for non-active users; the payment page is only reached when they
@@ -111,7 +112,7 @@ async function proceedToPayment() {
   try {
     const res = await fetch(`${API}/create-checkout`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem('jf_user_token')},
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + JFAuth.getToken()},
       body: JSON.stringify({billing_period: selectedPlan})
     });
     const data = await res.json();
@@ -134,13 +135,12 @@ async function proceedToPayment() {
 // Revoke the token server-side (POST /logout), THEN clear the local session and show the login
 // form. Local clear always happens regardless of the network result; a safety cap avoids hangs.
 function logout() {
-  const token = sessionStorage.getItem('jf_user_token');
+  const token = JFAuth.getToken();
   let done = false;
   function finish() {
     if (done) return;
     done = true;
-    sessionStorage.removeItem('jf_user_token');
-    sessionStorage.removeItem('jf_user');
+    JFAuth.clearSession();
     currentUser = null;
     const u = document.getElementById('nav-user'); if (u) u.style.display = 'none';
     const lo = document.getElementById('nav-logout'); if (lo) lo.style.display = 'none';
@@ -162,9 +162,8 @@ function logout() {
 //   logged-out                          → login form
 //   logged-in + #activate + non-active  → payment/activate page (Stripe flow)
 //   logged-in (everything else)         → redirect to /dashboard
-const saved = sessionStorage.getItem('jf_user');
-if (saved) {
-  const user = JSON.parse(saved);
+const user = JFAuth.getUser();
+if (user) {
   currentUser = user;
   const wantsActivate = location.hash === '#activate';
   // Only genuinely non-entitled users (industry path, not yet active) see the Stripe payment
