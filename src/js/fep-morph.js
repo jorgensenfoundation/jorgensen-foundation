@@ -48,7 +48,7 @@
       var t = (ts - start) % (period + hold);
       var L = t < period ? t / period : 1;
       if (lambdaEl) lambdaEl.textContent = L.toFixed(2);
-      viewer.rotate(0.4 * Math.min(dt, 120) / 16.67, 'y'); // fps-independent
+      viewer.rotate(0.4 * Math.min(dt, 400) / 16.67, 'y'); // fps-independent
       if (Math.abs(L - lastL) > 0.03) { styleMol(L); lastL = L; } else { viewer.render(); }
     }
     requestAnimationFrame(loop);

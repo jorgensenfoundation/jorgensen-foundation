@@ -39,7 +39,7 @@
       var dt = ts - lastFrame;
       if (dt < FRAME) return;
       lastFrame = ts;
-      viewer.rotate(0.14 * Math.min(dt, 120) / 16.67, { x: 0, y: 1, z: 0 }); // ~8.4°/s, fps-independent
+      viewer.rotate(0.14 * Math.min(dt, 400) / 16.67, { x: 0, y: 1, z: 0 }); // ~8.4°/s, fps-independent
       viewer.render();
     }
     requestAnimationFrame(loop);
