@@ -122,19 +122,41 @@ boss · mcpro · fep · opls · bomb · visualisation. Shared base in
   will eat every swipe (rotate) unless a canvas-free zone exists for scrolling —
   either shrink/relocate the canvas (homepage) or rely on the page area below it.
 - Decorative readouts (`.*-hero__readout`) are **hidden ≤900px**.
-- Mobile molecule opacity is **0.2** (backdrop); desktop is full strength.
-- **Battery/heat:** rendering complex structures continuously on retina devices
-  pins the GPU and overheats. Mitigations in place:
-  - **Pixel-ratio cap** — an inline script in `base.njk` caps
-    `window.devicePixelRatio` to **2** (3Dmol reads it at viewer creation, floor 2).
-    Takes 3× retina phones down to 2× (~56% fewer pixels/frame) with no visible
-    quality loss; iPad/desktop (≤2×) unaffected. CSS/media-query retina is untouched.
-  - **Frame cap** — continuous spin loops cap at **~45fps** (`FRAME = 1000/45` gate)
-    and scale rotation by elapsed time (`base60 * min(dt,50)/16.67`) so speed is
-    frame-rate-independent and stays smooth.
-  - Loops must also pause off-screen via `IntersectionObserver` and respect
-    `prefers-reduced-motion`. Monte-Carlo viewers that only re-render on an
-    interval are already light.
+- Program-hero mobile molecule opacity is **0.2** (faint backdrop); desktop full.
+
+### Molecular brand palette
+All molecule viewers use the warm site palette (never CPK defaults / cool blues):
+- C `#DEDCD5` oyster · H `#F4EFE4` cream · O `#C9824E` amber · **N `#AFA290` warm
+  taupe** (was a cool slate-blue — retoned warm) · S `#E3C766` · P `#CB8E5A`.
+- Proteins: single-colour **oyster** cartoon + **amber** ligand/inhibitor.
+- Viewer background is `#302C2E` (`--ink`).
+- Shared by `hp-hero-bio.js`, `bio.js`, `surface.js`, `lab.js`.
+
+### Fitting molecules (per-viewer JS)
+Some molecules overflow narrow mobile canvases, so the viewer JS sizes them
+responsively via `matchMedia('(max-width:760px)')`:
+- `bio.js` (cholesterol band): `zoom` 0.7 on mobile, and `index.css` lifts the
+  viewer `transform:translateY(-25%)` so it clears the heading text.
+- `lab.js` (the "From parameters to insight" molecule): `zoom` **0.4 desktop /
+  0.28 mobile** so even a flat molecule's widest spin orientation keeps margin.
+
+### Battery/heat — UNRESOLVED tradeoff (read before touching the hero spin)
+Continuous WebGL spin of complex structures heats phones/iPads. We tried several
+mitigations — fps-throttling, time-scaled (`dt`) rotation, a
+`window.devicePixelRatio` cap to 2×, and lighter `setDefaultCartoonQuality` —
+but they made the spin **clunky/stuttery** and the DPR cap **dropped iPhone
+definition (3×→2×)**. All of this was **reverted on the homepage hero**, which is
+back to the original simple loop: render every frame, fixed `viewer.rotate(0.2)`,
+pause off-screen, respect `prefers-reduced-motion`. **Do not re-add fps gates,
+dt-scaling, or a DPR cap to the homepage hero.** (The 5 program-page spin viewers
+— surface/visualisation/opls/fep/bomb — still carry a legacy 45fps gate +
+time-scaled rotation; revert them to a plain fixed-step loop if they feel clunky.)
+If heat is revisited, do it **without** degrading smoothness or definition.
+
+### Device colour/brightness
+iPhone/iMac reading *darker* than iPad is the **displays** (True Tone / Night
+Shift / OLED), not the site. `color-scheme:light` is declared (meta + tokens.css);
+don't chase this difference in code.
 
 ---
 
