@@ -306,5 +306,9 @@ a{text-decoration:none;color:inherit}
    part of the hero stays touch-scrollable (the canvas otherwise eats every
    swipe). Below the canvas there's no interactive layer, so the page scrolls. */
 @media(max-width:760px){
-  .hp-hero__viewer{inset:0 0 auto 0;height:55%}
+  /* Sit the molecule just above the eyebrow. The strip above it and the text
+     block below it have no canvas, so both stay touch-scrollable. */
+  .hp-hero__viewer{top:auto;bottom:18rem;height:22rem}
+  /* Drop the scroll cue clear of the CTA so they no longer touch. */
+  .hp-hero__scroll{bottom:0.75rem;right:1.5rem}
 }

@@ -138,6 +138,14 @@ select.input{appearance:none;-webkit-appearance:none;cursor:pointer;padding-righ
 @keyframes scrollAnim{0%{top:-100%}100%{top:100%}}
 @media(max-width:960px){.hero-content{padding:0 1.5rem 4rem}}
 @media(max-width:540px){.hero-h1{font-size:2.6rem}}
+/* Program heroes on mobile: size to content and anchor the eyebrow a fixed
+   distance below the fixed nav, so the nav->eyebrow gap is identical on every
+   program page and every device (instead of scaling with viewport height).
+   Targets only .hero--<name> (program pages); plain .hero pages are untouched. */
+@media(max-width:600px){
+  .hero[class*="hero--"]{height:auto;min-height:0;align-items:flex-start}
+  .hero[class*="hero--"] .hero-content{padding-top:18rem}
+}
 
 /* ============================================================================
    PROGRAM-PAGE SHARED BLOCK (folded in, token-based)
