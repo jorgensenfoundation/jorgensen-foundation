@@ -238,8 +238,9 @@ a{text-decoration:none;color:inherit}
   .hp-bio__label{top:1.5rem;right:1.5rem;left:1.5rem;text-align:right}
 }
 @media (max-width:760px){
-  /* Lift the molecule above the heading so it doesn't wash out the text. */
-  .hp-bio__viewer{transform:translateY(-16%)}
+  /* Lift the molecule above the heading so it doesn't wash out the text
+     (enough to clear it even at the molecule's widest/lowest spin orientation). */
+  .hp-bio__viewer{transform:translateY(-25%)}
 }
 
 /* (scroll-reveal CSS moved to components.css for site-wide use) */
