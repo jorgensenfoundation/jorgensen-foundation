@@ -32,13 +32,6 @@ a{text-decoration:none;color:inherit}
 .brand-prog{display:flex;flex-direction:column}
 .brand-dl--prog{margin-top:0.9rem;justify-content:center}
 
-/* Legacy / retired mark — quiet reference, no downloads */
-.brand-legacy{margin-top:3.25rem}
-.brand-legacy-row{display:flex;align-items:center;gap:1.5rem;border:1px solid var(--hairline);padding:1.5rem 1.75rem}
-.brand-legacy-mark img{display:block;width:56px;height:56px;opacity:0.5}
-.brand-legacy-note{font-size:0.82rem;line-height:1.8;color:var(--body);max-width:560px}
-.brand-legacy-note b{color:var(--ink);font-weight:400}
-
 .brand-dl{display:flex;flex-wrap:wrap;gap:0.7rem;margin-top:1.5rem}
 .brand-dl .btn{padding:0.7rem 1.3rem;font-size:0.58rem}
 
