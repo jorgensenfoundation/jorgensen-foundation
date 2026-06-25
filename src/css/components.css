@@ -40,8 +40,24 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
 }
 @media(max-width:540px){
-  .footer-grid{grid-template-columns:1fr}
-  .footer-bottom{flex-direction:column;gap:1rem;text-align:center}
+  footer{padding:3.5rem 1.5rem 2rem}
+  /* Brand on top, then each link group full-width — left-aligned. */
+  .footer-grid{grid-template-columns:1fr;gap:2rem;margin-bottom:2.5rem}
+  .footer-desc{max-width:none}
+  /* Each group: three links per row (two rows of three), tightly dot-separated.
+     Links flow inline with a "·" between them and a forced line break after
+     every 3rd. Text/tap targets unchanged — generous line-height keeps rows
+     finger-friendly. */
+  .footer-col ul{display:block;line-height:2.5}
+  .footer-col li{display:inline;white-space:nowrap}
+  .footer-col li:not(:nth-child(3n))::after{content:'·';color:color-mix(in srgb,var(--body) 38%,transparent);margin:0 0.7rem}
+  .footer-col li:nth-child(3n)::after{content:'\A';white-space:pre}
+  /* Bottom bar: copyright on its own line; legal links as a centered
+     dot-separated row; tagline on its own line below. */
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:1rem;text-align:left}
+  .footer-legal{flex-wrap:wrap;justify-content:flex-start;gap:0}
+  .footer-legal a:not(:last-of-type)::after{content:'·';color:color-mix(in srgb,var(--body) 38%,transparent);margin:0 0.7rem}
+  .footer-legal .footer-copy{flex-basis:100%;margin-top:0.5rem}
 }
 
 /* --- HEADINGS (serif, weight 300, italic <em> accent; large elegant clamps) --- */
