@@ -35,7 +35,7 @@
     function loop() {
       requestAnimationFrame(loop);
       if (!visible) return;
-      viewer.rotate(0.14, { x: 0, y: 1, z: 0 }); // slow auto-spin
+      viewer.rotate(0.2, { x: 0, y: 1, z: 0 }); // auto-spin (per frame)
       viewer.render();
     }
     requestAnimationFrame(loop);
