@@ -31,7 +31,9 @@ permalink: /login/index.html
     <div class="login-or"><span>or continue with</span></div>
     <div class="login-social">
       <button class="login-social-btn" type="button" onclick="oauthLogin('google')">Google</button>
-      <button class="login-social-btn" type="button" onclick="oauthLogin('microsoft')">Microsoft</button>
+      {# Microsoft sign-in is deferred until an Entra app is registered. To re-enable:
+         uncomment this button and set MICROSOFT_CLIENT_ID/SECRET in Railway. #}
+      {# <button class="login-social-btn" type="button" onclick="oauthLogin('microsoft')">Microsoft</button> #}
       <button class="login-social-btn" type="button" onclick="oauthLogin('orcid')">ORCID</button>
     </div>
     <span class="link-small">Don't have an account? <a href="/#access">Register here</a> · <a href="/reset-password">Forgot password?</a></span>
