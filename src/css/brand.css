@@ -46,12 +46,6 @@ a{text-decoration:none;color:inherit}
 .brand-progcards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 .brand-progcard img{display:block;width:100%;height:auto;border:1px solid var(--hairline)}
 .brand-progcard .brand-dl{margin-top:0.6rem;justify-content:center}
-.brand-banner-rows{display:grid;grid-template-columns:1fr;gap:1rem}
-.brand-banner-block{margin-bottom:2.25rem}
-.brand-banner-h{font-family:var(--font-sans);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);margin:0 0 0.85rem}
-.brand-banner-h span{color:var(--body);margin-left:0.5rem;letter-spacing:0.08em}
-.brand-swatch.banner-sw{padding:1.5rem;min-height:0}
-.brand-swatch.banner-sw img{display:block;width:100%;max-width:840px;height:auto;margin:0 auto}
 
 .brand-note{margin-top:3.5rem;border-top:1px solid var(--hairline);padding-top:1.75rem;font-size:0.82rem;line-height:1.95;color:var(--body);max-width:760px}
 .brand-note b{color:var(--ink);font-weight:400}
