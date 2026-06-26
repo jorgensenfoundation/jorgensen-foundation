@@ -120,6 +120,21 @@
     return false;
   }
 
+  // Social sign-in: hand off to the backend's OAuth start endpoint, which then
+  // redirects to the provider (Google / Microsoft / ORCID) and back. We forward
+  // the same "Remember me" choice the email/password form uses, reading whichever
+  // checkbox is present on the current page (nav dropdown or the /login page).
+  // Exposed as a bare global because the buttons call it via inline onclick, and
+  // this file (auth.js) loads on EVERY page — including app-layout pages where
+  // main.js is intentionally not loaded.
+  function oauthLogin(provider) {
+    var rememberEl = document.getElementById('nav-login-remember')
+      || document.getElementById('login-remember');
+    var remember = rememberEl && rememberEl.checked ? 1 : 0;
+    window.location.href = API + '/auth/' + encodeURIComponent(provider) + '/login?remember=' + remember;
+  }
+  window.oauthLogin = oauthLogin;
+
   window.JFAuth = {
     isLoggedIn: isLoggedIn,
     getToken: getToken,

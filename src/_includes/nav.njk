@@ -121,11 +121,15 @@
               <p class="nav-login-error" id="nav-login-error"></p>
               <div class="nav-login-or"><span>or</span></div>
               <div class="nav-social">
-                <button class="nav-social-btn" type="button" disabled aria-disabled="true">Facebook</button>
-                <button class="nav-social-btn" type="button" disabled aria-disabled="true">Google</button>
-                <button class="nav-social-btn" type="button" disabled aria-disabled="true">Apple</button>
+                <button class="nav-social-btn" type="button" onclick="oauthLogin('google')">Google</button>
+                {# Microsoft sign-in is deferred until an Entra app is registered. To re-enable:
+                   uncomment this button and set MICROSOFT_CLIENT_ID/SECRET in Railway. #}
+                {# <button class="nav-social-btn" type="button" onclick="oauthLogin('microsoft')">Microsoft</button> #}
+                {# ORCID sign-in is deferred pending ORCID API terms review (Public API is
+                   non-commercial only; the foundation has a paid industry tier). Re-enable by
+                   uncommenting + setting ORCID_CLIENT_ID/SECRET in Railway. #}
+                {# <button class="nav-social-btn" type="button" onclick="oauthLogin('orcid')">ORCID</button> #}
               </div>
-              <span class="nav-social-note">Social sign-in coming soon</span>
             </div>
 
           </div>

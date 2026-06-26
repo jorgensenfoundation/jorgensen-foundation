@@ -140,10 +140,10 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-login-or{display:flex;align-items:center;margin:1.3rem 0;color:color-mix(in srgb,var(--body) 60%,var(--ground));font-family:var(--font-sans);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase}
 .nav--hero .nav-login-or::before,.nav--hero .nav-login-or::after{content:"";flex:1;height:1px;background:var(--hairline)}
 .nav--hero .nav-login-or span{padding:0 0.9rem}
-/* Social buttons — visual only, disabled / coming soon */
-.nav--hero .nav-social{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem}
-.nav--hero .nav-social-btn{font-family:var(--font-sans);font-size:0.72rem;letter-spacing:0.04em;padding:0.65rem 0.5rem;border:1px solid var(--hairline);background:var(--ground);color:var(--body);cursor:not-allowed;opacity:0.45}
-.nav--hero .nav-social-note{display:block;margin-top:0.7rem;font-family:var(--font-sans);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb,var(--body) 60%,var(--ground));text-align:center}
+/* Social sign-in buttons (Google / Microsoft / ORCID) */
+.nav--hero .nav-social{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:0.6rem}
+.nav--hero .nav-social-btn{font-family:var(--font-sans);font-size:0.72rem;letter-spacing:0.04em;padding:0.65rem 0.5rem;border:1px solid var(--hairline);background:var(--ground);color:var(--body);cursor:pointer;transition:border-color 0.2s,color 0.2s}
+.nav--hero .nav-social-btn:hover{border-color:var(--ink);color:var(--ink)}
 /* Inline login error (tokened) */
 .nav--hero .nav-login-error{font-family:var(--font-sans);font-size:0.72rem;line-height:1.4;color:var(--error);margin-top:0.75rem;display:none}
 .nav--hero .nav-login-error.show{display:block}
