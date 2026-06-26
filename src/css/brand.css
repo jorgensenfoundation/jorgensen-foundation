@@ -24,6 +24,8 @@ a{text-decoration:none;color:inherit}
 .brand-swatch img{display:block;max-width:100%;height:auto}
 .brand-swatch.lock img{width:360px;max-width:100%;height:auto}
 .brand-swatch.lock-stacked img{width:240px;max-width:100%;height:auto}
+.brand-swatch.mono img{width:120px;max-width:100%;height:auto}
+.brand-swatch.seal img{width:148px;max-width:100%;height:auto}
 
 /* Program logos — horizontal Cormorant lockups; 3-up grid for the 6 marks */
 .brand-swatch.prog{min-height:130px}
