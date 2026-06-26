@@ -7,8 +7,8 @@
 <!-- Always render in light appearance, regardless of the device's Dark Mode, so
      colours look identical on iPad, iPhone and Mac (no UA dark-mode tinting). -->
 <meta name="color-scheme" content="light">
-<title>{{ title }}</title>
-<meta name="description" content="{{ description }}">
+<title>{{ title or site.name }}</title>
+{% include "seo.njk" %}
 <link rel="icon" href="/img/favicon.svg?v=4" type="image/svg+xml">
 <link rel="icon" href="/img/favicon-32.png?v=4" sizes="32x32" type="image/png">
 <link rel="icon" href="/img/favicon-16.png?v=4" sizes="16x16" type="image/png">

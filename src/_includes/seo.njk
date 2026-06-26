@@ -1,0 +1,70 @@
+{# ── SEO meta + structured data. Included from base.njk <head>. ──────────────
+   Indexability is driven by site.sitemapPages: only those paths get index,follow;
+   everything else (login, dashboard, coming-soon, drafts…) is noindex. A page can
+   also force noindex with `noindex: true` in its front matter.
+   Canonical/OG URLs strip the trailing slash to match the live clean URLs. #}
+{%- set _path = page.url -%}
+{%- if _path != "/" -%}{%- set _path = _path | replace(r/\/$/, "") -%}{%- endif -%}
+{%- set _canonical = site.url + _path -%}
+{%- set _desc = description or site.description -%}
+{%- set _title = title or site.name -%}
+{%- set _ogimg = site.url + (ogImage or site.ogImage) -%}
+<meta name="description" content="{{ _desc }}">
+<link rel="canonical" href="{{ _canonical }}">
+{% if (_path in site.sitemapPages) and not noindex %}<meta name="robots" content="index, follow">{% else %}<meta name="robots" content="noindex, follow">{% endif %}
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ _title }}">
+<meta property="og:description" content="{{ _desc }}">
+<meta property="og:url" content="{{ _canonical }}">
+<meta property="og:image" content="{{ _ogimg }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="{{ site.locale }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ _title }}">
+<meta name="twitter:description" content="{{ _desc }}">
+<meta name="twitter:image" content="{{ _ogimg }}">
+{% if site.twitterHandle %}<meta name="twitter:site" content="{{ site.twitterHandle }}">{% endif %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "{{ site.url }}/#organization",
+      "name": "{{ site.name }}",
+      "alternateName": "{{ site.shortName }}",
+      "url": "{{ site.url }}",
+      "logo": "{{ site.url }}{{ site.logo }}",
+      "image": "{{ _ogimg }}",
+      "description": "{{ site.description }}",
+      "foundingDate": "{{ site.foundingYear }}"{% if site.sameAs and site.sameAs.length %},
+      "sameAs": [{% for s in site.sameAs %}"{{ s }}"{% if not loop.last %}, {% endif %}{% endfor %}]{% endif %}
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ site.url }}/#website",
+      "url": "{{ site.url }}",
+      "name": "{{ site.name }}",
+      "description": "{{ site.description }}",
+      "publisher": { "@id": "{{ site.url }}/#organization" },
+      "inLanguage": "en"
+    }{% if software %},
+    {
+      "@type": "SoftwareApplication",
+      "name": "{{ software.name }}",
+      "applicationCategory": "{{ software.category or 'Scientific application' }}",
+      "operatingSystem": "Web-based (cloud)",
+      "url": "{{ _canonical }}",
+      "image": "{{ _ogimg }}",
+      "description": "{{ description or site.description }}",
+      "publisher": { "@id": "{{ site.url }}/#organization" },
+      "isAccessibleForFree": true
+    }{% endif %}
+  ]
+}
+</script>
