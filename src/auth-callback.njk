@@ -1,0 +1,22 @@
+---
+layout: app.njk
+title: Signing you in… — Jorgensen Foundation
+navAuth: true
+footerInclude: footer-app-full.njk
+pageCss: /css/login.css
+permalink: /auth/callback/index.html
+---
+
+<!-- OAUTH TOKEN HANDOFF — the backend redirects here with #token=…&remember=… in
+     the URL fragment. auth-callback.js reads it, verifies via /me, and stores the
+     session, then forwards to the dashboard. No interactive content. -->
+<div class="page-wrap" id="page-callback">
+  <div class="card">
+    <span class="card-label">Member Access</span>
+    <h1 class="card-title">Signing you<br><em>in…</em></h1>
+    <p class="card-body" id="callback-status">Completing sign-in, one moment.</p>
+    <p class="error-msg" id="callback-error"></p>
+  </div>
+</div>
+
+<script src="/js/auth-callback.js"></script>

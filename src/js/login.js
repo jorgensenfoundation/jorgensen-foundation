@@ -180,5 +180,20 @@ if (user) {
     window.location.href = '/dashboard';
   }
 } else {
+  // Surface a friendly message when social sign-in bounced back with ?error=…
+  // (see the backend's _oauth_error_redirect reasons).
+  const oauthErr = new URLSearchParams(location.search).get('error');
+  if (oauthErr) {
+    const MAP = {
+      oauth_unconfigured: 'That sign-in option isn’t available yet. Please use email and password.',
+      oauth_denied: 'Sign-in was cancelled. Please try again.',
+      oauth_state: 'Your sign-in session expired. Please try again.',
+      oauth_exchange: 'We couldn’t complete sign-in with that provider. Please try again.',
+      oauth_identity: 'That provider didn’t return enough information to sign you in.',
+    };
+    const el = document.getElementById('login-error');
+    if (el) { el.textContent = MAP[oauthErr] || 'Sign-in failed. Please try again.'; el.classList.add('show'); }
+    history.replaceState(null, '', location.pathname);   // scrub ?error= from the URL
+  }
   showPage('page-login');
 }

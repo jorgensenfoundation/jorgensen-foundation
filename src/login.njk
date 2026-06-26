@@ -28,6 +28,12 @@ permalink: /login/index.html
     <label class="login-remember"><input type="checkbox" id="login-remember"> Keep me signed in</label>
     <p class="error-msg" id="login-error"></p>
     <button class="btn" id="login-btn" onclick="login()">Sign In</button>
+    <div class="login-or"><span>or continue with</span></div>
+    <div class="login-social">
+      <button class="login-social-btn" type="button" onclick="oauthLogin('google')">Google</button>
+      <button class="login-social-btn" type="button" onclick="oauthLogin('microsoft')">Microsoft</button>
+      <button class="login-social-btn" type="button" onclick="oauthLogin('orcid')">ORCID</button>
+    </div>
     <span class="link-small">Don't have an account? <a href="/#access">Register here</a> · <a href="/reset-password">Forgot password?</a></span>
   </div>
 </div>
