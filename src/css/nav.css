@@ -109,7 +109,7 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--hero .nav-account-toggle{position:relative;display:flex;align-items:center;cursor:pointer;color:var(--cream);transition:color 0.4s}
 .nav--hero.scrolled .nav-account-toggle{color:var(--ink)}
 .nav--hero .nav-account-toggle:hover{opacity:0.8}
-.nav--hero .nav-account-icon{display:block}
+.nav--hero .nav-account-label{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.18em;text-transform:uppercase;white-space:nowrap}
 .nav--hero .nav-login-mega{position:absolute;top:100%;left:0;right:0;background:color-mix(in srgb,var(--ground) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:2.5rem;z-index:120}
 .nav--hero .nav-login-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;max-width:1080px;margin:0 auto;align-items:start}
 .nav--hero .nav-login-col{min-width:0}
