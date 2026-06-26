@@ -53,7 +53,18 @@
       "description": "{{ site.description }}",
       "publisher": { "@id": "{{ site.url }}/#organization" },
       "inLanguage": "en"
-    }
+    }{% if software %},
+    {
+      "@type": "SoftwareApplication",
+      "name": "{{ software.name }}",
+      "applicationCategory": "{{ software.category or 'Scientific application' }}",
+      "operatingSystem": "Web-based (cloud)",
+      "url": "{{ _canonical }}",
+      "image": "{{ _ogimg }}",
+      "description": "{{ description or site.description }}",
+      "publisher": { "@id": "{{ site.url }}/#organization" },
+      "isAccessibleForFree": true
+    }{% endif %}
   ]
 }
 </script>

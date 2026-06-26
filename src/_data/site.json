@@ -7,8 +7,10 @@
   "logo": "/img/brand/jf-monogram-midnight-1024.png",
   "ogImage": "/img/og/jf-og.png",
   "locale": "en_US",
-  "twitterHandle": "",
-  "sameAs": [],
+  "twitterHandle": "@jorgensenfdn",
+  "sameAs": [
+    "https://x.com/jorgensenfdn"
+  ],
   "sitemapPages": [
     "/",
     "/about",
