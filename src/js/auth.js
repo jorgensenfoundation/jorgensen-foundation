@@ -121,7 +121,7 @@
   }
 
   // Social sign-in: hand off to the backend's OAuth start endpoint, which then
-  // redirects to the provider (Google / Microsoft / ORCID) and back. We forward
+  // redirects to the provider (Google / GitHub) and back. We forward
   // the same "Remember me" choice the email/password form uses, reading whichever
   // checkbox is present on the current page (nav dropdown or the /login page).
   // Exposed as a bare global because the buttons call it via inline onclick, and

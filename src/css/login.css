@@ -31,7 +31,7 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .login-or::before,.login-or::after{content:"";flex:1;height:1px;background:var(--hairline)}
 .login-or span{font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--body)}
 .login-social{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:0.6rem}
-.login-social-btn{font-family:Helvetica,Arial,sans-serif;font-size:0.72rem;letter-spacing:0.04em;padding:0.7rem 0.5rem;border:1px solid var(--hairline);background:transparent;color:var(--body);cursor:pointer;transition:border-color 0.2s,color 0.2s}
+.login-social-btn{display:flex;align-items:center;justify-content:center;padding:0.8rem 0.5rem;border:1px solid var(--hairline);background:transparent;color:var(--body);cursor:pointer;transition:border-color 0.2s,color 0.2s}
 .login-social-btn:hover{border-color:var(--ink);color:var(--ink)}
 .error-msg{font-size:0.68rem;color:var(--error);margin-top:0.75rem;display:none}
 .error-msg.show{display:block}
