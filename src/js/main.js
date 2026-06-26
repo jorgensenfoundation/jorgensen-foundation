@@ -66,14 +66,23 @@ function applyAuthState() {
   if (!nav) return;
   const authed = !!(window.JFAuth && JFAuth.isLoggedIn());
   nav.classList.toggle('is-authed', authed);
+  // The nav control is a text link: "Sign In" when logged out, the user's first
+  // name when logged in (it opens the account menu in that state).
+  const labelEl = document.getElementById('nav-account-label');
+  const toggleEl = labelEl && labelEl.closest('.nav-account-toggle');
   if (authed && window.JFAuth) {
     const u = JFAuth.getUser() || {};
+    if (labelEl) labelEl.textContent = u.first_name || 'Account';
+    if (toggleEl) toggleEl.setAttribute('aria-label', 'Account menu');
     const nameEl = document.getElementById('nav-acct-name');
     if (nameEl) nameEl.textContent = u.first_name || 'there';
     const review = document.getElementById('nav-acct-review');
     if (review) review.hidden = !u.is_board_member;            // board only
     const grants = document.getElementById('nav-acct-grants');
     if (grants) grants.hidden = !!u.is_board_member;           // applicants only (inverse of review)
+  } else {
+    if (labelEl) labelEl.textContent = 'Sign In';
+    if (toggleEl) toggleEl.setAttribute('aria-label', 'Sign in');
   }
 }
 
