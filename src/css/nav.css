@@ -214,3 +214,19 @@ nav{display:flex;justify-content:space-between;align-items:center;transition:bac
 .nav--admin .nav-tag{font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:color-mix(in srgb,var(--cream) 35%,transparent)}
 .nav--admin .nav-logout{font-size:0.55rem;letter-spacing:0.18em;color:color-mix(in srgb,var(--cream) 50%,transparent);cursor:pointer;border:none;background:none;font-family:var(--font-sans)}
 .nav--admin .nav-logout:hover{color:var(--cream)}
+
+/* ============================================================================
+   Site search results — dropdown shared by the Discover (.nav-search) box and
+   the menu (.nav-menu-search) box. Powered by /js/search.js + /search-index.json.
+   ============================================================================ */
+.nav-search-host{position:relative}
+/* Search box inside the logged-in account menu (reuses .nav-search styling). */
+.nav-acct-search{margin:0.3rem 0.9rem 0.6rem}
+.nav-search-results{position:absolute;top:calc(100% + 0.4rem);left:0;right:0;z-index:30;background:var(--ground);border:1px solid var(--hairline);border-radius:6px;box-shadow:0 12px 32px rgba(48,44,46,0.14);overflow:hidden;max-height:60vh;overflow-y:auto}
+.nav-search-result{display:block;padding:0.7rem 0.9rem;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--hairline) 60%,transparent)}
+.nav-search-result:last-child{border-bottom:none}
+.nav-search-result:hover,.nav-search-result.is-active{background:color-mix(in srgb,var(--surface) 45%,var(--ground))}
+.nav-search-result-title{display:block;font-family:var(--font-sans);font-size:0.9rem;font-weight:600;color:var(--ink);line-height:1.3}
+.nav-search-result-snip{display:block;margin-top:0.2rem;font-family:var(--font-sans);font-size:0.78rem;color:var(--body);line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.nav-search-result mark{background:color-mix(in srgb,var(--surface) 80%,#f4d97b);color:inherit;padding:0 1px;border-radius:2px}
+.nav-search-empty{padding:0.8rem 0.9rem;font-family:var(--font-sans);font-size:0.82rem;color:var(--body)}

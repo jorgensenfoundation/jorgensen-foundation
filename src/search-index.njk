@@ -1,0 +1,14 @@
+---
+permalink: /search-index.json
+eleventyExcludeFromCollections: true
+layout: false
+---
+{#- Build-time search index consumed by /js/search.js. One entry per public page
+    (see the searchPages/searchText filters in .eleventy.js). Self-maintaining:
+    add a page to site.sitemapPages and it shows up here automatically. -#}
+[
+{%- set pages = collections.all | searchPages(site.sitemapPages) -%}
+{%- for item in pages -%}
+{"url":{{ item.url | dump | safe }},"title":{{ (item.data.searchTitle or item.data.title or site.name) | dump | safe }},"description":{{ (item.data.description or "") | dump | safe }},"keywords":{{ (item.data.searchKeywords or "") | dump | safe }},"text":{{ (item.templateContent | searchText) | dump | safe }}}{% if not loop.last %},{% endif %}
+{%- endfor -%}
+]

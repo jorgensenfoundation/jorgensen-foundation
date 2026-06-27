@@ -28,16 +28,8 @@ function toggleAccount(e) {
   closeNavPanels();
   if (willOpen) d.classList.add('open');
 }
-// Mobile menu search box. Results aren't wired yet (later project): prevent the default
-// form submit so nothing navigates or errors; just log the query. Graceful no-op for now.
-function navMenuSearch(e) {
-  if (e) e.preventDefault();
-  const form = e && e.currentTarget;
-  const input = form ? form.querySelector('.nav-menu-search-input') : null;
-  const q = input ? input.value.trim() : '';
-  if (q) console.log('[nav search] query:', q);
-  return false;
-}
+// Nav search (both the menu box and the Discover box) is owned by /js/search.js,
+// which runs a client-side search against the build-time /search-index.json.
 // Mobile-only Programs: a SUB-accordion inside the hamburger menu — plain toggle, does
 // not close the hamburger (it lives inside it). Desktop uses CSS hover.
 function toggleDropdown(e) {
