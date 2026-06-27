@@ -23,11 +23,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(48, 44, 46, 0.28);
-  transition: transform 0.18s ease, background 0.18s ease;
+  box-shadow: 0 8px 24px rgba(48, 44, 46, 0.18);
+  /* Present but understated; comes fully solid on hover/focus so it stays easy to use. */
+  opacity: 0.55;
+  transition: transform 0.18s ease, background 0.18s ease, opacity 0.18s ease;
   margin-left: auto;
 }
-.jf-support-toggle:hover {
+.jf-support-toggle:hover,
+.jf-support-toggle:focus-visible,
+.jf-support.is-open .jf-support-toggle {
+  opacity: 1;
   transform: translateY(-2px);
   background: var(--ink-hover);
 }
