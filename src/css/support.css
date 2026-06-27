@@ -1,0 +1,231 @@
+/* ============================================================================
+   AI customer-support chat widget. Bottom-right launcher + panel.
+   Markup: _includes/support-widget.njk · Logic: /js/support.js
+   Uses brand tokens (tokens.css) to match the site.
+   ============================================================================ */
+.jf-support {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 200;
+  font-family: var(--font-sans);
+}
+
+/* Launcher button */
+.jf-support-toggle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ink);
+  color: var(--cream);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(48, 44, 46, 0.28);
+  transition: transform 0.18s ease, background 0.18s ease;
+  margin-left: auto;
+}
+.jf-support-toggle:hover {
+  transform: translateY(-2px);
+  background: var(--ink-hover);
+}
+.jf-support-icon-close {
+  display: none;
+}
+.jf-support.is-open .jf-support-icon-open {
+  display: none;
+}
+.jf-support.is-open .jf-support-icon-close {
+  display: block;
+}
+
+/* Panel */
+.jf-support-panel {
+  position: absolute;
+  right: 0;
+  bottom: 70px;
+  width: 360px;
+  max-width: calc(100vw - 3rem);
+  height: 520px;
+  max-height: calc(100vh - 7rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--ground);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(48, 44, 46, 0.22);
+  overflow: hidden;
+}
+
+.jf-support-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.1rem;
+  background: var(--ink);
+  color: var(--cream);
+}
+.jf-support-head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.jf-support-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.jf-support-sub {
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--cream) 75%, transparent);
+}
+.jf-support-close {
+  background: none;
+  border: none;
+  color: color-mix(in srgb, var(--cream) 80%, transparent);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  border-radius: 4px;
+}
+.jf-support-close:hover {
+  color: var(--cream);
+}
+
+/* Message log */
+.jf-support-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: color-mix(in srgb, var(--surface) 22%, var(--ground));
+}
+.jf-support-msg {
+  display: flex;
+  max-width: 85%;
+}
+.jf-support-msg--user {
+  align-self: flex-end;
+}
+.jf-support-msg--assistant {
+  align-self: flex-start;
+}
+.jf-support-bubble {
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.jf-support-msg--assistant .jf-support-bubble {
+  background: var(--ground);
+  border: 1px solid var(--hairline);
+  border-bottom-left-radius: 3px;
+}
+.jf-support-msg--user .jf-support-bubble {
+  background: var(--ink);
+  color: var(--cream);
+  border-bottom-right-radius: 3px;
+}
+.jf-support-escalated .jf-support-bubble {
+  background: color-mix(in srgb, var(--surface) 60%, var(--ground));
+  font-size: 0.8rem;
+  color: var(--body);
+}
+
+/* Typing indicator */
+.jf-support-typing .jf-support-bubble {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.jf-support-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--body) 55%, var(--ground));
+  animation: jf-support-blink 1.2s infinite both;
+}
+.jf-support-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.jf-support-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes jf-support-blink {
+  0%, 80%, 100% { opacity: 0.3; }
+  40% { opacity: 1; }
+}
+
+/* Composer */
+.jf-support-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 0.8rem 0.4rem;
+  border-top: 1px solid var(--hairline);
+}
+.jf-support-input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  padding: 0.6rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--ink);
+  outline: none;
+  background: var(--ground);
+}
+.jf-support-input:focus {
+  border-color: color-mix(in srgb, var(--ink) 40%, var(--hairline));
+}
+.jf-support-input:disabled {
+  opacity: 0.6;
+}
+.jf-support-send {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ink);
+  color: var(--cream);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease;
+}
+.jf-support-send:hover {
+  background: var(--ink-hover);
+}
+.jf-support-send:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.jf-support-foot {
+  margin: 0;
+  padding: 0 0.8rem 0.6rem;
+  text-align: center;
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--body) 65%, var(--ground));
+}
+
+@media (max-width: 600px) {
+  .jf-support {
+    right: 1rem;
+    bottom: 1rem;
+  }
+  .jf-support-panel {
+    bottom: 66px;
+  }
+}
