@@ -67,6 +67,12 @@ function showDashboard() {
 // ============================================================================
 let supportFilter = '';
 
+// Only treat http(s) URLs as linkable. page_url is visitor-supplied, so a
+// "javascript:"/"data:" value must never reach an href (XSS). Returns '' if unsafe.
+function safeHref(u) {
+  return /^https?:\/\//i.test(String(u || '')) ? String(u) : '';
+}
+
 const SUPPORT_STATUS_LABEL = {
   bot: 'Bot', needs_review: 'Needs review', approved: 'Approved',
   hold: 'Hold', fixed: 'Fixed', closed: 'Closed',
@@ -166,7 +172,9 @@ function openTicketModal(t) {
         ${t.summary ? `<div class="sup-summary"><strong>Summary.</strong> ${esc(t.summary)}</div>` : ''}
         <div class="sup-meta">
           <span>From: <strong>${esc(t.user_email || 'anonymous')}</strong></span>
-          ${t.page_url ? `<span>Page: <a href="${escAttr(t.page_url)}" target="_blank" rel="noopener">${esc(t.page_url)}</a></span>` : ''}
+          ${t.page_url ? (safeHref(t.page_url)
+            ? `<span>Page: <a href="${escAttr(safeHref(t.page_url))}" target="_blank" rel="noopener">${esc(t.page_url)}</a></span>`
+            : `<span>Page: ${esc(t.page_url)}</span>`) : ''}
         </div>
         <div class="sup-thread">${thread || '<p class="detail-empty">No messages.</p>'}</div>
       </div>
