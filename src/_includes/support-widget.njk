@@ -1,0 +1,44 @@
+{# AI customer-support chat widget. Bottom-right launcher + panel.
+   Loaded from base.njk on nav pages; driven by /js/support.js → backend /support/chat. #}
+<div class="jf-support" id="jf-support">
+  <button class="jf-support-toggle" id="jf-support-toggle" type="button"
+          aria-label="Open help & support chat" aria-expanded="false" aria-controls="jf-support-panel">
+    <svg class="jf-support-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    <svg class="jf-support-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+
+  <div class="jf-support-panel" id="jf-support-panel" role="dialog" aria-label="Customer assistance" aria-modal="false" hidden>
+    <div class="jf-support-head">
+      <div class="jf-support-head-text">
+        <span class="jf-support-title">Help &amp; Support</span>
+        <span class="jf-support-sub">We usually reply right away</span>
+      </div>
+      <button class="jf-support-close" id="jf-support-close" type="button" aria-label="Close support chat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="jf-support-log" id="jf-support-log" role="log" aria-live="polite"></div>
+
+    <form class="jf-support-form" id="jf-support-form">
+      <input class="jf-support-input" id="jf-support-input" type="text" autocomplete="off"
+             placeholder="Describe what you need help with…" aria-label="Your message" maxlength="4000">
+      <button class="jf-support-send" id="jf-support-send" type="submit" aria-label="Send message">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+    <p class="jf-support-foot">AI assistant · complex issues are passed to our team</p>
+  </div>
+</div>

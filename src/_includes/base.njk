@@ -17,6 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ mainCss or '/css/style.css' }}">
 {% if navCss %}<link rel="stylesheet" href="/css/nav.css">{% endif %}
+{% if supportWidget != false %}<link rel="stylesheet" href="/css/support.css">{% endif %}
 {% if pageCss %}<link rel="stylesheet" href="{{ pageCss }}">{% endif %}
 <script src="/js/auth.js"></script>
 </head>
@@ -28,6 +29,7 @@
 
 {% if mainJs != false %}<script src="/js/main.js"></script>{% endif %}
 {% if navCss %}<script src="/js/search.js" defer></script>{% endif %}
+{% if supportWidget != false %}{% include "support-widget.njk" %}<script src="/js/support.js" defer></script>{% endif %}
 <script src="/js/reveal.js"></script>
 </body>
 </html>
