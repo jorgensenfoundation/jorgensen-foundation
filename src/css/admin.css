@@ -164,3 +164,52 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .board-msg.success{color:var(--success);display:block}
 
 @media(max-width:900px){.detail-grid{grid-template-columns:1fr;gap:1.5rem}}
+
+/* ============================================================================
+   Support tickets dashboard (AI customer support)
+   ============================================================================ */
+.sup-badge{display:inline-block;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.2rem 0.5rem;border-radius:3px;background:#e9e6df;color:#53534C;white-space:nowrap}
+.sup-needs_review{background:#f4d97b;color:#5a4a13}
+.sup-approved{background:#bfe0c2;color:#1f4d27}
+.sup-hold{background:#e7d2b8;color:#6b4a23}
+.sup-fixed{background:#cdd9ef;color:#2a3f63}
+.sup-closed{background:#e2e0da;color:#6a6a62}
+.sup-bot{background:#eceae4;color:#7a7a72}
+.sup-sev{display:inline-block;font-size:0.66rem;text-transform:capitalize}
+.sup-sev-high{color:#b0341d;font-weight:700}
+.sup-sev-medium{color:#9a6a18}
+.sup-sev-low{color:#6a6a62}
+
+.sup-modal-overlay{position:fixed;inset:0;background:rgba(48,44,46,0.45);z-index:1000;
+  display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.sup-modal{background:#fff;border-radius:10px;width:100%;max-width:620px;max-height:88vh;
+  display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.3)}
+.sup-modal-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.1rem 1.4rem;border-bottom:1px solid #DEDCD5}
+.sup-modal-cat{margin-left:0.5rem;font-size:0.8rem;color:#53534C;text-transform:capitalize}
+.sup-modal-close{background:none;border:none;font-size:1.6rem;line-height:1;color:#8a8a82;cursor:pointer}
+.sup-modal-close:hover{color:#302C2E}
+.sup-modal-body{padding:1.2rem 1.4rem;overflow-y:auto}
+.sup-summary{font-size:0.9rem;line-height:1.6;color:#302C2E;margin-bottom:0.9rem;
+  background:#f7f5f0;border:1px solid #ece9e2;border-radius:6px;padding:0.7rem 0.9rem}
+.sup-meta{display:flex;flex-wrap:wrap;gap:0.4rem 1.2rem;font-size:0.78rem;color:#53534C;margin-bottom:1rem}
+.sup-meta a{color:#53534C}
+.sup-thread{display:flex;flex-direction:column;gap:0.55rem}
+.sup-msg{max-width:88%;padding:0.55rem 0.75rem;border-radius:10px;font-size:0.85rem;line-height:1.5;
+  white-space:pre-wrap;word-wrap:break-word}
+.sup-msg-who{display:block;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:#8a8a82;margin-bottom:0.15rem}
+.sup-msg-user{align-self:flex-end;background:#302C2E;color:#f4efe4}
+.sup-msg-user .sup-msg-who{color:rgba(244,239,228,0.6)}
+.sup-msg-assistant{align-self:flex-start;background:#f1efe9;color:#302C2E;border:1px solid #e4e1da}
+.sup-msg-note{align-self:stretch;max-width:100%;background:#fff7e0;border:1px solid #f0e3b8;color:#5a4a13}
+.sup-modal-foot{border-top:1px solid #DEDCD5;padding:0.9rem 1.4rem;display:flex;flex-direction:column;gap:0.7rem}
+.sup-note-row{display:flex;gap:0.5rem}
+.sup-note-row .search-input{flex:1}
+.sup-action-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.sup-action-row label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:#8a8a82;
+  display:flex;align-items:center;gap:0.5rem}
+.sup-action-row select{text-transform:none;letter-spacing:normal}
+.sup-delete{background:none;border:1px solid #d9b3ab;color:#b0341d;border-radius:4px;
+  padding:0.4rem 0.8rem;font-size:0.72rem;letter-spacing:0.05em;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
+.sup-delete:hover{background:#fbeae6}

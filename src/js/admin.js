@@ -59,6 +59,183 @@ function showDashboard() {
   loadNewsletter();
   loadGrants();
   loadBoardMembers();
+  loadSupport();
+}
+
+// ============================================================================
+// SUPPORT TICKETS (AI customer-support dashboard)
+// ============================================================================
+let supportFilter = '';
+
+// Only treat http(s) URLs as linkable. page_url is visitor-supplied, so a
+// "javascript:"/"data:" value must never reach an href (XSS). Returns '' if unsafe.
+function safeHref(u) {
+  return /^https?:\/\//i.test(String(u || '')) ? String(u) : '';
+}
+
+const SUPPORT_STATUS_LABEL = {
+  bot: 'Bot', needs_review: 'Needs review', approved: 'Approved',
+  hold: 'Hold', fixed: 'Fixed', closed: 'Closed',
+};
+
+function setSupportFilter(status, btn) {
+  supportFilter = status;
+  document.querySelectorAll('#support-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  loadSupport();
+}
+
+async function loadSupport() {
+  const tbody = document.getElementById('support-table');
+  if (!tbody) return;
+  try {
+    const qs = supportFilter ? `?status=${encodeURIComponent(supportFilter)}` : '';
+    const res = await fetch(`${API}/admin/support/tickets${qs}`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (!res.ok) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Could not load tickets.</td></tr>'; return; }
+    const data = await res.json();
+    renderSupport(data.tickets || []);
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Could not load tickets.</td></tr>';
+  }
+}
+
+function renderSupport(tickets) {
+  const tbody = document.getElementById('support-table');
+  if (!tbody) return;
+  if (!tickets.length) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No tickets.</td></tr>';
+    return;
+  }
+  const fmt = v => v ? new Date(v).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+  tbody.innerHTML = tickets.map(t => {
+    const status = t.status || 'bot';
+    const sev = t.severity || '—';
+    const summary = (t.summary || '(no summary yet)');
+    const trimmed = summary.length > 70 ? summary.slice(0, 70) + '…' : summary;
+    return `<tr>
+      <td><span class="sup-badge sup-${escAttr(status)}">${esc(SUPPORT_STATUS_LABEL[status] || status)}</span></td>
+      <td><span class="sup-sev sup-sev-${escAttr(sev)}">${esc(sev)}</span></td>
+      <td>${esc(t.category || '—')}</td>
+      <td>${esc(trimmed)}</td>
+      <td>${esc(t.user_email || 'anonymous')}</td>
+      <td>${esc(fmt(t.updated_at))}</td>
+      <td><button class="filter-btn" onclick="viewTicket('${escAttr(t.id)}')">View</button></td>
+    </tr>`;
+  }).join('');
+}
+
+async function viewTicket(publicId) {
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (!res.ok) return;
+    const t = await res.json();
+    openTicketModal(t);
+  } catch (e) {}
+}
+
+function openTicketModal(t) {
+  closeTicketModal();
+  const fmt = v => v ? new Date(v).toLocaleString('en-GB', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+  const thread = (t.thread || []).map(m => {
+    if (m.role === 'note') {
+      return `<div class="sup-msg sup-msg-note"><span class="sup-msg-who">${esc(m.author || 'Note')} · ${esc(fmt(m.created_at))}</span>${esc(m.content)}</div>`;
+    }
+    const who = m.role === 'user' ? 'Visitor' : 'Assistant';
+    return `<div class="sup-msg sup-msg-${escAttr(m.role)}"><span class="sup-msg-who">${esc(who)}</span>${esc(m.content)}</div>`;
+  }).join('');
+
+  const statuses = ['needs_review','approved','hold','fixed','closed','bot'];
+  const options = statuses.map(s => `<option value="${s}"${s===t.status?' selected':''}>${esc(SUPPORT_STATUS_LABEL[s]||s)}</option>`).join('');
+  const pid = escAttr(t.id);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'sup-modal-overlay';
+  overlay.id = 'sup-modal-overlay';
+  overlay.onclick = (e) => { if (e.target === overlay) closeTicketModal(); };
+  overlay.innerHTML = `
+    <div class="sup-modal" role="dialog" aria-label="Support ticket">
+      <div class="sup-modal-head">
+        <div>
+          <span class="sup-badge sup-${escAttr(t.status)}">${esc(SUPPORT_STATUS_LABEL[t.status]||t.status)}</span>
+          ${t.severity ? `<span class="sup-sev sup-sev-${escAttr(t.severity)}">${esc(t.severity)}</span>` : ''}
+          <span class="sup-modal-cat">${esc(t.category || '')}</span>
+        </div>
+        <button class="sup-modal-close" onclick="closeTicketModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="sup-modal-body">
+        ${t.summary ? `<div class="sup-summary"><strong>Summary.</strong> ${esc(t.summary)}</div>` : ''}
+        <div class="sup-meta">
+          <span>From: <strong>${esc(t.user_email || 'anonymous')}</strong></span>
+          ${t.page_url ? (safeHref(t.page_url)
+            ? `<span>Page: <a href="${escAttr(safeHref(t.page_url))}" target="_blank" rel="noopener">${esc(t.page_url)}</a></span>`
+            : `<span>Page: ${esc(t.page_url)}</span>`) : ''}
+        </div>
+        <div class="sup-thread">${thread || '<p class="detail-empty">No messages.</p>'}</div>
+      </div>
+      <div class="sup-modal-foot">
+        <div class="sup-note-row">
+          <input class="search-input" id="sup-note-input" type="text" placeholder="Add a note for the thread…" maxlength="4000">
+          <button class="filter-btn" onclick="addTicketNote('${pid}')">Add note</button>
+        </div>
+        <div class="sup-action-row">
+          <label>Status
+            <select class="search-input" id="sup-status-select" onchange="setTicketStatus('${pid}', this.value)">${options}</select>
+          </label>
+          <button class="sup-delete" onclick="deleteTicket('${pid}')">Delete</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+function closeTicketModal() {
+  const o = document.getElementById('sup-modal-overlay');
+  if (o) o.remove();
+}
+
+async function addTicketNote(publicId) {
+  const input = document.getElementById('sup-note-input');
+  const note = input ? input.value.trim() : '';
+  if (!note) return;
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/note`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ note }),
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) { await viewTicket(publicId); loadSupport(); }
+  } catch (e) {}
+}
+
+async function setTicketStatus(publicId, status) {
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/status`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ status }),
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) { await viewTicket(publicId); loadSupport(); }
+  } catch (e) {}
+}
+
+async function deleteTicket(publicId) {
+  if (!confirm('Delete this ticket permanently?')) return;
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) { closeTicketModal(); loadSupport(); }
+  } catch (e) {}
 }
 
 // If a token-protected call returns 401 (expired/invalid token after the 8h TTL),

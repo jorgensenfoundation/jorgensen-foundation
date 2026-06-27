@@ -151,6 +151,42 @@ permalink: /admin/index.html
   <div class="section-divider"></div>
 
   <div class="table-header">
+    <div class="table-title">Support Tickets</div>
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <div class="filter-row" id="support-filters">
+        <button class="filter-btn active" onclick="setSupportFilter('', this)">All</button>
+        <button class="filter-btn" onclick="setSupportFilter('needs_review', this)">Needs review</button>
+        <button class="filter-btn" onclick="setSupportFilter('approved', this)">Approved</button>
+        <button class="filter-btn" onclick="setSupportFilter('hold', this)">Hold</button>
+        <button class="filter-btn" onclick="setSupportFilter('fixed', this)">Fixed</button>
+        <button class="filter-btn" onclick="setSupportFilter('closed', this)">Closed</button>
+      </div>
+      <button class="refresh-btn" onclick="loadSupport()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Severity</th>
+          <th>Category</th>
+          <th>Summary</th>
+          <th>From</th>
+          <th>Updated</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="support-table">
+        <tr><td colspan="7" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="table-header">
     <div class="table-title">All Users</div>
     <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
       <input class="search-input" type="text" id="search" placeholder="Search email or name..." oninput="filterUsers()">
