@@ -213,3 +213,65 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .sup-delete{background:none;border:1px solid #d9b3ab;color:#b0341d;border-radius:4px;
   padding:0.4rem 0.8rem;font-size:0.72rem;letter-spacing:0.05em;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
 .sup-delete:hover{background:#fbeae6}
+
+/* ============================================================================
+   Admin redesign: left rail + section panels + progress stepper
+   ============================================================================ */
+.admin-shell{display:flex;gap:2.5rem;align-items:flex-start;max-width:1340px;margin:0 auto;padding:2.5rem 3rem}
+.admin-rail{flex:0 0 188px;position:sticky;top:1.5rem;display:flex;flex-direction:column;gap:0.2rem}
+.rail-item{display:flex;align-items:center;justify-content:space-between;gap:0.5rem;width:100%;text-align:left;
+  padding:0.7rem 0.9rem;border:none;background:none;cursor:pointer;border-radius:6px;color:var(--body);
+  font-family:Helvetica,Arial,sans-serif;transition:background 0.2s,color 0.2s}
+.rail-item:hover{background:color-mix(in srgb,var(--surface) 45%,var(--ground));color:var(--ink)}
+.rail-item.active{background:var(--surface);color:var(--ink)}
+.rail-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase}
+.rail-count{font-size:0.55rem;min-width:1.15rem;height:1.15rem;line-height:1.15rem;text-align:center;padding:0 0.35rem;
+  border-radius:999px;background:color-mix(in srgb,var(--ink) 12%,var(--ground));color:var(--ink)}
+.rail-count:empty{display:none}
+.rail-count--alert{background:#e0a83a;color:#fff}
+
+.admin-main{flex:1;min-width:0}
+/* The main column owns width now — drop the old centered max-width on moved blocks. */
+.admin-main .table-header,.admin-main .table-wrap,.admin-main .stats-row,
+.admin-main .show-more-wrap,.admin-main .board-msg{max-width:none;margin-left:0;margin-right:0}
+.admin-main .stats-row{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:0}
+.admin-section{display:none}
+.admin-section.active{display:block}
+.section-head{margin-bottom:1.25rem}
+
+/* Overview "needs your attention" */
+.overview-attention{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:2rem}
+.overview-attention:empty{display:none}
+.attn-item{display:flex;align-items:center;gap:0.7rem;padding:0.85rem 1.1rem;border:1px solid var(--hairline);
+  border-radius:6px;font-size:0.72rem;color:var(--ink);cursor:pointer;transition:border-color 0.2s,background 0.2s}
+.attn-item:hover{border-color:var(--ink)}
+.attn-item--alert{border-color:#e8c98a;background:#fdf8ec}
+.attn-dot{width:8px;height:8px;border-radius:50%;background:var(--body);flex-shrink:0}
+.attn-item--alert .attn-dot{background:#e0a83a}
+.attn-arrow{margin-left:auto;color:var(--body);font-size:0.8rem}
+
+/* Progress stepper (Google-style) */
+.stepper{display:flex;margin:0 0 1.5rem;overflow-x:auto;padding-bottom:0.2rem}
+.stepper-step{flex:1;min-width:62px;text-align:center;position:relative}
+.stepper-step::before{content:"";position:absolute;top:11px;left:-50%;width:100%;height:2px;background:var(--hairline);z-index:0}
+.stepper-step:first-child::before{display:none}
+.stepper-step.is-done::before,.stepper-step.is-current::before,
+.stepper-step.is-error::before,.stepper-step.is-hold::before{background:var(--ink)}
+.stepper-dot{position:relative;z-index:1;width:24px;height:24px;border-radius:50%;margin:0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;
+  background:var(--ground);border:2px solid var(--hairline);color:var(--body);box-sizing:border-box}
+.is-done .stepper-dot{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+.is-current .stepper-dot{border-color:var(--ink);color:var(--ink)}
+.is-error .stepper-dot{background:var(--error);border-color:var(--error);color:#fff}
+.is-hold .stepper-dot{background:#e0a83a;border-color:#e0a83a;color:#fff}
+.stepper-label{margin-top:0.5rem;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--body);line-height:1.35}
+.is-current .stepper-label,.is-error .stepper-label,.is-hold .stepper-label{color:var(--ink);font-weight:700}
+.is-error .stepper-label{color:var(--error)}
+
+@media(max-width:900px){
+  .admin-shell{flex-direction:column;gap:1.25rem;padding:1.5rem}
+  .admin-rail{position:static;flex-direction:row;flex:none;gap:0.4rem;overflow-x:auto;
+    border-bottom:1px solid var(--hairline);padding-bottom:0.8rem}
+  .rail-item{flex:0 0 auto}
+}

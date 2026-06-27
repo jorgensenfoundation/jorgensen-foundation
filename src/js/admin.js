@@ -60,6 +60,80 @@ function showDashboard() {
   loadGrants();
   loadBoardMembers();
   loadSupport();
+  let saved = 'overview';
+  try { saved = sessionStorage.getItem('jf_admin_section') || 'overview'; } catch (e) {}
+  showSection(saved);
+}
+
+// ============================================================================
+// SECTION RAIL + PROGRESS STEPPER (redesign)
+// ============================================================================
+let supportCounts = {};
+
+// Switch the visible section + active rail item; remember it across refreshes.
+function showSection(name) {
+  try { sessionStorage.setItem('jf_admin_section', name); } catch (e) {}
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('section-' + name);
+  if (sec) sec.classList.add('active');
+  else { const o = document.getElementById('section-overview'); if (o) o.classList.add('active'); }
+  document.querySelectorAll('.admin-rail .rail-item').forEach(b =>
+    b.classList.toggle('active', b.dataset.section === name));
+}
+
+// Count chip on a rail item; `alert` tints it amber when there's something to act on.
+function setRailCount(name, n, alert) {
+  const el = document.getElementById('rail-count-' + name);
+  if (!el) return;
+  el.textContent = n > 0 ? String(n) : '';
+  el.classList.toggle('rail-count--alert', !!alert && n > 0);
+}
+
+// Overview "needs your attention" callouts, derived from already-loaded data.
+function renderOverviewAttention() {
+  const box = document.getElementById('overview-attention');
+  if (!box) return;
+  const items = [];
+  const needsReview = supportCounts.needs_review || 0;
+  if (needsReview > 0) {
+    items.push(`<div class="attn-item attn-item--alert" onclick="showSection('support')"><span class="attn-dot"></span>${needsReview} support ticket${needsReview > 1 ? 's' : ''} need review<span class="attn-arrow">&rarr;</span></div>`);
+  }
+  const action = (typeof allGrants !== 'undefined' ? allGrants : []).filter(g => ACTION_STATES.indexOf(g.status) !== -1).length;
+  if (action > 0) {
+    items.push(`<div class="attn-item attn-item--alert" onclick="showSection('grants')"><span class="attn-dot"></span>${action} grant${action > 1 ? 's' : ''} need action<span class="attn-arrow">&rarr;</span></div>`);
+  }
+  box.innerHTML = items.length ? items.join('')
+    : '<div class="attn-item"><span class="attn-dot"></span>All caught up — nothing needs your attention.</div>';
+}
+
+// Generic horizontal progress stepper. steps: labels; currentIndex: active step.
+// opts.errorIndex + opts.errorLabel mark a step as terminal-error (rejected) or,
+// with opts.hold, a paused state.
+function renderStepper(steps, currentIndex, opts) {
+  opts = opts || {};
+  return '<div class="stepper">' + steps.map((label, i) => {
+    let cls, lbl = label;
+    if (opts.errorIndex === i) { cls = opts.hold ? 'is-hold' : 'is-error'; if (opts.errorLabel) lbl = opts.errorLabel; }
+    else if (i < currentIndex) cls = 'is-done';
+    else if (i === currentIndex) cls = 'is-current';
+    else cls = 'is-todo';
+    const inner = cls === 'is-done' ? '&#10003;' : String(i + 1);
+    return `<div class="stepper-step ${cls}"><div class="stepper-dot">${inner}</div><div class="stepper-label">${esc(lbl)}</div></div>`;
+  }).join('') + '</div>';
+}
+
+function grantStepperHtml(status) {
+  const labels = ['Submitted', 'Under review', 'Decision', 'Approved', 'Receipts', 'Reimbursed'];
+  if (status === 'rejected') return renderStepper(labels, 2, { errorIndex: 2, errorLabel: 'Rejected' });
+  const idx = { submitted: 0, under_review: 1, awaiting_decision: 2, approved: 3, receipts_submitted: 4, reimbursed: 5 };
+  return renderStepper(labels, idx[status] !== undefined ? idx[status] : 0, {});
+}
+
+function ticketStepperHtml(status) {
+  const labels = ['Open', 'Needs review', 'Approved', 'Fixed', 'Closed'];
+  if (status === 'hold') return renderStepper(labels, 2, { errorIndex: 2, errorLabel: 'On hold', hold: true });
+  const idx = { bot: 0, needs_review: 1, approved: 2, fixed: 3, closed: 4 };
+  return renderStepper(labels, idx[status] !== undefined ? idx[status] : 0, {});
 }
 
 // ============================================================================
@@ -96,6 +170,9 @@ async function loadSupport() {
     if (handleAuthError(res)) return;
     if (!res.ok) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Could not load tickets.</td></tr>'; return; }
     const data = await res.json();
+    supportCounts = data.counts || {};
+    setRailCount('support', supportCounts.needs_review || 0, true);
+    renderOverviewAttention();
     renderSupport(data.tickets || []);
   } catch (e) {
     tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Could not load tickets.</td></tr>';
@@ -169,6 +246,7 @@ function openTicketModal(t) {
         <button class="sup-modal-close" onclick="closeTicketModal()" aria-label="Close">&times;</button>
       </div>
       <div class="sup-modal-body">
+        ${ticketStepperHtml(t.status)}
         ${t.summary ? `<div class="sup-summary"><strong>Summary.</strong> ${esc(t.summary)}</div>` : ''}
         <div class="sup-meta">
           <span>From: <strong>${esc(t.user_email || 'anonymous')}</strong></span>
@@ -289,6 +367,7 @@ async function loadUsers() {
     if (!res.ok) { logout(); return; }
     allUsers = await res.json();
     updateStats(allUsers);
+    setRailCount('users', allUsers.length, false);
     filterUsers();
   } catch(e) {
     console.error('Failed to load users', e);
@@ -358,6 +437,8 @@ async function loadGrants() {
     if (!res.ok) return;
     allGrants = await res.json();
     document.getElementById('stat-grants').textContent = allGrants.length;
+    setRailCount('grants', allGrants.filter(g => ACTION_STATES.indexOf(g.status) !== -1).length, true);
+    renderOverviewAttention();
     filterGrants();
   } catch(e) {
     console.error('Failed to load grants', e);
@@ -559,6 +640,7 @@ function renderGrantDetail(id, g) {
   }
 
   cell.innerHTML = `
+    ${grantStepperHtml(status)}
     <div class="detail-grid">
       <div class="detail-main">
         <span class="detail-label">Application</span>
