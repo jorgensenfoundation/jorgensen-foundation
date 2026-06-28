@@ -215,42 +215,55 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .sup-delete:hover{background:#fbeae6}
 
 /* ── Inline ticket rows: click a row to expand a vertical lifecycle stepper ── */
-.sup-row{cursor:pointer}
-.sup-row:hover{background:color-mix(in srgb,var(--surface) 50%,var(--ground))}
-.sup-row.is-open{background:var(--surface)}
+.sup-row{cursor:pointer;transition:background 0.15s}
+.sup-row:hover{background:color-mix(in srgb,var(--surface) 38%,var(--ground))}
+.sup-row.is-open{background:color-mix(in srgb,var(--surface) 60%,var(--ground))}
+.sup-row.is-open > td{border-bottom-color:transparent}
 .sup-row-action{text-align:right}
-.sup-chevron{display:inline-block;color:#b0aea6;transition:transform 0.2s}
-.sup-row.is-open .sup-chevron{transform:rotate(90deg);color:var(--ink)}
-.sup-detail-row > td{padding:0;background:var(--surface)}
-.sup-detail-inner{padding:1.1rem 1.4rem}
-.sup-restore{background:none;border:1px solid #9ec3a6;color:#1f7a3d;border-radius:4px;
-  padding:0.35rem 0.85rem;font-size:0.72rem;letter-spacing:0.05em;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
-.sup-restore:hover{background:#eaf4ec}
+.sup-chevron{display:inline-block;color:var(--body);opacity:0.5;transition:transform 0.2s,opacity 0.2s}
+.sup-row:hover .sup-chevron{opacity:0.85}
+.sup-row.is-open .sup-chevron{transform:rotate(90deg);color:var(--ink);opacity:1}
 
-/* Vertical Google-style stepper */
-.vstep{list-style:none;margin:0 0 1.1rem;padding:0}
-.vstep-item{position:relative;padding-left:2.2rem}
-.vstep-item::before{content:"";position:absolute;left:11px;top:26px;bottom:-2px;width:2px;background:var(--hairline)}
+/* Expanded detail sits in a soft tinted gutter, with the content on a white card. */
+.sup-detail-row > td{padding:0;background:color-mix(in srgb,var(--surface) 30%,var(--ground))}
+.sup-detail-inner{margin:0.15rem 0.9rem 1.05rem;padding:1.4rem 1.6rem;background:var(--ground);
+  border:1px solid var(--hairline);border-radius:14px;
+  box-shadow:0 8px 26px color-mix(in srgb,var(--ink) 9%,transparent)}
+.sup-restore{background:var(--ink);border:1px solid var(--ink);color:var(--ground);border-radius:7px;
+  padding:0.42rem 1rem;font-size:var(--fs-small);letter-spacing:0.02em;cursor:pointer;
+  font-family:var(--font-sans);transition:background 0.18s}
+.sup-restore:hover{background:var(--ink-hover)}
+
+/* Vertical lifecycle stepper — Material pattern in the brand monochrome palette. */
+.vstep{list-style:none;margin:0 0 0.4rem;padding:0}
+.vstep-item{position:relative;padding-left:2.85rem}
+.vstep-item::before{content:"";position:absolute;left:13px;top:32px;bottom:-2px;width:2px;
+  background:var(--hairline)}
 .vstep-item:last-child::before{display:none}
-.vstep-item.is-done::before{background:#1f7a3d}
-.vstep-head{display:flex;align-items:center;gap:0.6rem;width:100%;background:none;border:none;cursor:pointer;
-  padding:0.5rem 0;text-align:left;font-family:Helvetica,Arial,sans-serif;color:var(--ink)}
-.vstep-dot{position:absolute;left:0;top:0.45rem;width:24px;height:24px;border-radius:50%;
-  border:2px solid var(--hairline);background:var(--ground);color:#8a8a82;
-  font-size:0.72rem;display:flex;align-items:center;justify-content:center}
-.is-done .vstep-dot{background:#1f7a3d;border-color:#1f7a3d;color:#fff}
-.is-current .vstep-dot{border-color:#2a5bd7;color:#2a5bd7}
-.is-hold .vstep-dot{background:#e0a83a;border-color:#e0a83a;color:#fff}
-.vstep-title{flex:1;font-size:0.8rem;letter-spacing:0.03em}
-.is-current .vstep-title,.is-hold .vstep-title{font-weight:700}
-.vstep-caret{color:#b0aea6;font-size:0.7rem;transition:transform 0.2s}
+.vstep-item.is-done::before{background:var(--ink)}
+.vstep-head{display:flex;align-items:flex-start;gap:0.8rem;width:100%;background:none;border:none;
+  cursor:pointer;padding:0.55rem 0;text-align:left;font-family:var(--font-sans);color:var(--ink)}
+.vstep-dot{position:absolute;left:0;top:0.35rem;width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;line-height:1;
+  background:var(--surface);border:2px solid var(--surface);color:var(--body);transition:box-shadow 0.2s}
+.is-done .vstep-dot{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+.is-current .vstep-dot{background:var(--ink);border-color:var(--ink);color:var(--ground);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--ink) 16%,transparent)}
+.is-hold .vstep-dot{background:var(--ground);border:2px dashed var(--ink);color:var(--ink);font-size:0.6rem}
+.vstep-textcol{flex:1;display:flex;flex-direction:column;gap:0.05rem;min-width:0;padding-top:0.05rem}
+.vstep-title{font-size:0.95rem;line-height:1.25;color:var(--body)}
+.is-done .vstep-title{color:var(--ink)}
+.is-current .vstep-title,.is-hold .vstep-title{color:var(--ink);font-weight:700}
+.vstep-sub{font-size:var(--fs-small);color:var(--body);opacity:0.7}
+.vstep-caret{align-self:center;color:var(--body);opacity:0.45;font-size:0.7rem;transition:transform 0.2s}
+.vstep-head:hover .vstep-caret{opacity:0.8}
 .vstep-item.is-expanded .vstep-caret{transform:rotate(180deg)}
-.vstep-body{display:none;padding:0 0 0.7rem}
+.vstep-body{display:none;padding:0.2rem 0 0.95rem}
 .vstep-item.is-expanded .vstep-body{display:block}
-.sup-step-hint{font-size:0.82rem;line-height:1.55;color:#6a6a62;margin:0.1rem 0}
-.sup-empty{font-size:0.82rem;color:#8a8a82;margin:0.3rem 0}
-.sup-detail-actions{border-top:1px solid var(--hairline);padding-top:0.85rem;
-  display:flex;flex-direction:column;gap:0.7rem}
+.sup-step-hint{font-size:var(--fs-small);line-height:1.6;color:var(--body);margin:0.1rem 0}
+.sup-empty{font-size:var(--fs-small);color:var(--body);opacity:0.7;margin:0.3rem 0}
+.sup-detail-actions{border-top:1px solid var(--hairline);margin-top:0.3rem;padding-top:1rem;
+  display:flex;flex-direction:column;gap:0.8rem}
 
 /* ============================================================================
    Admin redesign: left rail + section panels + progress stepper
