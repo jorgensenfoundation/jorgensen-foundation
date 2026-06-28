@@ -39,188 +39,170 @@ permalink: /admin/index.html
 
 <!-- DASHBOARD -->
 <div class="admin-dashboard" id="admin-dashboard">
-  <div class="stats-row">
-    <div class="stat-box">
-      <div class="stat-num" id="stat-total">—</div>
-      <div class="stat-label">Total Users</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="stat-active">—</div>
-      <div class="stat-label">Active Subscriptions</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="stat-academia">—</div>
-      <div class="stat-label">Academia</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="stat-industry">—</div>
-      <div class="stat-label">Industry</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="stat-grants">—</div>
-      <div class="stat-label">Grant Applications</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="stat-newsletter">—</div>
-      <div class="stat-label">Newsletter Subscribers</div>
-    </div>
-  </div>
+ <div class="admin-shell">
+  <aside class="admin-rail" id="admin-rail">
+    <button class="rail-item" data-section="overview" onclick="showSection('overview')" type="button">
+      <span class="rail-label">Overview</span>
+    </button>
+    <button class="rail-item" data-section="support" onclick="showSection('support')" type="button">
+      <span class="rail-label">Support</span><span class="rail-count" id="rail-count-support"></span>
+    </button>
+    <button class="rail-item" data-section="grants" onclick="showSection('grants')" type="button">
+      <span class="rail-label">Grants</span><span class="rail-count" id="rail-count-grants"></span>
+    </button>
+    <button class="rail-item" data-section="users" onclick="showSection('users')" type="button">
+      <span class="rail-label">Users</span><span class="rail-count" id="rail-count-users"></span>
+    </button>
+    <button class="rail-item" data-section="board" onclick="showSection('board')" type="button">
+      <span class="rail-label">Board</span>
+    </button>
+    <button class="rail-item" data-section="newsletter" onclick="showSection('newsletter')" type="button">
+      <span class="rail-label">Newsletter</span>
+    </button>
+  </aside>
 
-  <div class="table-header">
-    <div class="table-title">Board Members</div>
-    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <input class="search-input" type="email" id="board-email" placeholder="board.member@institution.edu">
-      <button class="refresh-btn" onclick="inviteBoardMember()">Add</button>
-    </div>
-  </div>
-  <p class="board-msg" id="board-msg"></p>
+  <div class="admin-main">
 
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Email</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="board-members-table">
-        <tr><td colspan="4" class="empty-state">Loading...</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="show-more-wrap" id="board-more"></div>
-
-  <div class="section-divider"></div>
-
-  <div class="table-header">
-    <div class="table-title">Grant Applications</div>
-    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <input class="search-input" type="text" id="grants-search" placeholder="Search name, email, conference..." oninput="filterGrants()">
-      <button class="refresh-btn" onclick="loadGrants()">Refresh</button>
-    </div>
-  </div>
-
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Applicant</th>
-          <th>Institution</th>
-          <th>Supervisor</th>
-          <th>Amount</th>
-          <th>Status</th>
-          <th>Next Action</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="grants-table">
-        <tr><td colspan="7" class="empty-state">Loading...</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="show-more-wrap" id="grants-more"></div>
-
-  <div class="section-divider"></div>
-
-  <div class="table-header">
-    <div class="table-title">Newsletter Subscribers</div>
-    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <input class="search-input" type="text" id="newsletter-search" placeholder="Search email..." oninput="filterNewsletter()">
-      <button class="refresh-btn" onclick="loadNewsletter()">Refresh</button>
-    </div>
-  </div>
-
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Email</th>
-          <th>Subscribed</th>
-        </tr>
-      </thead>
-      <tbody id="newsletter-table">
-        <tr><td colspan="3" class="empty-state">Loading...</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="show-more-wrap" id="newsletter-more"></div>
-
-  <div class="section-divider"></div>
-
-  <div class="table-header">
-    <div class="table-title">Support Tickets</div>
-    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <div class="filter-row" id="support-filters">
-        <button class="filter-btn active" onclick="setSupportFilter('', this)">All</button>
-        <button class="filter-btn" onclick="setSupportFilter('needs_review', this)">Needs review</button>
-        <button class="filter-btn" onclick="setSupportFilter('approved', this)">Approved</button>
-        <button class="filter-btn" onclick="setSupportFilter('hold', this)">Hold</button>
-        <button class="filter-btn" onclick="setSupportFilter('fixed', this)">Fixed</button>
-        <button class="filter-btn" onclick="setSupportFilter('closed', this)">Closed</button>
+    <!-- OVERVIEW -->
+    <section class="admin-section" id="section-overview">
+      <div class="section-head"><div class="table-title">Overview</div></div>
+      <div class="overview-attention" id="overview-attention"></div>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total Users</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-active">—</div><div class="stat-label">Active Subscriptions</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-academia">—</div><div class="stat-label">Academia</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-industry">—</div><div class="stat-label">Industry</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-grants">—</div><div class="stat-label">Grant Applications</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-newsletter">—</div><div class="stat-label">Newsletter Subscribers</div></div>
       </div>
-      <button class="refresh-btn" onclick="loadSupport()">Refresh</button>
-    </div>
-  </div>
+    </section>
 
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Category</th>
-          <th>Summary</th>
-          <th>From</th>
-          <th>Updated</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="support-table">
-        <tr><td colspan="7" class="empty-state">Loading...</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <div class="table-header">
-    <div class="table-title">All Users</div>
-    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <input class="search-input" type="text" id="search" placeholder="Search email or name..." oninput="filterUsers()">
-      <div class="filter-row">
-        <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
-        <button class="filter-btn" onclick="setFilter('academia', this)">Academia</button>
-        <button class="filter-btn" onclick="setFilter('industry', this)">Industry</button>
-        <button class="filter-btn" onclick="setFilter('active', this)">Active</button>
-        <button class="filter-btn" onclick="setFilter('inactive', this)">Inactive</button>
+    <!-- SUPPORT -->
+    <section class="admin-section" id="section-support">
+      <div class="table-header">
+        <div class="table-title">Support Tickets</div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <div class="filter-row" id="support-filters">
+            <button class="filter-btn active" onclick="setSupportFilter('', this)">All</button>
+            <button class="filter-btn" onclick="setSupportFilter('needs_review', this)">Needs review</button>
+            <button class="filter-btn" onclick="setSupportFilter('approved', this)">Approved</button>
+            <button class="filter-btn" onclick="setSupportFilter('hold', this)">Hold</button>
+            <button class="filter-btn" onclick="setSupportFilter('fixed', this)">Fixed</button>
+            <button class="filter-btn" onclick="setSupportFilter('closed', this)">Closed</button>
+          </div>
+          <button class="refresh-btn" onclick="loadSupport()">Refresh</button>
+        </div>
       </div>
-      <button class="refresh-btn" onclick="loadUsers()">Refresh</button>
-    </div>
-  </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Status</th><th>Severity</th><th>Category</th><th>Summary</th><th>From</th><th>Updated</th><th></th></tr>
+          </thead>
+          <tbody id="support-table">
+            <tr><td colspan="7" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Institution</th>
-          <th>Type</th>
-          <th>Verified</th>
-          <th>Subscription</th>
-          <th>Registered</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="users-table">
-        <tr><td colspan="8" class="empty-state">Loading...</td></tr>
-      </tbody>
-    </table>
+    <!-- GRANTS -->
+    <section class="admin-section" id="section-grants">
+      <div class="table-header">
+        <div class="table-title">Grant Applications</div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <input class="search-input" type="text" id="grants-search" placeholder="Search name, email, conference..." oninput="filterGrants()">
+          <button class="refresh-btn" onclick="loadGrants()">Refresh</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Applicant</th><th>Institution</th><th>Supervisor</th><th>Amount</th><th>Status</th><th>Next Action</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="grants-table">
+            <tr><td colspan="7" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="show-more-wrap" id="grants-more"></div>
+    </section>
+
+    <!-- USERS -->
+    <section class="admin-section" id="section-users">
+      <div class="table-header">
+        <div class="table-title">All Users</div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <input class="search-input" type="text" id="search" placeholder="Search email or name..." oninput="filterUsers()">
+          <div class="filter-row">
+            <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+            <button class="filter-btn" onclick="setFilter('academia', this)">Academia</button>
+            <button class="filter-btn" onclick="setFilter('industry', this)">Industry</button>
+            <button class="filter-btn" onclick="setFilter('active', this)">Active</button>
+            <button class="filter-btn" onclick="setFilter('inactive', this)">Inactive</button>
+          </div>
+          <button class="refresh-btn" onclick="loadUsers()">Refresh</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Institution</th><th>Type</th><th>Verified</th><th>Subscription</th><th>Registered</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="users-table">
+            <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="show-more-wrap" id="users-more"></div>
+    </section>
+
+    <!-- BOARD -->
+    <section class="admin-section" id="section-board">
+      <div class="table-header">
+        <div class="table-title">Board Members</div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <input class="search-input" type="email" id="board-email" placeholder="board.member@institution.edu">
+          <button class="refresh-btn" onclick="inviteBoardMember()">Add</button>
+        </div>
+      </div>
+      <p class="board-msg" id="board-msg"></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Email</th><th>First Name</th><th>Last Name</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="board-members-table">
+            <tr><td colspan="4" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="show-more-wrap" id="board-more"></div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="admin-section" id="section-newsletter">
+      <div class="table-header">
+        <div class="table-title">Newsletter Subscribers</div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <input class="search-input" type="text" id="newsletter-search" placeholder="Search email..." oninput="filterNewsletter()">
+          <button class="refresh-btn" onclick="loadNewsletter()">Refresh</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Email</th><th>Subscribed</th></tr>
+          </thead>
+          <tbody id="newsletter-table">
+            <tr><td colspan="3" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="show-more-wrap" id="newsletter-more"></div>
+    </section>
+
   </div>
-  <div class="show-more-wrap" id="users-more"></div>
+ </div>
 </div>
 
 <footer>
