@@ -13,6 +13,15 @@ function escAttr(value) {
   return esc(value);
 }
 
+// Safe for a value placed inside a single-quoted JS string that itself sits in
+// an inline on* attribute, e.g. onclick="f('JSATTR(v)')". Escape backslash and
+// quote for the JS string FIRST (HTML-encoding alone won't protect it — the
+// browser decodes &#39; back to ' before the JS runs), then HTML-encode for the
+// attribute. Prevents JS-context breakout.
+function jsAttr(value) {
+  return esc(String(value == null ? '' : value).replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
+}
+
 function togglePasswordVisibility() {
   const input = document.getElementById('admin-password');
   const btn = document.getElementById('admin-show-btn');
@@ -888,7 +897,7 @@ function renderUsers(users) {
     const isActive = u.subscription_status === 'active';
     return `
       <tr>
-        <td><button class="user-name-link" onclick="openUserProfile('${escAttr(u.email)}')">${esc(u.first_name)} ${esc(u.last_name || '')}</button></td>
+        <td><button class="user-name-link" onclick="openUserProfile('${jsAttr(u.email)}')">${esc(u.first_name)} ${esc(u.last_name || '')}</button></td>
         <td>${esc(u.email)}</td>
         <td>${esc(u.institution || '—')}</td>
         <td><span class="badge badge-${escAttr(u.account_type)}">${esc(u.account_type)}</span></td>
@@ -940,12 +949,12 @@ function renderUserProfileModal(d) {
   ].map(([k,v]) => `<div class="usr-fact"><span class="usr-fact-k">${esc(k)}</span><span class="usr-fact-v">${esc(String(v))}</span></div>`).join('');
 
   const timeline = (d.timeline || []).map(e => {
-    const click = (e.kind === 'ticket' && e.ref) ? ` onclick="closeUserProfile();viewTicket('${escAttr(e.ref)}')" style="cursor:pointer"` : '';
+    const click = (e.kind === 'ticket' && e.ref) ? ` onclick="closeUserProfile();viewTicket('${jsAttr(e.ref)}')" style="cursor:pointer"` : '';
     return `<div class="usr-tl-item usr-tl-${escAttr(e.kind)}"${click}><span class="usr-tl-dot"></span><span class="usr-tl-text">${esc(e.text)}</span><span class="usr-tl-date">${esc(fmtT(e.at))}</span></div>`;
   }).join('') || '<p class="detail-empty">No activity yet.</p>';
 
   const tickets = (d.tickets || []).length
-    ? d.tickets.map(t => `<button class="usr-link-row" onclick="closeUserProfile();viewTicket('${escAttr(t.id)}')"><span class="sup-badge sup-${escAttr(t.status)}">${esc(SUPPORT_STATUS_LABEL[t.status] || t.status)}</span> ${esc(t.summary || t.category || 'Ticket')}</button>`).join('')
+    ? d.tickets.map(t => `<button class="usr-link-row" onclick="closeUserProfile();viewTicket('${jsAttr(t.id)}')"><span class="sup-badge sup-${escAttr(t.status)}">${esc(SUPPORT_STATUS_LABEL[t.status] || t.status)}</span> ${esc(t.summary || t.category || 'Ticket')}</button>`).join('')
     : '<p class="detail-empty">No support tickets.</p>';
   const grants = (d.grants || []).length
     ? d.grants.map(g => `<div class="usr-row"><span class="badge badge-${escAttr(g.status)}">${esc(g.status)}</span> ${esc(g.conference_name || 'Grant')} — $${esc(g.amount_requested || '')}</div>`).join('')
