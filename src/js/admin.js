@@ -283,19 +283,59 @@ function openTicketModal(t) {
   document.body.appendChild(overlay);
 }
 
-// Flag this ticket "for_dev" so it shows up in /support-queue, and copy the
-// command to the clipboard so Ana can paste it into her Claude Code terminal.
+// Build a complete, self-contained case brief (ticket + conversation + who the
+// user is) as plain text, prefixed with the /support-queue command, and copy it
+// to the clipboard. Ana pastes it into her Claude Code terminal — no password,
+// no API call from the terminal. Also flags the ticket "for_dev" for tracking.
+function buildCaseBrief(t, user) {
+  const lines = [];
+  lines.push(`Support ticket ${t.id} — ${t.category || 'support'} / ${t.severity || 'n/a'} (status: ${t.status})`);
+  if (t.summary) lines.push(`Summary: ${t.summary}`);
+  lines.push(`Visitor: ${t.user_email || 'anonymous (no account)'}`);
+  if (t.page_url) lines.push(`Page they were on: ${t.page_url}`);
+  lines.push('');
+  lines.push('Conversation:');
+  (t.thread || []).forEach(m => {
+    const who = m.role === 'note' ? `Note (${m.author || 'Ana'})` : (m.role === 'user' ? 'Visitor' : 'Assistant');
+    lines.push(`[${who}] ${m.content}`);
+  });
+  if (user && user.profile) {
+    const p = user.profile;
+    lines.push('');
+    lines.push('About this user:');
+    lines.push(`- ${(p.first_name || '') + ' ' + (p.last_name || '')}, ${p.institution || '—'}, ${p.account_type || '—'}; verified ${p.is_verified ? 'yes' : 'no'}; subscription ${p.subscription_status}`);
+    lines.push(`- Registered ${p.created_at || '—'}; last login ${p.last_login || 'never'} (${p.login_count} logins)`);
+    lines.push(`- They have ${(user.tickets || []).length} ticket(s), ${(user.grants || []).length} grant(s), ${(user.jobs || []).length} job(s).`);
+  }
+  return lines.join('\n');
+}
+
 async function sendToClaude(publicId) {
   try {
-    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/status`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
-      body: JSON.stringify({ status: 'for_dev' }),
-    });
-    if (handleAuthError(res)) return;
-    if (!res.ok) return;
-    try { await navigator.clipboard.writeText('/support-queue'); } catch (e) {}
-    alert('Queued for Claude Code.\n\nIn your Claude Code terminal, run:  /support-queue  (copied to your clipboard) — and press Enter.');
+    const tRes = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, { headers: { 'Authorization': `Bearer ${adminToken}` } });
+    if (handleAuthError(tRes)) return;
+    if (!tRes.ok) return;
+    const t = await tRes.json();
+    let user = null;
+    if (t.user_email) {
+      try {
+        const uRes = await fetch(`${API}/admin/users/${encodeURIComponent(t.user_email)}/profile`, { headers: { 'Authorization': `Bearer ${adminToken}` } });
+        if (uRes.ok) user = await uRes.json();
+      } catch (e) {}
+    }
+    const clip = '/support-queue\n\n' + buildCaseBrief(t, user);
+    let copied = false;
+    try { await navigator.clipboard.writeText(clip); copied = true; } catch (e) {}
+    // Flag for tracking (uses the admin session already in your browser — no password)
+    try {
+      await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/status`, {
+        method: 'POST', headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+        body: JSON.stringify({ status: 'for_dev' }),
+      });
+    } catch (e) {}
+    alert(copied
+      ? 'Case copied to your clipboard.\n\nOpen your Claude Code terminal, paste (Cmd+V), and press Enter. It starts with /support-queue and includes the full case.'
+      : 'Could not access the clipboard. The case is flagged for Claude — open a ticket and copy its details manually.');
     await viewTicket(publicId);
     loadSupport();
   } catch (e) {}
