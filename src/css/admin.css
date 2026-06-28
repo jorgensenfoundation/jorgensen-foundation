@@ -234,23 +234,32 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
   font-family:var(--font-sans);transition:background 0.18s}
 .sup-restore:hover{background:var(--ink-hover)}
 
-/* Vertical lifecycle stepper — Material pattern in the brand monochrome palette. */
+/* Vertical lifecycle stepper — Material pattern in the brand monochrome palette.
+   Dots stay in greys (no heavy Midnight): upcoming/current are a medium grey
+   with a white number; done is a fuller, darker grey with a white check. */
 .vstep{list-style:none;margin:0 0 0.4rem;padding:0}
-.vstep-item{position:relative;padding-left:2.85rem}
-.vstep-item::before{content:"";position:absolute;left:13px;top:32px;bottom:-2px;width:2px;
+.vstep-item{position:relative;padding-left:3rem}
+.vstep-item::before{content:"";position:absolute;left:13px;top:34px;bottom:-2px;width:2px;
   background:var(--hairline)}
 .vstep-item:last-child::before{display:none}
-.vstep-item.is-done::before{background:var(--ink)}
-.vstep-head{display:flex;align-items:flex-start;gap:0.8rem;width:100%;background:none;border:none;
-  cursor:pointer;padding:0.55rem 0;text-align:left;font-family:var(--font-sans);color:var(--ink)}
-.vstep-dot{position:absolute;left:0;top:0.35rem;width:28px;height:28px;border-radius:50%;
+.vstep-item.is-done::before{background:color-mix(in srgb,var(--body) 45%,var(--ground))}
+.vstep-dot{position:absolute;left:0;top:0.62rem;width:28px;height:28px;border-radius:50%;z-index:1;
   display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;line-height:1;
-  background:var(--surface);border:2px solid var(--surface);color:var(--body);transition:box-shadow 0.2s}
-.is-done .vstep-dot{background:var(--ink);border-color:var(--ink);color:var(--ground)}
-.is-current .vstep-dot{background:var(--ink);border-color:var(--ink);color:var(--ground);
-  box-shadow:0 0 0 4px color-mix(in srgb,var(--ink) 16%,transparent)}
-.is-hold .vstep-dot{background:var(--ground);border:2px dashed var(--ink);color:var(--ink);font-size:0.6rem}
-.vstep-textcol{flex:1;display:flex;flex-direction:column;gap:0.05rem;min-width:0;padding-top:0.05rem}
+  background:color-mix(in srgb,var(--body) 80%,var(--ground));color:var(--ground);
+  border:2px solid transparent;transition:box-shadow 0.2s}
+.is-done .vstep-dot{background:var(--body);color:var(--ground)}
+.is-current .vstep-dot{box-shadow:0 0 0 4px color-mix(in srgb,var(--body) 16%,transparent)}
+.is-hold .vstep-dot{background:var(--ground);border:2px dashed var(--body);color:var(--body);font-size:0.6rem}
+/* The clickable step header: soft hover shadow + a little bump, matching the
+   site's card-hover convention, so it reads as clickable. */
+.vstep-head{display:flex;align-items:flex-start;gap:0.8rem;width:100%;background:none;
+  border:1px solid transparent;cursor:pointer;padding:0.55rem 0.7rem;border-radius:10px;
+  text-align:left;font-family:var(--font-sans);color:var(--ink);
+  transition:background 0.2s ease,box-shadow 0.3s ease,transform 0.2s ease,border-color 0.2s ease}
+.vstep-head:hover{background:color-mix(in srgb,var(--surface) 40%,var(--ground));
+  border-color:var(--hairline);box-shadow:0 6px 20px color-mix(in srgb,var(--ink) 9%,transparent);
+  transform:translateX(2px)}
+.vstep-textcol{flex:1;display:flex;flex-direction:column;gap:0.05rem;min-width:0}
 .vstep-title{font-size:0.95rem;line-height:1.25;color:var(--body)}
 .is-done .vstep-title{color:var(--ink)}
 .is-current .vstep-title,.is-hold .vstep-title{color:var(--ink);font-weight:700}
@@ -258,7 +267,7 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .vstep-caret{align-self:center;color:var(--body);opacity:0.45;font-size:0.7rem;transition:transform 0.2s}
 .vstep-head:hover .vstep-caret{opacity:0.8}
 .vstep-item.is-expanded .vstep-caret{transform:rotate(180deg)}
-.vstep-body{display:none;padding:0.2rem 0 0.95rem}
+.vstep-body{display:none;padding:0.2rem 0.7rem 0.95rem}
 .vstep-item.is-expanded .vstep-body{display:block}
 .sup-step-hint{font-size:var(--fs-small);line-height:1.6;color:var(--body);margin:0.1rem 0}
 .sup-empty{font-size:var(--fs-small);color:var(--body);opacity:0.7;margin:0.3rem 0}
