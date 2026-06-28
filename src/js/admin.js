@@ -310,6 +310,64 @@ function buildCaseBrief(t, user) {
   return lines.join('\n');
 }
 
+// Copy text to the clipboard as reliably as we can across browsers. The modern
+// async API (navigator.clipboard) is strict: it needs a secure context (HTTPS)
+// and, on Safari, the write must happen in the same tick as the click — any
+// awaited work beforehand drops the user gesture and the write rejects. So we
+// fall back to the legacy execCommand('copy') path via a hidden textarea, which
+// is far more permissive and works after awaits and over plain HTTP.
+async function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (e) { /* fall through to legacy path */ }
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+// Fallback UI when even execCommand can't copy: show the case text in a
+// pre-selected, readonly textarea so Ana can press Cmd+C and paste it herself.
+function showCopyFallback(text) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:24px;';
+  const box = document.createElement('div');
+  box.style.cssText = 'background:#fff;border-radius:12px;max-width:680px;width:100%;padding:20px;display:flex;flex-direction:column;gap:12px;';
+  const msg = document.createElement('p');
+  msg.style.cssText = 'margin:0;font:14px/1.5 system-ui,sans-serif;';
+  msg.textContent = 'Automatic copy was blocked by the browser. Select all (Cmd+A) inside the box, copy (Cmd+C), then paste it into your Claude Code terminal.';
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.cssText = 'width:100%;height:260px;font:12px/1.4 ui-monospace,monospace;padding:10px;border:1px solid #ccc;border-radius:8px;resize:vertical;';
+  const close = document.createElement('button');
+  close.textContent = 'Done';
+  close.style.cssText = 'align-self:flex-end;padding:8px 16px;border:0;border-radius:8px;background:#111;color:#fff;cursor:pointer;';
+  close.onclick = () => overlay.remove();
+  box.append(msg, ta, close);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  ta.focus();
+  ta.select();
+}
+
 async function sendToClaude(publicId) {
   try {
     const tRes = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, { headers: { 'Authorization': `Bearer ${adminToken}` } });
@@ -324,8 +382,7 @@ async function sendToClaude(publicId) {
       } catch (e) {}
     }
     const clip = '/support-queue\n\n' + buildCaseBrief(t, user);
-    let copied = false;
-    try { await navigator.clipboard.writeText(clip); copied = true; } catch (e) {}
+    const copied = await copyToClipboard(clip);
     // Flag for tracking (uses the admin session already in your browser — no password)
     try {
       await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/status`, {
@@ -333,9 +390,12 @@ async function sendToClaude(publicId) {
         body: JSON.stringify({ status: 'for_dev' }),
       });
     } catch (e) {}
-    alert(copied
-      ? 'Case copied to your clipboard.\n\nOpen your Claude Code terminal, paste (Cmd+V), and press Enter. It starts with /support-queue and includes the full case.'
-      : 'Could not access the clipboard. The case is flagged for Claude — open a ticket and copy its details manually.');
+    if (copied) {
+      alert('Case copied to your clipboard.\n\nOpen your Claude Code terminal, paste (Cmd+V), and press Enter. It starts with /support-queue and includes the full case.');
+    } else {
+      // Last resort: hand her the text in a selectable box so she can Cmd+C it.
+      showCopyFallback(clip);
+    }
     await viewTicket(publicId);
     loadSupport();
   } catch (e) {}
