@@ -877,22 +877,24 @@ function renderUsers(users) {
   const tbody = document.getElementById('users-table');
   const more = document.getElementById('users-more');
   if (!users.length) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No users found</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No users found</td></tr>';
     if (more) more.innerHTML = '';
     return;
   }
   const visible = showMoreState.users ? users : users.slice(0, ROW_LIMIT);
   tbody.innerHTML = visible.map(u => {
     const date = u.created_at ? new Date(u.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+    const lastLogin = u.last_login ? new Date(u.last_login).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : 'never';
     const isActive = u.subscription_status === 'active';
     return `
       <tr>
-        <td>${esc(u.first_name)} ${esc(u.last_name || '—')}</td>
+        <td><button class="user-name-link" onclick="openUserProfile('${escAttr(u.email)}')">${esc(u.first_name)} ${esc(u.last_name || '')}</button></td>
         <td>${esc(u.email)}</td>
         <td>${esc(u.institution || '—')}</td>
         <td><span class="badge badge-${escAttr(u.account_type)}">${esc(u.account_type)}</span></td>
         <td><span class="badge ${u.is_verified ? 'badge-verified' : 'badge-unverified'}">${u.is_verified ? 'Verified' : 'Unverified'}</span></td>
         <td><span class="badge ${isActive ? 'badge-active' : 'badge-inactive'}">${isActive ? 'Active' : 'Inactive'}</span></td>
+        <td>${esc(lastLogin)}</td>
         <td>${esc(date)}</td>
         <td>
           ${isActive
@@ -905,6 +907,82 @@ function renderUsers(users) {
     `;
   }).join('');
   if (more) more.innerHTML = showMoreBtn('users', users.length);
+}
+
+// --- User interaction register (profile modal) -----------------------------
+function openUserProfile(email) {
+  fetch(`${API}/admin/users/${encodeURIComponent(email)}/profile`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
+    .then(r => { if (handleAuthError(r)) return null; return r.ok ? r.json() : null; })
+    .then(d => { if (d) renderUserProfileModal(d); })
+    .catch(() => {});
+}
+
+function closeUserProfile() {
+  const o = document.getElementById('usr-modal-overlay');
+  if (o) o.remove();
+}
+
+function renderUserProfileModal(d) {
+  closeUserProfile();
+  const p = d.profile;
+  const fmt = v => v ? new Date(v).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+  const fmtT = v => v ? new Date(v).toLocaleString('en-GB', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+  const facts = [
+    ['Institution', p.institution || '—'],
+    ['Type', p.account_type || '—'],
+    ['Verified', p.is_verified ? 'Yes' : 'No'],
+    ['Subscription', p.subscription_status],
+    ['Board member', p.is_board_member ? 'Yes' : 'No'],
+    ['Newsletter', p.newsletter ? 'Subscribed' : 'No'],
+    ['Registered', fmt(p.created_at)],
+    ['Last login', p.last_login ? fmt(p.last_login) : 'never'],
+    ['Total logins', p.login_count],
+  ].map(([k,v]) => `<div class="usr-fact"><span class="usr-fact-k">${esc(k)}</span><span class="usr-fact-v">${esc(String(v))}</span></div>`).join('');
+
+  const timeline = (d.timeline || []).map(e => {
+    const click = (e.kind === 'ticket' && e.ref) ? ` onclick="closeUserProfile();viewTicket('${escAttr(e.ref)}')" style="cursor:pointer"` : '';
+    return `<div class="usr-tl-item usr-tl-${escAttr(e.kind)}"${click}><span class="usr-tl-dot"></span><span class="usr-tl-text">${esc(e.text)}</span><span class="usr-tl-date">${esc(fmtT(e.at))}</span></div>`;
+  }).join('') || '<p class="detail-empty">No activity yet.</p>';
+
+  const tickets = (d.tickets || []).length
+    ? d.tickets.map(t => `<button class="usr-link-row" onclick="closeUserProfile();viewTicket('${escAttr(t.id)}')"><span class="sup-badge sup-${escAttr(t.status)}">${esc(SUPPORT_STATUS_LABEL[t.status] || t.status)}</span> ${esc(t.summary || t.category || 'Ticket')}</button>`).join('')
+    : '<p class="detail-empty">No support tickets.</p>';
+  const grants = (d.grants || []).length
+    ? d.grants.map(g => `<div class="usr-row"><span class="badge badge-${escAttr(g.status)}">${esc(g.status)}</span> ${esc(g.conference_name || 'Grant')} — $${esc(g.amount_requested || '')}</div>`).join('')
+    : '<p class="detail-empty">No grant applications.</p>';
+  const jobs = (d.jobs || []).length
+    ? d.jobs.map(j => `<div class="usr-row">${esc(j.calculation_type || 'Job')} — ${esc(j.status || '')}</div>`).join('')
+    : '<p class="detail-empty">No calculation jobs.</p>';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'sup-modal-overlay';
+  overlay.id = 'usr-modal-overlay';
+  overlay.onclick = (e) => { if (e.target === overlay) closeUserProfile(); };
+  overlay.innerHTML = `
+    <div class="sup-modal usr-modal" role="dialog" aria-label="User profile">
+      <div class="sup-modal-head">
+        <div><div class="usr-name">${esc(p.first_name)} ${esc(p.last_name)}</div><div class="usr-email">${esc(p.email)}</div></div>
+        <button class="sup-modal-close" onclick="closeUserProfile()" aria-label="Close">&times;</button>
+      </div>
+      <div class="sup-modal-body">
+        <div class="usr-facts">${facts}</div>
+        <div class="usr-cols">
+          <div>
+            <span class="detail-label">Support tickets (${(d.tickets || []).length})</span>
+            <div class="usr-list">${tickets}</div>
+            <span class="detail-label">Grants (${(d.grants || []).length})</span>
+            <div class="usr-list">${grants}</div>
+            <span class="detail-label">Jobs (${(d.jobs || []).length})</span>
+            <div class="usr-list">${jobs}</div>
+          </div>
+          <div>
+            <span class="detail-label">Activity</span>
+            <div class="usr-timeline">${timeline}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
 }
 
 async function activateUser(email) {
