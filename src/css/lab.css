@@ -1,0 +1,92 @@
+/* ============================================================================
+   /lab — Live Molecule Hero (PREVIEW). Consumes tokens via components.css.
+   Self-contained; safe to delete with lab.njk + js/lab.js.
+   ============================================================================ */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-sans);background:var(--ground);color:var(--body);overflow-x:clip}
+a{text-decoration:none;color:inherit}
+
+.lab-hero{
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  min-height:100vh;
+}
+
+/* --- LEFT: copy panel --- */
+.lab-copy{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:6rem 4.5rem;background:var(--ground);
+}
+.lab-copy .eyebrow{margin-bottom:1.5rem}
+.lab-copy .display{font-size:clamp(3rem,5.5vw,5rem);margin-bottom:2rem}
+.lab-copy .lead{max-width:30rem;margin-bottom:3rem}
+
+.lab-try{margin-bottom:1.75rem;max-width:30rem}
+.lab-try__row{display:flex;gap:1rem;align-items:flex-end}
+.lab-try__row .input{flex:1}
+.lab-try__row .btn{white-space:nowrap;flex-shrink:0}
+
+.lab-chips{display:flex;flex-wrap:wrap;gap:0.6rem;max-width:30rem}
+.lab-chip{
+  font-family:var(--font-sans);font-size:var(--fs-eyebrow);
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--body);
+  background:transparent;border:1px solid var(--hairline);border-radius:999px;
+  padding:0.5rem 1rem;cursor:pointer;transition:all 0.2s ease;
+}
+.lab-chip:hover{border-color:var(--ink);color:var(--ink);background:var(--surface)}
+
+/* --- RIGHT: Midnight molecule stage --- */
+.lab-stage{
+  position:relative;background:var(--ink);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;min-height:60vh;
+}
+.lab-viewer{position:absolute;inset:0;width:100%;height:100%}
+/* 3Dmol injects an inline-styled canvas; keep it behind our overlays */
+.lab-viewer canvas{display:block}
+
+/* soft radial glow behind the molecule so it reads as "emissive" against Midnight */
+.lab-stage__glow{
+  position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(circle at 50% 45%,
+    color-mix(in srgb, var(--cream) 16%, transparent) 0%,
+    transparent 55%);
+}
+
+.lab-readout{
+  position:absolute;left:3rem;bottom:3rem;z-index:3;pointer-events:none;
+  display:flex;flex-direction:column;gap:0.35rem;
+}
+.lab-readout__name{
+  font-family:var(--font-serif);font-weight:300;font-size:clamp(1.6rem,2.4vw,2rem);
+  line-height:1;letter-spacing:-0.01em;color:var(--cream);
+}
+.lab-readout__formula{
+  font-family:var(--font-sans);font-size:var(--fs-small);letter-spacing:0.12em;
+  color:color-mix(in srgb, var(--cream) 55%, transparent);
+}
+
+.lab-status{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;
+  font-family:var(--font-sans);font-size:var(--fs-small);letter-spacing:0.04em;
+  color:color-mix(in srgb, var(--cream) 70%, transparent);text-align:center;
+  max-width:18rem;pointer-events:none;
+}
+.lab-hint{
+  position:absolute;right:3rem;bottom:3rem;z-index:3;pointer-events:none;
+  font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.26em;
+  text-transform:uppercase;color:color-mix(in srgb, var(--cream) 35%, transparent);
+}
+
+/* --- responsive --- */
+@media (max-width:900px){
+  .lab-hero{grid-template-columns:1fr}
+  .lab-copy{padding:5rem 2rem 3rem;order:2}
+  .lab-stage{order:1;min-height:60vh}
+  .lab-readout,.lab-hint{bottom:1.5rem}
+  .lab-readout{left:1.5rem}
+  .lab-hint{right:1.5rem}
+}
+@media (max-width:560px){
+  .lab-try__row{flex-direction:column;align-items:stretch}
+  .lab-try__row .btn{width:100%}
+}

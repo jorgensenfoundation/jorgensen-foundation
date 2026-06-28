@@ -138,17 +138,98 @@ function grantStepperHtml(status) {
   return renderStepper(labels, idx[status] !== undefined ? idx[status] : 0, {});
 }
 
-function ticketStepperHtml(status) {
-  const labels = ['Open', 'Needs review', 'Approved', 'For Claude', 'Fixed', 'Closed'];
-  if (status === 'hold') return renderStepper(labels, 2, { errorIndex: 2, errorLabel: 'On hold', hold: true });
-  const idx = { bot: 0, needs_review: 1, approved: 2, for_dev: 3, fixed: 4, closed: 5 };
-  return renderStepper(labels, idx[status] !== undefined ? idx[status] : 0, {});
+// Vertical lifecycle stepper for a support ticket (Google-style): each stage is
+// a collapsible step that auto-completes (green check) as the ticket advances.
+const TICKET_STEPS = [
+  { key: 'bot',          title: 'Opened' },
+  { key: 'needs_review', title: 'Needs review' },
+  { key: 'approved',     title: 'Approved' },
+  { key: 'for_dev',      title: 'For Claude' },
+  { key: 'fixed',        title: 'Fixed' },
+  { key: 'closed',       title: 'Closed' },
+];
+const TICKET_STATUS_INDEX = { bot: 0, needs_review: 1, approved: 2, for_dev: 3, fixed: 4, closed: 5 };
+
+function fmtDateTime(v) {
+  return v ? new Date(v).toLocaleString('en-GB', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+}
+
+function ticketVSteps(t) {
+  const isHold = t.status === 'hold';
+  // Hold is a pause around the review stage; otherwise map status to its index.
+  const current = isHold ? 2 : (TICKET_STATUS_INDEX[t.status] !== undefined ? TICKET_STATUS_INDEX[t.status] : 0);
+  return '<ol class="vstep">' + TICKET_STEPS.map((s, i) => {
+    let cls;
+    if (i < current) cls = 'is-done';
+    else if (i === current) cls = isHold ? 'is-hold' : 'is-current';
+    else cls = 'is-todo';
+    const mark = cls === 'is-done' ? '&#10003;' : String(i + 1);
+    const expanded = i === current ? ' is-expanded' : '';
+    return `<li class="vstep-item ${cls}${expanded}">
+        <button type="button" class="vstep-head" onclick="toggleStep(this)">
+          <span class="vstep-dot">${mark}</span>
+          <span class="vstep-title">${esc(s.title)}${isHold && i === 2 ? ' · on hold' : ''}</span>
+          <span class="vstep-caret">&#9662;</span>
+        </button>
+        <div class="vstep-body">${stepBody(s.key, t)}</div>
+      </li>`;
+  }).join('') + '</ol>';
+}
+
+function toggleStep(btn) {
+  const li = btn.closest('.vstep-item');
+  if (li) li.classList.toggle('is-expanded');
+}
+
+// What each lifecycle step reveals when expanded.
+function stepBody(key, t) {
+  if (key === 'bot') return stepTranscript(t);
+  if (key === 'needs_review') return stepMeta(t);
+  if (key === 'approved') return stepNotes(t);
+  if (key === 'for_dev') return '<p class="sup-step-hint">Hand this case to Claude Code with its full context using the button below.</p>';
+  if (key === 'fixed') return '<p class="sup-step-hint">Mark the ticket Fixed with the status control below once the issue is resolved.</p>';
+  if (key === 'closed') return '<p class="sup-step-hint">Closed tickets stay searchable. Reopen from the status control below if needed.</p>';
+  return '';
+}
+
+function stepTranscript(t) {
+  const msgs = (t.thread || []).filter(m => m.role === 'user' || m.role === 'assistant');
+  if (!msgs.length) return '<p class="sup-empty">No conversation.</p>';
+  return '<div class="sup-thread">' + msgs.map(m => {
+    const who = m.role === 'user' ? 'Visitor' : 'Assistant';
+    return `<div class="sup-msg sup-msg-${escAttr(m.role)}"><span class="sup-msg-who">${esc(who)}</span>${esc(m.content)}</div>`;
+  }).join('') + '</div>';
+}
+
+function stepNotes(t) {
+  const notes = (t.thread || []).filter(m => m.role === 'note');
+  if (!notes.length) return '<p class="sup-empty">No notes yet.</p>';
+  return '<div class="sup-thread">' + notes.map(m =>
+    `<div class="sup-msg sup-msg-note"><span class="sup-msg-who">${esc(m.author || 'Note')} · ${esc(fmtDateTime(m.created_at))}</span>${esc(m.content)}</div>`
+  ).join('') + '</div>';
+}
+
+function stepMeta(t) {
+  const parts = [];
+  if (t.summary) parts.push(`<div class="sup-summary"><strong>Summary.</strong> ${esc(t.summary)}</div>`);
+  let meta = `<span>From: <strong>${esc(t.user_email || 'anonymous')}</strong></span>`
+    + `<span>Category: ${esc(t.category || '—')}</span>`
+    + `<span>Severity: ${esc(t.severity || '—')}</span>`;
+  if (t.page_url) {
+    meta += safeHref(t.page_url)
+      ? `<span>Page: <a href="${escAttr(safeHref(t.page_url))}" target="_blank" rel="noopener">${esc(t.page_url)}</a></span>`
+      : `<span>Page: ${esc(t.page_url)}</span>`;
+  }
+  parts.push(`<div class="sup-meta">${meta}</div>`);
+  return parts.join('');
 }
 
 // ============================================================================
 // SUPPORT TICKETS (AI customer-support dashboard)
 // ============================================================================
 let supportFilter = '';
+// Public ids of rows expanded inline, so expansion survives a list re-render.
+const openTickets = new Set();
 
 // Only treat http(s) URLs as linkable. page_url is visitor-supplied, so a
 // "javascript:"/"data:" value must never reach an href (XSS). Returns '' if unsafe.
@@ -188,6 +269,8 @@ async function loadSupport() {
   }
 }
 
+const SUPPORT_SETTABLE = ['needs_review','approved','for_dev','hold','fixed','closed','bot'];
+
 function renderSupport(tickets) {
   const tbody = document.getElementById('support-table');
   if (!tbody) return;
@@ -196,24 +279,64 @@ function renderSupport(tickets) {
     return;
   }
   const fmt = v => v ? new Date(v).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+  const deletedView = supportFilter === 'deleted';
   tbody.innerHTML = tickets.map(t => {
     const status = t.status || 'bot';
     const sev = t.severity || '—';
     const summary = (t.summary || '(no summary yet)');
     const trimmed = summary.length > 70 ? summary.slice(0, 70) + '…' : summary;
-    return `<tr>
-      <td><span class="sup-badge sup-${escAttr(status)}">${esc(SUPPORT_STATUS_LABEL[status] || status)}</span></td>
-      <td><span class="sup-sev sup-sev-${escAttr(sev)}">${esc(sev)}</span></td>
-      <td>${esc(t.category || '—')}</td>
-      <td>${esc(trimmed)}</td>
-      <td>${esc(t.user_email || 'anonymous')}</td>
-      <td>${esc(fmt(t.updated_at))}</td>
-      <td><button class="filter-btn" onclick="viewTicket('${escAttr(t.id)}')">View</button></td>
-    </tr>`;
+    const id = escAttr(t.id);
+    const idJs = jsAttr(t.id);
+    const badge = deletedView
+      ? '<span class="sup-badge">Deleted</span>'
+      : `<span class="sup-badge sup-${escAttr(status)}">${esc(SUPPORT_STATUS_LABEL[status] || status)}</span>`;
+    const last = deletedView
+      ? `<td class="sup-row-action"><button class="sup-restore" onclick="event.stopPropagation();restoreTicket('${idJs}')">Restore &#8617;</button></td>`
+      : '<td class="sup-row-action"><span class="sup-chevron">&#9656;</span></td>';
+    return `<tr class="sup-row" data-id="${id}" onclick="toggleTicket('${idJs}')">
+        <td>${badge}</td>
+        <td><span class="sup-sev sup-sev-${escAttr(sev)}">${esc(sev)}</span></td>
+        <td>${esc(t.category || '—')}</td>
+        <td>${esc(trimmed)}</td>
+        <td>${esc(t.user_email || 'anonymous')}</td>
+        <td>${esc(fmt(t.updated_at))}</td>
+        ${last}
+      </tr>
+      <tr class="sup-detail-row" id="sup-detailrow-${id}" hidden><td colspan="7"><div class="sup-detail" id="sup-detail-${id}"></div></td></tr>`;
   }).join('');
+  // Re-open any rows that were expanded before this re-render, and refresh them.
+  openTickets.forEach(id => {
+    const dr = document.getElementById('sup-detailrow-' + id);
+    if (!dr) { openTickets.delete(id); return; }
+    dr.removeAttribute('hidden');
+    const row = document.querySelector(`.sup-row[data-id="${id}"]`);
+    if (row) row.classList.add('is-open');
+    loadTicketDetail(id);
+  });
 }
 
-async function viewTicket(publicId) {
+// Expand/collapse a ticket row inline. Detail is fetched lazily on first open.
+async function toggleTicket(publicId) {
+  const dr = document.getElementById('sup-detailrow-' + publicId);
+  if (!dr) return;
+  const row = document.querySelector(`.sup-row[data-id="${publicId}"]`);
+  if (!dr.hasAttribute('hidden')) {
+    dr.setAttribute('hidden', '');
+    if (row) row.classList.remove('is-open');
+    openTickets.delete(publicId);
+    return;
+  }
+  dr.removeAttribute('hidden');
+  if (row) row.classList.add('is-open');
+  openTickets.add(publicId);
+  const host = document.getElementById('sup-detail-' + publicId);
+  if (host && !host.dataset.loaded) {
+    host.innerHTML = '<p class="sup-empty">Loading…</p>';
+    await loadTicketDetail(publicId);
+  }
+}
+
+async function loadTicketDetail(publicId) {
   try {
     const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, {
       headers: { 'Authorization': `Bearer ${adminToken}` }
@@ -221,66 +344,63 @@ async function viewTicket(publicId) {
     if (handleAuthError(res)) return;
     if (!res.ok) return;
     const t = await res.json();
-    openTicketModal(t);
+    const host = document.getElementById('sup-detail-' + publicId);
+    if (!host) return;
+    host.innerHTML = renderTicketDetail(t);
+    host.dataset.loaded = '1';
   } catch (e) {}
 }
 
-function openTicketModal(t) {
-  closeTicketModal();
-  const fmt = v => v ? new Date(v).toLocaleString('en-GB', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
-  const thread = (t.thread || []).map(m => {
-    if (m.role === 'note') {
-      return `<div class="sup-msg sup-msg-note"><span class="sup-msg-who">${esc(m.author || 'Note')} · ${esc(fmt(m.created_at))}</span>${esc(m.content)}</div>`;
-    }
-    const who = m.role === 'user' ? 'Visitor' : 'Assistant';
-    return `<div class="sup-msg sup-msg-${escAttr(m.role)}"><span class="sup-msg-who">${esc(who)}</span>${esc(m.content)}</div>`;
-  }).join('');
-
-  const statuses = ['needs_review','approved','for_dev','hold','fixed','closed','bot'];
-  const options = statuses.map(s => `<option value="${s}"${s===t.status?' selected':''}>${esc(SUPPORT_STATUS_LABEL[s]||s)}</option>`).join('');
-  const pid = escAttr(t.id);
-  const pidJs = jsAttr(t.id);
-
-  const overlay = document.createElement('div');
-  overlay.className = 'sup-modal-overlay';
-  overlay.id = 'sup-modal-overlay';
-  overlay.onclick = (e) => { if (e.target === overlay) closeTicketModal(); };
-  overlay.innerHTML = `
-    <div class="sup-modal" role="dialog" aria-label="Support ticket">
-      <div class="sup-modal-head">
-        <div>
-          <span class="sup-badge sup-${escAttr(t.status)}">${esc(SUPPORT_STATUS_LABEL[t.status]||t.status)}</span>
-          ${t.severity ? `<span class="sup-sev sup-sev-${escAttr(t.severity)}">${esc(t.severity)}</span>` : ''}
-          <span class="sup-modal-cat">${esc(t.category || '')}</span>
+function renderTicketDetail(t) {
+  const idJs = jsAttr(t.id);
+  const id = escAttr(t.id);
+  if (t.status === 'deleted') {
+    return `<div class="sup-detail-inner">
+        ${ticketVSteps(t)}
+        <div class="sup-detail-actions">
+          <p class="sup-empty">This ticket is deleted.</p>
+          <button class="sup-restore" onclick="restoreTicket('${idJs}')">Restore &#8617;</button>
         </div>
-        <button class="sup-modal-close" onclick="closeTicketModal()" aria-label="Close">&times;</button>
-      </div>
-      <div class="sup-modal-body">
-        ${ticketStepperHtml(t.status)}
-        ${t.summary ? `<div class="sup-summary"><strong>Summary.</strong> ${esc(t.summary)}</div>` : ''}
-        <div class="sup-meta">
-          <span>From: <strong>${esc(t.user_email || 'anonymous')}</strong></span>
-          ${t.page_url ? (safeHref(t.page_url)
-            ? `<span>Page: <a href="${escAttr(safeHref(t.page_url))}" target="_blank" rel="noopener">${esc(t.page_url)}</a></span>`
-            : `<span>Page: ${esc(t.page_url)}</span>`) : ''}
-        </div>
-        <div class="sup-thread">${thread || '<p class="detail-empty">No messages.</p>'}</div>
-      </div>
-      <div class="sup-modal-foot">
-        <button class="sup-claude-btn" onclick="sendToClaude('${pidJs}')">Send to Claude Code &rarr;</button>
+      </div>`;
+  }
+  const options = SUPPORT_SETTABLE.map(s => `<option value="${s}"${s === t.status ? ' selected' : ''}>${esc(SUPPORT_STATUS_LABEL[s] || s)}</option>`).join('');
+  return `<div class="sup-detail-inner">
+      ${ticketVSteps(t)}
+      <div class="sup-detail-actions">
+        <button class="sup-claude-btn" onclick="sendToClaude('${idJs}')">Send to Claude Code &rarr;</button>
         <div class="sup-note-row">
-          <input class="search-input" id="sup-note-input" type="text" placeholder="Add a note for the thread…" maxlength="4000">
-          <button class="filter-btn" onclick="addTicketNote('${pidJs}')">Add note</button>
+          <input class="search-input" id="sup-note-input-${id}" type="text" placeholder="Add a note for the thread…" maxlength="4000">
+          <button class="filter-btn" onclick="addTicketNote('${idJs}')">Add note</button>
         </div>
         <div class="sup-action-row">
           <label>Status
-            <select class="search-input" id="sup-status-select" onchange="setTicketStatus('${pidJs}', this.value)">${options}</select>
+            <select class="search-input" id="sup-status-${id}" onchange="setTicketStatus('${idJs}', this.value)">${options}</select>
           </label>
-          <button class="sup-delete" onclick="deleteTicket('${pidJs}')">Delete</button>
+          <button class="sup-delete" onclick="deleteTicket('${idJs}')">Delete</button>
         </div>
       </div>
     </div>`;
-  document.body.appendChild(overlay);
+}
+
+// Entry point used by the user-profile links: jump to Support and expand inline.
+async function viewTicket(publicId) {
+  showSection('support');
+  setSupportFilter('');
+  await loadSupport();
+  const dr = document.getElementById('sup-detailrow-' + publicId);
+  if (dr && dr.hasAttribute('hidden')) await toggleTicket(publicId);
+  const row = document.querySelector(`.sup-row[data-id="${publicId}"]`);
+  if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+async function restoreTicket(publicId) {
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/restore`, {
+      method: 'POST', headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) { openTickets.delete(publicId); loadSupport(); }
+  } catch (e) {}
 }
 
 // Build a complete, self-contained case brief (ticket + conversation + who the
@@ -396,18 +516,12 @@ async function sendToClaude(publicId) {
       // Last resort: hand her the text in a selectable box so she can Cmd+C it.
       showCopyFallback(clip);
     }
-    await viewTicket(publicId);
     loadSupport();
   } catch (e) {}
 }
 
-function closeTicketModal() {
-  const o = document.getElementById('sup-modal-overlay');
-  if (o) o.remove();
-}
-
 async function addTicketNote(publicId) {
-  const input = document.getElementById('sup-note-input');
+  const input = document.getElementById('sup-note-input-' + publicId);
   const note = input ? input.value.trim() : '';
   if (!note) return;
   try {
@@ -417,7 +531,7 @@ async function addTicketNote(publicId) {
       body: JSON.stringify({ note }),
     });
     if (handleAuthError(res)) return;
-    if (res.ok) { await viewTicket(publicId); loadSupport(); }
+    if (res.ok) loadSupport();   // re-renders + re-expands the open row with the new note
   } catch (e) {}
 }
 
@@ -429,19 +543,19 @@ async function setTicketStatus(publicId, status) {
       body: JSON.stringify({ status }),
     });
     if (handleAuthError(res)) return;
-    if (res.ok) { await viewTicket(publicId); loadSupport(); }
+    if (res.ok) loadSupport();   // stepper advances on re-render
   } catch (e) {}
 }
 
 async function deleteTicket(publicId) {
-  if (!confirm('Delete this ticket permanently?')) return;
+  if (!confirm('Delete this ticket? You can restore it later from the Deleted filter.')) return;
   try {
     const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
     if (handleAuthError(res)) return;
-    if (res.ok) { closeTicketModal(); loadSupport(); }
+    if (res.ok) { openTickets.delete(publicId); loadSupport(); }
   } catch (e) {}
 }
 
