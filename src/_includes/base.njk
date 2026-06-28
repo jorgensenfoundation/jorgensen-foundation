@@ -15,11 +15,11 @@
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ mainCss or '/css/style.css' }}">
-{% if navCss %}<link rel="stylesheet" href="/css/nav.css">{% endif %}
-{% if supportWidget != false %}<link rel="stylesheet" href="/css/support.css">{% endif %}
-{% if pageCss %}<link rel="stylesheet" href="{{ pageCss }}">{% endif %}
-<script src="/js/auth.js"></script>
+<link rel="stylesheet" href="{{ mainCss or '/css/style.css' }}?v={{ buildId }}">
+{% if navCss %}<link rel="stylesheet" href="/css/nav.css?v={{ buildId }}">{% endif %}
+{% if supportWidget != false %}<link rel="stylesheet" href="/css/support.css?v={{ buildId }}">{% endif %}
+{% if pageCss %}<link rel="stylesheet" href="{{ pageCss }}?v={{ buildId }}">{% endif %}
+<script src="/js/auth.js?v={{ buildId }}"></script>
 </head>
 <body>
 
@@ -27,9 +27,9 @@
 
 {% set _footer = footerInclude or "footer.njk" %}{% include _footer %}
 
-{% if mainJs != false %}<script src="/js/main.js"></script>{% endif %}
-{% if navCss %}<script src="/js/search.js" defer></script>{% endif %}
-{% if supportWidget != false %}{% include "support-widget.njk" %}<script src="/js/support.js" defer></script>{% endif %}
-<script src="/js/reveal.js"></script>
+{% if mainJs != false %}<script src="/js/main.js?v={{ buildId }}"></script>{% endif %}
+{% if navCss %}<script src="/js/search.js?v={{ buildId }}" defer></script>{% endif %}
+{% if supportWidget != false %}{% include "support-widget.njk" %}<script src="/js/support.js?v={{ buildId }}" defer></script>{% endif %}
+<script src="/js/reveal.js?v={{ buildId }}"></script>
 </body>
 </html>
