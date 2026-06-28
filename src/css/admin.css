@@ -308,3 +308,10 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .usr-tl-text{font-size:0.76rem;color:var(--ink);flex:1}
 .usr-tl-date{font-size:0.6rem;color:var(--body);white-space:nowrap}
 @media(max-width:700px){.usr-cols{grid-template-columns:1fr}}
+
+/* "Send to Claude Code" handoff + for_dev status */
+.sup-for_dev{background:#ddd5f2;color:#3a2f63}
+.sup-claude-btn{display:block;width:100%;padding:0.7rem;border:none;border-radius:6px;cursor:pointer;
+  background:var(--ink);color:var(--cream);font-family:Helvetica,Arial,sans-serif;font-size:0.7rem;
+  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.2rem;transition:background 0.18s}
+.sup-claude-btn:hover{background:var(--ink-hover)}
