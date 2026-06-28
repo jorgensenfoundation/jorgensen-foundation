@@ -214,6 +214,44 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
   padding:0.4rem 0.8rem;font-size:0.72rem;letter-spacing:0.05em;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
 .sup-delete:hover{background:#fbeae6}
 
+/* ── Inline ticket rows: click a row to expand a vertical lifecycle stepper ── */
+.sup-row{cursor:pointer}
+.sup-row:hover{background:color-mix(in srgb,var(--surface) 50%,var(--ground))}
+.sup-row.is-open{background:var(--surface)}
+.sup-row-action{text-align:right}
+.sup-chevron{display:inline-block;color:#b0aea6;transition:transform 0.2s}
+.sup-row.is-open .sup-chevron{transform:rotate(90deg);color:var(--ink)}
+.sup-detail-row > td{padding:0;background:var(--surface)}
+.sup-detail-inner{padding:1.1rem 1.4rem}
+.sup-restore{background:none;border:1px solid #9ec3a6;color:#1f7a3d;border-radius:4px;
+  padding:0.35rem 0.85rem;font-size:0.72rem;letter-spacing:0.05em;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
+.sup-restore:hover{background:#eaf4ec}
+
+/* Vertical Google-style stepper */
+.vstep{list-style:none;margin:0 0 1.1rem;padding:0}
+.vstep-item{position:relative;padding-left:2.2rem}
+.vstep-item::before{content:"";position:absolute;left:11px;top:26px;bottom:-2px;width:2px;background:var(--hairline)}
+.vstep-item:last-child::before{display:none}
+.vstep-item.is-done::before{background:#1f7a3d}
+.vstep-head{display:flex;align-items:center;gap:0.6rem;width:100%;background:none;border:none;cursor:pointer;
+  padding:0.5rem 0;text-align:left;font-family:Helvetica,Arial,sans-serif;color:var(--ink)}
+.vstep-dot{position:absolute;left:0;top:0.45rem;width:24px;height:24px;border-radius:50%;
+  border:2px solid var(--hairline);background:var(--ground);color:#8a8a82;
+  font-size:0.72rem;display:flex;align-items:center;justify-content:center}
+.is-done .vstep-dot{background:#1f7a3d;border-color:#1f7a3d;color:#fff}
+.is-current .vstep-dot{border-color:#2a5bd7;color:#2a5bd7}
+.is-hold .vstep-dot{background:#e0a83a;border-color:#e0a83a;color:#fff}
+.vstep-title{flex:1;font-size:0.8rem;letter-spacing:0.03em}
+.is-current .vstep-title,.is-hold .vstep-title{font-weight:700}
+.vstep-caret{color:#b0aea6;font-size:0.7rem;transition:transform 0.2s}
+.vstep-item.is-expanded .vstep-caret{transform:rotate(180deg)}
+.vstep-body{display:none;padding:0 0 0.7rem}
+.vstep-item.is-expanded .vstep-body{display:block}
+.sup-step-hint{font-size:0.82rem;line-height:1.55;color:#6a6a62;margin:0.1rem 0}
+.sup-empty{font-size:0.82rem;color:#8a8a82;margin:0.3rem 0}
+.sup-detail-actions{border-top:1px solid var(--hairline);padding-top:0.85rem;
+  display:flex;flex-direction:column;gap:0.7rem}
+
 /* ============================================================================
    Admin redesign: left rail + section panels + progress stepper
    ============================================================================ */

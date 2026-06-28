@@ -1,0 +1,61 @@
+---
+layout: marketing.njk
+title: Jorgensen Foundation — Live Molecule Lab (preview)
+description: Interactive 3D molecular rendering — type any molecule and see it in space.
+comingSoonGate: false
+navActive: home
+mainCss: /css/components.css
+pageCss: /css/lab.css
+mainJs: false
+---
+
+<!-- ============================================================
+     PREVIEW / PROTOTYPE — "Live Molecule Hero"
+     Standalone page at /lab. Not wired into the homepage.
+     Reuses tokens + components.css. Delete this file + css/lab.css
+     + js/lab.js to remove entirely.
+     ============================================================ -->
+<section class="lab-hero">
+
+  <!-- LEFT: editorial text + try-it -->
+  <div class="lab-copy">
+    <span class="eyebrow">Computational Chemistry · Live</span>
+    <h1 class="display">See the science.<br><em>Not the syntax.</em></h1>
+    <p class="lead">Decades of Yale computational chemistry, in your browser. Type any
+      molecule — watch it resolve into three dimensions, instantly. No installation,
+      no command line.</p>
+
+    <form id="try-form" class="lab-try" autocomplete="off">
+      <label class="input-label" for="try-input">Try a molecule</label>
+      <div class="lab-try__row">
+        <input id="try-input" class="input" type="text" placeholder="caffeine, aspirin, penicillin…" />
+        <button type="submit" class="btn btn--primary">Render →</button>
+      </div>
+    </form>
+
+    <div class="lab-chips">
+      <button class="lab-chip" data-mol="caffeine">Caffeine</button>
+      <button class="lab-chip" data-mol="aspirin">Aspirin</button>
+      <button class="lab-chip" data-mol="ibuprofen">Ibuprofen</button>
+      <button class="lab-chip" data-mol="glucose">Glucose</button>
+      <button class="lab-chip" data-mol="penicillin">Penicillin</button>
+      <button class="lab-chip" data-mol="dopamine">Dopamine</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: live 3D molecule on Midnight -->
+  <div class="lab-stage">
+    <div id="jf-viewer" class="lab-viewer"></div>
+    <div class="lab-stage__glow" aria-hidden="true"></div>
+    <div class="lab-readout">
+      <span class="lab-readout__name" id="mol-name">Caffeine</span>
+      <span class="lab-readout__formula" id="mol-formula"></span>
+    </div>
+    <div class="lab-status" id="mol-status"></div>
+    <div class="lab-hint">Drag to rotate · scroll to zoom</div>
+  </div>
+
+</section>
+
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/lab.js"></script>
