@@ -139,9 +139,9 @@ function grantStepperHtml(status) {
 }
 
 function ticketStepperHtml(status) {
-  const labels = ['Open', 'Needs review', 'Approved', 'Fixed', 'Closed'];
+  const labels = ['Open', 'Needs review', 'Approved', 'For Claude', 'Fixed', 'Closed'];
   if (status === 'hold') return renderStepper(labels, 2, { errorIndex: 2, errorLabel: 'On hold', hold: true });
-  const idx = { bot: 0, needs_review: 1, approved: 2, fixed: 3, closed: 4 };
+  const idx = { bot: 0, needs_review: 1, approved: 2, for_dev: 3, fixed: 4, closed: 5 };
   return renderStepper(labels, idx[status] !== undefined ? idx[status] : 0, {});
 }
 
@@ -158,7 +158,7 @@ function safeHref(u) {
 
 const SUPPORT_STATUS_LABEL = {
   bot: 'Bot', needs_review: 'Needs review', approved: 'Approved',
-  hold: 'Hold', fixed: 'Fixed', closed: 'Closed',
+  for_dev: 'For Claude', hold: 'Hold', fixed: 'Fixed', closed: 'Closed',
 };
 
 function setSupportFilter(status, btn) {
@@ -236,9 +236,10 @@ function openTicketModal(t) {
     return `<div class="sup-msg sup-msg-${escAttr(m.role)}"><span class="sup-msg-who">${esc(who)}</span>${esc(m.content)}</div>`;
   }).join('');
 
-  const statuses = ['needs_review','approved','hold','fixed','closed','bot'];
+  const statuses = ['needs_review','approved','for_dev','hold','fixed','closed','bot'];
   const options = statuses.map(s => `<option value="${s}"${s===t.status?' selected':''}>${esc(SUPPORT_STATUS_LABEL[s]||s)}</option>`).join('');
   const pid = escAttr(t.id);
+  const pidJs = jsAttr(t.id);
 
   const overlay = document.createElement('div');
   overlay.className = 'sup-modal-overlay';
@@ -266,19 +267,38 @@ function openTicketModal(t) {
         <div class="sup-thread">${thread || '<p class="detail-empty">No messages.</p>'}</div>
       </div>
       <div class="sup-modal-foot">
+        <button class="sup-claude-btn" onclick="sendToClaude('${pidJs}')">Send to Claude Code &rarr;</button>
         <div class="sup-note-row">
           <input class="search-input" id="sup-note-input" type="text" placeholder="Add a note for the thread…" maxlength="4000">
-          <button class="filter-btn" onclick="addTicketNote('${pid}')">Add note</button>
+          <button class="filter-btn" onclick="addTicketNote('${pidJs}')">Add note</button>
         </div>
         <div class="sup-action-row">
           <label>Status
-            <select class="search-input" id="sup-status-select" onchange="setTicketStatus('${pid}', this.value)">${options}</select>
+            <select class="search-input" id="sup-status-select" onchange="setTicketStatus('${pidJs}', this.value)">${options}</select>
           </label>
-          <button class="sup-delete" onclick="deleteTicket('${pid}')">Delete</button>
+          <button class="sup-delete" onclick="deleteTicket('${pidJs}')">Delete</button>
         </div>
       </div>
     </div>`;
   document.body.appendChild(overlay);
+}
+
+// Flag this ticket "for_dev" so it shows up in /support-queue, and copy the
+// command to the clipboard so Ana can paste it into her Claude Code terminal.
+async function sendToClaude(publicId) {
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/status`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ status: 'for_dev' }),
+    });
+    if (handleAuthError(res)) return;
+    if (!res.ok) return;
+    try { await navigator.clipboard.writeText('/support-queue'); } catch (e) {}
+    alert('Queued for Claude Code.\n\nIn your Claude Code terminal, run:  /support-queue  (copied to your clipboard) — and press Enter.');
+    await viewTicket(publicId);
+    loadSupport();
+  } catch (e) {}
 }
 
 function closeTicketModal() {
