@@ -124,13 +124,13 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 /* inline detail panel (full-width colspan row) */
 /* Grant rows: click the row (name) to expand the stepper — mirrors support. */
 .grant-row{cursor:pointer;transition:background 0.15s}
-.grant-row:hover{background:color-mix(in srgb,var(--surface) 38%,var(--ground))}
-.grant-row.is-open{background:color-mix(in srgb,var(--surface) 60%,var(--ground))}
+.grant-row:hover{background:color-mix(in srgb,var(--surface) 18%,var(--ground))}
+.grant-row.is-open{background:var(--ground)}
 .grant-row.is-open>td{border-bottom-color:transparent}
 .grant-name{font-weight:600;color:var(--ink)}
 .grant-row-action{text-align:right}
 .grant-row.is-open .sup-chevron{transform:rotate(90deg);color:var(--ink)}
-.detail-row>td{padding:0;background:color-mix(in srgb,var(--surface) 30%,var(--ground))}
+.detail-row>td{padding:0;background:var(--ground)}
 .detail-panel{padding:0}
 .detail-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:2.5rem}
 .detail-main,.detail-side{min-width:0}
@@ -138,7 +138,7 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .detail-main>.detail-label:first-child,.detail-side>.detail-label:first-child{margin-top:0}
 .detail-status{font-size:0.62rem;color:var(--body);margin-bottom:1rem}
 .detail-fields{width:100%;border-collapse:collapse}
-.detail-fields th{text-align:left;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--body);font-weight:400;padding:0.35rem 1rem 0.35rem 0;white-space:nowrap;vertical-align:top;border:none}
+.detail-fields th{width:1%;text-align:left;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--body);font-weight:400;padding:0.35rem 1.5rem 0.35rem 0;white-space:nowrap;vertical-align:top;border:none}
 .detail-fields td{font-size:0.7rem;color:var(--ink);padding:0.35rem 0;border:none}
 .detail-desc-label{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--body);margin:1.25rem 0 0.5rem}
 .detail-desc{font-size:0.72rem;line-height:1.8;color:var(--ink);white-space:pre-wrap}
@@ -221,8 +221,8 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 
 /* ── Inline ticket rows: click a row to expand a vertical lifecycle stepper ── */
 .sup-row{cursor:pointer;transition:background 0.15s}
-.sup-row:hover{background:color-mix(in srgb,var(--surface) 38%,var(--ground))}
-.sup-row.is-open{background:color-mix(in srgb,var(--surface) 60%,var(--ground))}
+.sup-row:hover{background:color-mix(in srgb,var(--surface) 18%,var(--ground))}
+.sup-row.is-open{background:var(--ground)}
 .sup-row.is-open > td{border-bottom-color:transparent}
 .sup-row-action{text-align:right}
 .sup-chevron{display:inline-block;color:var(--body);opacity:0.5;transition:transform 0.2s,opacity 0.2s}
@@ -230,10 +230,9 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .sup-row.is-open .sup-chevron{transform:rotate(90deg);color:var(--ink);opacity:1}
 
 /* Expanded detail sits in a soft tinted gutter, with the content on a white card. */
-.sup-detail-row > td{padding:0;background:color-mix(in srgb,var(--surface) 30%,var(--ground))}
-.sup-detail-inner{margin:0.15rem 0.9rem 1.05rem;padding:1.4rem 1.6rem;background:var(--ground);
-  border:1px solid var(--hairline);border-radius:14px;
-  box-shadow:0 8px 26px color-mix(in srgb,var(--ink) 9%,transparent)}
+.sup-detail-row > td{padding:0;background:var(--ground)}
+.sup-detail-inner{margin:0 0.9rem 1.05rem;padding:1.3rem 1.5rem;background:var(--ground);
+  border:1px solid var(--hairline);border-radius:14px}
 .sup-restore{background:var(--ink);border:1px solid var(--ink);color:var(--ground);border-radius:7px;
   padding:0.42rem 1rem;font-size:var(--fs-small);letter-spacing:0.02em;cursor:pointer;
   font-family:var(--font-sans);transition:background 0.18s}
