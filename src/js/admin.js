@@ -168,8 +168,8 @@ function ticketVSteps(t) {
     else { cls = 'is-todo'; mark = String(i + 1); }
     const expanded = i === current ? ' is-expanded' : '';
     return `<li class="vstep-item ${cls}${expanded}">
-        <span class="vstep-dot">${mark}</span>
         <button type="button" class="vstep-head" onclick="toggleStep(this)">
+          <span class="vstep-dot">${mark}</span>
           <span class="vstep-textcol">
             <span class="vstep-title">${esc(s.title)}</span>
             <span class="vstep-sub">${esc(sub)}</span>
