@@ -50,7 +50,10 @@ thead tr{border-bottom:1px solid var(--ink)}
 th{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink);padding:1rem 1.25rem;text-align:left;font-weight:400;white-space:nowrap}
 td{font-size:0.7rem;padding:1rem 1.25rem;border-bottom:1px solid var(--surface);color:var(--body);vertical-align:middle}
 tr:last-child td{border-bottom:none}
+/* Global row-hover tint, but NOT for the expandable grant/support rows or their
+   detail rows — those manage their own (white) backgrounds. */
 tr:hover td{background:color-mix(in srgb,var(--surface) 45%,var(--ground))}
+.grant-row:hover td,.sup-row:hover td,.detail-row:hover td,.sup-detail-row:hover td{background:none}
 .badge{display:inline-block;font-size:0.48rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.25rem 0.6rem;border:1px solid}
 .badge-active{border-color:var(--success);color:var(--success)}
 .badge-inactive{border-color:var(--error);color:var(--error)}
