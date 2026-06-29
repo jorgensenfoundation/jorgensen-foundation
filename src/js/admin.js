@@ -128,27 +128,7 @@ const GRANT_STEPS = [
 ];
 const GRANT_STATUS_INDEX = { submitted: 0, under_review: 1, awaiting_decision: 2, approved: 3, receipts_submitted: 4, reimbursed: 5 };
 
-function grantVSteps(status) {
-  const isRejected = status === 'rejected';
-  // Rejection is a terminal outcome at the Decision step.
-  const current = isRejected ? 2 : (GRANT_STATUS_INDEX[status] !== undefined ? GRANT_STATUS_INDEX[status] : 0);
-  return '<ol class="vstep vstep--static">' + GRANT_STEPS.map((s, i) => {
-    let cls, mark, sub = s.sub;
-    if (i < current) { cls = 'is-done'; mark = '&#10003;'; }
-    else if (i === current && isRejected) { cls = 'is-rejected'; mark = '&times;'; sub = 'Application rejected'; }
-    else if (i === current) { cls = 'is-current'; mark = String(i + 1); }
-    else { cls = 'is-todo'; mark = String(i + 1); }
-    return `<li class="vstep-item ${cls}">
-        <div class="vstep-head">
-          <span class="vstep-dot">${mark}</span>
-          <span class="vstep-textcol">
-            <span class="vstep-title">${esc(s.title)}</span>
-            <span class="vstep-sub">${esc(sub)}</span>
-          </span>
-        </div>
-      </li>`;
-  }).join('') + '</ol>';
-}
+// (Grant steps are rendered with content per-step inside renderGrantDetail.)
 
 // Vertical lifecycle stepper for a support ticket. Material-style pattern built
 // from our own brand tokens: each stage is a collapsible step that fills in
@@ -774,14 +754,14 @@ function renderGrants(grants) {
     const naClass = nextActionClass(status);
     const gid = escAttr(g.id);   // g.id (not the row index) drives all detail/action calls
     return `
-      <tr>
-        <td>${esc(g.first_name)} ${esc(g.last_name)}</td>
+      <tr class="grant-row" onclick="toggleDetail('${gid}')">
+        <td><span class="grant-name">${esc(g.first_name)} ${esc(g.last_name)}</span></td>
         <td>${esc(g.institution || '—')}</td>
         <td>${esc(g.supervisor_name || '—')}</td>
         <td style="white-space:nowrap">$${esc(g.amount_requested || '—')}</td>
         <td><span class="badge badge-${escAttr(status)}">${esc(status)}</span></td>
         <td><span class="next-action ${naClass}">${esc(naText)}</span></td>
-        <td><button class="action-btn action-details" onclick="toggleDetail('${gid}')">Details</button></td>
+        <td class="grant-row-action"><span class="sup-chevron">&#9656;</span></td>
       </tr>
       <tr class="detail-row" id="detail-${gid}" hidden>
         <td colspan="7"><div class="detail-panel" id="detail-cell-${gid}">Loading…</div></td>
@@ -797,6 +777,8 @@ function toggleDetail(id) {
   if (!row) return;
   const opening = row.hidden;
   row.hidden = !row.hidden;
+  const dataRow = row.previousElementSibling;   // the clickable .grant-row
+  if (dataRow) dataRow.classList.toggle('is-open', opening);
   if (opening && row.dataset.loaded !== 'true') {
     row.dataset.loaded = 'true';
     loadGrantDetail(id);
@@ -884,11 +866,10 @@ function renderGrantDetail(id, g) {
     }
   }
 
-  // Decision: Approve/Reject buttons pre-decision; a read-only decision line once decided.
-  let decisionHtml;
+  // Decision content (no label — it lives inside the "Decision" step).
+  let decisionBody;
   if (preDecision) {
-    decisionHtml = `
-        <span class="detail-label">Decision</span>
+    decisionBody = `
         <div class="decide-actions">
           <button class="action-btn action-activate" type="button" onclick="decideGrant('${gid}','approve')">Approve</button>
           <button class="action-btn action-deactivate" type="button" onclick="decideGrant('${gid}','reject')">Reject</button>
@@ -896,16 +877,12 @@ function renderGrantDetail(id, g) {
   } else {
     const decided = status === 'rejected' ? 'rejected' : 'approved';
     const decidedLabel = status === 'rejected' ? 'Rejected' : 'Approved';
-    decisionHtml = `
-        <span class="detail-label">Decision</span>
-        <div class="detail-decision">Decision: <span class="badge badge-${decided}">${esc(decidedLabel)}</span></div>`;
+    decisionBody = `<div class="detail-decision">Decision: <span class="badge badge-${decided}">${esc(decidedLabel)}</span></div>`;
   }
 
-  cell.innerHTML = `
-    ${grantVSteps(status)}
-    <div class="detail-grid">
-      <div class="detail-main">
-        <span class="detail-label">Application</span>
+  // Each lifecycle step owns the relevant section of the application.
+  const bodies = {
+    submitted: `
         <div class="detail-status">Status: <span class="badge badge-${escAttr(status)}">${esc(status)}</span></div>
         <table class="detail-fields">
           <tr><th>Applicant</th><td>${esc(g.first_name)} ${esc(g.last_name)}</td></tr>
@@ -919,29 +896,46 @@ function renderGrantDetail(id, g) {
           <tr><th>Submitted</th><td>${esc(date)}</td></tr>
           <tr><th>CV</th><td>${cv}</td></tr>
         </table>
-        <span class="detail-label">Receipts</span>
-        ${receiptRows ? `<table class="detail-fields">${receiptRows}</table>` : ''}
-        <div class="receipts-files">${receiptLinks}</div>
         <div class="detail-desc-label">Research description</div>
-        <p class="detail-desc">${esc(g.research_description || '—')}</p>
-      </div>
-      <div class="detail-side">
-        <span class="detail-label">Reviewers</span>
+        <p class="detail-desc">${esc(g.research_description || '—')}</p>`,
+    under_review: `
         <div class="reviewers-list">${reviewersHtml}</div>
-
-        <span class="detail-label">Assign Reviewers</span>
+        <span class="detail-label">Assign reviewers</span>
         <div class="assigned-reviewers">${assignedListHtml}</div>
-        ${assignControls}
+        ${assignControls}`,
+    awaiting_decision: decisionBody,
+    approved: `<p class="sup-step-hint">Cleared for funding — awaiting receipts from the applicant.</p>`,
+    receipts_submitted: `
+        ${receiptRows ? `<table class="detail-fields">${receiptRows}</table>` : '<p class="detail-empty">No receipts yet.</p>'}
+        <div class="receipts-files">${receiptLinks}</div>`,
+    reimbursed: `${status === 'receipts_submitted'
+        ? `<div class="decide-actions"><button class="action-btn action-activate" type="button" onclick="markReimbursed('${gid}')">Mark Reimbursed</button></div>`
+        : (g.reimbursed_at ? `<table class="detail-fields"><tr><th>Reimbursed</th><td>${esc(fmtDate(g.reimbursed_at))}</td></tr></table>` : '<p class="sup-step-hint">Awaiting reimbursement.</p>')}`,
+  };
 
-        ${decisionHtml}
-        ${status === 'receipts_submitted' ? `
-        <span class="detail-label">Reimbursement</span>
-        <div class="decide-actions">
-          <button class="action-btn action-activate" type="button" onclick="markReimbursed('${gid}')">Mark Reimbursed</button>
-        </div>` : ''}
-        <p class="detail-msg" id="detail-msg-${gid}"></p>
-      </div>
-    </div>`;
+  const isRejected = status === 'rejected';
+  const current = isRejected ? 2 : (GRANT_STATUS_INDEX[status] !== undefined ? GRANT_STATUS_INDEX[status] : 0);
+  const ol = '<ol class="vstep">' + GRANT_STEPS.map((s, i) => {
+    let cls, mark, sub = s.sub;
+    if (i < current) { cls = 'is-done'; mark = '&#10003;'; }
+    else if (i === current && isRejected) { cls = 'is-rejected'; mark = '&times;'; sub = 'Application rejected'; }
+    else if (i === current) { cls = 'is-current'; mark = String(i + 1); }
+    else { cls = 'is-todo'; mark = String(i + 1); }
+    const expanded = i === current ? ' is-expanded' : '';
+    return `<li class="vstep-item ${cls}${expanded}">
+        <button type="button" class="vstep-head" onclick="toggleStep(this)">
+          <span class="vstep-dot">${mark}</span>
+          <span class="vstep-textcol">
+            <span class="vstep-title">${esc(s.title)}</span>
+            <span class="vstep-sub">${esc(sub)}</span>
+          </span>
+          <span class="vstep-caret">&#9662;</span>
+        </button>
+        <div class="vstep-body">${bodies[s.key] || ''}</div>
+      </li>`;
+  }).join('') + '</ol>';
+
+  cell.innerHTML = `<div class="sup-detail-inner">${ol}<p class="detail-msg" id="detail-msg-${gid}"></p></div>`;
 }
 
 // Enable the Assign button only once at least one (newly-listed) board member is checked.
