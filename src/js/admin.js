@@ -115,27 +115,39 @@ function renderOverviewAttention() {
     : '<div class="attn-item"><span class="attn-dot"></span>All caught up — nothing needs your attention.</div>';
 }
 
-// Generic horizontal progress stepper. steps: labels; currentIndex: active step.
-// opts.errorIndex + opts.errorLabel mark a step as terminal-error (rejected) or,
-// with opts.hold, a paused state.
-function renderStepper(steps, currentIndex, opts) {
-  opts = opts || {};
-  return '<div class="stepper">' + steps.map((label, i) => {
-    let cls, lbl = label;
-    if (opts.errorIndex === i) { cls = opts.hold ? 'is-hold' : 'is-error'; if (opts.errorLabel) lbl = opts.errorLabel; }
-    else if (i < currentIndex) cls = 'is-done';
-    else if (i === currentIndex) cls = 'is-current';
-    else cls = 'is-todo';
-    const inner = cls === 'is-done' ? '&#10003;' : String(i + 1);
-    return `<div class="stepper-step ${cls}"><div class="stepper-dot">${inner}</div><div class="stepper-label">${esc(lbl)}</div></div>`;
-  }).join('') + '</div>';
-}
+// Grant lifecycle as a static (read-only) vertical stepper — same component as
+// the ticket stepper (see ticketVSteps), without click-to-expand since the grant
+// detail panel sits below it.
+const GRANT_STEPS = [
+  { key: 'submitted',          title: 'Submitted',    sub: 'Application received' },
+  { key: 'under_review',       title: 'Under review', sub: 'Being assessed' },
+  { key: 'awaiting_decision',  title: 'Decision',     sub: 'Awaiting outcome' },
+  { key: 'approved',           title: 'Approved',     sub: 'Cleared for funding' },
+  { key: 'receipts_submitted', title: 'Receipts',     sub: 'Receipts submitted' },
+  { key: 'reimbursed',         title: 'Reimbursed',   sub: 'Payment complete' },
+];
+const GRANT_STATUS_INDEX = { submitted: 0, under_review: 1, awaiting_decision: 2, approved: 3, receipts_submitted: 4, reimbursed: 5 };
 
-function grantStepperHtml(status) {
-  const labels = ['Submitted', 'Under review', 'Decision', 'Approved', 'Receipts', 'Reimbursed'];
-  if (status === 'rejected') return renderStepper(labels, 2, { errorIndex: 2, errorLabel: 'Rejected' });
-  const idx = { submitted: 0, under_review: 1, awaiting_decision: 2, approved: 3, receipts_submitted: 4, reimbursed: 5 };
-  return renderStepper(labels, idx[status] !== undefined ? idx[status] : 0, {});
+function grantVSteps(status) {
+  const isRejected = status === 'rejected';
+  // Rejection is a terminal outcome at the Decision step.
+  const current = isRejected ? 2 : (GRANT_STATUS_INDEX[status] !== undefined ? GRANT_STATUS_INDEX[status] : 0);
+  return '<ol class="vstep vstep--static">' + GRANT_STEPS.map((s, i) => {
+    let cls, mark, sub = s.sub;
+    if (i < current) { cls = 'is-done'; mark = '&#10003;'; }
+    else if (i === current && isRejected) { cls = 'is-rejected'; mark = '&times;'; sub = 'Application rejected'; }
+    else if (i === current) { cls = 'is-current'; mark = String(i + 1); }
+    else { cls = 'is-todo'; mark = String(i + 1); }
+    return `<li class="vstep-item ${cls}">
+        <div class="vstep-head">
+          <span class="vstep-dot">${mark}</span>
+          <span class="vstep-textcol">
+            <span class="vstep-title">${esc(s.title)}</span>
+            <span class="vstep-sub">${esc(sub)}</span>
+          </span>
+        </div>
+      </li>`;
+  }).join('') + '</ol>';
 }
 
 // Vertical lifecycle stepper for a support ticket. Material-style pattern built
@@ -890,7 +902,7 @@ function renderGrantDetail(id, g) {
   }
 
   cell.innerHTML = `
-    ${grantStepperHtml(status)}
+    ${grantVSteps(status)}
     <div class="detail-grid">
       <div class="detail-main">
         <span class="detail-label">Application</span>
