@@ -121,8 +121,16 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .action-details:hover{background:var(--ink);color:var(--ground)}
 
 /* inline detail panel (full-width colspan row) */
-.detail-row>td{padding:0;background:var(--surface);border-bottom:1px solid var(--ink)}
-.detail-panel{padding:2rem 1.75rem}
+/* Grant rows: click the row (name) to expand the stepper — mirrors support. */
+.grant-row{cursor:pointer;transition:background 0.15s}
+.grant-row:hover{background:color-mix(in srgb,var(--surface) 38%,var(--ground))}
+.grant-row.is-open{background:color-mix(in srgb,var(--surface) 60%,var(--ground))}
+.grant-row.is-open>td{border-bottom-color:transparent}
+.grant-name{font-weight:600;color:var(--ink)}
+.grant-row-action{text-align:right}
+.grant-row.is-open .sup-chevron{transform:rotate(90deg);color:var(--ink)}
+.detail-row>td{padding:0;background:color-mix(in srgb,var(--surface) 30%,var(--ground))}
+.detail-panel{padding:0}
 .detail-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:2.5rem}
 .detail-main,.detail-side{min-width:0}
 .detail-label{font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--body);display:block;margin:1.5rem 0 0.75rem}
