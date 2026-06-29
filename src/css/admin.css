@@ -59,10 +59,10 @@ tr:hover td{background:color-mix(in srgb,var(--surface) 45%,var(--ground))}
 .badge-verified{border-color:var(--success);color:var(--success)}
 .badge-unverified{border-color:var(--surface);color:var(--body)}
 .action-btn{font-size:0.48rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.7rem;border:1px solid;cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif;background:transparent}
-.action-activate{border-color:var(--success);color:var(--success)}
-.action-activate:hover{background:var(--success);color:var(--ground)}
-.action-deactivate{border-color:var(--error);color:var(--error)}
-.action-deactivate:hover{background:var(--error);color:var(--ground)}
+.action-activate{border-color:var(--ink);color:var(--ink)}
+.action-activate:hover{background:var(--ink);color:var(--ground)}
+.action-deactivate{border-color:color-mix(in srgb,var(--body) 45%,var(--ground));color:var(--body)}
+.action-deactivate:hover{background:var(--body);color:var(--ground)}
 .empty-state{text-align:center;padding:4rem;color:var(--body);font-size:0.72rem;letter-spacing:0.1em}
 
 .refresh-btn{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.25rem;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:all 0.2s;font-family:Helvetica,Arial,sans-serif}
@@ -96,17 +96,18 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .card:hover,.prog-card:hover,.access-card:hover,.price-card:hover,.stat-box:hover,.table-wrap:hover,.plan-card:hover,.dashboard-card:hover,.user-info:hover{box-shadow:0 8px 30px color-mix(in srgb,var(--ink) 10%,transparent);transition:box-shadow 0.3s ease,border-color 0.3s ease}
 
 /* === Grant controls (status badges, CV link, detail panel, assign/decide, board) === */
-/* Grant status badges — token palette, matching the existing .badge pattern */
-.badge-submitted{border-color:var(--surface);color:var(--body)}
+/* Grant status badges — monochrome (matches the rest of the site). Progressed
+   states carry ink emphasis; early/negative states sit in muted grey. */
+.badge-submitted{border-color:color-mix(in srgb,var(--body) 32%,var(--ground));color:var(--body)}
 .badge-under_review{border-color:var(--ink);color:var(--ink)}
 .badge-awaiting_decision{border-color:var(--ink);color:var(--ink)}
-.badge-approved{border-color:var(--success);color:var(--success)}
-.badge-rejected{border-color:var(--error);color:var(--error)}
+.badge-approved{border-color:var(--ink);color:var(--ink)}
+.badge-rejected{border-color:color-mix(in srgb,var(--body) 45%,var(--ground));color:var(--body)}
 .badge-receipts_submitted{border-color:var(--body);color:var(--body)}
-.badge-reimbursed{border-color:var(--success);color:var(--success)}
-/* reviewer recommendation badges */
-.badge-vote-approve{border-color:var(--success);color:var(--success)}
-.badge-vote-reject{border-color:var(--error);color:var(--error)}
+.badge-reimbursed{border-color:var(--ink);color:var(--ink)}
+/* reviewer recommendation badges — monochrome */
+.badge-vote-approve{border-color:var(--ink);color:var(--ink)}
+.badge-vote-reject{border-color:color-mix(in srgb,var(--body) 45%,var(--ground));color:var(--body)}
 .badge-vote-abstain{border-color:var(--surface);color:var(--body)}
 
 .cv-link{color:var(--ink);border-bottom:1px solid var(--surface);white-space:nowrap}
@@ -154,13 +155,14 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 
 .assign-list{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem}
 .assign-opt{font-size:0.66rem;color:var(--ink);display:flex;align-items:center;gap:0.5rem;cursor:pointer}
+.assign-opt input{accent-color:var(--ink)}   /* brand-coloured checkbox, not browser blue */
 .assign-name{color:var(--body)}
 .refresh-btn:disabled{opacity:0.45;cursor:not-allowed}
 .refresh-btn:disabled:hover{background:transparent;color:var(--ink)}
 .assigned-reviewers{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem}
 .assigned-row{display:flex;align-items:center;justify-content:space-between;gap:0.6rem;font-size:0.66rem;color:var(--ink)}
 .assigned-email{min-width:0;overflow-wrap:anywhere}
-.assigned-mark{font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--success);white-space:nowrap}
+.assigned-mark{font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--body);white-space:nowrap}
 .detail-decision{font-size:0.7rem;color:var(--ink);display:flex;align-items:center;gap:0.6rem}
 .decide-actions{display:flex;gap:0.6rem;flex-wrap:wrap}
 
