@@ -240,3 +240,61 @@ select.input{appearance:none;-webkit-appearance:none;cursor:pointer;padding-righ
     transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
   .reveal.is-visible{opacity:1;transform:none}
 }
+
+/* ============================================================================
+   VERTICAL PROGRESS STEPPER (.vstep) — canonical pattern for lifecycle / status
+   progress UIs (support tickets, grants, …). Brand monochrome, MUI-inspired.
+
+   MARKUP (interactive — click a step to expand its content):
+     <ol class="vstep">
+       <li class="vstep-item is-done|is-current|is-todo|is-hold|is-rejected [is-expanded]">
+         <button class="vstep-head" onclick="…toggle…">
+           <span class="vstep-dot">✓ | n</span>      number, or &#10003; when done
+           <span class="vstep-textcol">
+             <span class="vstep-title">Title</span>
+             <span class="vstep-sub">caption</span>
+           </span>
+           <span class="vstep-caret">&#9662;</span>
+         </button>
+         <div class="vstep-body">…content shown when .is-expanded…</div>
+       </li>
+     </ol>
+
+   STATIC variant (read-only progress rail, no expanding): add `vstep--static`
+   to the <ol>, use a <div class="vstep-head"> (no button/caret/body).
+
+   STATE on each <li>: is-done (filled grey + check), is-current (white, stronger
+   ring, bold), is-todo (white, light ring), is-hold (dashed ring),
+   is-rejected (error-outlined ×). Dots are white-filled with a midnight glyph;
+   completed are filled light grey; hover (interactive only) darkens the ring.
+   ============================================================================ */
+.vstep{list-style:none;margin:0 0 0.4rem;padding:0}
+.vstep-item{position:relative;padding-left:3rem}
+.vstep-item::before{content:"";position:absolute;left:13px;top:34px;bottom:-2px;width:2px;background:var(--hairline)}
+.vstep-item:last-child::before{display:none}
+.vstep-item.is-done::before{background:color-mix(in srgb,var(--body) 28%,var(--ground))}
+.vstep-dot{position:absolute;left:1px;top:0.55rem;width:24px;height:24px;border-radius:50%;z-index:1;
+  display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;line-height:1;
+  background:var(--ground);color:var(--ink);
+  border:2px solid color-mix(in srgb,var(--body) 26%,var(--ground));
+  transition:border-color 0.2s ease,box-shadow 0.2s ease}
+.is-done .vstep-dot{background:var(--surface);border-color:var(--surface);color:var(--ink)}
+.is-current .vstep-dot{border-color:color-mix(in srgb,var(--body) 45%,var(--ground))}
+.is-hold .vstep-dot{border-style:dashed}
+.is-rejected .vstep-dot{border-color:var(--error);color:var(--error)}
+.vstep:not(.vstep--static) .vstep-head:hover .vstep-dot{border-color:var(--ink)}
+.vstep-head{display:flex;align-items:flex-start;gap:0.8rem;width:100%;background:none;
+  border:none;cursor:pointer;padding:0.55rem 0.7rem;border-radius:10px;
+  text-align:left;font-family:var(--font-sans);color:var(--ink)}
+.vstep--static .vstep-head{cursor:default}
+.vstep-textcol{flex:1;display:flex;flex-direction:column;gap:0.05rem;min-width:0}
+.vstep-title{font-size:0.92rem;line-height:1.3;color:var(--ink)}
+.is-todo .vstep-title{color:color-mix(in srgb,var(--body) 62%,var(--ground))}
+.is-current .vstep-title,.is-hold .vstep-title,.is-rejected .vstep-title{color:var(--ink);font-weight:600}
+.vstep-sub{font-size:var(--fs-small);color:var(--body);opacity:0.7}
+.vstep-caret{align-self:center;color:var(--body);opacity:0.45;font-size:0.7rem;transition:transform 0.2s}
+.vstep-head:hover .vstep-caret{opacity:0.8}
+.vstep-item.is-expanded .vstep-caret{transform:rotate(180deg)}
+.vstep-body{display:none;padding:0.2rem 0.7rem 0.95rem}
+.vstep-item.is-expanded .vstep-body{display:block}
+.vstep--static .vstep-body{display:none}
