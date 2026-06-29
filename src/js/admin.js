@@ -372,7 +372,6 @@ function renderTicketDetail(t) {
   return `<div class="sup-detail-inner">
       ${ticketVSteps(t)}
       <div class="sup-detail-actions">
-        <button class="sup-claude-btn" onclick="sendToClaude('${idJs}')">Send to Claude Code &rarr;</button>
         <div class="sup-note-row">
           <input class="search-input" id="sup-note-input-${id}" type="text" placeholder="Add a note for the thread…" maxlength="4000">
           <button class="filter-btn" onclick="addTicketNote('${idJs}')">Add note</button>
@@ -381,7 +380,10 @@ function renderTicketDetail(t) {
           <label>Status
             <select class="search-input" id="sup-status-${id}" onchange="setTicketStatus('${idJs}', this.value)">${options}</select>
           </label>
-          <button class="sup-delete" onclick="deleteTicket('${idJs}')">Delete</button>
+          <div class="sup-action-btns">
+            <button class="sup-claude-btn" onclick="sendToClaude('${idJs}')">Send to Claude Code &rarr;</button>
+            <button class="sup-delete" onclick="deleteTicket('${idJs}')">Delete</button>
+          </div>
         </div>
       </div>
     </div>`;

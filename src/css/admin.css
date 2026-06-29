@@ -168,14 +168,9 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 /* ============================================================================
    Support tickets dashboard (AI customer support)
    ============================================================================ */
+/* Status badges are intentionally monochrome — the label carries the meaning. */
 .sup-badge{display:inline-block;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;
-  padding:0.2rem 0.5rem;border-radius:3px;background:#e9e6df;color:#53534C;white-space:nowrap}
-.sup-needs_review{background:#f4d97b;color:#5a4a13}
-.sup-approved{background:#bfe0c2;color:#1f4d27}
-.sup-hold{background:#e7d2b8;color:#6b4a23}
-.sup-fixed{background:#cdd9ef;color:#2a3f63}
-.sup-closed{background:#e2e0da;color:#6a6a62}
-.sup-bot{background:#eceae4;color:#7a7a72}
+  padding:0.2rem 0.5rem;border-radius:3px;background:var(--surface);color:var(--body);white-space:nowrap}
 .sup-sev{display:inline-block;font-size:0.66rem;text-transform:capitalize}
 .sup-sev-high{color:#b0341d;font-weight:700}
 .sup-sev-medium{color:#9a6a18}
@@ -372,7 +367,9 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 
 /* "Send to Claude Code" handoff + for_dev status */
 .sup-for_dev{background:#ddd5f2;color:#3a2f63}
-.sup-claude-btn{display:block;width:100%;padding:0.7rem;border:none;border-radius:6px;cursor:pointer;
-  background:var(--ink);color:var(--cream);font-family:Helvetica,Arial,sans-serif;font-size:0.7rem;
-  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.2rem;transition:background 0.18s}
+.sup-claude-btn{display:inline-block;padding:0.4rem 0.85rem;border:none;border-radius:5px;cursor:pointer;
+  background:var(--ink);color:var(--cream);font-family:Helvetica,Arial,sans-serif;font-size:0.66rem;
+  letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;transition:background 0.18s}
 .sup-claude-btn:hover{background:var(--ink-hover)}
+/* Right-aligned action buttons (Send to Claude + Delete) in the action row. */
+.sup-action-btns{display:flex;align-items:center;gap:0.5rem}
