@@ -1,4 +1,7 @@
-const PASSWORD = 'OPLS';
+// Coming-soon splash: progressive enhancement only. The actual gate is
+// server-side — the form POSTs to /api/unlock, which validates the password
+// against the SITE_PASSWORD env var and sets the access cookie. No password
+// or access state lives in this file.
 
 function toggleVis() {
   const input = document.getElementById('password');
@@ -7,20 +10,10 @@ function toggleVis() {
   else { input.type = 'password'; btn.textContent = 'SHOW'; }
 }
 
-function unlock() {
-  const val = document.getElementById('password').value;
+// Surface the incorrect-password message that /api/unlock signals via ?error=1.
+if (new URLSearchParams(location.search).get('error')) {
   const err = document.getElementById('error-msg');
-  if (val === PASSWORD) {
-    sessionStorage.setItem('jf_access', 'true');
-    window.location.replace('/');
-  } else {
-    err.textContent = 'Incorrect password.';
-    document.getElementById('password').value = '';
-    document.getElementById('password').focus();
-  }
-}
-
-// Already unlocked — skip gate
-if (sessionStorage.getItem('jf_access') === 'true') {
-  window.location.replace('/');
+  if (err) err.textContent = 'Incorrect password.';
+  const input = document.getElementById('password');
+  if (input) input.focus();
 }
