@@ -11,7 +11,8 @@
 {%- set _ogimg = site.url + (ogImage or site.ogImage) -%}
 <meta name="description" content="{{ _desc }}">
 <link rel="canonical" href="{{ _canonical }}">
-{% if (_path in site.sitemapPages) and not noindex %}<meta name="robots" content="index, follow">{% else %}<meta name="robots" content="noindex, follow">{% endif %}
+{# site.gated: while the coming-soon gate is up nothing is indexable — flip it off in site.json at launch. #}
+{% if (_path in site.sitemapPages) and not noindex and not site.gated %}<meta name="robots" content="index, follow">{% else %}<meta name="robots" content="noindex, follow">{% endif %}
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ site.name }}">

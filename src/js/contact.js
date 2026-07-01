@@ -26,7 +26,7 @@ function submitContact() {
   btn.disabled = true;
   btn.textContent = 'Sending…';
 
-  fetch('https://jorgensen-backend-production.up.railway.app/contact', {
+  fetch(window.JF_API + '/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

@@ -1,5 +1,5 @@
 // News page behaviour: newsletter subscription.
-const API = 'https://jorgensen-backend-production.up.railway.app';
+const API = window.JF_API;
 async function subscribeNewsletter() {
   const input = document.getElementById('newsletter-email');
   const msg = document.getElementById('newsletter-msg');

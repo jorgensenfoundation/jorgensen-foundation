@@ -15,6 +15,12 @@ function escAttr(value) {
   // Entity-encoded for safe use inside quoted HTML attribute values
   return esc(value);
 }
+// Only allow http(s) URLs into href — blocks javascript:/data: from a stored cv_url.
+function safeUrl(value) {
+  if (!value) return '';
+  const s = String(value).trim();
+  return /^https?:\/\//i.test(s) ? s : '';
+}
 
 function toggleFaq(qEl) {
   const item = qEl.closest('.faq-item');
@@ -23,7 +29,7 @@ function toggleFaq(qEl) {
   if (!isOpen) item.classList.add('open');
 }
 
-const API = 'https://jorgensen-backend-production.up.railway.app';
+const API = window.JF_API;
 
 function val(id) {
   const el = document.getElementById(id);
@@ -231,7 +237,8 @@ function renderMyGrants(list) {
   wrap.innerHTML = list.map(g => {
     const date = fmtDate(g.created_at);
     const amount = (g.amount_requested !== null && g.amount_requested !== undefined && g.amount_requested !== '') ? ('$' + esc(g.amount_requested)) : '—';
-    const cv = g.cv_url ? `<a class="grant-cv-link" href="${escAttr(g.cv_url)}" target="_blank" rel="noopener">View CV →</a>` : '';
+    const cvHref = safeUrl(g.cv_url);
+    const cv = cvHref ? `<a class="grant-cv-link" href="${escAttr(cvHref)}" target="_blank" rel="noopener">View CV →</a>` : '';
     return `
       <div class="grant-card">
         <div class="grant-card-head">

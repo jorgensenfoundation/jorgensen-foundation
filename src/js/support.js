@@ -8,7 +8,7 @@
 (function () {
   "use strict";
 
-  var API = "https://jorgensen-backend-production.up.railway.app";
+  var API = window.JF_API;
   var CONV_KEY = "jf_support_conversation";
   var GREETING =
     "Hi! I'm the Jorgensen Foundation assistant. Tell me what you're trying to do or what's going wrong, and I'll help — or pass it to our team if it needs a person.";

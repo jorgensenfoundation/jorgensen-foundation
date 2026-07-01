@@ -7,7 +7,7 @@
 // JFAuth helper (honouring "Remember me"), then forward to the dashboard.
 
 (function () {
-  var API = 'https://jorgensen-backend-production.up.railway.app';
+  var API = window.JF_API;
 
   function fail(reason) {
     window.location.href = '/login?error=' + encodeURIComponent(reason || 'oauth_exchange');

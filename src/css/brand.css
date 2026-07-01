@@ -65,3 +65,10 @@ a{text-decoration:none;color:inherit}
   .brand-swatch.lock img{width:280px}
   .brand-swatch.lock-stacked img{width:220px}
 }
+@media(max-width:640px){
+  .brand-hero{padding:7rem 1.25rem 2.5rem}
+  .brand-body{padding:2rem 1.25rem 3.5rem}
+  .brand-progcards{grid-template-columns:1fr}
+  .brand-swatch{padding:2.25rem 1.5rem;min-height:150px}
+  .brand-dl{justify-content:center}
+}

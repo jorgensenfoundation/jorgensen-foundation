@@ -4,6 +4,7 @@
   "url": "https://www.jorgensenfoundation.org",
   "description": "The Jorgensen Foundation advances computational chemistry through accessible, cloud-based simulation tools for academia and industry.",
   "foundingYear": "2026",
+  "gated": true,
   "logo": "/img/brand/jf-monogram-midnight-1024.png",
   "ogImage": "/img/og/jf-og.png",
   "locale": "en_US",

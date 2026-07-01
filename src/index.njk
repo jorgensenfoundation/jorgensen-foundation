@@ -198,41 +198,6 @@ pageCss: /css/index.css
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="test-hd">
-    <span class="eyebrow">Testimonials</span>
-    <h2 class="h2">What researchers<br>are <em>saying.</em></h2>
-  </div>
-  <div class="test-grid">
-
-    <div class="card test-card">
-      <div class="test-mark">&ldquo;</div>
-      <p class="body test-quote">BOSS has been a cornerstone of our group's research for years. The cloud platform removes every barrier we used to face with installation and configuration — our graduate students are running free energy calculations on day one now, rather than spending weeks wrestling with legacy software. The OPLS-AA implementation is impeccable.</p>
-      <div class="test-divider"></div>
-      <p class="test-name">Dr. Sarah Mitchell</p>
-      <p class="test-meta">Associate Professor of Medicinal Chemistry<br>University of Cambridge</p>
-    </div>
-
-    <div class="card test-card">
-      <div class="test-mark">&ldquo;</div>
-      <p class="body test-quote">We have been using MCPRO for protein-ligand binding affinity predictions throughout our lead optimisation campaigns. The accuracy of the FEP results is consistently excellent — comparable to what we see from far more expensive commercial platforms. Free academic access makes it genuinely accessible for university groups working on drug discovery.</p>
-      <div class="test-divider"></div>
-      <p class="test-name">Prof. James Okafor</p>
-      <p class="test-meta">Chair of Computational Biophysics<br>ETH Zürich</p>
-    </div>
-
-    <div class="card test-card">
-      <div class="test-mark">&ldquo;</div>
-      <p class="body test-quote">The browser-based interface for BOSS and BOMB has transformed how we teach computational chemistry at the undergraduate level. Students can set up Monte Carlo simulations and visualise results interactively without any of the traditional command-line overhead. This is what modern computational chemistry education should look like.</p>
-      <div class="test-divider"></div>
-      <p class="test-name">Dr. Elena Vasquez</p>
-      <p class="test-meta">Senior Lecturer in Physical Chemistry<br>University of Melbourne</p>
-    </div>
-
-  </div>
-</section>
-
 <!-- SPLIT — SECURITY -->
 <section class="split">
   <div class="split-media">
@@ -416,7 +381,7 @@ pageCss: /css/index.css
 <script src="/js/index.js"></script>
 
 <!-- Live molecule visuals (hero structure + BOSS protein band + "From parameters to insight" lab) -->
-<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+<script src="/js/vendor/3Dmol-min.js?v={{ buildId }}"></script>
 <script src="/js/hp-hero-bio.js"></script>
 <script src="/js/bio.js"></script>
 <script src="/js/surface.js"></script>

@@ -5,7 +5,7 @@
 (function () {
   var USER_KEY = 'jf_user';
   var TOKEN_KEY = 'jf_user_token';
-  var API = 'https://jorgensen-backend-production.up.railway.app';   // same Railway backend as login.js / verify.js
+  var API = window.JF_API;   // same Railway backend as login.js / verify.js
   // Base URL of the BOSS web app (The Console). Centralised here so program launches from the
   // dashboard and the /boss page share one configurable value — change it in this one spot.
   // The app reads the session token from the URL fragment: <BOSS_APP_URL>/login#token=<TOKEN>.

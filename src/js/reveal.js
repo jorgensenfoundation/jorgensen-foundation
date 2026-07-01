@@ -8,7 +8,7 @@
   // Content blocks across the site. Heroes/bands keep their own motion.
   var SELECTORS = [
     '#mission .hp-inner', '.hp-prog-header', '.prog-item',   // homepage
-    '.test-card', '.access-card', '.stat',                   // homepage
+    '.access-card', '.stat',                                 // homepage
     '.pub-item', '.faq-item', '.team-member'                 // inner pages
   ];
 

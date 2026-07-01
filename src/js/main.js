@@ -50,7 +50,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 // Same backend contract as the /login page (login.js): POST /login → {token, email,
 // first_name, account_type, subscription_status, is_board_member}. JFAuth (auth.js,
 // global) owns the session keys 'jf_user_token' / 'jf_user'.
-const NAV_API = 'https://jorgensen-backend-production.up.railway.app';
+const NAV_API = window.JF_API;
 
 // Reflect auth state in the nav: .is-authed swaps the login mega for the account menu
 // (CSS), and we fill the welcome name + board-only "Review Applications" item.

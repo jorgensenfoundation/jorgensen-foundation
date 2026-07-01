@@ -41,6 +41,12 @@ input[type=password]{-webkit-appearance:none;appearance:none}
 .loading-spinner{text-align:center;padding:2rem 0}
 .loading-spinner p{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--body);margin-top:1rem}
 
+@media(max-width:640px){
+  main{padding:3rem 1.25rem}
+  .card{padding:2.5rem 1.5rem}
+  .card-title{font-size:1.9rem}
+  .user-info{padding:1rem 1.25rem}
+}
 @media(max-width:600px){
   main{padding:2rem 1rem}
   .card{padding:2rem 1.5rem}
