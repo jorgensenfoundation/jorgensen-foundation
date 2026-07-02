@@ -54,6 +54,11 @@ a{text-decoration:none;color:inherit}
 .rv-panel{padding:1.5rem 1.5rem 1.75rem;background:color-mix(in srgb,var(--surface) 40%,var(--ground));border-top:1px solid var(--surface)}
 .rv-meta{display:flex;gap:1.5rem;flex-wrap:wrap;font-size:0.72rem;color:var(--body);margin-bottom:0.9rem}
 .rv-meta b{color:var(--ink);font-weight:400}
+/* Applicant eligibility signals — reviewer's at-a-glance context */
+.rv-signals{display:flex;gap:0.4rem;flex-wrap:wrap;margin:0 0 1rem}
+.rv-sig{font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.24rem 0.6rem;border:1px solid var(--hairline);color:var(--body);white-space:nowrap}
+.rv-sig-ok{border-color:var(--ink);color:var(--ink)}
+.rv-sig-warn{border-color:var(--ink);background:var(--ink);color:var(--ground)}
 .rv-cv{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--surface);white-space:nowrap}
 .rv-cv:hover{border-bottom-color:var(--ink)}
 .rv-desc{font-size:0.75rem;line-height:1.8;color:var(--body);max-width:680px;margin-bottom:1.1rem;white-space:pre-wrap}

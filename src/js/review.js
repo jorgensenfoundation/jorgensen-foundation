@@ -30,6 +30,30 @@ function reviewRelogin() {
   else window.location.href = '/';
 }
 
+// At-a-glance eligibility chips derived server-side (a.signals). Tone: `ok`
+// (neutral-good), `warn` (worth a second look), plain (informational).
+function rvSignals(s) {
+  if (!s) return '';
+  const chips = [];
+  if (s.first_time_applicant) {
+    chips.push(['ok', 'First-time applicant']);
+  } else {
+    const n = s.prior_applications || 0;
+    chips.push(['', `Repeat applicant · ${n} prior`]);
+    if (s.prior_grants_funded > 0) chips.push(['warn', `Funded before ×${s.prior_grants_funded}`]);
+  }
+  if (s.other_open_applications > 0) chips.push(['warn', `${s.other_open_applications} other open`]);
+  if (s.amount_pct_of_cap != null) {
+    const tone = s.at_cap ? 'warn' : '';
+    chips.push([tone, s.at_cap ? 'At the $' + (s.cap || 2000) + ' cap' : `${s.amount_pct_of_cap}% of cap`]);
+  }
+  if (s.account_type) chips.push(['', s.account_type === 'industry' ? 'Industry' : 'Academia']);
+  if (!chips.length) return '';
+  return `<div class="rv-signals">${chips
+    .map(([tone, label]) => `<span class="rv-sig${tone ? ' rv-sig-' + tone : ''}">${esc(label)}</span>`)
+    .join('')}</div>`;
+}
+
 async function loadAssignments() {
   const wrap = document.getElementById('review-list');
   try {
@@ -113,6 +137,7 @@ function renderAssignments(list) {
         </div>
         <div class="rv-panel" id="rv-panel-${sid}" hidden>
           <div class="rv-meta"><span><b>Date</b> ${date}</span><span><b>Location</b> ${location}</span><span><b>Amount</b> ${amount}</span>${cv ? `<span>${cv}</span>` : ''}</div>
+          ${rvSignals(a.signals)}
           ${a.research_description ? `<p class="rv-desc">${esc(a.research_description)}</p>` : ''}
           ${action}
         </div>

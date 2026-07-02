@@ -820,6 +820,28 @@ async function loadGrantDetail(id) {
   }
 }
 
+// Eligibility chips (g.signals from /admin/grants/{id}) — same tones as the
+// board reviewer view. Neutral by default; `warn` flags things worth a look.
+function admSignals(s) {
+  if (!s) return '';
+  const chips = [];
+  if (s.first_time_applicant) {
+    chips.push(['ok', 'First-time applicant']);
+  } else {
+    chips.push(['', `Repeat applicant · ${s.prior_applications || 0} prior`]);
+    if (s.prior_grants_funded > 0) chips.push(['warn', `Funded before ×${s.prior_grants_funded}`]);
+  }
+  if (s.other_open_applications > 0) chips.push(['warn', `${s.other_open_applications} other open`]);
+  if (s.amount_pct_of_cap != null) {
+    chips.push([s.at_cap ? 'warn' : '', s.at_cap ? 'At the $' + (s.cap || 2000) + ' cap' : `${s.amount_pct_of_cap}% of cap`]);
+  }
+  if (s.account_type) chips.push(['', s.account_type === 'industry' ? 'Industry' : 'Academia']);
+  if (!chips.length) return '';
+  return `<div class="adm-signals">${chips
+    .map(([tone, label]) => `<span class="adm-sig${tone ? ' adm-sig-' + tone : ''}">${esc(label)}</span>`)
+    .join('')}</div>`;
+}
+
 function renderGrantDetail(id, g) {
   const cell = document.getElementById(`detail-cell-${id}`);
   if (!cell) return;
@@ -915,6 +937,7 @@ function renderGrantDetail(id, g) {
           <tr><th>Submitted</th><td>${esc(date)}</td></tr>
           <tr><th>CV</th><td>${cv}</td></tr>
         </table>
+        ${admSignals(g.signals)}
         <div class="detail-desc-label">Research description</div>
         <p class="detail-desc">${esc(g.research_description || '—')}</p>`,
     under_review: `
