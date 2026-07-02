@@ -6,7 +6,7 @@ function toggleVis(inputId, btn) {
   else { input.type = 'password'; btn.innerHTML = EYE_OPEN; btn.setAttribute('aria-label', 'Show password'); }
 }
 
-const API = 'https://jorgensen-backend-production.up.railway.app';
+const API = window.JF_API;
 let currentUser = null;
 let selectedPlan = 'monthly';
 

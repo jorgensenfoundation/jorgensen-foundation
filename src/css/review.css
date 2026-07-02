@@ -95,3 +95,13 @@ a{text-decoration:none;color:inherit}
   .rv-state{order:5;justify-content:flex-start}
   .rv-details{order:2}
 }
+@media(max-width:640px){
+  .rv-hero{padding:7rem 1.25rem 2.5rem}
+  .rv-content{padding:1.5rem 1.25rem 3rem}
+  .rv-gate{padding:3rem 1.25rem 5rem}
+  .rv-gate-card{padding:2rem 1.5rem}
+  .rv-row{grid-template-columns:1fr;gap:0.6rem}
+  .rv-state{justify-content:flex-start}
+  .rv-vote-btns .rv-vbtn{flex:1}
+  .rv-details{width:100%;text-align:center}
+}

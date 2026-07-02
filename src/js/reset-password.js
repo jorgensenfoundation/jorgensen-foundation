@@ -1,4 +1,4 @@
-const API = 'https://jorgensen-backend-production.up.railway.app';
+const API = window.JF_API;
 let resetToken = '';
 
 function showState(id) {

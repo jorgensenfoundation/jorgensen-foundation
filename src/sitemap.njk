@@ -5,7 +5,9 @@ layout: false
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- if not site.gated %}
 {%- for url in site.sitemapPages %}
   <url><loc>{{ site.url }}{{ url }}</loc></url>
 {%- endfor %}
+{%- endif %}
 </urlset>

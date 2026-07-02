@@ -206,3 +206,71 @@ hero/feature/split/lab heights follow this pattern.
 - `src/css/<page>.css` — per-page styles + that page's 3Dmol viewer accent.
 - `src/css/index.css` — homepage (its own `.hp-*` hero/feature/lab system).
 - `src/styleguide.njk` — live visual styleguide page.
+
+---
+
+## 10. Email signature
+
+Chosen design (catalog #31): **name-first** layout — name (serif) → title (small-caps)
+→ horizontal lockup → stacked contacts (email / phone / web). Not yet wired into any
+mail system; saved here to roll out properly later.
+
+Conventions:
+- Table-based with **inline styles** (Gmail / Apple Mail / Outlook compatible).
+- Logo is referenced by **absolute `www` URL** — `https://www.jorgensenfoundation.org/...`
+  — because the apex domain 307-redirects to `www` and mail clients shouldn't chase it.
+- Colors are the brand tokens: ink `#302C2E`, body `#53534C`, muted label `#8a847c`;
+  on dark, cream `#f4efe4`, oyster body `#DEDCD5`, muted `#b8b2a6`.
+- Replace the `[bracketed]` fields. The `[Title]` line is optional.
+
+### Version A — light backgrounds (midnight lockup + dark ink)
+
+```html
+<!-- Jorgensen Foundation — email signature (#31, light) -->
+<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
+  <tr><td style="padding:0;">
+    <div style="font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:22px;color:#302C2E;">[Full Name]</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;line-height:14px;letter-spacing:1.8px;text-transform:uppercase;color:#8a847c;padding-top:5px;">[Title]</div>
+    <div style="height:15px;line-height:15px;font-size:0;">&nbsp;</div>
+    <a href="https://www.jorgensenfoundation.org" target="_blank" style="text-decoration:none;border:0;outline:none;">
+      <img src="https://www.jorgensenfoundation.org/img/brand/jf-lockup-midnight-1024.png" alt="Jorgensen Foundation" width="240" height="20" style="display:block;width:240px;height:20px;border:0;outline:none;">
+    </a>
+    <div style="height:14px;line-height:14px;font-size:0;">&nbsp;</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:21px;">
+      <div><a href="mailto:[name@jorgensenfoundation.org]" style="color:#302C2E;text-decoration:none;">[name@jorgensenfoundation.org]</a></div>
+      <div style="color:#53534C;">[+1 (415) 555&#8209;0123]</div>
+      <div><a href="https://www.jorgensenfoundation.org" target="_blank" style="color:#302C2E;text-decoration:none;font-weight:bold;">jorgensenfoundation.org</a></div>
+    </div>
+  </td></tr>
+</table>
+```
+
+### Version B — dark backgrounds (cream lockup + light ink)
+
+```html
+<!-- Jorgensen Foundation — email signature (#31, dark) -->
+<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
+  <tr><td style="padding:0;">
+    <div style="font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:22px;color:#f4efe4;">[Full Name]</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;line-height:14px;letter-spacing:1.8px;text-transform:uppercase;color:#b8b2a6;padding-top:5px;">[Title]</div>
+    <div style="height:15px;line-height:15px;font-size:0;">&nbsp;</div>
+    <a href="https://www.jorgensenfoundation.org" target="_blank" style="text-decoration:none;border:0;outline:none;">
+      <img src="https://www.jorgensenfoundation.org/img/brand/jf-lockup-cream-1024.png" alt="Jorgensen Foundation" width="240" height="20" style="display:block;width:240px;height:20px;border:0;outline:none;">
+    </a>
+    <div style="height:14px;line-height:14px;font-size:0;">&nbsp;</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:21px;">
+      <div><a href="mailto:[name@jorgensenfoundation.org]" style="color:#f4efe4;text-decoration:none;">[name@jorgensenfoundation.org]</a></div>
+      <div style="color:#DEDCD5;">[+1 (415) 555&#8209;0123]</div>
+      <div><a href="https://www.jorgensenfoundation.org" target="_blank" style="color:#f4efe4;text-decoration:none;font-weight:bold;">jorgensenfoundation.org</a></div>
+    </div>
+  </td></tr>
+</table>
+```
+
+> **Recommended default — dark-mode-safe single signature.** Versions A and B are each
+> transparent and only legible on their intended background. To use **one** signature
+> everywhere, wrap Version A in a white "card": set the white background with **both** the
+> `bgcolor="#ffffff"` attribute *and* inline `background-color` (the attribute is what Outlook
+> and most dark-mode clients honor), plus padding and an optional `1px #eceae4` border —
+> the card stays white and the dark ink/logo stay readable on light *and* dark surfaces.
+> (A few aggressive mobile clients can still force-invert; this is the best available defense.)

@@ -3,7 +3,15 @@ permalink: /robots.txt
 eleventyExcludeFromCollections: true
 layout: false
 ---
+{% if site.gated -%}
 User-agent: *
+Disallow: /
+{%- else -%}
+User-agent: *
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /login
 Allow: /
 
 Sitemap: {{ site.url }}/sitemap.xml
+{%- endif %}

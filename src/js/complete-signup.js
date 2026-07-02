@@ -5,7 +5,7 @@
 // and decide whether to ask for an email — the signature still gates the real call
 // server-side, so a tampered blob is rejected by /auth/complete-signup.
 
-const CS_API = 'https://jorgensen-backend-production.up.railway.app';
+const CS_API = window.JF_API;
 
 let csPending = '';
 let csRemember = false;

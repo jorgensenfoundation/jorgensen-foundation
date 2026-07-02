@@ -44,7 +44,7 @@ function submitRequest() {
   }
   btn.disabled = true;
   btn.textContent = 'Creating account...';
-  fetch('https://jorgensen-backend-production.up.railway.app/register', {
+  fetch(window.JF_API + '/register', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ first_name: firstName, last_name: lastName, institution, email })

@@ -1,4 +1,4 @@
-const API = 'https://jorgensen-backend-production.up.railway.app';
+const API = window.JF_API;
 
 function esc(value) {
   if (value === null || value === undefined) return '';

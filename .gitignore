@@ -1,2 +1,11 @@
 node_modules/
 _site/
+
+# Local dev/lab scratch pages — set comingSoonGate:false and must never ship.
+# Keep them out of git so an accidental `git add -A` can't publish them.
+src/lab.njk
+src/hero-lab.njk
+src/logo-lab.njk
+src/dev-open.njk
+src/css/lab.css
+.playwright-mcp/

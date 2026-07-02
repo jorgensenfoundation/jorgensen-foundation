@@ -3,7 +3,7 @@
 // with body {recommendation, comment} and the user Bearer header. Only the UI is restyled
 // (Option 1: compact rows + inline expand). JFAuth (auth.js) is global.
 
-const API = 'https://jorgensen-backend-production.up.railway.app';
+const API = window.JF_API;
 
 function esc(value) {
   if (value === null || value === undefined) return '';
@@ -12,6 +12,12 @@ function esc(value) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 function escAttr(value) { return esc(value); }
+// Only allow http(s) URLs into href — blocks javascript:/data: from a stored cv_url.
+function safeUrl(value) {
+  if (!value) return '';
+  const s = String(value).trim();
+  return /^https?:\/\//i.test(s) ? s : '';
+}
 
 // User Bearer token (same as login.js reviewAuthHeader).
 function reviewAuthHeader() {
@@ -57,7 +63,8 @@ function renderAssignments(list) {
     const date = esc(a.conference_date || '—');
     const location = esc(a.conference_location || '—');
     const status = esc(a.status || 'submitted');
-    const cv = a.cv_url ? `<a class="rv-cv" href="${escAttr(a.cv_url)}" target="_blank" rel="noopener">View CV →</a>` : '';
+    const cvHref = safeUrl(a.cv_url);
+    const cv = cvHref ? `<a class="rv-cv" href="${escAttr(cvHref)}" target="_blank" rel="noopener">View CV →</a>` : '';
     const voted = a.recommendation;
     // "Open" = the pre-decision window where board voting applies (same set admin.js uses).
     // Anything else (approved/rejected/receipts_submitted/reimbursed) is a final decision: no voting.

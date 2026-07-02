@@ -10,6 +10,11 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem 
 .divider{height:1px;background:var(--hairline);margin:2rem 0}
 .redirect-note{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--body);text-align:center}
 
+@media(max-width:640px){
+  main{padding:3rem 1.25rem}
+  .card{padding:2.5rem 1.5rem}
+  .card-title{font-size:1.9rem}
+}
 @media(max-width:600px){
   main{padding:2rem 1rem}
   .card{padding:2rem 1.5rem}

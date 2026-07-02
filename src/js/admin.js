@@ -12,6 +12,12 @@ function escAttr(value) {
   // Entity-encoded for safe use inside quoted HTML attribute values
   return esc(value);
 }
+// Only allow http(s) URLs into href — blocks javascript:/data: from a stored cv_url.
+function safeUrl(value) {
+  if (!value) return '';
+  const s = String(value).trim();
+  return /^https?:\/\//i.test(s) ? s : '';
+}
 
 // Safe for a value placed inside a single-quoted JS string that itself sits in
 // an inline on* attribute, e.g. onclick="f('JSATTR(v)')". Escape backslash and
@@ -29,7 +35,7 @@ function togglePasswordVisibility() {
   else { input.type = 'password'; btn.textContent = 'SHOW'; }
 }
 
-const API = 'https://jorgensen-backend-production.up.railway.app';
+const API = window.JF_API;
 let adminToken = '';
 let allUsers = [];
 let allGrants = [];
@@ -808,7 +814,8 @@ function renderGrantDetail(id, g) {
   const gid = escAttr(id);
   const status = g.status || 'submitted';
   const date = g.created_at ? new Date(g.created_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
-  const cv = g.cv_url ? `<a href="${escAttr(g.cv_url)}" target="_blank" rel="noopener" class="cv-link">View CV →</a>` : '—';
+  const cvHref = safeUrl(g.cv_url);
+  const cv = cvHref ? `<a href="${escAttr(cvHref)}" target="_blank" rel="noopener" class="cv-link">View CV →</a>` : '—';
   const fmtDate = v => v ? new Date(v).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
   // Receipts (Phase 3): extra field rows shown only when a value exists, plus download links.
   const receipts = Array.isArray(g.receipts) ? g.receipts : [];

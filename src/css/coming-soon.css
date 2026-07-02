@@ -19,3 +19,11 @@ body{font-family:var(--font-sans);background:var(--ink);color:var(--cream);displ
 .submit:hover{background:color-mix(in srgb,var(--cream) 8%,transparent);border-color:color-mix(in srgb,var(--cream) 60%,transparent)}
 .error{font-size:0.6rem;letter-spacing:0.08em;color:#d8654f;margin-top:1rem;min-height:1rem;text-align:center}
 .footer-note{position:fixed;bottom:2rem;font-size:0.52rem;letter-spacing:0.12em;color:color-mix(in srgb,var(--cream) 18%,transparent)}
+
+@media(max-width:640px){
+  body{padding:1.5rem}
+  .heading{margin-bottom:0.85rem}
+  .sub{margin-bottom:2.5rem}
+  .form{max-width:100%}
+  .submit{width:100%;padding:0.9rem 1rem}
+}

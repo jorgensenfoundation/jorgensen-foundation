@@ -14,11 +14,13 @@
 <link rel="icon" href="/img/favicon-16.png?v=6" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ mainCss or '/css/style.css' }}?v={{ buildId }}">
 {% if navCss %}<link rel="stylesheet" href="/css/nav.css?v={{ buildId }}">{% endif %}
 {% if supportWidget != false %}<link rel="stylesheet" href="/css/support.css?v={{ buildId }}">{% endif %}
 {% if pageCss %}<link rel="stylesheet" href="{{ pageCss }}?v={{ buildId }}">{% endif %}
+<script src="/js/config.js?v={{ buildId }}"></script>
 <script src="/js/auth.js?v={{ buildId }}"></script>
 </head>
 <body>

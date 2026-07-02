@@ -64,6 +64,16 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:
 .footer-col ul a:hover{color:var(--ink)}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--hairline);padding-top:2rem}
 
+@media(max-width:768px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+}
+@media(max-width:640px){
+  .page-wrap{padding:3rem 1.25rem}
+  .card{padding:2.5rem 1.5rem}
+  .card-title{font-size:1.9rem}
+  .plan-grid{grid-template-columns:1fr}
+  .login-social{grid-template-columns:1fr}
+}
 @media(max-width:600px){
   .page-wrap{padding:2rem 1rem}
   .card{padding:2rem 1.5rem}
