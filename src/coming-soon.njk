@@ -14,14 +14,14 @@ permalink: /coming-soon/index.html
 <h1 class="heading">Coming <em>Soon</em></h1>
 <p class="sub">The platform is under final preparation. Enter the access password to continue.</p>
 
-<form class="form" method="POST" action="/api/unlock">
+<div class="form">
   <div class="input-wrap">
-    <input class="input" type="password" id="password" name="password" placeholder="Access password" autocomplete="current-password" autofocus>
+    <input class="input" type="password" id="password" placeholder="Access password" onkeydown="if(event.key==='Enter')unlock()">
     <button class="eye-btn" type="button" onclick="toggleVis()" id="eye-btn">SHOW</button>
   </div>
   <p class="error" id="error-msg"></p>
-  <button class="submit" type="submit">Enter →</button>
-</form>
+  <button class="submit" onclick="unlock()">Enter →</button>
+</div>
 
 <p class="footer-note">© 2026 Jorgensen Foundation</p>
 

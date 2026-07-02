@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{% if comingSoonGate != false %}<script>if(sessionStorage.getItem('jf_access')!=='true'){window.location.replace('/coming-soon');}</script>{% endif %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Always render in light appearance, regardless of the device's Dark Mode, so
