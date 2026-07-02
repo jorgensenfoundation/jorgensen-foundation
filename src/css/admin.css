@@ -246,43 +246,54 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
    with a white number; done is a fuller, darker grey with a white check. */
 .vstep{list-style:none;margin:0 0 0.4rem;padding:0}
 .vstep-item{position:relative;padding-left:3rem}
+/* Connector rail between markers; darkens as each step completes. */
 .vstep-item::before{content:"";position:absolute;left:13px;top:34px;bottom:-2px;width:2px;
-  background:var(--hairline)}
+  background:var(--hairline);transition:background 0.25s ease}
 .vstep-item:last-child::before{display:none}
-.vstep-item.is-done::before{background:color-mix(in srgb,var(--body) 28%,var(--ground))}
-/* Outlined dots: white fill, light-grey ring, midnight glyph (number/check).
-   Hover swaps the grey ring for a midnight one with a soft halo — subtle. */
-.vstep-dot{position:absolute;left:1px;top:0.55rem;width:24px;height:24px;border-radius:50%;z-index:1;
+.vstep-item.is-done::before{background:color-mix(in srgb,var(--ink) 55%,var(--ground))}
+/* Step markers, MUI-style progression so "where am I" reads instantly:
+   todo = hollow grey number · done = filled oyster + midnight check ·
+   current = filled midnight + cream glyph with a soft halo. */
+.vstep-dot{position:absolute;left:0;top:0.5rem;width:26px;height:26px;border-radius:50%;z-index:1;
   display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;line-height:1;
-  background:var(--ground);color:var(--ink);
+  background:var(--ground);color:var(--body);
   border:2px solid color-mix(in srgb,var(--body) 26%,var(--ground));
-  transition:border-color 0.2s ease,box-shadow 0.2s ease}
+  transition:background 0.2s ease,border-color 0.2s ease,box-shadow 0.2s ease,color 0.2s ease}
 .is-done .vstep-dot{background:var(--surface);border-color:var(--surface);color:var(--ink)}
-.is-current .vstep-dot{border-color:color-mix(in srgb,var(--body) 45%,var(--ground))}
-.is-hold .vstep-dot{border-style:dashed}
-/* Hover (interactive steppers only): quietly darken the dot ring to midnight. */
+.is-current .vstep-dot{background:var(--ink);border-color:var(--ink);color:var(--cream);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--ink) 12%,transparent)}
+.is-hold .vstep-dot{background:var(--ground);border-style:dashed;border-color:var(--body);color:var(--body);box-shadow:none}
 .vstep:not(.vstep--static) .vstep-head:hover .vstep-dot{border-color:var(--ink)}
 /* Rejected/terminal state (e.g. a declined grant): outlined in the error colour. */
-.is-rejected .vstep-dot{border-color:var(--error);color:var(--error)}
+.is-rejected .vstep-dot{background:var(--ground);border-color:var(--error);color:var(--error);box-shadow:none}
 .is-rejected .vstep-title{color:var(--ink);font-weight:600}
-/* Static variant: a read-only progress rail (no expanding) — used by grants. */
+/* Static variant: a read-only progress rail (no expanding). */
 .vstep--static .vstep-head{cursor:default}
-.vstep--static .vstep-body{display:none}
-/* The clickable step header. Hover cue lives entirely on the dot ring (above) —
-   no background wash, no colour. */
+.vstep--static .vstep-caret{display:none}
+.vstep--static .vstep-body{grid-template-rows:minmax(0,0fr)}
+/* The clickable step header — subtle hover wash + keyboard focus ring. */
 .vstep-head{display:flex;align-items:flex-start;gap:0.8rem;width:100%;background:none;
   border:none;cursor:pointer;padding:0.55rem 0.7rem;border-radius:10px;
-  text-align:left;font-family:var(--font-sans);color:var(--ink)}
+  text-align:left;font-family:var(--font-sans);color:var(--ink);transition:background 0.15s ease}
+.vstep:not(.vstep--static) .vstep-head:hover{background:color-mix(in srgb,var(--surface) 34%,transparent)}
+.vstep-head:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .vstep-textcol{flex:1;display:flex;flex-direction:column;gap:0.05rem;min-width:0}
 .vstep-title{font-size:0.92rem;line-height:1.3;color:var(--ink)}
 .is-todo .vstep-title{color:color-mix(in srgb,var(--body) 62%,var(--ground))}
 .is-current .vstep-title,.is-hold .vstep-title{color:var(--ink);font-weight:600}
 .vstep-sub{font-size:var(--fs-small);color:var(--body);opacity:0.7}
-.vstep-caret{align-self:center;color:var(--body);opacity:0.45;font-size:0.7rem;transition:transform 0.2s}
+.vstep-caret{align-self:center;color:var(--body);opacity:0.45;font-size:0.7rem;transition:transform 0.25s ease}
 .vstep-head:hover .vstep-caret{opacity:0.8}
 .vstep-item.is-expanded .vstep-caret{transform:rotate(180deg)}
-.vstep-body{display:none;padding:0.2rem 0.7rem 0.95rem}
-.vstep-item.is-expanded .vstep-body{display:block}
+/* Smooth expand/collapse. minmax(0,…) forces the collapsed track to a true 0
+   (a bare 0fr keeps the inner's min-content/padding, leaking a sliver); the
+   inner clips with overflow:hidden so nothing shows until expanded. */
+.vstep-body{display:grid;grid-template-rows:minmax(0,0fr);overflow:hidden;transition:grid-template-rows 0.28s ease}
+.vstep-item.is-expanded .vstep-body{grid-template-rows:minmax(0,1fr)}
+.vstep-body-inner{overflow:hidden;min-height:0;padding:0.2rem 0.7rem 0.95rem}
+@media (prefers-reduced-motion: reduce){
+  .vstep-body,.vstep-caret,.vstep-dot,.vstep-item::before{transition:none}
+}
 .sup-step-hint{font-size:var(--fs-small);line-height:1.6;color:var(--body);margin:0.1rem 0}
 .sup-empty{font-size:var(--fs-small);color:var(--body);opacity:0.7;margin:0.3rem 0}
 .sup-detail-actions{border-top:1px solid var(--hairline);margin-top:0.3rem;padding-top:1rem;

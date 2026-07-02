@@ -158,24 +158,28 @@ function ticketVSteps(t) {
     else if (i === current && isHold) { cls = 'is-hold'; mark = '&#10074;&#10074;'; sub = 'Paused — on hold'; }
     else if (i === current) { cls = 'is-current'; mark = String(i + 1); }
     else { cls = 'is-todo'; mark = String(i + 1); }
-    const expanded = i === current ? ' is-expanded' : '';
-    return `<li class="vstep-item ${cls}${expanded}">
-        <button type="button" class="vstep-head" data-action="toggleStep">
-          <span class="vstep-dot">${mark}</span>
+    const isOpen = i === current;
+    const expanded = isOpen ? ' is-expanded' : '';
+    return `<li class="vstep-item ${cls}${expanded}"${isOpen ? ' aria-current="step"' : ''}>
+        <button type="button" class="vstep-head" data-action="toggleStep" aria-expanded="${isOpen}">
+          <span class="vstep-dot" aria-hidden="true">${mark}</span>
           <span class="vstep-textcol">
             <span class="vstep-title">${esc(s.title)}</span>
             <span class="vstep-sub">${esc(sub)}</span>
           </span>
-          <span class="vstep-caret">&#9662;</span>
+          <span class="vstep-caret" aria-hidden="true">&#9662;</span>
         </button>
-        <div class="vstep-body">${stepBody(s.key, t)}</div>
+        <div class="vstep-body"><div class="vstep-body-inner">${stepBody(s.key, t)}</div></div>
       </li>`;
   }).join('') + '</ol>';
 }
 
 function toggleStep(el) {
   const li = el.closest('.vstep-item');
-  if (li) li.classList.toggle('is-expanded');
+  if (!li) return;
+  const open = li.classList.toggle('is-expanded');
+  const head = li.querySelector('.vstep-head');
+  if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
 // What each lifecycle step reveals when expanded.
@@ -935,17 +939,18 @@ function renderGrantDetail(id, g) {
     else if (i === current && isRejected) { cls = 'is-rejected'; mark = '&times;'; sub = 'Application rejected'; }
     else if (i === current) { cls = 'is-current'; mark = String(i + 1); }
     else { cls = 'is-todo'; mark = String(i + 1); }
-    const expanded = i === current ? ' is-expanded' : '';
-    return `<li class="vstep-item ${cls}${expanded}">
-        <button type="button" class="vstep-head" data-action="toggleStep">
-          <span class="vstep-dot">${mark}</span>
+    const isOpen = i === current;
+    const expanded = isOpen ? ' is-expanded' : '';
+    return `<li class="vstep-item ${cls}${expanded}"${isOpen ? ' aria-current="step"' : ''}>
+        <button type="button" class="vstep-head" data-action="toggleStep" aria-expanded="${isOpen}">
+          <span class="vstep-dot" aria-hidden="true">${mark}</span>
           <span class="vstep-textcol">
             <span class="vstep-title">${esc(s.title)}</span>
             <span class="vstep-sub">${esc(sub)}</span>
           </span>
-          <span class="vstep-caret">&#9662;</span>
+          <span class="vstep-caret" aria-hidden="true">&#9662;</span>
         </button>
-        <div class="vstep-body">${bodies[s.key] || ''}</div>
+        <div class="vstep-body"><div class="vstep-body-inner">${bodies[s.key] || ''}</div></div>
       </li>`;
   }).join('') + '</ol>';
 
