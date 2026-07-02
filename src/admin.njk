@@ -9,15 +9,20 @@ mainJs: false
 permalink: /admin/index.html
 ---
 
+<style>
+  /* Hover tint for the admin nav links (was inline onmouseover/onmouseout). */
+  .nav--admin .admin-navlink { color: rgba(245,240,230,0.35); transition: color 0.2s; }
+  .nav--admin .admin-navlink:hover { color: rgba(245,240,230,0.7); }
+</style>
 <nav class="nav--admin">
   <a href="/" class="nav-logo">Jorgensen Foundation</a>
   <span class="nav-tag">Admin</span>
   <div style="display:flex;align-items:center;gap:1.5rem">
-    <a href="/about" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">About</a>
-    <a href="/publications" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">Publications</a>
-    <a href="/news" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">News</a>
-    <a href="/contact" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,230,0.35);transition:color 0.2s" onmouseover="this.style.color='rgba(245,240,230,0.7)'" onmouseout="this.style.color='rgba(245,240,230,0.35)'">Contact</a>
-    <button class="nav-logout" id="nav-logout" onclick="logout()">Sign Out</button>
+    <a href="/about" class="admin-navlink" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase">About</a>
+    <a href="/publications" class="admin-navlink" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase">Publications</a>
+    <a href="/news" class="admin-navlink" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase">News</a>
+    <a href="/contact" class="admin-navlink" style="font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase">Contact</a>
+    <button class="nav-logout" id="nav-logout" data-action="logout">Sign Out</button>
   </div>
 </nav>
 
@@ -29,11 +34,11 @@ permalink: /admin/index.html
     <div class="divider"></div>
     <label class="input-label">Admin Password</label>
     <div style="position:relative">
-      <input class="input" type="password" id="admin-password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin()" style="padding-right:2rem">
-      <button onclick="togglePasswordVisibility()" style="position:absolute;right:0;bottom:0.75rem;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.75rem;font-family:Helvetica,Arial,sans-serif;letter-spacing:0.05em" type="button" id="admin-show-btn">SHOW</button>
+      <input class="input" type="password" id="admin-password" placeholder="Enter admin password" data-enter="adminLogin" style="padding-right:2rem">
+      <button data-action="togglePasswordVisibility" style="position:absolute;right:0;bottom:0.75rem;background:none;border:none;cursor:pointer;color:#bbb;font-size:0.75rem;font-family:Helvetica,Arial,sans-serif;letter-spacing:0.05em" type="button" id="admin-show-btn">SHOW</button>
     </div>
     <p class="error-msg" id="login-error"></p>
-    <button class="btn" id="login-btn" onclick="adminLogin()">Sign In</button>
+    <button class="btn" id="login-btn" data-action="adminLogin">Sign In</button>
   </div>
 </div>
 
@@ -41,22 +46,22 @@ permalink: /admin/index.html
 <div class="admin-dashboard" id="admin-dashboard">
  <div class="admin-shell">
   <aside class="admin-rail" id="admin-rail">
-    <button class="rail-item" data-section="overview" onclick="showSection('overview')" type="button">
+    <button class="rail-item" data-section="overview" data-action="showSection" type="button">
       <span class="rail-label">Overview</span>
     </button>
-    <button class="rail-item" data-section="support" onclick="showSection('support')" type="button">
+    <button class="rail-item" data-section="support" data-action="showSection" type="button">
       <span class="rail-label">Support</span><span class="rail-count" id="rail-count-support"></span>
     </button>
-    <button class="rail-item" data-section="grants" onclick="showSection('grants')" type="button">
+    <button class="rail-item" data-section="grants" data-action="showSection" type="button">
       <span class="rail-label">Grants</span><span class="rail-count" id="rail-count-grants"></span>
     </button>
-    <button class="rail-item" data-section="users" onclick="showSection('users')" type="button">
+    <button class="rail-item" data-section="users" data-action="showSection" type="button">
       <span class="rail-label">Users</span><span class="rail-count" id="rail-count-users"></span>
     </button>
-    <button class="rail-item" data-section="board" onclick="showSection('board')" type="button">
+    <button class="rail-item" data-section="board" data-action="showSection" type="button">
       <span class="rail-label">Board</span>
     </button>
-    <button class="rail-item" data-section="newsletter" onclick="showSection('newsletter')" type="button">
+    <button class="rail-item" data-section="newsletter" data-action="showSection" type="button">
       <span class="rail-label">Newsletter</span>
     </button>
   </aside>
@@ -83,15 +88,15 @@ permalink: /admin/index.html
         <div class="table-title">Support Tickets</div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
           <div class="filter-row" id="support-filters">
-            <button class="filter-btn active" onclick="setSupportFilter('', this)">All</button>
-            <button class="filter-btn" onclick="setSupportFilter('needs_review', this)">Needs review</button>
-            <button class="filter-btn" onclick="setSupportFilter('approved', this)">Approved</button>
-            <button class="filter-btn" onclick="setSupportFilter('hold', this)">Hold</button>
-            <button class="filter-btn" onclick="setSupportFilter('fixed', this)">Fixed</button>
-            <button class="filter-btn" onclick="setSupportFilter('closed', this)">Closed</button>
-            <button class="filter-btn" onclick="setSupportFilter('deleted', this)">Deleted</button>
+            <button class="filter-btn active" data-action="setSupportFilter" data-status="">All</button>
+            <button class="filter-btn" data-action="setSupportFilter" data-status="needs_review">Needs review</button>
+            <button class="filter-btn" data-action="setSupportFilter" data-status="approved">Approved</button>
+            <button class="filter-btn" data-action="setSupportFilter" data-status="hold">Hold</button>
+            <button class="filter-btn" data-action="setSupportFilter" data-status="fixed">Fixed</button>
+            <button class="filter-btn" data-action="setSupportFilter" data-status="closed">Closed</button>
+            <button class="filter-btn" data-action="setSupportFilter" data-status="deleted">Deleted</button>
           </div>
-          <button class="refresh-btn" onclick="loadSupport()">Refresh</button>
+          <button class="refresh-btn" data-action="loadSupport">Refresh</button>
         </div>
       </div>
       <div class="table-wrap">
@@ -111,8 +116,8 @@ permalink: /admin/index.html
       <div class="table-header">
         <div class="table-title">Grant Applications</div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-          <input class="search-input" type="text" id="grants-search" placeholder="Search name, email, conference..." oninput="filterGrants()">
-          <button class="refresh-btn" onclick="loadGrants()">Refresh</button>
+          <input class="search-input" type="text" id="grants-search" placeholder="Search name, email, conference...">
+          <button class="refresh-btn" data-action="loadGrants">Refresh</button>
         </div>
       </div>
       <div class="table-wrap">
@@ -133,15 +138,15 @@ permalink: /admin/index.html
       <div class="table-header">
         <div class="table-title">All Users</div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-          <input class="search-input" type="text" id="search" placeholder="Search email or name..." oninput="filterUsers()">
+          <input class="search-input" type="text" id="search" placeholder="Search email or name...">
           <div class="filter-row">
-            <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
-            <button class="filter-btn" onclick="setFilter('academia', this)">Academia</button>
-            <button class="filter-btn" onclick="setFilter('industry', this)">Industry</button>
-            <button class="filter-btn" onclick="setFilter('active', this)">Active</button>
-            <button class="filter-btn" onclick="setFilter('inactive', this)">Inactive</button>
+            <button class="filter-btn active" data-action="setFilter" data-filter="all">All</button>
+            <button class="filter-btn" data-action="setFilter" data-filter="academia">Academia</button>
+            <button class="filter-btn" data-action="setFilter" data-filter="industry">Industry</button>
+            <button class="filter-btn" data-action="setFilter" data-filter="active">Active</button>
+            <button class="filter-btn" data-action="setFilter" data-filter="inactive">Inactive</button>
           </div>
-          <button class="refresh-btn" onclick="loadUsers()">Refresh</button>
+          <button class="refresh-btn" data-action="loadUsers">Refresh</button>
         </div>
       </div>
       <div class="table-wrap">
@@ -163,7 +168,7 @@ permalink: /admin/index.html
         <div class="table-title">Board Members</div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
           <input class="search-input" type="email" id="board-email" placeholder="board.member@institution.edu">
-          <button class="refresh-btn" onclick="inviteBoardMember()">Add</button>
+          <button class="refresh-btn" data-action="inviteBoardMember">Add</button>
         </div>
       </div>
       <p class="board-msg" id="board-msg"></p>
@@ -185,8 +190,8 @@ permalink: /admin/index.html
       <div class="table-header">
         <div class="table-title">Newsletter Subscribers</div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-          <input class="search-input" type="text" id="newsletter-search" placeholder="Search email..." oninput="filterNewsletter()">
-          <button class="refresh-btn" onclick="loadNewsletter()">Refresh</button>
+          <input class="search-input" type="text" id="newsletter-search" placeholder="Search email...">
+          <button class="refresh-btn" data-action="loadNewsletter">Refresh</button>
         </div>
       </div>
       <div class="table-wrap">

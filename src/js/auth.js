@@ -124,10 +124,11 @@
   // redirects to the provider (Google / GitHub) and back. We forward
   // the same "Remember me" choice the email/password form uses, reading whichever
   // checkbox is present on the current page (nav dropdown or the /login page).
-  // Exposed as a bare global because the buttons call it via inline onclick, and
-  // this file (auth.js) loads on EVERY page — including app-layout pages where
-  // main.js is intentionally not loaded.
-  function oauthLogin(provider) {
+  // Exposed as a bare global because the buttons invoke it via the delegated dispatcher
+  // (data-action="oauthLogin" data-provider="…"), and this file (auth.js) loads on EVERY
+  // page — including app-layout pages where main.js is intentionally not loaded.
+  function oauthLogin(el) {
+    var provider = el && el.dataset ? el.dataset.provider : '';
     var rememberEl = document.getElementById('nav-login-remember')
       || document.getElementById('login-remember');
     var remember = rememberEl && rememberEl.checked ? 1 : 0;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{% if comingSoonGate != false %}<script>if(sessionStorage.getItem('jf_access')!=='true'){window.location.replace('/coming-soon');}</script>{% endif %}
+{% if comingSoonGate != false %}<script src="/js/gate.js?v={{ buildId }}"></script>{% endif %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Always render in light appearance, regardless of the device's Dark Mode, so
@@ -21,6 +21,7 @@
 {% if supportWidget != false %}<link rel="stylesheet" href="/css/support.css?v={{ buildId }}">{% endif %}
 {% if pageCss %}<link rel="stylesheet" href="{{ pageCss }}?v={{ buildId }}">{% endif %}
 <script src="/js/config.js?v={{ buildId }}"></script>
+<script src="/js/actions.js?v={{ buildId }}"></script>
 <script src="/js/auth.js?v={{ buildId }}"></script>
 </head>
 <body>

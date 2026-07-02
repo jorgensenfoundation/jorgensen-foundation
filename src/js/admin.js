@@ -19,15 +19,6 @@ function safeUrl(value) {
   return /^https?:\/\//i.test(s) ? s : '';
 }
 
-// Safe for a value placed inside a single-quoted JS string that itself sits in
-// an inline on* attribute, e.g. onclick="f('JSATTR(v)')". Escape backslash and
-// quote for the JS string FIRST (HTML-encoding alone won't protect it — the
-// browser decodes &#39; back to ' before the JS runs), then HTML-encode for the
-// attribute. Prevents JS-context breakout.
-function jsAttr(value) {
-  return esc(String(value == null ? '' : value).replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
-}
-
 function togglePasswordVisibility() {
   const input = document.getElementById('admin-password');
   const btn = document.getElementById('admin-show-btn');
@@ -53,12 +44,13 @@ function showMoreBtn(key, total) {
   const label = showMoreState[key]
     ? 'Show less'
     : `Show more (${total - ROW_LIMIT} more)`;
-  return `<button class="show-more-btn" type="button" onclick="toggleShowMore('${key}')">${label}</button>`;
+  return `<button class="show-more-btn" type="button" data-action="toggleShowMore" data-key="${escAttr(key)}">${label}</button>`;
 }
 
 // Toggle a table's expanded state, then re-derive its rows through the SAME path
 // (filter → render) so the search filter and any sort are preserved.
-function toggleShowMore(key) {
+function toggleShowMore(el) {
+  const key = el.dataset.key;
   showMoreState[key] = !showMoreState[key];
   if (key === 'users') filterUsers();
   else if (key === 'grants') filterGrants();
@@ -86,7 +78,9 @@ function showDashboard() {
 let supportCounts = {};
 
 // Switch the visible section + active rail item; remember it across refreshes.
+// Accepts a section name (internal callers) or the clicked rail element (dispatcher).
 function showSection(name) {
+  if (name && name.dataset) name = name.dataset.section;
   try { sessionStorage.setItem('jf_admin_section', name); } catch (e) {}
   document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
   const sec = document.getElementById('section-' + name);
@@ -111,11 +105,11 @@ function renderOverviewAttention() {
   const items = [];
   const needsReview = supportCounts.needs_review || 0;
   if (needsReview > 0) {
-    items.push(`<div class="attn-item attn-item--alert" onclick="showSection('support')"><span class="attn-dot"></span>${needsReview} support ticket${needsReview > 1 ? 's' : ''} need review<span class="attn-arrow">&rarr;</span></div>`);
+    items.push(`<div class="attn-item attn-item--alert" data-action="showSection" data-section="support"><span class="attn-dot"></span>${needsReview} support ticket${needsReview > 1 ? 's' : ''} need review<span class="attn-arrow">&rarr;</span></div>`);
   }
   const action = (typeof allGrants !== 'undefined' ? allGrants : []).filter(g => ACTION_STATES.indexOf(g.status) !== -1).length;
   if (action > 0) {
-    items.push(`<div class="attn-item attn-item--alert" onclick="showSection('grants')"><span class="attn-dot"></span>${action} grant${action > 1 ? 's' : ''} need action<span class="attn-arrow">&rarr;</span></div>`);
+    items.push(`<div class="attn-item attn-item--alert" data-action="showSection" data-section="grants"><span class="attn-dot"></span>${action} grant${action > 1 ? 's' : ''} need action<span class="attn-arrow">&rarr;</span></div>`);
   }
   box.innerHTML = items.length ? items.join('')
     : '<div class="attn-item"><span class="attn-dot"></span>All caught up — nothing needs your attention.</div>';
@@ -166,7 +160,7 @@ function ticketVSteps(t) {
     else { cls = 'is-todo'; mark = String(i + 1); }
     const expanded = i === current ? ' is-expanded' : '';
     return `<li class="vstep-item ${cls}${expanded}">
-        <button type="button" class="vstep-head" onclick="toggleStep(this)">
+        <button type="button" class="vstep-head" data-action="toggleStep">
           <span class="vstep-dot">${mark}</span>
           <span class="vstep-textcol">
             <span class="vstep-title">${esc(s.title)}</span>
@@ -179,8 +173,8 @@ function ticketVSteps(t) {
   }).join('') + '</ol>';
 }
 
-function toggleStep(btn) {
-  const li = btn.closest('.vstep-item');
+function toggleStep(el) {
+  const li = el.closest('.vstep-item');
   if (li) li.classList.toggle('is-expanded');
 }
 
@@ -245,7 +239,9 @@ const SUPPORT_STATUS_LABEL = {
   for_dev: 'For Claude', hold: 'Hold', fixed: 'Fixed', closed: 'Closed',
 };
 
+// Accepts a status string (internal callers) or the clicked filter button (dispatcher).
 function setSupportFilter(status, btn) {
+  if (status && status.dataset) { btn = status; status = btn.dataset.status || ''; }
   supportFilter = status;
   document.querySelectorAll('#support-filters .filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -289,14 +285,13 @@ function renderSupport(tickets) {
     const summary = (t.summary || '(no summary yet)');
     const trimmed = summary.length > 70 ? summary.slice(0, 70) + '…' : summary;
     const id = escAttr(t.id);
-    const idJs = jsAttr(t.id);
     const badge = deletedView
       ? '<span class="sup-badge">Deleted</span>'
       : `<span class="sup-badge sup-${escAttr(status)}">${esc(SUPPORT_STATUS_LABEL[status] || status)}</span>`;
     const last = deletedView
-      ? `<td class="sup-row-action"><button class="sup-restore" onclick="event.stopPropagation();restoreTicket('${idJs}')">Restore &#8617;</button></td>`
+      ? `<td class="sup-row-action"><button class="sup-restore" data-action="restoreTicket" data-id="${id}">Restore &#8617;</button></td>`
       : '<td class="sup-row-action"><span class="sup-chevron">&#9656;</span></td>';
-    return `<tr class="sup-row" data-id="${id}" onclick="toggleTicket('${idJs}')">
+    return `<tr class="sup-row" data-id="${id}" data-action="toggleTicket">
         <td>${badge}</td>
         <td><span class="sup-sev sup-sev-${escAttr(sev)}">${esc(sev)}</span></td>
         <td>${esc(t.category || '—')}</td>
@@ -319,7 +314,9 @@ function renderSupport(tickets) {
 }
 
 // Expand/collapse a ticket row inline. Detail is fetched lazily on first open.
+// Accepts a ticket public id (internal callers) or the clicked row (dispatcher).
 async function toggleTicket(publicId) {
+  if (publicId && publicId.dataset) publicId = publicId.dataset.id;
   const dr = document.getElementById('sup-detailrow-' + publicId);
   if (!dr) return;
   const row = document.querySelector(`.sup-row[data-id="${publicId}"]`);
@@ -351,18 +348,20 @@ async function loadTicketDetail(publicId) {
     if (!host) return;
     host.innerHTML = renderTicketDetail(t);
     host.dataset.loaded = '1';
+    // The status <select> fires on 'change', which the click/Enter dispatcher doesn't cover.
+    const statusSel = document.getElementById('sup-status-' + publicId);
+    if (statusSel) statusSel.addEventListener('change', () => setTicketStatus(publicId, statusSel.value));
   } catch (e) {}
 }
 
 function renderTicketDetail(t) {
-  const idJs = jsAttr(t.id);
   const id = escAttr(t.id);
   if (t.status === 'deleted') {
     return `<div class="sup-detail-inner">
         ${ticketVSteps(t)}
         <div class="sup-detail-actions">
           <p class="sup-empty">This ticket is deleted.</p>
-          <button class="sup-restore" onclick="restoreTicket('${idJs}')">Restore &#8617;</button>
+          <button class="sup-restore" data-action="restoreTicket" data-id="${id}">Restore &#8617;</button>
         </div>
       </div>`;
   }
@@ -372,23 +371,26 @@ function renderTicketDetail(t) {
       <div class="sup-detail-actions">
         <div class="sup-note-row">
           <input class="search-input" id="sup-note-input-${id}" type="text" placeholder="Add a note for the thread…" maxlength="4000">
-          <button class="filter-btn" onclick="addTicketNote('${idJs}')">Add note</button>
+          <button class="filter-btn" data-action="addTicketNote" data-id="${id}">Add note</button>
         </div>
         <div class="sup-action-row">
           <label>Status
-            <select class="search-input" id="sup-status-${id}" onchange="setTicketStatus('${idJs}', this.value)">${options}</select>
+            <select class="search-input" id="sup-status-${id}" data-id="${id}">${options}</select>
           </label>
           <div class="sup-action-btns">
-            <button class="sup-claude-btn" onclick="sendToClaude('${idJs}')">Send to Claude Code &rarr;</button>
-            <button class="sup-delete" onclick="deleteTicket('${idJs}')">Delete</button>
+            <button class="sup-claude-btn" data-action="sendToClaude" data-id="${id}">Send to Claude Code &rarr;</button>
+            <button class="sup-delete" data-action="deleteTicket" data-id="${id}">Delete</button>
           </div>
         </div>
       </div>
     </div>`;
 }
 
-// Entry point used by the user-profile links: jump to Support and expand inline.
-async function viewTicket(publicId) {
+// Entry point used by the user-profile links: close the profile modal, jump to
+// Support and expand the ticket inline.
+async function viewTicket(el) {
+  const publicId = el.dataset.id;
+  closeUserProfile();
   showSection('support');
   setSupportFilter('');
   await loadSupport();
@@ -398,7 +400,8 @@ async function viewTicket(publicId) {
   if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-async function restoreTicket(publicId) {
+async function restoreTicket(el) {
+  const publicId = el.dataset.id;
   try {
     const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}/restore`, {
       method: 'POST', headers: { 'Authorization': `Bearer ${adminToken}` }
@@ -493,7 +496,8 @@ function showCopyFallback(text) {
   ta.select();
 }
 
-async function sendToClaude(publicId) {
+async function sendToClaude(el) {
+  const publicId = el.dataset.id;
   try {
     const tRes = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, { headers: { 'Authorization': `Bearer ${adminToken}` } });
     if (handleAuthError(tRes)) return;
@@ -525,7 +529,8 @@ async function sendToClaude(publicId) {
   } catch (e) {}
 }
 
-async function addTicketNote(publicId) {
+async function addTicketNote(el) {
+  const publicId = el.dataset.id;
   const input = document.getElementById('sup-note-input-' + publicId);
   const note = input ? input.value.trim() : '';
   if (!note) return;
@@ -552,7 +557,8 @@ async function setTicketStatus(publicId, status) {
   } catch (e) {}
 }
 
-async function deleteTicket(publicId) {
+async function deleteTicket(el) {
+  const publicId = el.dataset.id;
   if (!confirm('Delete this ticket? You can restore it later from the Deleted filter.')) return;
   try {
     const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(publicId)}`, {
@@ -760,7 +766,7 @@ function renderGrants(grants) {
     const naClass = nextActionClass(status);
     const gid = escAttr(g.id);   // g.id (not the row index) drives all detail/action calls
     return `
-      <tr class="grant-row" onclick="toggleDetail('${gid}')">
+      <tr class="grant-row" data-action="toggleDetail" data-id="${gid}">
         <td><span class="grant-name">${esc(g.first_name)} ${esc(g.last_name)}</span></td>
         <td>${esc(g.institution || '—')}</td>
         <td>${esc(g.supervisor_name || '—')}</td>
@@ -778,7 +784,8 @@ function renderGrants(grants) {
 }
 
 // --- Inline grant detail panel (board votes) + assign/decide controls ---------
-function toggleDetail(id) {
+function toggleDetail(el) {
+  const id = el.dataset.id;
   const row = document.getElementById(`detail-${id}`);
   if (!row) return;
   const opening = row.hidden;
@@ -864,12 +871,12 @@ function renderGrantDetail(id, g) {
         const email = m.email || '';
         const name = `${esc(m.first_name || '')} ${esc(m.last_name || '')}`.trim();
         return `<label class="assign-opt">
-          <input type="checkbox" value="${escAttr(email)}" onchange="syncAssignBtn('${gid}')">
+          <input type="checkbox" value="${escAttr(email)}">
           ${esc(email)}${name ? ` <span class="assign-name">(${name})</span>` : ''}
         </label>`;
       }).join('');
       assignControls = `<div class="assign-list" id="assign-list-${gid}">${opts}</div>
-        <button class="refresh-btn" type="button" id="assign-btn-${gid}" onclick="assignReviewers('${gid}')" disabled>Assign</button>`;
+        <button class="refresh-btn" type="button" id="assign-btn-${gid}" data-action="assignReviewers" data-id="${gid}" disabled>Assign</button>`;
     }
   }
 
@@ -878,8 +885,8 @@ function renderGrantDetail(id, g) {
   if (preDecision) {
     decisionBody = `
         <div class="decide-actions">
-          <button class="action-btn action-activate" type="button" onclick="decideGrant('${gid}','approve')">Approve</button>
-          <button class="action-btn action-deactivate" type="button" onclick="decideGrant('${gid}','reject')">Reject</button>
+          <button class="action-btn action-activate" type="button" data-action="decideGrant" data-id="${gid}" data-decision="approve">Approve</button>
+          <button class="action-btn action-deactivate" type="button" data-action="decideGrant" data-id="${gid}" data-decision="reject">Reject</button>
         </div>`;
   } else {
     const decided = status === 'rejected' ? 'rejected' : 'approved';
@@ -916,7 +923,7 @@ function renderGrantDetail(id, g) {
         ${receiptRows ? `<table class="detail-fields">${receiptRows}</table>` : '<p class="detail-empty">No receipts yet.</p>'}
         <div class="receipts-files">${receiptLinks}</div>`,
     reimbursed: `${status === 'receipts_submitted'
-        ? `<div class="decide-actions"><button class="action-btn action-activate" type="button" onclick="markReimbursed('${gid}')">Mark Reimbursed</button></div>`
+        ? `<div class="decide-actions"><button class="action-btn action-activate" type="button" data-action="markReimbursed" data-id="${gid}">Mark Reimbursed</button></div>`
         : (g.reimbursed_at ? `<table class="detail-fields"><tr><th>Reimbursed</th><td>${esc(fmtDate(g.reimbursed_at))}</td></tr></table>` : '<p class="sup-step-hint">Awaiting reimbursement.</p>')}`,
   };
 
@@ -930,7 +937,7 @@ function renderGrantDetail(id, g) {
     else { cls = 'is-todo'; mark = String(i + 1); }
     const expanded = i === current ? ' is-expanded' : '';
     return `<li class="vstep-item ${cls}${expanded}">
-        <button type="button" class="vstep-head" onclick="toggleStep(this)">
+        <button type="button" class="vstep-head" data-action="toggleStep">
           <span class="vstep-dot">${mark}</span>
           <span class="vstep-textcol">
             <span class="vstep-title">${esc(s.title)}</span>
@@ -943,6 +950,10 @@ function renderGrantDetail(id, g) {
   }).join('') + '</ol>';
 
   cell.innerHTML = `<div class="sup-detail-inner">${ol}<p class="detail-msg" id="detail-msg-${gid}"></p></div>`;
+  // Assign checkboxes toggle the Assign button on 'change' (not covered by the click/Enter dispatcher).
+  const assignList = document.getElementById(`assign-list-${id}`);
+  if (assignList) assignList.querySelectorAll('input[type="checkbox"]').forEach(cb =>
+    cb.addEventListener('change', () => syncAssignBtn(id)));
 }
 
 // Enable the Assign button only once at least one (newly-listed) board member is checked.
@@ -953,7 +964,8 @@ function syncAssignBtn(id) {
   btn.disabled = !container.querySelector('input[type="checkbox"]:checked');
 }
 
-async function assignReviewers(id) {
+async function assignReviewers(el) {
+  const id = el.dataset.id;
   const msg = document.getElementById(`detail-msg-${id}`);
   const container = document.getElementById(`assign-list-${id}`);
   if (!container) return;
@@ -981,7 +993,9 @@ async function assignReviewers(id) {
   }
 }
 
-async function decideGrant(id, decision) {
+async function decideGrant(el) {
+  const id = el.dataset.id;
+  const decision = el.dataset.decision;
   const verb = decision === 'approve' ? 'Approve' : 'Reject';
   if (!confirm(`${verb} this application? This records the board's decision.`)) return;
   const msg = document.getElementById(`detail-msg-${id}`);
@@ -1004,7 +1018,8 @@ async function decideGrant(id, decision) {
   }
 }
 
-async function markReimbursed(id) {
+async function markReimbursed(el) {
+  const id = el.dataset.id;
   if (!confirm('Mark this grant as reimbursed? This records that payment has been made.')) return;
   const msg = document.getElementById(`detail-msg-${id}`);
   try {
@@ -1055,7 +1070,7 @@ function renderBoardMembers(members) {
         <td>${esc(m.email)}</td>
         <td>${esc(m.first_name || '—')}</td>
         <td>${esc(m.last_name || '—')}</td>
-        <td><button class="action-btn action-deactivate" onclick="removeBoardMember('${escAttr(m.email)}')">Remove</button></td>
+        <td><button class="action-btn action-deactivate" data-action="removeBoardMember" data-email="${escAttr(m.email)}">Remove</button></td>
       </tr>`).join('');
   if (more) more.innerHTML = showMoreBtn('board', members.length);
 }
@@ -1088,7 +1103,8 @@ async function inviteBoardMember() {
   }
 }
 
-async function removeBoardMember(email) {
+async function removeBoardMember(el) {
+  const email = el.dataset.email;
   if (!confirm(`Remove ${email} as a board member? They keep their account.`)) return;
   const msg = document.getElementById('board-msg');
   try {
@@ -1110,10 +1126,10 @@ async function removeBoardMember(email) {
   }
 }
 
-function setFilter(filter, btn) {
-  currentFilter = filter;
+function setFilter(el) {
+  currentFilter = el.dataset.filter;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  el.classList.add('active');
   filterUsers();
 }
 
@@ -1151,7 +1167,7 @@ function renderUsers(users) {
     const isActive = u.subscription_status === 'active';
     return `
       <tr>
-        <td><button class="user-name-link" onclick="openUserProfile('${jsAttr(u.email)}')">${esc(u.first_name)} ${esc(u.last_name || '')}</button></td>
+        <td><button class="user-name-link" data-action="openUserProfile" data-email="${escAttr(u.email)}">${esc(u.first_name)} ${esc(u.last_name || '')}</button></td>
         <td>${esc(u.email)}</td>
         <td>${esc(u.institution || '—')}</td>
         <td><span class="badge badge-${escAttr(u.account_type)}">${esc(u.account_type)}</span></td>
@@ -1161,10 +1177,10 @@ function renderUsers(users) {
         <td>${esc(date)}</td>
         <td>
           ${isActive
-            ? `<button class="action-btn action-deactivate" onclick="deactivateUser('${escAttr(u.email)}')">Deactivate</button>`
-            : `<button class="action-btn action-activate" onclick="activateUser('${escAttr(u.email)}')">Activate</button>`
+            ? `<button class="action-btn action-deactivate" data-action="deactivateUser" data-email="${escAttr(u.email)}">Deactivate</button>`
+            : `<button class="action-btn action-activate" data-action="activateUser" data-email="${escAttr(u.email)}">Activate</button>`
           }
-          <button class="action-btn" onclick="deleteUser('${escAttr(u.email)}')" style="border-color:#e74c3c;color:#e74c3c;margin-left:0.4rem">Delete</button>
+          <button class="action-btn" data-action="deleteUser" data-email="${escAttr(u.email)}" style="border-color:#e74c3c;color:#e74c3c;margin-left:0.4rem">Delete</button>
         </td>
       </tr>
     `;
@@ -1173,7 +1189,8 @@ function renderUsers(users) {
 }
 
 // --- User interaction register (profile modal) -----------------------------
-function openUserProfile(email) {
+function openUserProfile(el) {
+  const email = el.dataset.email;
   fetch(`${API}/admin/users/${encodeURIComponent(email)}/profile`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
     .then(r => { if (handleAuthError(r)) return null; return r.ok ? r.json() : null; })
     .then(d => { if (d) renderUserProfileModal(d); })
@@ -1203,12 +1220,12 @@ function renderUserProfileModal(d) {
   ].map(([k,v]) => `<div class="usr-fact"><span class="usr-fact-k">${esc(k)}</span><span class="usr-fact-v">${esc(String(v))}</span></div>`).join('');
 
   const timeline = (d.timeline || []).map(e => {
-    const click = (e.kind === 'ticket' && e.ref) ? ` onclick="closeUserProfile();viewTicket('${jsAttr(e.ref)}')" style="cursor:pointer"` : '';
+    const click = (e.kind === 'ticket' && e.ref) ? ` data-action="viewTicket" data-id="${escAttr(e.ref)}" style="cursor:pointer"` : '';
     return `<div class="usr-tl-item usr-tl-${escAttr(e.kind)}"${click}><span class="usr-tl-dot"></span><span class="usr-tl-text">${esc(e.text)}</span><span class="usr-tl-date">${esc(fmtT(e.at))}</span></div>`;
   }).join('') || '<p class="detail-empty">No activity yet.</p>';
 
   const tickets = (d.tickets || []).length
-    ? d.tickets.map(t => `<button class="usr-link-row" onclick="closeUserProfile();viewTicket('${jsAttr(t.id)}')"><span class="sup-badge sup-${escAttr(t.status)}">${esc(SUPPORT_STATUS_LABEL[t.status] || t.status)}</span> ${esc(t.summary || t.category || 'Ticket')}</button>`).join('')
+    ? d.tickets.map(t => `<button class="usr-link-row" data-action="viewTicket" data-id="${escAttr(t.id)}"><span class="sup-badge sup-${escAttr(t.status)}">${esc(SUPPORT_STATUS_LABEL[t.status] || t.status)}</span> ${esc(t.summary || t.category || 'Ticket')}</button>`).join('')
     : '<p class="detail-empty">No support tickets.</p>';
   const grants = (d.grants || []).length
     ? d.grants.map(g => `<div class="usr-row"><span class="badge badge-${escAttr(g.status)}">${esc(g.status)}</span> ${esc(g.conference_name || 'Grant')} — $${esc(g.amount_requested || '')}</div>`).join('')
@@ -1225,7 +1242,7 @@ function renderUserProfileModal(d) {
     <div class="sup-modal usr-modal" role="dialog" aria-label="User profile">
       <div class="sup-modal-head">
         <div><div class="usr-name">${esc(p.first_name)} ${esc(p.last_name)}</div><div class="usr-email">${esc(p.email)}</div></div>
-        <button class="sup-modal-close" onclick="closeUserProfile()" aria-label="Close">&times;</button>
+        <button class="sup-modal-close" data-action="closeUserProfile" aria-label="Close">&times;</button>
       </div>
       <div class="sup-modal-body">
         <div class="usr-facts">${facts}</div>
@@ -1248,7 +1265,8 @@ function renderUserProfileModal(d) {
   document.body.appendChild(overlay);
 }
 
-async function activateUser(email) {
+async function activateUser(el) {
+  const email = el.dataset.email;
   try {
     const res = await fetch(`${API}/admin/activate`, {
       method: 'POST',
@@ -1260,7 +1278,8 @@ async function activateUser(email) {
   } catch(e) { console.error(e); }
 }
 
-async function deleteUser(email) {
+async function deleteUser(el) {
+  const email = el.dataset.email;
   if (!confirm(`Permanently delete ${email}? This cannot be undone.`)) return;
   try {
     const res = await fetch(`${API}/admin/delete-user`, {
@@ -1273,7 +1292,8 @@ async function deleteUser(email) {
   } catch(e) { console.error(e); }
 }
 
-async function deactivateUser(email) {
+async function deactivateUser(el) {
+  const email = el.dataset.email;
   if (!confirm(`Deactivate ${email}?`)) return;
   try {
     const res = await fetch(`${API}/admin/deactivate`, {
@@ -1294,6 +1314,10 @@ function logout() {
   document.getElementById('nav-logout').style.display = 'none';
   document.getElementById('admin-password').value = '';
 }
+
+// Live-search boxes filter on 'input', which the click/Enter dispatcher doesn't cover.
+[['search', filterUsers], ['grants-search', filterGrants], ['newsletter-search', filterNewsletter]]
+  .forEach(([id, fn]) => { const el = document.getElementById(id); if (el) el.addEventListener('input', fn); });
 
 // Check existing session
 const saved = sessionStorage.getItem('jf_admin_token');

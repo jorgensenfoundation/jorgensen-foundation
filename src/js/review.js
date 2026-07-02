@@ -92,12 +92,12 @@ function renderAssignments(list) {
       // 3) OPEN, not yet voted — the only state with active voting controls.
       action = `<div class="rv-vote" id="rv-vote-${sid}">
            <div class="rv-vote-btns">
-             <button class="rv-vbtn rv-vbtn-app" type="button" data-rec="approve" onclick="pickVote('${sid}', this)">Approve</button>
-             <button class="rv-vbtn rv-vbtn-rej" type="button" data-rec="reject" onclick="pickVote('${sid}', this)">Reject</button>
-             <button class="rv-vbtn rv-vbtn-abs" type="button" data-rec="abstain" onclick="pickVote('${sid}', this)">Abstain</button>
+             <button class="rv-vbtn rv-vbtn-app" type="button" data-rec="approve" data-action="pickVote" data-id="${sid}">Approve</button>
+             <button class="rv-vbtn rv-vbtn-rej" type="button" data-rec="reject" data-action="pickVote" data-id="${sid}">Reject</button>
+             <button class="rv-vbtn rv-vbtn-abs" type="button" data-rec="abstain" data-action="pickVote" data-id="${sid}">Abstain</button>
            </div>
            <textarea class="rv-textarea" id="rv-comment-${sid}" placeholder="Comments (optional) — rationale for your recommendation."></textarea>
-           <button class="rv-submit" type="button" onclick="submitVote('${sid}')">Submit Review</button>
+           <button class="rv-submit" type="button" data-action="submitVote" data-id="${sid}">Submit Review</button>
            <p class="rv-msg" id="rv-msg-${sid}"></p>
          </div>`;
     }
@@ -109,7 +109,7 @@ function renderAssignments(list) {
           <div class="rv-applicant">${applicant} · ${institution}</div>
           <div class="rv-amount">${amount}</div>
           <div class="rv-state">${rowState}</div>
-          <button class="rv-details" type="button" onclick="toggleDetail('${sid}')">Details ▸</button>
+          <button class="rv-details" type="button" data-action="toggleDetail" data-id="${sid}">Details ▸</button>
         </div>
         <div class="rv-panel" id="rv-panel-${sid}" hidden>
           <div class="rv-meta"><span><b>Date</b> ${date}</span><span><b>Location</b> ${location}</span><span><b>Amount</b> ${amount}</span>${cv ? `<span>${cv}</span>` : ''}</div>
@@ -120,7 +120,8 @@ function renderAssignments(list) {
   }).join('');
 }
 
-function toggleDetail(id) {
+function toggleDetail(el) {
+  const id = el.dataset.id;
   const panel = document.getElementById(`rv-panel-${id}`);
   if (!panel) return;
   panel.hidden = !panel.hidden;
@@ -129,15 +130,16 @@ function toggleDetail(id) {
 }
 
 // Select one of the three recommendations (highlight); the value is read on submit.
-function pickVote(id, btn) {
-  const box = document.getElementById(`rv-vote-${id}`);
+function pickVote(el) {
+  const box = document.getElementById(`rv-vote-${el.dataset.id}`);
   if (!box) return;
   box.querySelectorAll('.rv-vbtn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
+  el.classList.add('selected');
 }
 
 // Same POST contract as login.js submitVote: body {recommendation, comment}, user Bearer.
-async function submitVote(id) {
+async function submitVote(el) {
+  const id = el.dataset.id;
   const msg = document.getElementById(`rv-msg-${id}`);
   const picked = document.querySelector(`#rv-vote-${id} .rv-vbtn.selected`);
   if (!picked) {

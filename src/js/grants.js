@@ -201,7 +201,7 @@ function renderReceiptsBlock(g) {
           <label class="input-label" for="receipts-amount-${gid}">Amount claimed (USD)</label>
           <input class="input" type="number" id="receipts-amount-${gid}" min="1" max="2000" step="0.01" placeholder="e.g. 1850">
         </div>
-        <button class="btn btn--primary submit-btn" type="button" onclick="submitReceipts('${gid}')">Submit Receipts</button>
+        <button class="btn btn--primary submit-btn" type="button" data-action="submitReceipts" data-id="${gid}">Submit Receipts</button>
         <p class="form-msg" id="receipts-msg-${gid}"></p>
       </div>`;
   }
@@ -274,7 +274,8 @@ async function loadMyGrants() {
 const RECEIPT_RE = /\.(pdf|jpe?g|png|heic)$/i;
 const RECEIPT_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/heic'];
 
-async function submitReceipts(grantId) {
+async function submitReceipts(el) {
+  const grantId = el.dataset.id;
   const msg = document.getElementById(`receipts-msg-${grantId}`);
   const filesInput = document.getElementById(`receipts-files-${grantId}`);
   const amountInput = document.getElementById(`receipts-amount-${grantId}`);

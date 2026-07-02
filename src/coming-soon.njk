@@ -16,11 +16,11 @@ permalink: /coming-soon/index.html
 
 <div class="form">
   <div class="input-wrap">
-    <input class="input" type="password" id="password" placeholder="Access password" onkeydown="if(event.key==='Enter')unlock()">
-    <button class="eye-btn" type="button" onclick="toggleVis()" id="eye-btn">SHOW</button>
+    <input class="input" type="password" id="password" placeholder="Access password" data-enter="unlock">
+    <button class="eye-btn" type="button" data-action="toggleVis" id="eye-btn">SHOW</button>
   </div>
   <p class="error" id="error-msg"></p>
-  <button class="submit" onclick="unlock()">Enter →</button>
+  <button class="submit" data-action="unlock">Enter →</button>
 </div>
 
 <p class="footer-note">© 2026 Jorgensen Foundation</p>

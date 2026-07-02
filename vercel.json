@@ -6,7 +6,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://jorgensen-backend-production.up.railway.app https://pubchem.ncbi.nlm.nih.gov https://models.rcsb.org https://files.rcsb.org; worker-src 'self' blob:; frame-src 'self' https://app.jorgensenfoundation.org; object-src 'none'; base-uri 'self'; form-action 'self' https://jorgensen-backend-production.up.railway.app; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://jorgensen-backend-production.up.railway.app https://pubchem.ncbi.nlm.nih.gov https://models.rcsb.org https://files.rcsb.org; worker-src 'self' blob:; frame-src 'self' https://app.jorgensenfoundation.org; object-src 'none'; base-uri 'self'; form-action 'self' https://jorgensen-backend-production.up.railway.app; frame-ancestors 'none'; upgrade-insecure-requests"
         },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },

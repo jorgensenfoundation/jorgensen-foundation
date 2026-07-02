@@ -1,7 +1,8 @@
 // Publications page behaviour: category filter + citation copy toast.
-function setFilter(btn, category) {
+function setFilter(el) {
+  const category = el.dataset.filter;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  el.classList.add('active');
 
   const items = document.querySelectorAll('.pub-item[data-category]');
   let visible = 0;
@@ -16,8 +17,8 @@ function setFilter(btn, category) {
 }
 
 let toastTimer;
-function copyCite(text) {
-  navigator.clipboard.writeText(text).catch(() => {});
+function copyCite(el) {
+  navigator.clipboard.writeText(el.dataset.cite).catch(() => {});
   const toast = document.getElementById('toast');
   toast.textContent = 'Citation copied';
   toast.classList.add('show');

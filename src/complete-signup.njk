@@ -25,11 +25,11 @@ permalink: /complete-signup/index.html
 
     <div class="input-group">
       <label class="input-label" for="cs-institution">Institution</label>
-      <input class="input" type="text" id="cs-institution" placeholder="Your university or company" autocomplete="organization" onkeydown="if(event.key==='Enter')completeSignup()">
+      <input class="input" type="text" id="cs-institution" placeholder="Your university or company" autocomplete="organization" data-enter="completeSignup">
     </div>
 
     <p class="error-msg" id="cs-error"></p>
-    <button class="btn" id="cs-btn" onclick="completeSignup()">Create Account</button>
+    <button class="btn" id="cs-btn" data-action="completeSignup">Create Account</button>
     <span class="link-small">Already have an account? <a href="/login">Sign in</a></span>
   </div>
 </div>

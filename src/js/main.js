@@ -20,10 +20,10 @@ function toggleMenu() {
   if (willOpen) nav.classList.add('menu-open');
 }
 // Mobile-only: tap the account icon → login drawer (closes the other two first).
-function toggleAccount(e) {
+function toggleAccount(el, e) {
   if (!window.matchMedia('(max-width:960px)').matches) return;
-  e.preventDefault();
-  const d = e.currentTarget.closest('.nav-account');
+  if (e) e.preventDefault();
+  const d = el.closest('.nav-account');
   const willOpen = d && !d.classList.contains('open');
   closeNavPanels();
   if (willOpen) d.classList.add('open');
@@ -32,10 +32,10 @@ function toggleAccount(e) {
 // which runs a client-side search against the build-time /search-index.json.
 // Mobile-only Programs: a SUB-accordion inside the hamburger menu — plain toggle, does
 // not close the hamburger (it lives inside it). Desktop uses CSS hover.
-function toggleDropdown(e) {
+function toggleDropdown(el, e) {
   if (window.matchMedia('(max-width:960px)').matches) {
-    e.preventDefault();
-    const d = e.currentTarget.closest('.nav-dropdown');
+    if (e) e.preventDefault();
+    const d = el.closest('.nav-dropdown');
     if (d) d.classList.toggle('open');
   }
 }

@@ -220,7 +220,7 @@ pageCss: /css/index.css
     <p class="access-sub">Revenue from industry partners funds academic access — and <a href="/grants">student travel grants</a> for international conferences and meetings.</p>
     <div class="bill-row">
       <span class="bill-label" id="toggle-monthly-label">Monthly</span>
-      <div class="bill-toggle" onclick="toggleBilling()">
+      <div class="bill-toggle" data-action="toggleBilling">
         <div id="toggle-knob"></div>
       </div>
       <span class="bill-label" id="toggle-annual-label">Annual <span class="bill-save">(save 2 months)</span></span>
@@ -259,7 +259,7 @@ pageCss: /css/index.css
     </div>
   </div>
   <div class="access-cta-row">
-    <button onclick="openModal()" class="btn btn--primary">Create Account</button>
+    <button data-action="openModal" class="btn btn--primary">Create Account</button>
   </div>
   <p class="access-signin">Already have an account? <a href="/login">Sign in here</a></p>
 </section>
@@ -267,7 +267,7 @@ pageCss: /css/index.css
 <!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" data-action="closeModal">✕</button>
     <span class="eyebrow">Create Account</span>
     <h3 class="modal-title">Get Started</h3>
     <div id="modal-form">
@@ -276,7 +276,7 @@ pageCss: /css/index.css
       <input class="input" type="text" placeholder="Last name" id="modal-lastname">
       <input class="input" type="text" placeholder="Institution / Company" id="modal-institution">
       <input class="input" type="email" placeholder="Institutional email address" id="modal-email">
-      <button class="btn btn--primary" id="modal-btn" onclick="submitRequest()" style="width:100%;margin-top:0.5rem">Create Account</button>
+      <button class="btn btn--primary" id="modal-btn" data-action="submitRequest" style="width:100%;margin-top:0.5rem">Create Account</button>
       <p class="modal-note">By creating an account you agree to our <a href="/terms">Terms of Service</a>.</p>
       <p class="modal-note" id="modal-note"></p>
     </div>
@@ -295,7 +295,7 @@ pageCss: /css/index.css
     <div class="faq-list">
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">How does the cloud computing work?</span>
           <span class="faq-icon"></span>
         </div>
@@ -305,7 +305,7 @@ pageCss: /css/index.css
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">Is my data and code secure?</span>
           <span class="faq-icon"></span>
         </div>
@@ -315,7 +315,7 @@ pageCss: /css/index.css
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">What file formats are supported?</span>
           <span class="faq-icon"></span>
         </div>
@@ -325,7 +325,7 @@ pageCss: /css/index.css
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">Can I use the programs without programming experience?</span>
           <span class="faq-icon"></span>
         </div>
@@ -335,7 +335,7 @@ pageCss: /css/index.css
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">Is academic access really free?</span>
           <span class="faq-icon"></span>
         </div>
@@ -345,7 +345,7 @@ pageCss: /css/index.css
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">What is the difference between academia and industry access?</span>
           <span class="faq-icon"></span>
         </div>
@@ -355,7 +355,7 @@ pageCss: /css/index.css
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">Can I cancel my subscription at any time?</span>
           <span class="faq-icon"></span>
         </div>
@@ -365,7 +365,7 @@ pageCss: /css/index.css
       </div>
 
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggleFaq">
           <span class="faq-q-text">How do student travel grants work?</span>
           <span class="faq-icon"></span>
         </div>
