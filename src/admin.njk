@@ -49,6 +49,9 @@ permalink: /admin/index.html
     <button class="rail-item" data-section="overview" data-action="showSection" type="button">
       <span class="rail-label">Overview</span>
     </button>
+    <button class="rail-item" data-section="insights" data-action="showSection" type="button">
+      <span class="rail-label">Insights</span>
+    </button>
     <button class="rail-item" data-section="support" data-action="showSection" type="button">
       <span class="rail-label">Support</span><span class="rail-count" id="rail-count-support"></span>
     </button>
@@ -80,6 +83,22 @@ permalink: /admin/index.html
         <div class="stat-box"><div class="stat-num" id="stat-grants">—</div><div class="stat-label">Grant Applications</div></div>
         <div class="stat-box"><div class="stat-num" id="stat-newsletter">—</div><div class="stat-label">Newsletter Subscribers</div></div>
       </div>
+    </section>
+
+    <!-- INSIGHTS -->
+    <section class="admin-section" id="section-insights">
+      <div class="table-header">
+        <div class="table-title">Insights</div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <div class="filter-row" id="stats-range">
+            <button class="filter-btn" data-action="setStatsRange" data-days="7">7 days</button>
+            <button class="filter-btn active" data-action="setStatsRange" data-days="30">30 days</button>
+            <button class="filter-btn" data-action="setStatsRange" data-days="90">90 days</button>
+          </div>
+          <button class="refresh-btn" data-action="loadInsights">Refresh</button>
+        </div>
+      </div>
+      <div id="insights-body"><p class="empty-state">Loading…</p></div>
     </section>
 
     <!-- SUPPORT -->

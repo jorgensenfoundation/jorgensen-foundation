@@ -88,6 +88,7 @@ function showSection(name) {
   else { const o = document.getElementById('section-overview'); if (o) o.classList.add('active'); }
   document.querySelectorAll('.admin-rail .rail-item').forEach(b =>
     b.classList.toggle('active', b.dataset.section === name));
+  if (name === 'insights' && !insightsLoaded) loadInsights();  // lazy-load on first view
 }
 
 // Count chip on a rail item; `alert` tints it amber when there's something to act on.
@@ -1318,6 +1319,85 @@ function logout() {
   document.getElementById('admin-dashboard').classList.remove('active');
   document.getElementById('nav-logout').style.display = 'none';
   document.getElementById('admin-password').value = '';
+}
+
+// ============================================================================
+// INSIGHTS (Phase 1 analytics) — privacy-first pageview stats from /admin/stats.
+// ============================================================================
+let statsRange = 30;
+let insightsLoaded = false;
+
+function setStatsRange(el) {
+  statsRange = parseInt(el.dataset.days, 10) || 30;
+  document.querySelectorAll('#stats-range .filter-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.days === String(statsRange)));
+  loadInsights();
+}
+
+async function loadInsights() {
+  const host = document.getElementById('insights-body');
+  try {
+    const res = await fetch(`${API}/admin/stats/summary?days=${statsRange}`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (!res.ok) { if (host) host.innerHTML = '<p class="empty-state">Could not load insights.</p>'; return; }
+    insightsLoaded = true;
+    renderInsights(await res.json());
+  } catch (e) {
+    if (host) host.innerHTML = '<p class="empty-state">Could not load insights.</p>';
+  }
+}
+
+// Horizontal bar list: [{label, views, sub?}] scaled to the largest value.
+function insBars(items) {
+  if (!items.length) return '<p class="detail-empty">No data yet.</p>';
+  const max = Math.max(1, ...items.map(i => i.views));
+  return items.map(i => {
+    const pct = Math.round((i.views / max) * 100);
+    return `<div class="ins-bar-row">
+        <span class="ins-bar-label" title="${escAttr(i.label)}">${esc(i.label)}</span>
+        <span class="ins-bar-track"><span class="ins-bar-fill" style="width:${pct}%"></span></span>
+        <span class="ins-bar-val">${esc(String(i.views))}${i.sub ? `<span class="ins-bar-sub">${esc(i.sub)}</span>` : ''}</span>
+      </div>`;
+  }).join('');
+}
+
+// Inline SVG sparkline of daily views (single monochrome series; stroke via CSS).
+function insSpark(trend) {
+  const w = 600, h = 70, pad = 5;
+  const vals = trend.map(t => t.views);
+  const n = vals.length, max = Math.max(1, ...vals);
+  const pts = vals.map((v, i) => {
+    const x = pad + (n <= 1 ? 0 : (i / (n - 1)) * (w - 2 * pad));
+    const y = h - pad - (v / max) * (h - 2 * pad);
+    return `${Math.round(x)},${Math.round(y)}`;
+  }).join(' ');
+  return `<svg class="ins-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Daily views over the selected range"><polyline points="${pts}"/></svg>`;
+}
+
+function insCard(title, inner) {
+  return `<div class="ins-card"><div class="ins-card-title">${esc(title)}</div>${inner}</div>`;
+}
+
+function renderInsights(d) {
+  const host = document.getElementById('insights-body');
+  if (!host) return;
+  const pages = (d.top_pages || []).map(p => ({ label: p.path, views: p.views, sub: `${p.uniques} uniq` }));
+  const map = arr => (arr || []).map(r => ({ label: r.key, views: r.views }));
+  host.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">${esc(String(d.total_views))}</div><div class="stat-label">Page views · ${esc(String(d.days))}d</div></div>
+      <div class="stat-box"><div class="stat-num">${esc(String(d.unique_visitors))}</div><div class="stat-label">Unique visitors</div></div>
+    </div>
+    <div class="ins-card ins-trend"><div class="ins-card-title">Views — last ${esc(String(d.days))} days</div>${insSpark(d.trend || [])}</div>
+    <div class="ins-grid">
+      ${insCard('Top pages', insBars(pages))}
+      ${insCard('Countries', insBars(map(d.top_countries)))}
+      ${insCard('Devices', insBars(map(d.devices)))}
+      ${insCard('Browsers', insBars(map(d.browsers)))}
+      ${insCard('Referrers', insBars(map(d.referrers)))}
+    </div>`;
 }
 
 // Live-search boxes filter on 'input', which the click/Enter dispatcher doesn't cover.
