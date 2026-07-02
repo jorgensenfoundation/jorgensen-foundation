@@ -15,7 +15,8 @@
     } catch (e) { ref = ''; }
     if (ref === location.host) ref = '';                  // internal navigation isn't a referrer
     if (!navigator.sendBeacon) return;
-    var payload = new Blob([JSON.stringify({ p: path, r: ref })], { type: 'text/plain' });
+    var nf = document.body.getAttribute('data-nf') === '1'; // this is the 404 page
+    var payload = new Blob([JSON.stringify({ p: path, r: ref, nf: nf })], { type: 'text/plain' });
     navigator.sendBeacon('/api/collect', payload);        // simple, same-origin, non-blocking
   } catch (e) { /* analytics is best-effort — swallow everything */ }
 })();

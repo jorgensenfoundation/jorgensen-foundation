@@ -65,6 +65,7 @@ export default async function handler(request) {
     os: info.os,
     browser: info.browser,
     visitor_id: visitorId,
+    not_found: data.nf === true,
   };
 
   try {

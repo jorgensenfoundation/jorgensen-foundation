@@ -24,7 +24,7 @@
 <script src="/js/actions.js?v={{ buildId }}"></script>
 <script src="/js/auth.js?v={{ buildId }}"></script>
 </head>
-<body>
+<body{% if notFound %} data-nf="1"{% endif %}>
 
 {{ content | safe }}
 

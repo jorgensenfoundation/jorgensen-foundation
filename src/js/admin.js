@@ -1385,18 +1385,26 @@ function renderInsights(d) {
   if (!host) return;
   const pages = (d.top_pages || []).map(p => ({ label: p.path, views: p.views, sub: `${p.uniques} uniq` }));
   const map = arr => (arr || []).map(r => ({ label: r.key, views: r.views }));
+  const g = d.goals || {};
+  const goalTiles = [
+    ['Sign-ups', g.signup], ['Grant applications', g.grant_application],
+    ['Contact messages', g.contact], ['Newsletter sign-ups', g.newsletter],
+  ].map(([label, n]) => `<div class="stat-box"><div class="stat-num">${esc(String(n || 0))}</div><div class="stat-label">${esc(label)}</div></div>`).join('');
   host.innerHTML = `
     <div class="stats-row">
       <div class="stat-box"><div class="stat-num">${esc(String(d.total_views))}</div><div class="stat-label">Page views · ${esc(String(d.days))}d</div></div>
       <div class="stat-box"><div class="stat-num">${esc(String(d.unique_visitors))}</div><div class="stat-label">Unique visitors</div></div>
     </div>
     <div class="ins-card ins-trend"><div class="ins-card-title">Views — last ${esc(String(d.days))} days</div>${insSpark(d.trend || [])}</div>
+    <div class="ins-subhead">Conversions</div>
+    <div class="ins-goals-row">${goalTiles}</div>
     <div class="ins-grid">
       ${insCard('Top pages', insBars(pages))}
       ${insCard('Countries', insBars(map(d.top_countries)))}
       ${insCard('Devices', insBars(map(d.devices)))}
       ${insCard('Browsers', insBars(map(d.browsers)))}
       ${insCard('Referrers', insBars(map(d.referrers)))}
+      ${insCard('Broken links (404s)', insBars(map(d.top_404)))}
     </div>`;
 }
 
