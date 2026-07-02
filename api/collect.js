@@ -54,23 +54,6 @@ async function readBody(req) {
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).end(); return; }
   const secret = process.env.COLLECT_SECRET;
-  // TEMP diagnostic (no secret value leaked) — reports config presence + the
-  // backend's response to a probe forward, to pinpoint a setup mismatch.
-  if (req.query && req.query.debug === '1') {
-    let forwardStatus = null;
-    if (secret) {
-      try {
-        const r = await fetch(`${BACKEND}/collect`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-Collect-Secret': secret },
-          body: JSON.stringify({ path: '/__debug_probe', visitor_id: 'debugprobe' }),
-        });
-        forwardStatus = r.status;
-      } catch (e) { forwardStatus = 'fetch-error: ' + (e && e.message); }
-    }
-    res.status(200).json({ hasSecret: !!secret, hasSalt: !!process.env.ANALYTICS_SALT, backend: BACKEND, forwardStatus });
-    return;
-  }
   if (!secret) { res.status(204).end(); return; } // analytics off until configured
 
   const data = await readBody(req);
