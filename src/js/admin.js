@@ -1336,16 +1336,36 @@ function setStatsRange(el) {
 
 async function loadInsights() {
   const host = document.getElementById('insights-body');
+  const hdr = { 'Authorization': `Bearer ${adminToken}` };
   try {
-    const res = await fetch(`${API}/admin/stats/summary?days=${statsRange}`, {
-      headers: { 'Authorization': `Bearer ${adminToken}` }
-    });
-    if (handleAuthError(res)) return;
-    if (!res.ok) { if (host) host.innerHTML = '<p class="empty-state">Could not load insights.</p>'; return; }
+    const [sres, dres] = await Promise.all([
+      fetch(`${API}/admin/stats/summary?days=${statsRange}`, { headers: hdr }),
+      fetch(`${API}/admin/insights/digest`, { headers: hdr }),
+    ]);
+    if (handleAuthError(sres)) return;
+    if (!sres.ok) { if (host) host.innerHTML = '<p class="empty-state">Could not load insights.</p>'; return; }
     insightsLoaded = true;
-    renderInsights(await res.json());
+    const digest = dres.ok ? (await dres.json()).digest : null;
+    renderInsights(await sres.json(), digest);
   } catch (e) {
     if (host) host.innerHTML = '<p class="empty-state">Could not load insights.</p>';
+  }
+}
+
+// Ask Claude for a fresh digest of the selected range, then re-render.
+async function generateDigest(el) {
+  if (el) { el.disabled = true; el.textContent = 'Generating…'; }
+  try {
+    const res = await fetch(`${API}/admin/insights/digest/generate?days=${statsRange}`, {
+      method: 'POST', headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) { insightsLoaded = false; loadInsights(); return; }
+    if (el) { el.disabled = false; el.textContent = 'Generate now'; }
+    const m = document.getElementById('ins-digest-msg');
+    if (m) m.textContent = res.status === 503 ? 'Insights model not configured yet.' : 'Could not generate a digest.';
+  } catch (e) {
+    if (el) { el.disabled = false; el.textContent = 'Generate now'; }
   }
 }
 
@@ -1380,9 +1400,20 @@ function insCard(title, inner) {
   return `<div class="ins-card"><div class="ins-card-title">${esc(title)}</div>${inner}</div>`;
 }
 
-function renderInsights(d) {
+function renderInsights(d, digest) {
   const host = document.getElementById('insights-body');
   if (!host) return;
+  const digestCard = `
+    <div class="ins-card ins-digest-card">
+      <div class="ins-digest-head">
+        <div class="ins-card-title">AI insights digest</div>
+        <button class="refresh-btn" data-action="generateDigest">Generate now</button>
+      </div>
+      ${digest && digest.text
+        ? `<div class="ins-digest">${esc(digest.text)}</div><div class="ins-digest-meta">Generated ${esc(fmtDateTime(digest.created_at))} · ${esc(String(digest.days))}-day window</div>`
+        : '<p class="detail-empty">No digest yet — click “Generate now” for a plain-English readout with recommendations.</p>'}
+      <p class="detail-msg" id="ins-digest-msg"></p>
+    </div>`;
   const pages = (d.top_pages || []).map(p => ({ label: p.path, views: p.views, sub: `${p.uniques} uniq` }));
   const map = arr => (arr || []).map(r => ({ label: r.key, views: r.views }));
   const g = d.goals || {};
@@ -1391,6 +1422,7 @@ function renderInsights(d) {
     ['Contact messages', g.contact], ['Newsletter sign-ups', g.newsletter],
   ].map(([label, n]) => `<div class="stat-box"><div class="stat-num">${esc(String(n || 0))}</div><div class="stat-label">${esc(label)}</div></div>`).join('');
   host.innerHTML = `
+    ${digestCard}
     <div class="stats-row">
       <div class="stat-box"><div class="stat-num">${esc(String(d.total_views))}</div><div class="stat-label">Page views · ${esc(String(d.days))}d</div></div>
       <div class="stat-box"><div class="stat-num">${esc(String(d.unique_visitors))}</div><div class="stat-label">Unique visitors</div></div>

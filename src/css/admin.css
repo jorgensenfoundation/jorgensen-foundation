@@ -402,3 +402,8 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .ins-subhead{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--body);margin:0.5rem 0 0.8rem}
 .ins-goals-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;max-width:none}
 @media(max-width:900px){.ins-goals-row{grid-template-columns:1fr 1fr}}
+.ins-digest-card{margin-bottom:1.5rem}
+.ins-digest-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:0.8rem}
+.ins-digest-head .ins-card-title{margin-bottom:0}
+.ins-digest{white-space:pre-wrap;font-size:0.86rem;line-height:1.65;color:var(--ink)}
+.ins-digest-meta{margin-top:0.7rem;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--body);opacity:0.7}
