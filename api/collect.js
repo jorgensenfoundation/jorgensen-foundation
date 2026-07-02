@@ -1,19 +1,18 @@
-// Vercel Edge Function: the same-origin sink for the pageview beacon.
+// Vercel Serverless Function (Node runtime) — the same-origin sink for the
+// pageview beacon. Written as CommonJS with the (req, res) signature so Vercel
+// runs it directly (no ESM->CJS compile) and passes Node's request object.
 //
-// The browser POSTs { p: path, r: referrerHost } here. At the edge we can read
-// Vercel's geo headers and the User-Agent, and we still have the client IP —
-// which we use ONLY to compute a per-day salted visitor hash and then discard.
-// Nothing identifying is stored or forwarded: we send a clean, enriched event
-// to the backend's /collect with the shared COLLECT_SECRET. Disabled (no-op)
-// until COLLECT_SECRET is configured, so shipping it is inert.
+// We read Vercel's geo headers + the User-Agent, salt a per-day visitor hash
+// from the client IP (which is never stored or forwarded), drop bots, and
+// forward a clean event to the backend's /collect with the shared secret.
+// No-ops until COLLECT_SECRET is configured.
 
-export const config = { runtime: 'edge' };
+const { createHash } = require('node:crypto');
 
 const BACKEND = process.env.BACKEND_URL || 'https://jorgensen-backend-production.up.railway.app';
 
-async function sha256Hex(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+function sha256Hex(str) {
+  return createHash('sha256').update(str).digest('hex');
 }
 
 function parseUA(ua) {
@@ -31,36 +30,51 @@ function parseUA(ua) {
   const browser = /Edg\//.test(ua) ? 'Edge'
     : /OPR\/|Opera/.test(ua) ? 'Opera'
     : /Firefox\//.test(ua) ? 'Firefox'
-    : /Chrome\//.test(ua) && !/Chromium/.test(ua) ? 'Chrome'
-    : /Safari\//.test(ua) && !/Chrome/.test(ua) ? 'Safari' : 'Other';
+    : (/Chrome\//.test(ua) && !/Chromium/.test(ua)) ? 'Chrome'
+    : (/Safari\//.test(ua) && !/Chrome/.test(ua)) ? 'Safari' : 'Other';
   return { bot: false, device, os, browser };
 }
 
-export default async function handler(request) {
-  if (request.method !== 'POST') return new Response(null, { status: 405 });
+async function readBody(req) {
+  // req.body is populated by Vercel for known content types; text/plain may not
+  // be, so fall back to reading the raw stream.
+  if (req.body && typeof req.body === 'object') return req.body;
+  let raw = typeof req.body === 'string' ? req.body : '';
+  if (!raw) {
+    raw = await new Promise((resolve) => {
+      let b = '';
+      req.on('data', (c) => { b += c; });
+      req.on('end', () => resolve(b));
+      req.on('error', () => resolve(''));
+    });
+  }
+  try { return JSON.parse(raw || '{}'); } catch (e) { return {}; }
+}
+
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') { res.status(405).end(); return; }
   const secret = process.env.COLLECT_SECRET;
-  if (!secret) return new Response(null, { status: 204 }); // analytics off until configured
+  if (!secret) { res.status(204).end(); return; } // analytics off until configured
 
-  let data = {};
-  try { data = JSON.parse((await request.text()) || '{}'); } catch { return new Response(null, { status: 204 }); }
+  const data = await readBody(req);
   const path = typeof data.p === 'string' ? data.p : '';
-  if (!path.startsWith('/')) return new Response(null, { status: 204 });
+  if (!path.startsWith('/')) { res.status(204).end(); return; }
 
-  const ua = request.headers.get('user-agent') || '';
+  const ua = req.headers['user-agent'] || '';
   const info = parseUA(ua);
-  if (info.bot) return new Response(null, { status: 204 }); // drop bots/crawlers
+  if (info.bot) { res.status(204).end(); return; } // drop bots/crawlers
 
   // IP is used only to salt the daily visitor hash, then discarded — never sent on.
-  const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim()
-    || request.headers.get('x-real-ip') || '';
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim()
+    || req.headers['x-real-ip'] || '';
   const day = new Date().toISOString().slice(0, 10);
-  const visitorId = (await sha256Hex(`${ip}|${ua}|${day}|${process.env.ANALYTICS_SALT || ''}`)).slice(0, 32);
+  const visitorId = sha256Hex(`${ip}|${ua}|${day}|${process.env.ANALYTICS_SALT || ''}`).slice(0, 32);
 
   const event = {
     path: path.slice(0, 300),
     referrer_host: (typeof data.r === 'string' ? data.r : '').slice(0, 255) || null,
-    country: request.headers.get('x-vercel-ip-country') || null,
-    region: request.headers.get('x-vercel-ip-country-region') || null,
+    country: req.headers['x-vercel-ip-country'] || null,
+    region: req.headers['x-vercel-ip-country-region'] || null,
     device: info.device,
     os: info.os,
     browser: info.browser,
@@ -76,5 +90,5 @@ export default async function handler(request) {
     });
   } catch (e) { /* best-effort */ }
 
-  return new Response(null, { status: 204 });
-}
+  res.status(204).end();
+};
