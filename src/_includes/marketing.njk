@@ -2,6 +2,9 @@
 layout: base.njk
 navCss: true
 ---
+<a class="skip-link" href="#main-content">Skip to content</a>
 {% include "nav.njk" %}
 
+<main id="main-content">
 {{ content | safe }}
+</main>

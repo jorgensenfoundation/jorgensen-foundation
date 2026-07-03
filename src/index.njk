@@ -272,10 +272,10 @@ pageCss: /css/index.css
     <h3 class="modal-title">Get Started</h3>
     <div id="modal-form">
       <p class="modal-sub">Enter your details below. Your account type is automatically determined by your email domain — academic institutions receive free access, all others receive industry pricing.</p>
-      <input class="input" type="text" placeholder="First name" id="modal-firstname">
-      <input class="input" type="text" placeholder="Last name" id="modal-lastname">
-      <input class="input" type="text" placeholder="Institution / Company" id="modal-institution">
-      <input class="input" type="email" placeholder="Institutional email address" id="modal-email">
+      <input class="input" type="text" placeholder="First name" id="modal-firstname" aria-label="First name" autocomplete="given-name">
+      <input class="input" type="text" placeholder="Last name" id="modal-lastname" aria-label="Last name" autocomplete="family-name">
+      <input class="input" type="text" placeholder="Institution / Company" id="modal-institution" aria-label="Institution or company" autocomplete="organization">
+      <input class="input" type="email" placeholder="Institutional email address" id="modal-email" aria-label="Institutional email address" autocomplete="email">
       <button class="btn btn--primary" id="modal-btn" data-action="submitRequest" style="width:100%;margin-top:0.5rem">Create Account</button>
       <p class="modal-note">By creating an account you agree to our <a href="/terms">Terms of Service</a>.</p>
       <p class="modal-note" id="modal-note"></p>

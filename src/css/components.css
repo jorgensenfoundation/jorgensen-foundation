@@ -27,7 +27,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid var(--hairline);background:
 .footer-logo-sub{font-weight:500;font-size:0.66rem;letter-spacing:0.5em;text-transform:uppercase;padding-left:0.5em}
 .footer-logo-est{font-weight:500;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--body);padding-left:0.4em;margin-top:0.7em}
 .footer-desc{font-family:var(--font-sans);font-size:var(--fs-small);line-height:1.9;color:var(--body);max-width:280px}
-.footer-col h4{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.28em;text-transform:uppercase;color:var(--ink);margin-bottom:1.25rem}
+.footer-col h2{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.28em;text-transform:uppercase;color:var(--ink);margin-bottom:1.25rem}
 .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
 .footer-col ul a{font-family:var(--font-sans);font-size:var(--fs-small);color:var(--body);transition:color 0.2s}
 .footer-col ul a:hover{color:var(--ink)}

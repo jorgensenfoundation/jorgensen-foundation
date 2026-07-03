@@ -179,7 +179,7 @@ footer{padding:5rem 3rem 2.5rem;border-top:1px solid #ede8de;background:#faf8f4}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:1.25rem;display:block}
 .footer-desc{font-size:0.65rem;line-height:2.1;color:#aaa;max-width:280px}
-.footer-col h4{font-size:0.52rem;letter-spacing:0.32em;text-transform:uppercase;color:#bbb;margin-bottom:1.25rem}
+.footer-col h2{font-size:0.52rem;letter-spacing:0.32em;text-transform:uppercase;color:#bbb;margin-bottom:1.25rem}
 .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
 .footer-col ul a{font-size:0.68rem;color:#888;transition:color 0.2s}
 .footer-col ul a:hover{color:#111}

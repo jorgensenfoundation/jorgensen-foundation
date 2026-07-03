@@ -1,0 +1,27 @@
+/* Site-wide accessibility helpers, loaded on every page from base.njk. */
+
+/* Skip-to-content link: off-screen until it receives keyboard focus, then it
+   slides into the top-left so keyboard users can jump past the nav. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -4rem;
+  z-index: 2000;
+  background: #302C2E;
+  color: #ffffff;
+  padding: 0.6rem 1rem;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Older UAs render <main> inline; force block so the landmark lays out normally. */
+main { display: block; }
