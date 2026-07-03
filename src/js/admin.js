@@ -820,6 +820,18 @@ async function loadGrantDetail(id) {
   }
 }
 
+// Re-render every open grant-detail panel so its assign chips reflect the current
+// board-member list (used after a board member is invited/removed). Not called
+// from loadBoardMembers itself — loadGrantDetail already calls that, which would
+// recurse.
+function refreshOpenGrantDetails() {
+  document.querySelectorAll('tr[id^="detail-"]').forEach(row => {
+    if (!row.hidden && row.dataset.loaded === 'true') {
+      loadGrantDetail(row.id.slice('detail-'.length));
+    }
+  });
+}
+
 // Eligibility chips (g.signals from /admin/grants/{id}) — same tones as the
 // board reviewer view. Neutral by default; `warn` flags things worth a look.
 function admSignals(s) {
@@ -1194,7 +1206,8 @@ async function inviteBoardMember() {
     if (res.ok) {
       if (msg) { msg.textContent = 'Board member invited.'; msg.className = 'board-msg success'; }
       input.value = '';
-      loadBoardMembers();
+      await loadBoardMembers();
+      refreshOpenGrantDetails();   // any open grant's assign chips gain the new member
     } else {
       const data = await res.json().catch(() => ({}));
       if (msg) { msg.textContent = data.detail || 'Could not invite board member.'; msg.className = 'board-msg error'; }
@@ -1217,7 +1230,8 @@ async function removeBoardMember(el) {
     if (handleAuthError(res)) return;
     if (res.ok) {
       if (msg) { msg.textContent = 'Board member removed.'; msg.className = 'board-msg success'; }
-      loadBoardMembers();
+      await loadBoardMembers();
+      refreshOpenGrantDetails();   // any open grant's assign chips drop the removed member
     } else {
       const data = await res.json().catch(() => ({}));
       if (msg) { msg.textContent = data.detail || 'Could not remove board member.'; msg.className = 'board-msg error'; }

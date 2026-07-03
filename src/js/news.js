@@ -19,10 +19,10 @@ async function subscribeNewsletter() {
       body: JSON.stringify({ email }),
     });
     const data = await res.json();
-    msg.textContent = data.message || 'Thank you — you\'re subscribed.';
+    msg.textContent = data.message || 'Almost there — check your inbox to confirm.';
     msg.style.color = 'rgba(245,240,230,0.45)';
     input.value = '';
-    btn.textContent = 'Subscribed ✓';
+    btn.textContent = 'Check your inbox ✓';
   } catch {
     msg.textContent = 'Something went wrong. Please try again.';
     msg.style.color = 'rgba(245,240,230,0.5)';

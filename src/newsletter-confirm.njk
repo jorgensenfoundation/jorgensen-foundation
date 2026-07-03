@@ -1,0 +1,40 @@
+---
+layout: app.njk
+title: Confirm Subscription — Jorgensen Foundation
+pageCss: /css/verify.css
+permalink: /newsletter/confirm/index.html
+comingSoonGate: false
+---
+
+<main>
+  <div class="card">
+
+    <!-- LOADING STATE -->
+    <div class="state active" id="state-loading">
+      <div class="loading-spinner">
+        <p>Confirming your subscription...</p>
+      </div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="state" id="state-success">
+      <span class="card-label">Subscription Confirmed</span>
+      <h1 class="card-title">You're on<br><em>the list</em></h1>
+      <p class="card-body">Thank you for confirming. You'll now receive updates from the Jorgensen Foundation — program releases, research highlights, and grant opportunities, no more than once a month.</p>
+      <div class="divider"></div>
+      <a href="/" class="btn">Return to Home</a>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div class="state" id="state-error">
+      <span class="card-label">Confirmation Failed</span>
+      <h1 class="card-title">Invalid<br><em>link</em></h1>
+      <p class="card-body">This confirmation link is invalid or has already been used. You can sign up again from the news page, or contact us at info@jorgensenfoundation.org.</p>
+      <div class="divider"></div>
+      <a href="/news/#newsletter" class="btn">Back to Newsletter</a>
+    </div>
+
+  </div>
+</main>
+
+<script src="/js/newsletter-confirm.js?v={{ buildId }}"></script>
