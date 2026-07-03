@@ -863,29 +863,49 @@ function renderGrantDetail(id, g) {
     ? receipts.map(r => `<a class="cv-link" href="${escAttr(r.download_url)}" target="_blank" rel="noopener">${esc(r.original_filename || 'Receipt')} →</a>`).join('')
     : '<p class="detail-empty">No receipts submitted.</p>';
   const reviewers = Array.isArray(g.reviewers) ? g.reviewers : [];
-  const assignedEmails = reviewers.map(r => (r.email || '').toLowerCase());
-
-  const reviewersHtml = reviewers.length ? reviewers.map(r => {
-    const rec = r.recommendation
-      ? `<span class="badge badge-vote-${escAttr(r.recommendation)}">${esc(r.recommendation)}</span>`
-      : '<span class="vote-pending">not yet voted</span>';
-    const votedAt = r.voted_at ? new Date(r.voted_at).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '';
-    return `<div class="reviewer-row">
-        <div class="reviewer-email">${esc(r.email)}</div>
-        <div class="reviewer-vote">${rec}${votedAt ? `<span class="reviewer-date">${esc(votedAt)}</span>` : ''}</div>
-        ${r.comment ? `<p class="reviewer-comment">${esc(r.comment)}</p>` : ''}
-      </div>`;
-  }).join('') : '<p class="detail-empty">No reviewers assigned yet.</p>';
+  // Backend returns `reviewer_email`; tolerate a legacy `email` too.
+  const revEmail = r => r.reviewer_email || r.email || '';
+  const assignedEmails = reviewers.map(r => revEmail(r).toLowerCase());
 
   // Stage gating: reviewers can only be assigned and a decision only made BEFORE a decision exists.
   const preDecision = ['submitted', 'under_review', 'awaiting_decision'].indexOf(status) !== -1;
 
-  // Always-on read-only "Assigned Reviewers" list (votes live in the Reviewers block above).
-  const assignedListHtml = reviewers.length
-    ? reviewers.map(r => `<div class="assigned-row"><span class="assigned-email">${esc(r.email)}</span><span class="assigned-mark">✓ Assigned</span></div>`).join('')
-    : '<p class="detail-empty">No reviewers assigned yet.</p>';
+  // One card per reviewer: vote/awaiting state, when assigned, whether a reminder
+  // went out, a Stalled flag, and (pre-decision, not-yet-voted) Nudge/Unassign.
+  const reviewersHtml = reviewers.length ? reviewers.map(r => {
+    const email = revEmail(r);
+    const voted = !!r.voted_at;
+    const rec = r.recommendation
+      ? `<span class="badge badge-vote-${escAttr(r.recommendation)}">${esc(r.recommendation)}</span>`
+      : '<span class="vote-pending">Awaiting review</span>';
+    const votedAt = voted ? `<span class="reviewer-date">${esc(fmtDate(r.voted_at))}</span>` : '';
+    const stalled = r.stalled ? '<span class="reviewer-stalled">Stalled</span>' : '';
 
-  // Pick-list of board members NOT yet assigned + Assign button — pre-decision only.
+    const meta = [];
+    if (r.assigned_at) meta.push(`Assigned ${esc(fmtDateTime(r.assigned_at))}`);
+    if (r.reminder_sent_at) meta.push(`Reminder sent ${esc(fmtDateTime(r.reminder_sent_at))}`);
+    const metaLine = meta.length ? `<div class="reviewer-meta">${meta.join(' &middot; ')}</div>` : '';
+
+    // Nudge/Unassign only make sense while the review is still open and unvoted.
+    const actions = (preDecision && !voted)
+      ? `<div class="reviewer-actions">
+           <button class="reviewer-btn" type="button" data-action="remindReviewer" data-id="${gid}" data-email="${escAttr(email)}">${r.reminder_sent_at ? 'Nudge again' : 'Send reminder'}</button>
+           <button class="reviewer-btn reviewer-btn-danger" type="button" data-action="unassignReviewer" data-id="${gid}" data-email="${escAttr(email)}">Unassign</button>
+         </div>`
+      : '';
+
+    return `<div class="reviewer-row${r.stalled ? ' is-stalled' : ''}">
+        <div class="reviewer-head">
+          <span class="reviewer-email">${esc(email)}</span>
+          <span class="reviewer-vote">${stalled}${rec}${votedAt}</span>
+        </div>
+        ${metaLine}
+        ${r.comment ? `<p class="reviewer-comment">${esc(r.comment)}</p>` : ''}
+        ${actions}
+      </div>`;
+  }).join('') : '<p class="detail-empty">No reviewers assigned yet.</p>';
+
+  // Press-to-select chips for board members NOT yet assigned + Assign button — pre-decision only.
   let assignControls = '';
   if (preDecision) {
     const unassigned = boardMembers.filter(m => assignedEmails.indexOf((m.email || '').toLowerCase()) === -1);
@@ -894,15 +914,14 @@ function renderGrantDetail(id, g) {
     } else if (!unassigned.length) {
       assignControls = '<p class="detail-empty">All board members are assigned.</p>';
     } else {
-      const opts = unassigned.map(m => {
+      const chips = unassigned.map(m => {
         const email = m.email || '';
         const name = `${esc(m.first_name || '')} ${esc(m.last_name || '')}`.trim();
-        return `<label class="assign-opt">
-          <input type="checkbox" value="${escAttr(email)}">
-          ${esc(email)}${name ? ` <span class="assign-name">(${name})</span>` : ''}
-        </label>`;
+        const label = name || esc(email);
+        return `<button type="button" class="assign-chip" data-action="toggleAssignChip" data-id="${gid}" data-email="${escAttr(email)}" aria-pressed="false" title="${escAttr(email)}">${label}</button>`;
       }).join('');
-      assignControls = `<div class="assign-list" id="assign-list-${gid}">${opts}</div>
+      assignControls = `<p class="assign-hint">Select the board members to assign, then press Assign — each is emailed straight away.</p>
+        <div class="assign-chips" id="assign-list-${gid}">${chips}</div>
         <button class="refresh-btn" type="button" id="assign-btn-${gid}" data-action="assignReviewers" data-id="${gid}" disabled>Assign</button>`;
     }
   }
@@ -943,7 +962,6 @@ function renderGrantDetail(id, g) {
     under_review: `
         <div class="reviewers-list">${reviewersHtml}</div>
         <span class="detail-label">Assign reviewers</span>
-        <div class="assigned-reviewers">${assignedListHtml}</div>
         ${assignControls}`,
     awaiting_decision: decisionBody,
     approved: `<p class="sup-step-hint">Cleared for funding — awaiting receipts from the applicant.</p>`,
@@ -979,18 +997,22 @@ function renderGrantDetail(id, g) {
   }).join('') + '</ol>';
 
   cell.innerHTML = `<div class="sup-detail-inner">${ol}<p class="detail-msg" id="detail-msg-${gid}"></p></div>`;
-  // Assign checkboxes toggle the Assign button on 'change' (not covered by the click/Enter dispatcher).
-  const assignList = document.getElementById(`assign-list-${id}`);
-  if (assignList) assignList.querySelectorAll('input[type="checkbox"]').forEach(cb =>
-    cb.addEventListener('change', () => syncAssignBtn(id)));
 }
 
-// Enable the Assign button only once at least one (newly-listed) board member is checked.
+// Press-to-select a board-member chip; the Assign button enables once ≥1 is selected.
+function toggleAssignChip(el) {
+  const on = el.getAttribute('aria-pressed') === 'true';
+  el.setAttribute('aria-pressed', on ? 'false' : 'true');
+  el.classList.toggle('is-selected', !on);
+  syncAssignBtn(el.dataset.id);
+}
+
+// Enable the Assign button only once at least one board member chip is selected.
 function syncAssignBtn(id) {
   const container = document.getElementById(`assign-list-${id}`);
   const btn = document.getElementById(`assign-btn-${id}`);
   if (!container || !btn) return;
-  btn.disabled = !container.querySelector('input[type="checkbox"]:checked');
+  btn.disabled = !container.querySelector('.assign-chip[aria-pressed="true"]');
 }
 
 async function assignReviewers(el) {
@@ -998,7 +1020,7 @@ async function assignReviewers(el) {
   const msg = document.getElementById(`detail-msg-${id}`);
   const container = document.getElementById(`assign-list-${id}`);
   if (!container) return;
-  const emails = Array.from(container.querySelectorAll('input[type="checkbox"]:checked:not(:disabled)')).map(cb => cb.value);
+  const emails = Array.from(container.querySelectorAll('.assign-chip[aria-pressed="true"]')).map(c => c.dataset.email);
   if (!emails.length) {
     if (msg) { msg.textContent = 'Select at least one board member to assign.'; msg.className = 'detail-msg error'; }
     return;
@@ -1016,6 +1038,56 @@ async function assignReviewers(el) {
     } else {
       const data = await res.json().catch(() => ({}));
       if (msg) { msg.textContent = data.detail || 'Could not assign reviewers.'; msg.className = 'detail-msg error'; }
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
+  }
+}
+
+// Manually nudge one reviewer now.
+async function remindReviewer(el) {
+  const id = el.dataset.id, email = el.dataset.email;
+  const msg = document.getElementById(`detail-msg-${id}`);
+  el.disabled = true;
+  try {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/remind`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ email })
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      if (msg) { msg.textContent = `Reminder sent to ${email}.`; msg.className = 'detail-msg success'; }
+      loadGrantDetail(id);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      el.disabled = false;
+      if (msg) { msg.textContent = data.detail || 'Could not send the reminder.'; msg.className = 'detail-msg error'; }
+    }
+  } catch (e) {
+    el.disabled = false;
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
+  }
+}
+
+// Remove a reviewer from a grant (to reassign, or drop a non-responder).
+async function unassignReviewer(el) {
+  const id = el.dataset.id, email = el.dataset.email;
+  if (!confirm(`Remove ${email} from this review? They'll be unassigned and their reminders cleared.`)) return;
+  const msg = document.getElementById(`detail-msg-${id}`);
+  try {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/unassign`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ email })
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      loadGrants();          // status may revert to 'submitted' if no reviewers remain
+      loadGrantDetail(id);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (msg) { msg.textContent = data.detail || 'Could not unassign that reviewer.'; msg.className = 'detail-msg error'; }
     }
   } catch (e) {
     if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
