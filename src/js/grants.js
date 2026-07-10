@@ -31,6 +31,10 @@ function toggleFaq(qEl) {
 
 const API = window.JF_API;
 
+// Set once the applicant submits in this session, so a subsequent loadMyGrants keeps
+// the on-form success message visible instead of swapping the form for the notice.
+let submittedThisSession = false;
+
 function val(id) {
   const el = document.getElementById(id);
   return el ? el.value.trim() : '';
@@ -131,6 +135,7 @@ async function submitGrant() {
       msg.textContent = 'Application received. You can track its progress in “Your Applications” below. We will be in touch within three weeks of the cycle closing date.';
       msg.className = 'form-msg success';
       btn.textContent = 'Application Submitted';
+      submittedThisSession = true;
       loadMyGrants();
     } else {
       const data = await res.json().catch(() => ({}));
@@ -227,6 +232,39 @@ function renderReceiptsBlock(g) {
   return '';
 }
 
+// Plain-language line under the step indicator so every status reads as a clear,
+// self-explanatory state rather than a bare stepper — one per scenario.
+const STATUS_NOTES = {
+  submitted: 'Your application has been received and is in the queue for board review.',
+  under_review: 'Board members are reviewing your application now.',
+  awaiting_decision: 'Reviews are in and a final decision is being prepared.',
+  approved: 'Congratulations — your grant was approved. After your conference, submit your receipts below to be reimbursed.',
+  rejected: 'This application wasn’t selected this cycle. You’re very welcome to apply again in a future cycle.',
+  receipts_submitted: 'Thank you — your receipts are with us and reimbursement is being arranged.',
+  reimbursed: 'This grant is complete and your reimbursement has been processed. Thank you.',
+};
+function renderStatusNote(status) {
+  const note = STATUS_NOTES[status];
+  return note ? `<p class="grant-status-note">${esc(note)}</p>` : '';
+}
+
+// An application is "in flight" for any status the backend's duplicate guard treats as
+// open — everything except a final rejection or a completed reimbursement. While one is
+// in flight the applicant can't start another, so we hide the form and show a notice.
+const TERMINAL = ['rejected', 'reimbursed'];
+function hasInflight(list) {
+  return Array.isArray(list) && list.some(g => TERMINAL.indexOf(g.status || 'submitted') === -1);
+}
+// Show the blank form OR the in-progress notice based on whether an application is open.
+// Skipped right after an in-session submit so the success message stays put (submittedThisSession).
+function applyApplyState(list) {
+  const form = document.getElementById('grant-form');
+  const notice = document.getElementById('grant-inflight');
+  const inflight = hasInflight(list);
+  if (form) form.hidden = inflight;
+  if (notice) notice.hidden = !inflight;
+}
+
 function renderMyGrants(list) {
   const wrap = document.getElementById('my-grants-list');
   if (!wrap) return;
@@ -249,6 +287,7 @@ function renderMyGrants(list) {
           ${cv}
         </div>
         ${renderSteps(g.status || 'submitted')}
+        ${renderStatusNote(g.status || 'submitted')}
         ${renderReceiptsBlock(g)}
       </div>`;
   }).join('');
@@ -261,13 +300,29 @@ async function loadMyGrants() {
     if (res.status === 401) { promptRelogin(); return; }
     if (!res.ok) {
       if (wrap) wrap.innerHTML = '<p class="status-empty">Could not load your applications right now.</p>';
+      revealFormFallback();
       return;
     }
     const list = await res.json();
     renderMyGrants(list);
+    // Don't flip the form away right after an in-session submit — keep the success
+    // message visible; the in-progress notice takes over on the next page load.
+    if (!submittedThisSession) applyApplyState(list);
   } catch (e) {
     if (wrap) wrap.innerHTML = '<p class="status-empty">Could not load your applications right now.</p>';
+    revealFormFallback();
   }
+}
+
+// If we can't determine the applicant's application state (network/API error), fail open:
+// show the blank form so they can still apply. The backend's duplicate guard is the real
+// backstop against a second in-flight application.
+function revealFormFallback() {
+  if (submittedThisSession) return;
+  const form = document.getElementById('grant-form');
+  const notice = document.getElementById('grant-inflight');
+  if (form) form.hidden = false;
+  if (notice) notice.hidden = true;
 }
 
 // ---- Submit receipts for an approved grant (multipart, multiple files + amount_claimed) ----
@@ -339,8 +394,9 @@ async function submitReceipts(el) {
     return;
   }
   if (gate) gate.hidden = true;
-  if (form) form.hidden = false;
   if (status) status.hidden = false;
+  // Form vs. in-progress notice is decided by loadMyGrants → applyApplyState once we know
+  // whether an application is already in flight; leave the form hidden until then.
   prefillFromMe();
   loadMyGrants();
 })();

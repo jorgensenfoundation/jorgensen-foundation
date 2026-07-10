@@ -131,6 +131,17 @@ navActive: grants
       </div>
     </div>
 
+    <!-- LOGGED IN + an application already in progress: grants.js shows this instead of a
+         blank form, since the backend allows only one in-flight application at a time. -->
+    <div class="gate-card inflight-card" id="grant-inflight" hidden>
+      <span class="eyebrow">Application In Progress</span>
+      <h3 class="h3">You already have an <em>application underway</em></h3>
+      <p class="gate-body">You have a grant application in progress. You can follow its status in “Your Applications” below — we'll email you as it moves through review. Once it has been resolved, you'll be able to submit a new application here.</p>
+      <div class="gate-actions">
+        <a class="btn btn--secondary" href="#my-applications">View your applications ↓</a>
+      </div>
+    </div>
+
     <!-- LOGGED IN: the application form (revealed by grants.js when logged in) -->
     <form class="grant-form" id="grant-form" hidden>
       <div class="form-row">
