@@ -19,6 +19,15 @@ function safeUrl(value) {
   return /^https?:\/\//i.test(s) ? s : '';
 }
 
+// The specific application to open on load, from the review email's deep link
+// (/review?grant=<id>). Returns the id as a string, or '' if absent/invalid.
+function deepLinkGrantId() {
+  try {
+    const raw = new URLSearchParams(location.search).get('grant');
+    return raw && /^\d+$/.test(raw) ? raw : '';
+  } catch (e) { return ''; }
+}
+
 // User Bearer token (same as login.js reviewAuthHeader).
 function reviewAuthHeader() {
   if (window.JFAuth && JFAuth.authHeader) return JFAuth.authHeader();
@@ -82,6 +91,7 @@ function renderAssignments(list) {
     const sid = escAttr(id);
     const applicant = `${esc(a.first_name || '')} ${esc(a.last_name || '')}`.trim() || '—';
     const institution = esc(a.institution || '—');
+    const supervisor = esc(a.supervisor_name || '');
     const amount = (a.amount_requested !== null && a.amount_requested !== undefined && a.amount_requested !== '') ? ('$' + esc(a.amount_requested)) : '—';
     const conf = esc(a.conference_name || 'Conference');
     const date = esc(a.conference_date || '—');
@@ -136,13 +146,41 @@ function renderAssignments(list) {
           <button class="rv-details" type="button" data-action="toggleDetail" data-id="${sid}">Details ▸</button>
         </div>
         <div class="rv-panel" id="rv-panel-${sid}" hidden>
-          <div class="rv-meta"><span><b>Date</b> ${date}</span><span><b>Location</b> ${location}</span><span><b>Amount</b> ${amount}</span>${cv ? `<span>${cv}</span>` : ''}</div>
+          <div class="rv-applicant-card">
+            <span class="rv-ac-label">Applicant</span>
+            <p class="rv-ac-name">${applicant}</p>
+            <p class="rv-ac-inst">${institution}${supervisor ? ` · Supervisor: ${supervisor}` : ''}</p>
+          </div>
+          <div class="rv-meta"><span><b>Date</b> ${date}</span><span><b>Location</b> ${location}</span><span><b>Amount</b> ${amount}</span></div>
           ${rvSignals(a.signals)}
-          ${a.research_description ? `<p class="rv-desc">${esc(a.research_description)}</p>` : ''}
+          <div class="rv-docs">${cv || '<span class="rv-nocv">No CV attached to this application.</span>'}</div>
+          ${a.research_description ? `<div class="rv-story"><span class="rv-story-label">Research summary</span><p class="rv-desc">${esc(a.research_description)}</p></div>` : '<p class="rv-nocv">No research summary provided.</p>'}
           ${action}
         </div>
       </div>`;
   }).join('');
+  autoExpand(list);
+}
+
+// Open the deep-linked application (from the review email) automatically, or — when a
+// reviewer has just one thing assigned — open that, so they see the full applicant
+// details and voting controls without first hunting for a "Details" toggle.
+function autoExpand(list) {
+  let targetId = deepLinkGrantId();
+  if (!targetId && Array.isArray(list) && list.length === 1) {
+    const only = list[0];
+    targetId = String(only.grant_id != null ? only.grant_id : only.id);
+  }
+  if (!targetId) return;
+  const panel = document.getElementById(`rv-panel-${targetId}`);
+  if (!panel) return;
+  panel.hidden = false;
+  const item = panel.parentElement;
+  const btn = item ? item.querySelector('.rv-details') : null;
+  if (btn) btn.textContent = 'Close ▾';
+  if (item && item.scrollIntoView) {
+    try { item.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { item.scrollIntoView(); }
+  }
 }
 
 function toggleDetail(el) {
@@ -185,8 +223,10 @@ async function submitVote(el) {
     });
     if (res.status === 401) { reviewRelogin(); return; }
     if (res.ok) {
-      if (msg) { msg.textContent = 'Review submitted.'; msg.className = 'rv-msg success'; }
-      loadAssignments();   // refresh — the row re-renders into its voted state
+      // End on a thank-you (with a clear exit) rather than silently re-rendering the row.
+      const item = el.closest ? el.closest('.rv-item') : null;
+      const titleEl = item ? item.querySelector('.rv-title') : null;
+      showThankYou(titleEl ? titleEl.textContent : '', recommendation);
     } else {
       const data = await res.json().catch(() => ({}));
       if (msg) { msg.textContent = data.detail || 'Could not submit your review. Please try again.'; msg.className = 'rv-msg error'; }
@@ -198,12 +238,56 @@ async function submitVote(el) {
   }
 }
 
+// Confirmation shown once a vote is recorded: a thank-you plus a clear way out
+// (dashboard) and a way back to any remaining assigned reviews.
+function showThankYou(confName, recommendation) {
+  const content = document.getElementById('review-content');
+  const label = content ? content.querySelector('.rv-label') : null;
+  if (label) label.hidden = true;
+  const wrap = document.getElementById('review-list');
+  if (!wrap) return;
+  const rec = esc(recommendation || '');
+  const conf = esc((confName || '').trim() || 'this application');
+  wrap.innerHTML = `
+    <div class="rv-thanks" role="status">
+      <div class="rv-thanks-check" aria-hidden="true">✓</div>
+      <h2 class="rv-thanks-title">Thank you — your review is recorded.</h2>
+      <p class="rv-thanks-body">Your recommendation${rec ? ` to <strong>${rec}</strong>` : ''} for <strong>${conf}</strong> has been sent to the board. We appreciate you taking the time.</p>
+      <div class="rv-thanks-actions">
+        <button class="rv-thanks-btn rv-thanks-primary" type="button" data-action="reviewGoDashboard">Go to Dashboard</button>
+        <button class="rv-thanks-btn rv-thanks-ghost" type="button" data-action="reviewAnother">Back to reviews</button>
+      </div>
+    </div>`;
+  if (wrap.scrollIntoView) { try { wrap.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {} }
+}
+
+function reviewGoDashboard() { window.location.href = '/dashboard'; }
+
+function reviewAnother() {
+  const content = document.getElementById('review-content');
+  const label = content ? content.querySelector('.rv-label') : null;
+  if (label) label.hidden = false;
+  const wrap = document.getElementById('review-list');
+  if (wrap) wrap.innerHTML = '<p class="rv-empty">Loading your assigned applications…</p>';
+  loadAssignments();
+}
+
 // ---- Gate: board members only ----
 (function initReview() {
   const gate = document.getElementById('review-gate');
   const content = document.getElementById('review-content');
-  const user = (window.JFAuth && JFAuth.isLoggedIn() && JFAuth.getUser && JFAuth.getUser()) || null;
+  const loggedIn = !!(window.JFAuth && JFAuth.isLoggedIn());
+  const user = (loggedIn && JFAuth.getUser && JFAuth.getUser()) || null;
   const isBoard = !!(user && user.is_board_member);
+
+  // Not signed in → bounce through login carrying the current deep link, so a board
+  // member from a review email lands right back on this application after one sign-in.
+  if (!loggedIn) {
+    const next = location.pathname + location.search;
+    window.location.replace('/login?next=' + encodeURIComponent(next));
+    return;
+  }
+  // Signed in but not a board member — this page isn't for them.
   if (!isBoard) {
     if (gate) gate.hidden = false;
     if (content) content.hidden = true;

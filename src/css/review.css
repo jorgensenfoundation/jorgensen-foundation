@@ -61,7 +61,18 @@ a{text-decoration:none;color:inherit}
 .rv-sig-warn{border-color:var(--ink);background:var(--ink);color:var(--ground)}
 .rv-cv{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--surface);white-space:nowrap}
 .rv-cv:hover{border-bottom-color:var(--ink)}
-.rv-desc{font-size:0.75rem;line-height:1.8;color:var(--body);max-width:680px;margin-bottom:1.1rem;white-space:pre-wrap}
+.rv-desc{font-size:0.75rem;line-height:1.8;color:var(--body);max-width:680px;margin:0;white-space:pre-wrap}
+
+/* Applicant identity block — surfaced at the top of the expanded panel so the
+   reviewer sees who they're assessing without cross-referencing the collapsed row. */
+.rv-applicant-card{border:1px solid var(--hairline);background:var(--ground);padding:0.9rem 1.1rem;margin-bottom:1rem}
+.rv-ac-label{font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--body);display:block;margin-bottom:0.35rem}
+.rv-ac-name{font-family:var(--font-serif);font-size:1.1rem;color:var(--ink);margin:0 0 0.15rem;line-height:1.2}
+.rv-ac-inst{font-size:0.72rem;color:var(--body);margin:0;line-height:1.5}
+.rv-docs{margin:0 0 1rem}
+.rv-nocv{font-size:0.72rem;color:var(--body);font-style:italic}
+.rv-story{margin-bottom:1.1rem}
+.rv-story-label{font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--body);display:block;margin-bottom:0.4rem}
 
 /* voting controls */
 .rv-vote-btns{display:flex;gap:0.6rem;flex-wrap:wrap}
@@ -90,6 +101,23 @@ a{text-decoration:none;color:inherit}
 .rv-final{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
 .rv-final-label{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--body)}
 .rv-final-note{font-size:0.7rem;color:var(--body)}
+
+/* Post-vote thank-you — replaces the list once a recommendation is recorded. */
+.rv-thanks{border:1px solid var(--hairline);background:var(--ground);padding:3rem 2rem;text-align:center;max-width:560px;margin:0 auto}
+.rv-thanks-check{width:52px;height:52px;line-height:52px;margin:0 auto 1.25rem;border-radius:50%;background:var(--success);color:var(--ground);font-size:1.5rem}
+.rv-thanks-title{font-family:var(--font-serif);font-size:1.6rem;font-weight:300;color:var(--ink);margin:0 0 0.75rem;line-height:1.2}
+.rv-thanks-body{font-size:0.8rem;line-height:1.8;color:var(--body);max-width:420px;margin:0 auto 1.75rem}
+.rv-thanks-body strong{color:var(--ink);font-weight:500}
+.rv-thanks-actions{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+.rv-thanks-btn{font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.7rem 1.6rem;cursor:pointer;font-family:var(--font-sans);border:1px solid var(--ink)}
+.rv-thanks-primary{background:var(--ink);color:var(--ground);box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 22%,transparent)}
+.rv-thanks-primary:hover{background:var(--ink-hover)}
+.rv-thanks-ghost{background:transparent;color:var(--ink)}
+.rv-thanks-ghost:hover{background:var(--ink);color:var(--ground)}
+@media(max-width:640px){
+  .rv-thanks{padding:2.25rem 1.25rem}
+  .rv-thanks-actions .rv-thanks-btn{flex:1}
+}
 
 @media(max-width:900px){
   .rv-hero{padding:8rem 1.5rem 3rem}

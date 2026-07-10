@@ -10,6 +10,18 @@ const API = window.JF_API;
 let currentUser = null;
 let selectedPlan = 'monthly';
 
+// Post-login destination. Board members arriving from a review email carry
+// ?next=/review?grant=<id> so they land on the exact application in one click.
+// Only same-site absolute paths are honoured (must start with a single "/", never
+// "//" or "/\"), so this can never become an open-redirect to another origin.
+function nextTarget() {
+  try {
+    const raw = new URLSearchParams(location.search).get('next');
+    if (raw && /^\/(?![/\\])/.test(raw)) return raw;
+  } catch (e) {}
+  return null;
+}
+
 // Academic access is free — academics are entitled and never reach the payment page (see the
 // entitlement gate in the bootstrap). Kept only as a defensive label if opened directly.
 const ACADEMIA_PRICES = { monthly: 'Free', annual: 'Free' };
@@ -91,10 +103,11 @@ async function login() {
     };
     JFAuth.saveSession(userInfo, data.token, remember);
     currentUser = userInfo;
-    // Every logged-in user lands on the dashboard (active or non-active). The dashboard shows
-    // the activate banner for non-active users; the payment page is only reached when they
-    // explicitly choose to activate (which arrives here as /login#activate — see bootstrap).
-    window.location.href = '/dashboard';
+    // Honour a same-site ?next= deep link (e.g. a board member coming from a review
+    // email → straight to /review?grant=<id>); otherwise every logged-in user lands on
+    // the dashboard. The dashboard shows the activate banner for non-active users; the
+    // payment page is only reached via /login#activate (see bootstrap).
+    window.location.href = nextTarget() || '/dashboard';
   } catch(e) {
     errorEl.textContent = 'Connection error. Please try again.';
     errorEl.classList.add('show');
@@ -178,7 +191,9 @@ if (user) {
     setupPaymentPage(user);
     showPage('page-payment');
   } else {
-    window.location.href = '/dashboard';
+    // Already signed in and hit /login (often via a review email's ?next= hop) —
+    // forward to the deep link if one was carried, otherwise the dashboard.
+    window.location.href = nextTarget() || '/dashboard';
   }
 } else {
   // Surface a friendly message when social sign-in bounced back with ?error=…
