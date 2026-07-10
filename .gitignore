@@ -9,3 +9,7 @@ src/logo-lab.njk
 src/dev-open.njk
 src/css/lab.css
 .playwright-mcp/
+
+# Local Playwright/screenshot artifacts (never commit)
+.playwright-mcp/
+/*.png
