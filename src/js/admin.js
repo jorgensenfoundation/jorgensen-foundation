@@ -981,7 +981,7 @@ function renderGrantDetail(id, g) {
         ${receiptRows ? `<table class="detail-fields">${receiptRows}</table>` : '<p class="detail-empty">No receipts yet.</p>'}
         <div class="receipts-files">${receiptLinks}</div>`,
     reimbursed: `${status === 'receipts_submitted'
-        ? `<div class="decide-actions"><button class="action-btn action-activate" type="button" data-action="markReimbursed" data-id="${gid}">Mark Reimbursed</button></div>`
+        ? renderReimburseAction(g, gid)
         : (g.reimbursed_at ? `<table class="detail-fields"><tr><th>Reimbursed</th><td>${esc(fmtDate(g.reimbursed_at))}</td></tr></table>` : '<p class="sup-step-hint">Awaiting reimbursement.</p>')}`,
   };
 
@@ -1128,6 +1128,57 @@ async function decideGrant(el) {
     }
   } catch (e) {
     if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
+  }
+}
+
+// Reimbursement step for a grant with submitted receipts. Shows the awardee's
+// Stripe payout readiness and a "Send reimbursement" button that fires the actual
+// transfer — disabled with a clear reason until their payout account is ready.
+function renderReimburseAction(g, gid) {
+  const payout = g.payout || {};
+  const claimed = (g.amount_claimed !== null && g.amount_claimed !== undefined && g.amount_claimed !== '') ? ('$' + esc(g.amount_claimed)) : '';
+  const ready = !!payout.payouts_enabled;
+  let line;
+  if (ready) {
+    line = `<p class="reimburse-status ok"><span class="reimburse-dot ok"></span>Awardee payout account ready${payout.country ? ' · ' + esc(payout.country) : ''} — Stripe will transfer the funds.</p>`;
+  } else if (payout.onboarded) {
+    line = `<p class="reimburse-status wait"><span class="reimburse-dot wait"></span>Awardee started payout setup but hasn't finished — you can't send yet.</p>`;
+  } else {
+    line = `<p class="reimburse-status wait"><span class="reimburse-dot wait"></span>Awardee hasn't set up a payout account yet — you can't send yet.</p>`;
+  }
+  const btn = ready
+    ? `<button class="action-btn action-activate" type="button" data-action="sendReimbursement" data-id="${gid}" data-amount="${escAttr(g.amount_claimed || '')}">Send reimbursement${claimed ? ' ' + claimed : ''}</button>`
+    : `<button class="action-btn" type="button" disabled>Send reimbursement${claimed ? ' ' + claimed : ''}</button>`;
+  return `<div class="reimburse-panel">${line}<div class="decide-actions">${btn}</div><p class="detail-msg" id="detail-msg-${gid}"></p></div>`;
+}
+
+// Fire the Stripe transfer to the awardee, then refresh the grant into its
+// reimbursed state. Guarded server-side (receipts + payouts-enabled) too.
+async function sendReimbursement(el) {
+  const id = el.dataset.id;
+  const amount = el.dataset.amount;
+  if (!confirm(`Send ${amount ? '$' + amount : 'the reimbursement'} to the awardee via Stripe now?`)) return;
+  const msg = document.getElementById(`detail-msg-${id}`);
+  const original = el.textContent;
+  el.disabled = true; el.textContent = 'Sending…';
+  if (msg) msg.className = 'detail-msg';
+  try {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/reimburse`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`}
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) {
+      loadGrants();
+      loadGrantDetail(id);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (msg) { msg.textContent = data.detail || 'Could not send the reimbursement.'; msg.className = 'detail-msg error'; }
+      el.disabled = false; el.textContent = original;
+    }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Connection error. Please try again.'; msg.className = 'detail-msg error'; }
+    el.disabled = false; el.textContent = original;
   }
 }
 

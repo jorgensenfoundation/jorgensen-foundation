@@ -97,6 +97,13 @@ body{font-family:var(--font-sans);background:var(--ground);color:var(--body);ove
 .receipts-files{display:flex;flex-direction:column;gap:0.5rem;margin-top:0.75rem}
 .receipts-none{font-size:var(--fs-small);color:var(--body)}
 
+/* --- Payout account (Stripe Connect) --- */
+.payout-block{margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--hairline)}
+.payout-label{display:block;font-size:var(--fs-eyebrow);letter-spacing:0.25em;text-transform:uppercase;color:var(--body);margin-bottom:0.75rem}
+.payout-block .btn{margin-top:0.35rem}
+.payout-note{font-size:var(--fs-small);line-height:1.7;color:var(--ink);margin:0;display:flex;align-items:center;gap:0.5rem}
+.payout-check{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--success);color:var(--ground);font-size:0.7rem;flex-shrink:0}
+
 /* --- FAQ --- */
 .faq{padding:8rem 3rem;background:var(--ground)}
 .faq-inner{max-width:780px;margin:0 auto}

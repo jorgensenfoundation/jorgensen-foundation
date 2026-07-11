@@ -183,6 +183,58 @@ function fmtDate(value) {
   return value ? new Date(value).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
 }
 
+// ---- Payout account (Stripe Connect) ----
+// Awardees receive their reimbursement as a Stripe transfer into their own payout
+// account, which they set up via Stripe-hosted onboarding. We show this once a grant
+// is approved (or awaiting reimbursement). payoutStatus is a per-user cache, loaded
+// only when a grant actually needs it.
+let payoutStatus = null;
+const PAYOUT_RELEVANT = ['approved', 'receipts_submitted'];
+
+async function loadPayoutStatus() {
+  try {
+    const res = await fetch(`${API}/my/payout/status`, { headers: JFAuth.authHeader() });
+    if (res.ok) payoutStatus = await res.json();
+  } catch (e) { /* leave null → the panel shows the setup CTA */ }
+}
+
+function renderPayoutPanel() {
+  if (payoutStatus && payoutStatus.payouts_enabled) {
+    return `
+      <div class="payout-block payout-ready">
+        <span class="payout-label">Payout account</span>
+        <p class="payout-note"><span class="payout-check" aria-hidden="true">✓</span> Your payout account is set up — you're all set to receive your reimbursement.</p>
+      </div>`;
+  }
+  const started = !!(payoutStatus && payoutStatus.onboarded);
+  return `
+    <div class="payout-block">
+      <span class="payout-label">Payout account</span>
+      <p class="input-hint">To receive your reimbursement, set up your payout account. You'll enter your bank details securely on Stripe — the Foundation never sees or stores them.</p>
+      <button class="btn btn--primary" type="button" data-action="startPayout">${started ? 'Finish payout setup' : 'Set up payouts'}</button>
+      <p class="form-msg" id="payout-msg"></p>
+    </div>`;
+}
+
+// Kick off (or resume) Stripe-hosted onboarding, then hand off to Stripe.
+async function startPayout(el) {
+  const msg = document.getElementById('payout-msg');
+  const original = el ? el.textContent : '';
+  if (el) { el.disabled = true; el.textContent = 'Starting…'; }
+  if (msg) msg.className = 'form-msg';
+  try {
+    const res = await fetch(`${API}/my/payout/start`, { method: 'POST', headers: JFAuth.authHeader() });
+    if (res.status === 401) { promptRelogin(); return; }
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.url) { window.location.href = data.url; return; }
+    if (msg) { msg.textContent = data.detail || 'Could not start payout setup. Please try again.'; msg.className = 'form-msg error'; }
+    if (el) { el.disabled = false; el.textContent = original || 'Set up payouts'; }
+  } catch (e) {
+    if (msg) { msg.textContent = 'Unable to reach the server. Please try again.'; msg.className = 'form-msg error'; }
+    if (el) { el.disabled = false; el.textContent = original || 'Set up payouts'; }
+  }
+}
+
 // Status-gated receipts UI appended below the step indicator on each grant card.
 //  - approved            -> upload form (multi-file + amount_claimed)
 //  - receipts_submitted  -> read-only summary + receipt download links
@@ -194,6 +246,7 @@ function renderReceiptsBlock(g) {
 
   if (status === 'approved') {
     return `
+      ${renderPayoutPanel()}
       <div class="receipts-block">
         <span class="receipts-label">Submit Receipts</span>
         <p class="input-hint">Upload your conference receipts (PDF or image, up to 10 files, 10MB each), then enter the total amount you are claiming. The claim cannot exceed your approved amount (max $2,000).</p>
@@ -226,7 +279,8 @@ function renderReceiptsBlock(g) {
           ${g.reimbursed_at ? `<div>Reimbursed: ${esc(fmtDate(g.reimbursed_at))}</div>` : ''}
         </div>
         <div class="receipts-files">${links}</div>
-      </div>`;
+      </div>
+      ${status === 'receipts_submitted' ? renderPayoutPanel() : ''}`;
   }
 
   return '';
@@ -304,6 +358,11 @@ async function loadMyGrants() {
       return;
     }
     const list = await res.json();
+    // Only fetch payout readiness when a grant actually needs it (approved or
+    // awaiting reimbursement), so the extra call is skipped for everyone else.
+    if (Array.isArray(list) && list.some(g => PAYOUT_RELEVANT.indexOf(g.status || '') !== -1)) {
+      await loadPayoutStatus();
+    }
     renderMyGrants(list);
     // Don't flip the form away right after an in-session submit — keep the success
     // message visible; the in-progress notice takes over on the next page load.

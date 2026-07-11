@@ -182,6 +182,14 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .detail-decision{font-size:0.7rem;color:var(--ink);display:flex;align-items:center;gap:0.6rem}
 .decide-actions{display:flex;gap:0.6rem;flex-wrap:wrap}
 
+/* Reimbursement step: awardee payout readiness + send-transfer action */
+.reimburse-panel{display:flex;flex-direction:column;gap:0.85rem}
+.reimburse-status{font-size:var(--fs-small,0.72rem);line-height:1.6;color:var(--body);margin:0;display:flex;align-items:center;gap:0.5rem}
+.reimburse-status.ok{color:var(--ink)}
+.reimburse-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.reimburse-dot.ok{background:var(--success)}
+.reimburse-dot.wait{background:color-mix(in srgb,var(--body) 50%,var(--ground))}
+
 .detail-msg{font-size:0.66rem;margin-top:0.85rem;display:none}
 .detail-msg.error{color:var(--error);display:block}
 .detail-msg.success{color:var(--success);display:block}
