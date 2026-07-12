@@ -1131,49 +1131,83 @@ async function decideGrant(el) {
   }
 }
 
-// Reimbursement step for a grant with submitted receipts. Shows the awardee's
-// Stripe payout readiness and a "Send reimbursement" button that fires the actual
-// transfer — disabled with a clear reason until their payout account is ready.
+// Reimbursement step for a grant with submitted receipts. The ADMIN sets the exact
+// amount to pay (never the applicant — their claimed figure is shown only as a
+// reference). Setting the amount "clears the grant to pay": if the awardee's payout
+// account is ready it sends immediately, otherwise it auto-sends when they finish setup.
 function renderReimburseAction(g, gid) {
   const payout = g.payout || {};
-  const claimed = (g.amount_claimed !== null && g.amount_claimed !== undefined && g.amount_claimed !== '') ? ('$' + esc(g.amount_claimed)) : '';
+  const capCents = (g.reimbursement_cap_cents !== null && g.reimbursement_cap_cents !== undefined) ? g.reimbursement_cap_cents : 200000;
+  const capDollars = capCents / 100;
+  const claimedNum = parseFloat(String(g.amount_claimed == null ? '' : g.amount_claimed).replace(/[^0-9.]/g, ''));
+  const authorizedDollars = (g.authorized_amount_cents !== null && g.authorized_amount_cents !== undefined) ? (g.authorized_amount_cents / 100) : null;
+  // Prefill: a previously-set amount, else the claim (capped), else blank.
+  let prefill = '';
+  if (authorizedDollars !== null) prefill = authorizedDollars;
+  else if (Number.isFinite(claimedNum) && claimedNum > 0) prefill = Math.min(claimedNum, capDollars);
   const ready = !!payout.payouts_enabled;
+
   let line;
   if (ready) {
-    line = `<p class="reimburse-status ok"><span class="reimburse-dot ok"></span>Awardee payout account ready${payout.country ? ' · ' + esc(payout.country) : ''} — Stripe will transfer the funds.</p>`;
+    line = `<p class="reimburse-status ok"><span class="reimburse-dot ok"></span>Awardee payout account ready${payout.country ? ' · ' + esc(payout.country) : ''} — setting the amount sends the transfer now.</p>`;
   } else if (payout.onboarded) {
-    line = `<p class="reimburse-status wait"><span class="reimburse-dot wait"></span>Awardee started payout setup but hasn't finished — you can't send yet.</p>`;
+    line = `<p class="reimburse-status wait"><span class="reimburse-dot wait"></span>Awardee started payout setup but hasn't finished. Set the amount now — it sends automatically when they're ready.</p>`;
   } else {
-    line = `<p class="reimburse-status wait"><span class="reimburse-dot wait"></span>Awardee hasn't set up a payout account yet — you can't send yet.</p>`;
+    line = `<p class="reimburse-status wait"><span class="reimburse-dot wait"></span>Awardee hasn't set up payouts yet. Set the amount now — it sends automatically once they do.</p>`;
   }
-  const btn = ready
-    ? `<button class="action-btn action-activate" type="button" data-action="sendReimbursement" data-id="${gid}" data-amount="${escAttr(g.amount_claimed || '')}">Send reimbursement${claimed ? ' ' + claimed : ''}</button>`
-    : `<button class="action-btn" type="button" disabled>Send reimbursement${claimed ? ' ' + claimed : ''}</button>`;
-  return `<div class="reimburse-panel">${line}<div class="decide-actions">${btn}</div><p class="detail-msg" id="detail-msg-${gid}"></p></div>`;
+  const authorizedNote = (authorizedDollars !== null && !ready)
+    ? `<p class="reimburse-status ok"><span class="reimburse-dot ok"></span>Cleared to pay <strong>$${esc(authorizedDollars)}</strong> — waiting on the awardee's payout setup.</p>`
+    : '';
+  const claimedRef = (Number.isFinite(claimedNum) && claimedNum > 0)
+    ? `<p class="reimburse-ref">Applicant reported spending <strong>$${esc(String(g.amount_claimed))}</strong> — reference only; you set the amount paid.</p>`
+    : '';
+  const btnLabel = ready ? 'Authorize &amp; send' : (authorizedDollars !== null ? 'Update amount' : 'Authorize to pay');
+
+  return `<div class="reimburse-panel">
+      ${claimedRef}
+      ${line}
+      ${authorizedNote}
+      <div class="reimburse-amount-row">
+        <label class="reimburse-amount-label" for="reimburse-amt-${gid}">Amount to reimburse (USD)</label>
+        <input class="reimburse-amount-input" id="reimburse-amt-${gid}" type="number" min="1" max="${capDollars}" step="0.01" value="${escAttr(prefill)}">
+        <span class="reimburse-cap-hint">Max $${capDollars.toLocaleString()}</span>
+      </div>
+      <div class="decide-actions">
+        <button class="action-btn action-activate" type="button" data-action="authorizeReimbursement" data-id="${gid}">${btnLabel}</button>
+      </div>
+      <p class="detail-msg" id="detail-msg-${gid}"></p>
+    </div>`;
 }
 
-// Fire the Stripe transfer to the awardee, then refresh the grant into its
-// reimbursed state. Guarded server-side (receipts + payouts-enabled) too.
-async function sendReimbursement(el) {
+// Set the admin-authorised reimbursement amount. If the awardee's payout account is
+// ready the server sends the transfer immediately; otherwise it's held and auto-sent
+// when they finish payout setup. Server re-validates the cap + state.
+async function authorizeReimbursement(el) {
   const id = el.dataset.id;
-  const amount = el.dataset.amount;
-  if (!confirm(`Send ${amount ? '$' + amount : 'the reimbursement'} to the awardee via Stripe now?`)) return;
+  const input = document.getElementById(`reimburse-amt-${id}`);
+  const amount = input ? input.value.trim() : '';
   const msg = document.getElementById(`detail-msg-${id}`);
+  if (!amount || !(Number(amount) > 0)) {
+    if (msg) { msg.textContent = 'Enter an amount to reimburse.'; msg.className = 'detail-msg error'; }
+    return;
+  }
+  if (!confirm(`Set this grant's reimbursement to $${amount}? If the awardee's payout account is ready, the transfer sends now.`)) return;
   const original = el.textContent;
-  el.disabled = true; el.textContent = 'Sending…';
+  el.disabled = true; el.textContent = 'Working…';
   if (msg) msg.className = 'detail-msg';
   try {
-    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/reimburse`, {
+    const res = await fetch(`${API}/admin/grants/${encodeURIComponent(id)}/authorize-reimbursement`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`}
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}`},
+      body: JSON.stringify({ amount })
     });
     if (handleAuthError(res)) return;
+    const data = await res.json().catch(() => ({}));
     if (res.ok) {
       loadGrants();
       loadGrantDetail(id);
     } else {
-      const data = await res.json().catch(() => ({}));
-      if (msg) { msg.textContent = data.detail || 'Could not send the reimbursement.'; msg.className = 'detail-msg error'; }
+      if (msg) { msg.textContent = data.detail || 'Could not set the reimbursement.'; msg.className = 'detail-msg error'; }
       el.disabled = false; el.textContent = original;
     }
   } catch (e) {

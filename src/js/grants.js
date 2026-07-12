@@ -440,6 +440,41 @@ async function submitReceipts(el) {
   }
 }
 
+// ---- Return from Stripe payout onboarding ----
+// The awardee comes back to /grants?payout=return. We refresh their payout status
+// and, if a reimbursement the admin already cleared just auto-sent, confirm it
+// immediately ("You've been reimbursed $X") rather than making them wonder.
+function showPayoutBanner(message, kind) {
+  const banner = document.getElementById('payout-banner');
+  if (!banner) return;
+  banner.textContent = message;                 // textContent — safe against injection
+  banner.className = 'payout-banner' + (kind ? ' ' + kind : '');
+  banner.hidden = false;
+  try { banner.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+}
+
+async function handlePayoutReturn() {
+  const p = new URLSearchParams(location.search).get('payout');
+  if (p !== 'return' && p !== 'refresh') return false;
+  // Clean the query so a page refresh doesn't re-run this.
+  try { history.replaceState({}, '', location.pathname + '#my-applications'); } catch (e) {}
+  if (p === 'refresh') return false;   // onboarding link expired; nothing to confirm
+  try {
+    const res = await fetch(`${API}/my/payout/refresh`, { method: 'POST', headers: JFAuth.authHeader() });
+    if (res.ok) {
+      const data = await res.json();
+      const paid = (data.reimbursed && data.reimbursed[0]) || null;
+      if (paid) {
+        const amt = (paid.amount_cents / 100).toFixed(2).replace(/\.00$/, '');
+        showPayoutBanner(`You've been reimbursed $${amt} for ${paid.conference_name}. The funds are on their way to your bank account.`, 'success');
+      } else if (data.payouts_enabled) {
+        showPayoutBanner('Your payout account is set up — your reimbursement will be sent shortly.', 'success');
+      }
+    }
+  } catch (e) { /* fall through to a normal load */ }
+  return true;
+}
+
 // ---- Gate: only logged-in users see the form + status; others see the account-required card ----
 (function initGrants() {
   const gate = document.getElementById('grant-gate');
@@ -457,5 +492,6 @@ async function submitReceipts(el) {
   // Form vs. in-progress notice is decided by loadMyGrants → applyApplyState once we know
   // whether an application is already in flight; leave the form hidden until then.
   prefillFromMe();
-  loadMyGrants();
+  // On return from Stripe, finalize payouts first (may auto-reimburse), then load.
+  handlePayoutReturn().then(loadMyGrants);
 })();

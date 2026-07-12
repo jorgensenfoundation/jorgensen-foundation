@@ -104,6 +104,10 @@ body{font-family:var(--font-sans);background:var(--ground);color:var(--body);ove
 .payout-note{font-size:var(--fs-small);line-height:1.7;color:var(--ink);margin:0;display:flex;align-items:center;gap:0.5rem}
 .payout-check{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--success);color:var(--ground);font-size:0.7rem;flex-shrink:0}
 
+/* Return-from-Stripe confirmation banner */
+.payout-banner{margin:1.5rem 0 0;padding:1.1rem 1.4rem;border:1px solid var(--hairline);background:var(--ground);font-size:0.8rem;line-height:1.6;color:var(--ink)}
+.payout-banner.success{border-color:var(--success);border-left:3px solid var(--success)}
+
 /* --- FAQ --- */
 .faq{padding:8rem 3rem;background:var(--ground)}
 .faq-inner{max-width:780px;margin:0 auto}
