@@ -453,26 +453,38 @@ function showPayoutBanner(message, kind) {
   try { banner.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
 }
 
+function _sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
 async function handlePayoutReturn() {
   const p = new URLSearchParams(location.search).get('payout');
-  if (p !== 'return' && p !== 'refresh') return false;
+  if (p !== 'return' && p !== 'refresh') return;
   // Clean the query so a page refresh doesn't re-run this.
   try { history.replaceState({}, '', location.pathname + '#my-applications'); } catch (e) {}
-  if (p === 'refresh') return false;   // onboarding link expired; nothing to confirm
-  try {
-    const res = await fetch(`${API}/my/payout/refresh`, { method: 'POST', headers: JFAuth.authHeader() });
-    if (res.ok) {
-      const data = await res.json();
-      const paid = (data.reimbursed && data.reimbursed[0]) || null;
-      if (paid) {
-        const amt = (paid.amount_cents / 100).toFixed(2).replace(/\.00$/, '');
-        showPayoutBanner(`You've been reimbursed $${amt} for ${paid.conference_name}. The funds are on their way to your bank account.`, 'success');
-      } else if (data.payouts_enabled) {
-        showPayoutBanner('Your payout account is set up — your reimbursement will be sent shortly.', 'success');
+  if (p === 'refresh') return;   // onboarding link expired; nothing to confirm
+  // Stripe can take a few seconds to activate the payout capability after the
+  // awardee submits, so poll a few times rather than reading a stale "not ready".
+  showPayoutBanner('Finishing your payout setup — one moment…', '');
+  let result = {};
+  for (let i = 0; i < 5; i++) {
+    try {
+      const res = await fetch(`${API}/my/payout/refresh`, { method: 'POST', headers: JFAuth.authHeader() });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.reimbursed && data.reimbursed.length) { result = { paid: data.reimbursed[0] }; break; }
+        if (data.payouts_enabled) { result = { ready: true }; break; }
       }
-    }
-  } catch (e) { /* fall through to a normal load */ }
-  return true;
+    } catch (e) { /* keep polling */ }
+    if (i < 4) await _sleep(2000);
+  }
+  if (result.paid) {
+    const amt = (result.paid.amount_cents / 100).toFixed(2).replace(/\.00$/, '');
+    showPayoutBanner(`You've been reimbursed $${amt} for ${result.paid.conference_name}. The funds are on their way to your bank account.`, 'success');
+  } else if (result.ready) {
+    showPayoutBanner('Your payout account is set up — your reimbursement will be sent shortly.', 'success');
+  } else {
+    showPayoutBanner("We're finishing your payout setup — this can take a moment. Please refresh this page shortly.", '');
+  }
+  loadMyGrants();   // reflect any status change (e.g. now reimbursed)
 }
 
 // ---- Gate: only logged-in users see the form + status; others see the account-required card ----
@@ -492,6 +504,8 @@ async function handlePayoutReturn() {
   // Form vs. in-progress notice is decided by loadMyGrants → applyApplyState once we know
   // whether an application is already in flight; leave the form hidden until then.
   prefillFromMe();
-  // On return from Stripe, finalize payouts first (may auto-reimburse), then load.
-  handlePayoutReturn().then(loadMyGrants);
+  loadMyGrants();
+  // On return from Stripe, poll for the payout to activate and confirm the outcome
+  // (may auto-reimburse); runs alongside the initial load and re-loads when done.
+  handlePayoutReturn();
 })();
