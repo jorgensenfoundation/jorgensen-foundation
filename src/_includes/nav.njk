@@ -58,11 +58,77 @@
         </div>
       </div>
     </div>
-    <a href="/about"{% if navActive == "about" %} class="active"{% endif %}>About</a>
-    <a href="/publications"{% if navActive == "publications" %} class="active"{% endif %}>Publications</a>
-    <a href="/news"{% if navActive == "news" %} class="active"{% endif %}>News</a>
-    <a href="/grants"{% if navActive == "grants" %} class="active"{% endif %}>Grants</a>
-    <a href="/contact"{% if navActive == "contact" %} class="active"{% endif %}>Contact</a>
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle{% if navActive == "about" %} active{% endif %}" href="/about" data-action="toggleDropdown">About</a>
+      <div class="nav-mega">
+        <div class="nav-mega-inner">
+          <div class="nav-mega-label">About the Foundation</div>
+          <div class="nav-mega-grid nav-mega-grid--text">
+            <a class="nav-mega-item" href="/about#story"><span class="nav-mega-text"><span class="nav-mega-name">Our Story</span><span class="nav-mega-desc">How the Jorgensen group's work at Yale grew into a public foundation.</span></span></a>
+            <a class="nav-mega-item" href="/about#science"><span class="nav-mega-text"><span class="nav-mega-name">Computational Chemistry</span><span class="nav-mega-desc">What it is, and why simulating molecules accelerates discovery.</span></span></a>
+            <a class="nav-mega-item" href="/about#yale"><span class="nav-mega-text"><span class="nav-mega-name">Built at Yale</span><span class="nav-mega-desc">The research programs' origins in the Jorgensen lab.</span></span></a>
+            <a class="nav-mega-item" href="/about#mission"><span class="nav-mega-text"><span class="nav-mega-name">Our Mission</span><span class="nav-mega-desc">Open science, funded by industry and given freely to academia.</span></span></a>
+            <a class="nav-mega-item" href="/about#team"><span class="nav-mega-text"><span class="nav-mega-name">The Team</span><span class="nav-mega-desc">The scientists and board behind the Foundation.</span></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle{% if navActive == "publications" %} active{% endif %}" href="/publications" data-action="toggleDropdown">Publications</a>
+      <div class="nav-mega">
+        <div class="nav-mega-inner">
+          <div class="nav-mega-label">Research Publications</div>
+          <div class="nav-mega-grid nav-mega-grid--text">
+            <a class="nav-mega-item" href="/publications"><span class="nav-mega-text"><span class="nav-mega-name">All Papers</span><span class="nav-mega-desc">The full collection of Jorgensen-group publications.</span></span></a>
+            <a class="nav-mega-item" href="/publications#force-fields"><span class="nav-mega-text"><span class="nav-mega-name">Force Fields</span><span class="nav-mega-desc">OPLS and the parameterisation of molecular force fields.</span></span></a>
+            <a class="nav-mega-item" href="/publications#monte-carlo"><span class="nav-mega-text"><span class="nav-mega-name">Monte Carlo</span><span class="nav-mega-desc">Statistical-mechanics simulation of liquids and biomolecules.</span></span></a>
+            <a class="nav-mega-item" href="/publications#free-energy"><span class="nav-mega-text"><span class="nav-mega-name">Free Energy</span><span class="nav-mega-desc">FEP and thermodynamic-integration methods.</span></span></a>
+            <a class="nav-mega-item" href="/publications#drug-discovery"><span class="nav-mega-text"><span class="nav-mega-name">Drug Discovery</span><span class="nav-mega-desc">Structure-based design and lead optimisation.</span></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle{% if navActive == "news" %} active{% endif %}" href="/news" data-action="toggleDropdown">News</a>
+      <div class="nav-mega">
+        <div class="nav-mega-inner">
+          <div class="nav-mega-label">News &amp; Updates</div>
+          <div class="nav-mega-grid nav-mega-grid--text">
+            <a class="nav-mega-item" href="/news#news"><span class="nav-mega-text"><span class="nav-mega-name">Latest News</span><span class="nav-mega-desc">Announcements, milestones, and updates from the Foundation.</span></span></a>
+            <a class="nav-mega-item" href="/news#newsletter"><span class="nav-mega-text"><span class="nav-mega-name">Newsletter</span><span class="nav-mega-desc">Get Foundation updates delivered to your inbox.</span></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle{% if navActive == "grants" %} active{% endif %}" href="/grants" data-action="toggleDropdown">Grants</a>
+      <div class="nav-mega">
+        <div class="nav-mega-inner">
+          <div class="nav-mega-label">Student Travel Grants</div>
+          <div class="nav-mega-grid nav-mega-grid--text">
+            <a class="nav-mega-item" href="/grants#about"><span class="nav-mega-text"><span class="nav-mega-name">About the Grant</span><span class="nav-mega-desc">What the travel-grant programme funds, and why.</span></span></a>
+            <a class="nav-mega-item" href="/grants#eligibility"><span class="nav-mega-text"><span class="nav-mega-name">Eligibility &amp; Coverage</span><span class="nav-mega-desc">Who can apply, and which costs are covered.</span></span></a>
+            <a class="nav-mega-item" href="/grants#how-to-apply"><span class="nav-mega-text"><span class="nav-mega-name">How to Apply</span><span class="nav-mega-desc">The application process, step by step.</span></span></a>
+            <a class="nav-mega-item" href="/grants#apply"><span class="nav-mega-text"><span class="nav-mega-name">Apply Now</span><span class="nav-mega-desc">Start your application — free, no subscription needed.</span></span></a>
+            <a class="nav-mega-item" href="/grants#faq"><span class="nav-mega-text"><span class="nav-mega-name">FAQ</span><span class="nav-mega-desc">Deadlines, decisions, receipts, and reimbursement.</span></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle{% if navActive == "contact" %} active{% endif %}" href="/contact" data-action="toggleDropdown">Contact</a>
+      <div class="nav-mega">
+        <div class="nav-mega-inner">
+          <div class="nav-mega-label">Get in Touch</div>
+          <div class="nav-mega-grid nav-mega-grid--text">
+            <a class="nav-mega-item" href="/contact"><span class="nav-mega-text"><span class="nav-mega-name">Send a Message</span><span class="nav-mega-desc">Reach the Foundation with any question.</span></span></a>
+            <a class="nav-mega-item" href="/contact?subject=Academic%20Access"><span class="nav-mega-text"><span class="nav-mega-name">Academic Access</span><span class="nav-mega-desc">Questions about free academic accounts and programs.</span></span></a>
+            <a class="nav-mega-item" href="/contact?subject=Industry%20Partnership"><span class="nav-mega-text"><span class="nav-mega-name">Industry Partnership</span><span class="nav-mega-desc">Support academic access by partnering with us.</span></span></a>
+            <a class="nav-mega-item" href="/contact?subject=Technical%20Support"><span class="nav-mega-text"><span class="nav-mega-name">Technical Support</span><span class="nav-mega-desc">Help with the programs, accounts, or the platform.</span></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="nav-menu-search-wrap">
       <form class="nav-menu-search" role="search">
         <button class="nav-menu-search-btn" type="submit" aria-label="Search">
