@@ -60,71 +60,110 @@
     </div>
     <div class="nav-dropdown">
       <a class="nav-dropdown-toggle{% if navActive == "about" %} active{% endif %}" href="/about" data-action="toggleDropdown">About</a>
-      <div class="nav-mega">
+      <div class="nav-mega nav-mega--feature">
         <div class="nav-mega-inner">
-          <div class="nav-mega-label">About the Foundation</div>
-          <div class="nav-mega-grid nav-mega-grid--text">
-            <a class="nav-mega-item" href="/about#story"><span class="nav-mega-text"><span class="nav-mega-name">Our Story</span><span class="nav-mega-desc">How the Jorgensen group's work at Yale grew into a public foundation.</span></span></a>
-            <a class="nav-mega-item" href="/about#science"><span class="nav-mega-text"><span class="nav-mega-name">Computational Chemistry</span><span class="nav-mega-desc">What it is, and why simulating molecules accelerates discovery.</span></span></a>
-            <a class="nav-mega-item" href="/about#yale"><span class="nav-mega-text"><span class="nav-mega-name">Built at Yale</span><span class="nav-mega-desc">The research programs' origins in the Jorgensen lab.</span></span></a>
-            <a class="nav-mega-item" href="/about#mission"><span class="nav-mega-text"><span class="nav-mega-name">Our Mission</span><span class="nav-mega-desc">Open science, funded by industry and given freely to academia.</span></span></a>
-            <a class="nav-mega-item" href="/about#team"><span class="nav-mega-text"><span class="nav-mega-name">The Team</span><span class="nav-mega-desc">The scientists and board behind the Foundation.</span></span></a>
+          <div class="nav-feature-grid">
+            <a class="nav-feature" href="/about#story">
+              <span class="nav-feature-eyebrow">About the Foundation</span>
+              <span class="nav-feature-title">Four decades of Yale computational chemistry, opened to the world.</span>
+              <span class="nav-feature-desc">Founded on the research of William L. Jorgensen, the Foundation gives the group's simulation software to academia for free — funded by industry.</span>
+              <span class="nav-feature-cta">Read our story →</span>
+            </a>
+            <div class="nav-mega-links">
+              <span class="nav-mega-label">Explore</span>
+              <a class="nav-link-item" href="/about#science"><span class="nav-link-name">Computational Chemistry</span><span class="nav-link-desc">What it is, and why it matters.</span></a>
+              <a class="nav-link-item" href="/about#yale"><span class="nav-link-name">Built at Yale</span><span class="nav-link-desc">Origins in the Jorgensen lab.</span></a>
+              <a class="nav-link-item" href="/about#mission"><span class="nav-link-name">Our Mission</span><span class="nav-link-desc">Open science, sustainable access.</span></a>
+              <a class="nav-link-item" href="/about#team"><span class="nav-link-name">The Team</span><span class="nav-link-desc">The people behind the Foundation.</span></a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="nav-dropdown">
       <a class="nav-dropdown-toggle{% if navActive == "publications" %} active{% endif %}" href="/publications" data-action="toggleDropdown">Publications</a>
-      <div class="nav-mega">
+      <div class="nav-mega nav-mega--feature">
         <div class="nav-mega-inner">
-          <div class="nav-mega-label">Research Publications</div>
-          <div class="nav-mega-grid nav-mega-grid--text">
-            <a class="nav-mega-item" href="/publications"><span class="nav-mega-text"><span class="nav-mega-name">All Papers</span><span class="nav-mega-desc">The full collection of Jorgensen-group publications.</span></span></a>
-            <a class="nav-mega-item" href="/publications#force-fields"><span class="nav-mega-text"><span class="nav-mega-name">Force Fields</span><span class="nav-mega-desc">OPLS and the parameterisation of molecular force fields.</span></span></a>
-            <a class="nav-mega-item" href="/publications#monte-carlo"><span class="nav-mega-text"><span class="nav-mega-name">Monte Carlo</span><span class="nav-mega-desc">Statistical-mechanics simulation of liquids and biomolecules.</span></span></a>
-            <a class="nav-mega-item" href="/publications#free-energy"><span class="nav-mega-text"><span class="nav-mega-name">Free Energy</span><span class="nav-mega-desc">FEP and thermodynamic-integration methods.</span></span></a>
-            <a class="nav-mega-item" href="/publications#drug-discovery"><span class="nav-mega-text"><span class="nav-mega-name">Drug Discovery</span><span class="nav-mega-desc">Structure-based design and lead optimisation.</span></span></a>
+          <div class="nav-feature-grid">
+            <a class="nav-feature" href="/publications#force-fields">
+              <span class="nav-feature-eyebrow">Most cited · 40,000+ citations</span>
+              <span class="nav-feature-title">Comparison of Simple Potential Functions for Simulating Liquid Water</span>
+              <span class="nav-feature-desc">The 1983 paper that introduced the TIP3P and TIP4P water models — still underpinning the majority of biomolecular simulations worldwide.</span>
+              <span class="nav-feature-cta">Browse publications →</span>
+            </a>
+            <div class="nav-mega-links">
+              <span class="nav-mega-label">Browse by topic</span>
+              <a class="nav-link-item" href="/publications#force-fields"><span class="nav-link-name">Force Fields</span><span class="nav-link-desc">OPLS and molecular parameterisation.</span></a>
+              <a class="nav-link-item" href="/publications#monte-carlo"><span class="nav-link-name">Monte Carlo</span><span class="nav-link-desc">Simulating liquids and biomolecules.</span></a>
+              <a class="nav-link-item" href="/publications#free-energy"><span class="nav-link-name">Free Energy</span><span class="nav-link-desc">FEP and thermodynamic integration.</span></a>
+              <a class="nav-link-item" href="/publications#drug-discovery"><span class="nav-link-name">Drug Discovery</span><span class="nav-link-desc">Structure-based design & lead optimisation.</span></a>
+              <a class="nav-links-more" href="/publications">All papers →</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="nav-dropdown">
       <a class="nav-dropdown-toggle{% if navActive == "news" %} active{% endif %}" href="/news" data-action="toggleDropdown">News</a>
-      <div class="nav-mega">
+      <div class="nav-mega nav-mega--feature">
         <div class="nav-mega-inner">
-          <div class="nav-mega-label">News &amp; Updates</div>
-          <div class="nav-mega-grid nav-mega-grid--text">
-            <a class="nav-mega-item" href="/news#news"><span class="nav-mega-text"><span class="nav-mega-name">Latest News</span><span class="nav-mega-desc">Announcements, milestones, and updates from the Foundation.</span></span></a>
-            <a class="nav-mega-item" href="/news#newsletter"><span class="nav-mega-text"><span class="nav-mega-name">Newsletter</span><span class="nav-mega-desc">Get Foundation updates delivered to your inbox.</span></span></a>
+          <div class="nav-feature-grid">
+            <a class="nav-feature" href="/news#news">
+              <span class="nav-feature-eyebrow">Latest · June 2026</span>
+              <span class="nav-feature-title">The Jorgensen Foundation Launches</span>
+              <span class="nav-feature-desc">Four decades of Yale computational chemistry — BOSS, MCPRO, BOMB, FEP, OPLS, and molecular visualisation — now accessible from any browser.</span>
+              <span class="nav-feature-cta">Read more →</span>
+            </a>
+            <div class="nav-mega-links">
+              <span class="nav-mega-label">More updates</span>
+              <a class="nav-link-item" href="/news#news"><span class="nav-link-name">BOSS Version 5.0 Now Available</span><span class="nav-link-desc">June 2026 · Program update</span></a>
+              <a class="nav-link-item" href="/news#news"><span class="nav-link-name">New FEP Calculations for SARS-CoV-2</span><span class="nav-link-desc">May 2026 · Publication</span></a>
+              <a class="nav-link-item" href="/news#newsletter"><span class="nav-link-name">Newsletter</span><span class="nav-link-desc">Get updates in your inbox.</span></a>
+              <a class="nav-links-more" href="/news#news">See all news →</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="nav-dropdown">
       <a class="nav-dropdown-toggle{% if navActive == "grants" %} active{% endif %}" href="/grants" data-action="toggleDropdown">Grants</a>
-      <div class="nav-mega">
+      <div class="nav-mega nav-mega--feature">
         <div class="nav-mega-inner">
-          <div class="nav-mega-label">Student Travel Grants</div>
-          <div class="nav-mega-grid nav-mega-grid--text">
-            <a class="nav-mega-item" href="/grants#about"><span class="nav-mega-text"><span class="nav-mega-name">About the Grant</span><span class="nav-mega-desc">What the travel-grant programme funds, and why.</span></span></a>
-            <a class="nav-mega-item" href="/grants#eligibility"><span class="nav-mega-text"><span class="nav-mega-name">Eligibility &amp; Coverage</span><span class="nav-mega-desc">Who can apply, and which costs are covered.</span></span></a>
-            <a class="nav-mega-item" href="/grants#how-to-apply"><span class="nav-mega-text"><span class="nav-mega-name">How to Apply</span><span class="nav-mega-desc">The application process, step by step.</span></span></a>
-            <a class="nav-mega-item" href="/grants#apply"><span class="nav-mega-text"><span class="nav-mega-name">Apply Now</span><span class="nav-mega-desc">Start your application — free, no subscription needed.</span></span></a>
-            <a class="nav-mega-item" href="/grants#faq"><span class="nav-mega-text"><span class="nav-mega-name">FAQ</span><span class="nav-mega-desc">Deadlines, decisions, receipts, and reimbursement.</span></span></a>
+          <div class="nav-feature-grid">
+            <a class="nav-feature" href="/grants#apply">
+              <span class="nav-feature-eyebrow">Student Travel Grants</span>
+              <span class="nav-feature-metric">Up to $2,000</span>
+              <span class="nav-feature-desc">Funding for graduate students and postdocs to present at international computational chemistry conferences. Free to apply — no subscription needed.</span>
+              <span class="nav-feature-cta">Apply now →</span>
+            </a>
+            <div class="nav-mega-links">
+              <span class="nav-mega-label">The programme</span>
+              <a class="nav-link-item" href="/grants#about"><span class="nav-link-name">About the Grant</span><span class="nav-link-desc">What it funds, and why.</span></a>
+              <a class="nav-link-item" href="/grants#eligibility"><span class="nav-link-name">Eligibility &amp; Coverage</span><span class="nav-link-desc">Who can apply; what's covered.</span></a>
+              <a class="nav-link-item" href="/grants#how-to-apply"><span class="nav-link-name">How to Apply</span><span class="nav-link-desc">The process, step by step.</span></a>
+              <a class="nav-link-item" href="/grants#faq"><span class="nav-link-name">FAQ</span><span class="nav-link-desc">Deadlines, decisions, receipts.</span></a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="nav-dropdown">
       <a class="nav-dropdown-toggle{% if navActive == "contact" %} active{% endif %}" href="/contact" data-action="toggleDropdown">Contact</a>
-      <div class="nav-mega">
+      <div class="nav-mega nav-mega--feature">
         <div class="nav-mega-inner">
-          <div class="nav-mega-label">Get in Touch</div>
-          <div class="nav-mega-grid nav-mega-grid--text">
-            <a class="nav-mega-item" href="/contact"><span class="nav-mega-text"><span class="nav-mega-name">Send a Message</span><span class="nav-mega-desc">Reach the Foundation with any question.</span></span></a>
-            <a class="nav-mega-item" href="/contact?subject=Academic%20Access"><span class="nav-mega-text"><span class="nav-mega-name">Academic Access</span><span class="nav-mega-desc">Questions about free academic accounts and programs.</span></span></a>
-            <a class="nav-mega-item" href="/contact?subject=Industry%20Partnership"><span class="nav-mega-text"><span class="nav-mega-name">Industry Partnership</span><span class="nav-mega-desc">Support academic access by partnering with us.</span></span></a>
-            <a class="nav-mega-item" href="/contact?subject=Technical%20Support"><span class="nav-mega-text"><span class="nav-mega-name">Technical Support</span><span class="nav-mega-desc">Help with the programs, accounts, or the platform.</span></span></a>
+          <div class="nav-feature-grid">
+            <a class="nav-feature" href="/contact">
+              <span class="nav-feature-eyebrow">Contact</span>
+              <span class="nav-feature-title">We respond to every enquiry.</span>
+              <span class="nav-feature-desc">Whether it's academic access, the programs, an industry partnership, or the grant programme — we're glad to help.</span>
+              <span class="nav-feature-cta">Send a message →</span>
+            </a>
+            <div class="nav-mega-links">
+              <span class="nav-mega-label">What can we help with?</span>
+              <a class="nav-link-item" href="/contact?subject=Academic%20Access"><span class="nav-link-name">Academic Access</span><span class="nav-link-desc">Free accounts and programs.</span></a>
+              <a class="nav-link-item" href="/contact?subject=Industry%20Partnership"><span class="nav-link-name">Industry Partnership</span><span class="nav-link-desc">Help fund academic access.</span></a>
+              <a class="nav-link-item" href="/contact?subject=Technical%20Support"><span class="nav-link-name">Technical Support</span><span class="nav-link-desc">Help with programs or accounts.</span></a>
+            </div>
           </div>
         </div>
       </div>
