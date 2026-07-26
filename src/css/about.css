@@ -45,6 +45,18 @@ a{text-decoration:none;color:inherit}
 .prog-arrow{font-family:var(--font-sans);font-size:var(--fs-eyebrow);letter-spacing:0.2em;text-transform:uppercase;color:var(--body);white-space:nowrap;transition:color 0.2s}
 .prog-item:hover .prog-arrow{color:var(--ink)}
 
+/* --- HISTORY TIMELINE --- */
+.timeline{list-style:none;max-width:860px;margin:3.5rem 0 0}
+.tl-item{display:grid;grid-template-columns:96px 1fr;gap:2rem;padding:1.75rem 0;border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+.tl-item:last-child{border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+.tl-year{font-family:var(--font-serif);font-size:1.6rem;font-weight:300;color:var(--ink);line-height:1.15}
+.tl-name{font-family:var(--font-sans);font-size:var(--fs-body);color:var(--ink);margin-bottom:0.4rem}
+.tl-desc{font-family:var(--font-sans);font-size:var(--fs-small);color:var(--body);line-height:1.8}
+.tl-desc i{font-style:italic}
+.tl-source{max-width:860px;margin:2.5rem 0 0;padding-top:1.5rem;border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent);font-family:var(--font-sans);font-size:var(--fs-small);color:var(--body);line-height:1.85}
+.tl-source i{font-style:italic}
+@media(max-width:960px){.timeline{margin-top:2.5rem}.tl-item{grid-template-columns:64px 1fr;gap:1.1rem}.tl-year{font-size:1.25rem}}
+
 /* --- MISSION SPLIT (two light panels) --- */
 .split{display:grid;grid-template-columns:1fr 1fr;min-height:60vh}
 .split-panel{padding:5rem 4.5rem;display:flex;flex-direction:column;justify-content:center;background:var(--ground)}
