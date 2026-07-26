@@ -51,11 +51,11 @@ navActive: publications
       <div class="stat-label">Years of Research</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">400+</div>
+      <div class="stat-num">480+</div>
       <div class="stat-label">Publications</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">100k+</div>
+      <div class="stat-num">130k+</div>
       <div class="stat-label">Total Citations</div>
     </div>
     <div class="stat-item">
@@ -69,11 +69,11 @@ navActive: publications
 <!-- FILTER BAR -->
 <div class="filter-bar" id="filter-bar">
   <div class="filter-inner">
-    <button class="filter-btn active" data-filter="all" data-action="setFilter">All Papers <span class="filter-count" id="count-all">12</span></button>
-    <button class="filter-btn" data-filter="force-fields" data-action="setFilter">Force Fields <span class="filter-count" id="count-force-fields">4</span></button>
+    <button class="filter-btn active" data-filter="all" data-action="setFilter">All Papers <span class="filter-count" id="count-all">17</span></button>
+    <button class="filter-btn" data-filter="force-fields" data-action="setFilter">Force Fields <span class="filter-count" id="count-force-fields">6</span></button>
     <button class="filter-btn" data-filter="monte-carlo" data-action="setFilter">Monte Carlo <span class="filter-count" id="count-monte-carlo">3</span></button>
-    <button class="filter-btn" data-filter="free-energy" data-action="setFilter">Free Energy <span class="filter-count" id="count-free-energy">3</span></button>
-    <button class="filter-btn" data-filter="drug-discovery" data-action="setFilter">Drug Discovery <span class="filter-count" id="count-drug-discovery">3</span></button>
+    <button class="filter-btn" data-filter="free-energy" data-action="setFilter">Free Energy <span class="filter-count" id="count-free-energy">4</span></button>
+    <button class="filter-btn" data-filter="drug-discovery" data-action="setFilter">Drug Discovery <span class="filter-count" id="count-drug-discovery">4</span></button>
   </div>
 </div>
 
@@ -162,6 +162,48 @@ navActive: publications
           <a href="https://doi.org/10.1021/jp003919d" target="_blank" rel="noopener" class="pub-link">View Paper →</a>
           <a href="/opls" class="pub-link">View Program →</a>
           <button class="pub-cite" data-action="copyCite" data-cite="Kaminski, G. A.; Friesner, R. A.; Tirado-Rives, J.; Jorgensen, W. L. J. Phys. Chem. B 2001, 105, 6474.">Copy Citation</button>
+        </div>
+      </div>
+
+      <!-- OPLS-AA/M (2015) -->
+      <div class="pub-item" data-category="force-fields">
+        <div class="pub-year">2015</div>
+        <div class="pub-body">
+          <p class="pub-title">Improved Peptide and Protein Torsional Energetics with the OPLS-AA Force Field</p>
+          <p class="pub-authors">M. J. Robertson, J. Tirado-Rives, W. L. Jorgensen</p>
+          <p class="pub-journal">Journal of Chemical Theory and Computation · 2015 · Vol. 11, p. 3499</p>
+          <p class="pub-desc">The OPLS-AA/M refinement — reoptimised backbone and side-chain torsional parameters fit against high-level quantum chemical data. Substantially improved peptide and protein conformational preferences over the original OPLS-AA, and was later extended to RNA. Distributed for GROMACS and CHARMM, and rebuilt as the Foundation's OPLS-AA/M topology tool.</p>
+          <div class="pub-tags">
+            <span class="pub-tag">Force Fields</span>
+            <span class="pub-tag">OPLS-AA/M</span>
+            <span class="pub-tag">Proteins</span>
+          </div>
+        </div>
+        <div class="pub-actions">
+          <a href="https://doi.org/10.1021/acs.jctc.5b00356" target="_blank" rel="noopener" class="pub-link">View Paper →</a>
+          <a href="/opls" class="pub-link">View Program →</a>
+          <button class="pub-cite" data-action="copyCite" data-cite="Robertson, M. J.; Tirado-Rives, J.; Jorgensen, W. L. J. Chem. Theory Comput. 2015, 11, 3499.">Copy Citation</button>
+        </div>
+      </div>
+
+      <!-- 1.14*CM1A-LBCC (2017) -->
+      <div class="pub-item" data-category="force-fields">
+        <div class="pub-year">2017</div>
+        <div class="pub-body">
+          <p class="pub-title">1.14*CM1A-LBCC: Localized Bond-Charge Corrected CM1A Charges for Condensed-Phase Simulations</p>
+          <p class="pub-authors">L. S. Dodda, J. Z. Vilseck, J. Tirado-Rives, W. L. Jorgensen</p>
+          <p class="pub-journal">Journal of Physical Chemistry B · 2017 · Vol. 121, p. 3864</p>
+          <p class="pub-desc">A localized bond-charge correction to CM1A partial charges that markedly improves computed free energies of hydration and condensed-phase properties of organic molecules. Now the default charge model behind the LigParGen server, enabling automatic, accurate OPLS-AA parameters for arbitrary ligands.</p>
+          <div class="pub-tags">
+            <span class="pub-tag">Force Fields</span>
+            <span class="pub-tag">Partial Charges</span>
+            <span class="pub-tag">LigParGen</span>
+          </div>
+        </div>
+        <div class="pub-actions">
+          <a href="https://doi.org/10.1021/acs.jpcb.7b00272" target="_blank" rel="noopener" class="pub-link">View Paper →</a>
+          <a href="/opls" class="pub-link">View Program →</a>
+          <button class="pub-cite" data-action="copyCite" data-cite="Dodda, L. S.; Vilseck, J. Z.; Tirado-Rives, J.; Jorgensen, W. L. J. Phys. Chem. B 2017, 121, 3864.">Copy Citation</button>
         </div>
       </div>
 
@@ -291,6 +333,27 @@ navActive: publications
         </div>
       </div>
 
+      <!-- Modern FEP protocol (2015) -->
+      <div class="pub-item" data-category="free-energy">
+        <div class="pub-year">2015</div>
+        <div class="pub-body">
+          <p class="pub-title">Accurate and Reliable Prediction of Relative Ligand Binding Potency in Prospective Drug Discovery by Way of a Modern Free-Energy Calculation Protocol and Force Field</p>
+          <p class="pub-authors">L. Wang, Y. Wu, Y. Deng, … , W. L. Jorgensen, R. Abel, R. A. Friesner</p>
+          <p class="pub-journal">Journal of the American Chemical Society · 2015 · Vol. 137, p. 2695</p>
+          <p class="pub-desc">A landmark demonstration that free energy perturbation, paired with a modern force field and automated setup, predicts relative protein–ligand binding affinities accurately enough to guide real lead-optimization campaigns — helping move FEP from a specialist technique into routine industrial drug discovery.</p>
+          <div class="pub-tags">
+            <span class="pub-tag">Free Energy</span>
+            <span class="pub-tag">FEP</span>
+            <span class="pub-tag">Drug Discovery</span>
+          </div>
+        </div>
+        <div class="pub-actions">
+          <a href="https://doi.org/10.1021/ja512751q" target="_blank" rel="noopener" class="pub-link">View Paper →</a>
+          <a href="/fep" class="pub-link">View Program →</a>
+          <button class="pub-cite" data-action="copyCite" data-cite="Wang, L. et al. J. Am. Chem. Soc. 2015, 137, 2695.">Copy Citation</button>
+        </div>
+      </div>
+
       <!-- PAPER 11 -->
       <div class="pub-item" data-category="drug-discovery">
         <div class="pub-year">2004</div>
@@ -337,6 +400,48 @@ navActive: publications
       <div class="empty-state" id="empty-state" style="display:none">
         <p>No papers in this category.</p>
         <span>Try selecting a different filter above.</span>
+      </div>
+
+      <!-- SARS-CoV-2 Mpro / perampanel (2021) -->
+      <div class="pub-item" data-category="drug-discovery">
+        <div class="pub-year">2021</div>
+        <div class="pub-body">
+          <p class="pub-title">Potent Noncovalent Inhibitors of the Main Protease of SARS-CoV-2 from Molecular Sculpting of the Drug Perampanel Guided by Free Energy Perturbation Calculations</p>
+          <p class="pub-authors">C. H. Zhang, E. A. Stone, M. Deshmukh, J. A. Ippolito, M. M. Ghahremanpour, … , W. L. Jorgensen</p>
+          <p class="pub-journal">ACS Central Science · 2021 · Vol. 7, p. 467</p>
+          <p class="pub-desc">FEP-guided redesign of the approved drug perampanel into potent noncovalent inhibitors of the SARS-CoV-2 main protease — a real-time demonstration during the COVID-19 pandemic of free-energy-driven optimization taking a weak starting point to nanomolar antiviral potency.</p>
+          <div class="pub-tags">
+            <span class="pub-tag">Drug Discovery</span>
+            <span class="pub-tag">FEP</span>
+            <span class="pub-tag">SARS-CoV-2</span>
+          </div>
+        </div>
+        <div class="pub-actions">
+          <a href="https://doi.org/10.1021/acscentsci.1c00039" target="_blank" rel="noopener" class="pub-link">View Paper →</a>
+          <a href="/fep" class="pub-link">View Program →</a>
+          <button class="pub-cite" data-action="copyCite" data-cite="Zhang, C. H. et al. ACS Cent. Sci. 2021, 7, 467.">Copy Citation</button>
+        </div>
+      </div>
+
+      <!-- Computationally designed Mpro inhibitor (2024) -->
+      <div class="pub-item" data-category="drug-discovery">
+        <div class="pub-year">2024</div>
+        <div class="pub-body">
+          <p class="pub-title">Proof-of-Concept Studies with a Computationally Designed Mpro Inhibitor as a Synergistic Combination Regimen Alternative to Paxlovid</p>
+          <p class="pub-authors">C. Papini, I. Ullah, A. P. Ranjan, S. Zhang, Q. Wu, K. A. Spasov, … , W. L. Jorgensen</p>
+          <p class="pub-journal">Proceedings of the National Academy of Sciences · 2024 · Vol. 121, e2320713121</p>
+          <p class="pub-desc">A computationally designed main-protease inhibitor advanced to in vivo proof of concept as a potential alternative to Paxlovid, including efficacy in animal models — illustrating the Foundation's end-to-end pipeline from FEP-guided design through synthesis and preclinical validation.</p>
+          <div class="pub-tags">
+            <span class="pub-tag">Drug Discovery</span>
+            <span class="pub-tag">SARS-CoV-2</span>
+            <span class="pub-tag">Antivirals</span>
+          </div>
+        </div>
+        <div class="pub-actions">
+          <a href="https://doi.org/10.1073/pnas.2320713121" target="_blank" rel="noopener" class="pub-link">View Paper →</a>
+          <a href="/fep" class="pub-link">View Program →</a>
+          <button class="pub-cite" data-action="copyCite" data-cite="Papini, C. et al. Proc. Natl. Acad. Sci. U.S.A. 2024, 121, e2320713121.">Copy Citation</button>
+        </div>
       </div>
 
     </div><!-- /pub-list -->
