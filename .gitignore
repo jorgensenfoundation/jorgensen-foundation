@@ -13,3 +13,5 @@ src/css/lab.css
 # Local Playwright/screenshot artifacts (never commit)
 .playwright-mcp/
 /*.png
+.vercel
+.env*
