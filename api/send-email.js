@@ -77,6 +77,7 @@ module.exports = async (req, res) => {
       to,
       subject,
       html,
+      text: typeof body.text === 'string' && body.text ? body.text : undefined,
       replyTo: typeof body.replyTo === 'string' && body.replyTo.includes('@')
         ? body.replyTo : undefined,
     });
