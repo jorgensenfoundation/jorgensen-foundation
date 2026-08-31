@@ -20,7 +20,13 @@ const { timingSafeEqual } = require('node:crypto');
 const nodemailer = require('nodemailer');
 
 const FROM_EMAIL = 'info@jorgensenfoundation.org';
-const FROM = `"The Jorgensen Foundation" <${FROM_EMAIL}>`;
+// Two sites share this relay, and the From NAME is the first thing an inbox shows —
+// lab-site mail must not present as the foundation (Ana, 31 Aug 2026). The address is
+// always the foundation mailbox (the only one iCloud lets us send as); only the display
+// name varies, and only to names on this list, so a caller cannot dress mail up as an
+// arbitrary third party.
+const FROM_NAMES = new Set(['The Jorgensen Foundation', 'Jorgensen Lab (Yale)']);
+const DEFAULT_FROM_NAME = 'The Jorgensen Foundation';
 const MAX_RECIPIENTS = 5;
 const MAX_BODY_BYTES = 300 * 1024;
 
@@ -68,9 +74,11 @@ module.exports = async (req, res) => {
     socketTimeout: 25000,
   });
 
+  const fromName = FROM_NAMES.has(body.fromName) ? body.fromName : DEFAULT_FROM_NAME;
+
   try {
     await transporter.sendMail({
-      from: FROM,
+      from: `"${fromName}" <${FROM_EMAIL}>`,
       // Envelope sender = the foundation address (an alias on the same iCloud
       // account), so bounces route to the foundation mailbox, not the Apple ID.
       envelope: { from: FROM_EMAIL, to },
