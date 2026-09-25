@@ -249,6 +249,14 @@ footer{padding:2rem 3rem;border-top:1px solid var(--hairline);background:var(--g
 .sup-delete{background:none;border:1px solid #d9b3ab;color:#b0341d;border-radius:4px;
   padding:0.4rem 0.8rem;font-size:0.72rem;letter-spacing:0.05em;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
 .sup-delete:hover{background:#fbeae6}
+/* Files a visitor chose to send with a tool report */
+.sup-files{margin:14px 0 4px;padding:12px 14px;border:1px solid var(--oyster, #DEDCD5);border-radius:6px}
+.sup-files-title{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8a8a82;margin-bottom:8px}
+.sup-file-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:6px 0}
+.sup-file-row + .sup-file-row{border-top:1px solid var(--oyster, #DEDCD5)}
+.sup-file-name{font-family:ui-monospace,Menlo,monospace;font-size:13px;word-break:break-all}
+.sup-file-meta{font-size:12px;color:#8a8a82;margin-right:auto}
+.sup-file-gone{font-size:12px;color:#8a8a82;font-style:italic}
 
 /* ── Inline ticket rows: click a row to expand a vertical lifecycle stepper ── */
 .sup-row{cursor:pointer;transition:background 0.15s}
