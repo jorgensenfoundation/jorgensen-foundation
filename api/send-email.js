@@ -20,12 +20,11 @@ const { timingSafeEqual } = require('node:crypto');
 const nodemailer = require('nodemailer');
 
 const FROM_EMAIL = 'info@jorgensenfoundation.org';
-// Two sites share this relay, and the From NAME is the first thing an inbox shows —
-// lab-site mail must not present as the foundation (Ana, 31 Aug 2026). The address is
-// always the foundation mailbox (the only one iCloud lets us send as); only the display
-// name varies, and only to names on this list, so a caller cannot dress mail up as an
-// arbitrary third party.
-const FROM_NAMES = new Set(['The Jorgensen Foundation', 'Jorgensen Lab (Yale)']);
+// Foundation mail only. The lab site (jorgensenresearch.com) used to send through this relay
+// under the name "Jorgensen Lab (Yale)"; since 25 Sep 2026 it has its own sender and address
+// (info@jorgensenresearch.com), so the only name allowed here is the foundation's. The list stays
+// a list so a caller can never dress mail up as an arbitrary third party.
+const FROM_NAMES = new Set(['The Jorgensen Foundation']);
 const DEFAULT_FROM_NAME = 'The Jorgensen Foundation';
 const MAX_RECIPIENTS = 5;
 const MAX_BODY_BYTES = 300 * 1024;
