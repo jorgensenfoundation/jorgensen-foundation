@@ -373,6 +373,7 @@ function renderTicketDetail(t) {
   const options = SUPPORT_SETTABLE.map(s => `<option value="${s}"${s === t.status ? ' selected' : ''}>${esc(SUPPORT_STATUS_LABEL[s] || s)}</option>`).join('');
   return `<div class="sup-detail-inner">
       ${ticketVSteps(t)}
+      ${ticketFiles(t)}
       <div class="sup-detail-actions">
         <div class="sup-note-row">
           <input class="search-input" id="sup-note-input-${id}" type="text" placeholder="Add a note for the thread…" maxlength="4000">
@@ -389,6 +390,54 @@ function renderTicketDetail(t) {
         </div>
       </div>
     </div>`;
+}
+
+// Files a visitor chose to send with a tool bug report (LigParGen's opt-in "send this file"
+// button). Stored privately; Download fetches a 5-minute link, Delete removes the file for good
+// (the backend also purges files after 90 days). A deleted file stays listed so the ticket still
+// shows one was sent.
+function ticketFiles(t) {
+  const files = t.files || [];
+  if (!files.length) return '';
+  const id = escAttr(t.id);
+  const rows = files.map(f => {
+    const size = f.size >= 1024 ? `${(f.size / 1024).toFixed(1)} KB` : `${f.size} B`;
+    const acts = f.deleted
+      ? '<span class="sup-file-gone">deleted</span>'
+      : `<button class="filter-btn" data-action="downloadTicketFile" data-id="${id}" data-file="${escAttr(f.id)}">Download</button>
+         <button class="sup-delete" data-action="deleteTicketFile" data-id="${id}" data-file="${escAttr(f.id)}">Delete file</button>`;
+    return `<div class="sup-file-row"><span class="sup-file-name">${esc(f.filename)}</span>
+      <span class="sup-file-meta">${esc(size)} · ${esc(fmtDateTime(f.created_at))}</span>${acts}</div>`;
+  }).join('');
+  return `<div class="sup-files"><div class="sup-files-title">Files the visitor chose to send</div>${rows}</div>`;
+}
+
+async function downloadTicketFile(el) {
+  const { id, file } = el.dataset;
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(id)}/files/${encodeURIComponent(file)}`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (!res.ok) { alert('That file is no longer available.'); return; }
+    const { url, filename } = await res.json();
+    const a = document.createElement('a');
+    a.href = url; a.download = filename || 'structure'; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); a.remove();
+  } catch (e) {}
+}
+
+async function deleteTicketFile(el) {
+  const { id, file } = el.dataset;
+  if (!confirm('Delete this file permanently? It cannot be recovered.')) return;
+  try {
+    const res = await fetch(`${API}/admin/support/tickets/${encodeURIComponent(id)}/files/${encodeURIComponent(file)}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (handleAuthError(res)) return;
+    if (res.ok) loadTicketDetail(id);
+  } catch (e) {}
 }
 
 // Entry point used by the user-profile links: close the profile modal, jump to
@@ -426,6 +475,11 @@ function buildCaseBrief(t, user) {
   if (t.summary) lines.push(`Summary: ${t.summary}`);
   lines.push(`Visitor: ${t.user_email || 'anonymous (no account)'}`);
   if (t.page_url) lines.push(`Page they were on: ${t.page_url}`);
+  const liveFiles = (t.files || []).filter(f => !f.deleted);
+  if (liveFiles.length) {
+    lines.push('Files the visitor sent (fetch a 5-minute link with the agent secret):');
+    liveFiles.forEach(f => lines.push(`- ${f.filename} (${f.size} bytes): GET ${API}/admin/support/tickets/${t.id}/files/${f.id}`));
+  }
   lines.push('');
   lines.push('Conversation:');
   (t.thread || []).forEach(m => {
